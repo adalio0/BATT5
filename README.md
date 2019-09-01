@@ -1,5 +1,6 @@
 # BEAT_GUI
-GUI prototype for the Software II Team 5 project.<br>
+<b>GUI prototype for the Software II Team 5 project.<br><br></b>
+
 Language: Python<br>
 GUI Library: pyqt<br><br>
 
