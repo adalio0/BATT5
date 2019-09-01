@@ -1,8 +1,9 @@
 # BEAT_GUI
-GUI prototype for the Software II Team 5 project.
+GUI prototype for the Software II Team 5 project.<br>
 Language: Python<br>
-GUI Library: pyqt<br>
-<b>(See srs for reference)</b><br>
+GUI Library: pyqt<br><br>
+
+(See srs for reference)<br>
 Outside and windows: Alain<br>
 Project tab: Juan<br>
 Analysis tab: Adal<br>
