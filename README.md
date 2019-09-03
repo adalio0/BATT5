@@ -14,8 +14,8 @@ Documentation tab: Ana<br>
 
 <b>How to install QtDesginer:</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
-2. Go to your command line and put this command: <u>pip install pyqt5-tools --pre</u> <br>
-3. Now you should be able to open up with this command: <u>Desginer</u> <br>
-Congrats!!<br><br>
+2. Go to your command line and put this command: <i>pip install pyqt5-tools --pre</i> <br>
+3. Now you should be able to open up with this command: <i>Desginer</i> <br>
+<b>Congrats!!</b><br><br>
 
 <b>Link to tutorial for QtDesigner:</b> https://youtu.be/Dmo8eZG5I2w
