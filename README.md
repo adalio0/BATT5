@@ -1,4 +1,4 @@
-# BEAT_GUI
+# BATT5
 <b>GUI prototype for the Software II Team 5 project.<br><br></b>
 
 Language: Python<br>
