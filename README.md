@@ -12,7 +12,7 @@ Plugins tab: Mark<br>
 POI's tab: Andrea<br>
 Documentation tab: Ana<br>
 
-<b>How to install QtDesginer:</b> <br>
+<b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
 2. Go to your command line and put this command: <i>pip install pyqt5-tools --pre</i> <br>
 3. Now you should be able to open up with this command: <i>Desginer</i> <br>
