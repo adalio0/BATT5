@@ -35,10 +35,11 @@ To change to the new branch type in your command line:
 If you would like to go back to master -> git checkout master <br>
 If you would like to go back to the branch you created -> git checkout custom_name <br>
 <br>
+<b> To push from your local repository to the remote branch</b><br>
+git push origin HEAD:"name of branch you are trying to push (without quotation marks)"<br>
 <br>
-To push from your local repository to the remote branch<br>
-git push origin HEAD:<name of branch you are trying to push><br>
-
+<b>to delete local branch</b><br>
+git branch -d "name of branch (without quotation marks)"<br>
 
 # Installing QtDesigner
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
