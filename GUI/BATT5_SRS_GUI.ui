@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1011</width>
+    <width>969</width>
     <height>677</height>
    </rect>
   </property>
@@ -21,17 +21,17 @@
        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.488955, y1:1, x2:0.488773, y2:0, stop:0.698864 rgba(240, 240, 240, 255), stop:1 rgba(255, 255, 255, 255));</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="projectsTab">
+      <widget class="QWidget" name="project_tab">
        <attribute name="title">
         <string>Projects</string>
        </attribute>
        <layout class="QFormLayout" name="formLayout_4">
         <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_11">
+         <layout class="QVBoxLayout" name="projectView_layout">
           <item>
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="projectView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -47,14 +47,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_7">
+           <widget class="QLineEdit" name="project_search">
             <property name="text">
              <string>Search</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTreeWidget" name="treeWidget_3">
+           <widget class="QTreeWidget" name="project_tree">
             <column>
              <property name="text">
               <string>Projects</string>
@@ -78,7 +78,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_10">
+           <widget class="QPushButton" name="newProject_button">
             <property name="text">
              <string>New</string>
             </property>
@@ -87,9 +87,9 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <layout class="QGridLayout" name="gridLayout_5">
+         <layout class="QGridLayout" name="detailedProjectView_layout">
           <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="label_13">
+           <widget class="QLabel" name="detailedProjectView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -105,48 +105,48 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_14">
+           <widget class="QLabel" name="projectName_label">
             <property name="text">
              <string>Project Name</string>
             </property>
            </widget>
           </item>
           <item row="4" column="2">
-           <widget class="QPushButton" name="pushButton_7">
+           <widget class="QPushButton" name="browse_button">
             <property name="text">
              <string>Browse</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_8"/>
+           <widget class="QLineEdit" name="projectName_text"/>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="label_15">
+           <widget class="QLabel" name="binaryFilePath_label">
             <property name="text">
              <string>Binary File Path</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_12">
+           <widget class="QLabel" name="projectDescription_label">
             <property name="text">
              <string>Project Description</string>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_9"/>
+           <widget class="QLineEdit" name="binaryFilePath_text"/>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="binaryFileProperties_label">
             <property name="text">
              <string>Binary File Properties</string>
             </property>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QTreeWidget" name="treeWidget">
+           <widget class="QTreeWidget" name="binaryFileProperties_text">
             <column>
              <property name="text">
               <string>Name</string>
@@ -248,37 +248,37 @@
            </widget>
           </item>
           <item row="6" column="0">
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="delete_button">
             <property name="text">
              <string>Delete</string>
             </property>
            </widget>
           </item>
           <item row="6" column="2">
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="save_button">
             <property name="text">
              <string>Save</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QTextEdit" name="textEdit_4"/>
+           <widget class="QTextEdit" name="proJectDescription_text"/>
           </item>
          </layout>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="analysisTab">
+      <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
         <string>Analysis</string>
        </attribute>
        <layout class="QFormLayout" name="formLayout_3">
         <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_13">
+         <layout class="QVBoxLayout" name="pluginPOI_layout">
           <item>
-           <layout class="QGridLayout" name="gridLayout_8">
+           <layout class="QGridLayout" name="pluginPOISelection_layout">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_20">
+             <widget class="QLabel" name="plugin_label">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -291,7 +291,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_18">
+             <widget class="QLabel" name="POIType_label">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -304,7 +304,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QComboBox" name="comboBox_3">
+             <widget class="QComboBox" name="plugin_selection">
               <item>
                <property name="text">
                 <string>Plugin A</string>
@@ -323,7 +323,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="comboBox_2">
+             <widget class="QComboBox" name="POIType_selection">
               <item>
                <property name="text">
                 <string>Type A</string>
@@ -344,7 +344,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="POIView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -360,14 +360,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_6">
+           <widget class="QLineEdit" name="POI_search">
             <property name="text">
              <string>Search</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget_3">
+           <widget class="QListWidget" name="POI_list">
             <item>
              <property name="text">
               <string>POI A</string>
@@ -397,9 +397,9 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <layout class="QGridLayout" name="gridLayout_7">
+         <layout class="QGridLayout" name="detailedPOI_layout">
           <item row="9" column="0" colspan="5">
-           <widget class="QLabel" name="label_21">
+           <widget class="QLabel" name="detailedPOIView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -415,32 +415,32 @@
            </widget>
           </item>
           <item row="9" column="6" alignment="Qt::AlignRight">
-           <widget class="QPushButton" name="pushButton_14">
+           <widget class="QPushButton" name="a_button">
             <property name="text">
              <string>A</string>
             </property>
            </widget>
           </item>
           <item row="11" column="6" alignment="Qt::AlignRight|Qt::AlignTop">
-           <widget class="QPushButton" name="pushButton_15">
+           <widget class="QPushButton" name="o_button">
             <property name="text">
              <string>O</string>
             </property>
            </widget>
           </item>
           <item row="11" column="0" colspan="4">
-           <widget class="QTextEdit" name="textEdit_5">
+           <widget class="QTextEdit" name="POIContentArea_text">
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Point Of Interest Content Area&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;Point Of Interest Content Area&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
           <item row="11" column="4" alignment="Qt::AlignLeft|Qt::AlignTop">
-           <widget class="QPushButton" name="pushButton_13">
+           <widget class="QPushButton" name="c_button">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -460,21 +460,21 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="8" column="6">
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="stop_button">
             <property name="text">
              <string>Stop</string>
             </property>
            </widget>
           </item>
           <item row="8" column="4">
-           <widget class="QPushButton" name="pushButton_11">
+           <widget class="QPushButton" name="dynamicAnalysisRun_button">
             <property name="text">
              <string>Run</string>
             </property>
            </widget>
           </item>
           <item row="8" column="3">
-           <widget class="QLabel" name="label_22">
+           <widget class="QLabel" name="dynamicAnalysis_label">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -487,14 +487,14 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="8" column="1">
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="staticAnalysisRun_button">
             <property name="text">
              <string>Run</string>
             </property>
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_19">
+           <widget class="QLabel" name="staticAnalysis_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -513,13 +513,13 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="12" column="0" rowspan="3" colspan="4">
-           <widget class="QTextEdit" name="textEdit_6">
+           <widget class="QTextEdit" name="terminal_text">
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Terminal Window Content Area&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;Terminal Window Content Area&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -527,15 +527,15 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pluginManagementTab">
+      <widget class="QWidget" name="pluginManagement_tab">
        <attribute name="title">
         <string>Plugin Management</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QVBoxLayout" name="pluginView_layout">
           <item>
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="pluginView_label">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -563,7 +563,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="pluginView_search">
             <property name="maximumSize">
              <size>
               <width>200</width>
@@ -579,7 +579,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget_2">
+           <widget class="QListWidget" name="pluginView_list">
             <property name="maximumSize">
              <size>
               <width>200</width>
@@ -609,7 +609,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="newPlugin_button">
             <property name="maximumSize">
              <size>
               <width>200</width>
@@ -624,9 +624,9 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <layout class="QVBoxLayout" name="detailedPluginView_layout">
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="detailedPOI_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -651,16 +651,16 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <layout class="QGridLayout" name="gridLayout">
+           <layout class="QGridLayout" name="detailedPluginContent_layout">
             <item row="7" column="2">
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="savePOI_button">
               <property name="text">
                <string>Save</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="pluginPredefDataSet_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -673,7 +673,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QTextEdit" name="textEdit_2">
+             <widget class="QTextEdit" name="poi_text">
               <property name="minimumSize">
                <size>
                 <width>500</width>
@@ -692,7 +692,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="pluginStructure_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -705,7 +705,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QTextEdit" name="textEdit">
+             <widget class="QTextEdit" name="pluginDescription_text">
               <property name="minimumSize">
                <size>
                 <width>500</width>
@@ -724,7 +724,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QComboBox" name="comboBox">
+             <widget class="QComboBox" name="outputField_selection">
               <property name="maximumSize">
                <size>
                 <width>200</width>
@@ -749,7 +749,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="5" column="0">
-             <widget class="QLabel" name="label_8">
+             <widget class="QLabel" name="poi_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -762,14 +762,14 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="7" column="0">
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="delete_button_2">
               <property name="text">
                <string>Delete</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="pluginName_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -782,7 +782,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QLineEdit" name="pluginPredefDataSet_text">
               <property name="minimumSize">
                <size>
                 <width>500</width>
@@ -801,7 +801,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="browsePluginStructures_buton">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(228, 228, 228);</string>
               </property>
@@ -811,7 +811,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit_3">
+             <widget class="QLineEdit" name="pluginStructure_text">
               <property name="minimumSize">
                <size>
                 <width>500</width>
@@ -830,7 +830,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="browsePluginPredef_button">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(228, 228, 228);</string>
               </property>
@@ -840,7 +840,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="pluginDescription_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -853,7 +853,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="lineEdit_4">
+             <widget class="QLineEdit" name="pluginName_text">
               <property name="minimumSize">
                <size>
                 <width>500</width>
@@ -872,7 +872,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="4" column="0">
-             <widget class="QLabel" name="label_9">
+             <widget class="QLabel" name="defaultOutField_label">
               <property name="styleSheet">
                <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
               </property>
@@ -903,15 +903,15 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pointsOfInterestTab">
+      <widget class="QWidget" name="pointsOfInterest_tab">
        <attribute name="title">
         <string>Points of Interest</string>
        </attribute>
        <layout class="QFormLayout" name="formLayout">
         <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout" name="poiView_layout">
           <item>
-           <widget class="QLabel" name="poiViewLabel">
+           <widget class="QLabel" name="poiView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -927,14 +927,14 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="poisearchBar">
+           <widget class="QLineEdit" name="poiSearchBar_search">
             <property name="text">
              <string>Search</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="poi_list">
             <item>
              <property name="text">
               <string>POI A</string>
@@ -958,7 +958,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QPushButton" name="newPOI">
+           <widget class="QPushButton" name="newPOI_button">
             <property name="text">
              <string>New</string>
             </property>
@@ -967,18 +967,18 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item row="0" column="1">
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="detailedPOIView_layout">
           <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="deleteSave_layout">
             <item alignment="Qt::AlignLeft">
-             <widget class="QPushButton" name="deletePOI">
+             <widget class="QPushButton" name="deletePOI_button">
               <property name="text">
                <string>Delete</string>
               </property>
              </widget>
             </item>
             <item alignment="Qt::AlignRight">
-             <widget class="QPushButton" name="savePOI">
+             <widget class="QPushButton" name="savePOI_button_2">
               <property name="text">
                <string>Save</string>
               </property>
@@ -987,26 +987,26 @@ p, li { white-space: pre-wrap; }
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="QListView" name="listView"/>
+           <widget class="QListView" name="detailedPOIView_text"/>
           </item>
           <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_4">
+           <layout class="QGridLayout" name="detailedPOIViewSelection_layout">
             <item row="1" column="0" alignment="Qt::AlignHCenter">
-             <widget class="QLabel" name="pluginpoiLabel">
+             <widget class="QLabel" name="pluginPOI_label">
               <property name="text">
                <string>Plugin</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0" alignment="Qt::AlignHCenter">
-             <widget class="QLabel" name="poitypeLabel">
+             <widget class="QLabel" name="poiType_label">
               <property name="text">
                <string>Point of Interest Type</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1" alignment="Qt::AlignLeft">
-             <widget class="QComboBox" name="typePOIDrop">
+             <widget class="QComboBox" name="typePOI_selection">
               <item>
                <property name="text">
                 <string>Type A</string>
@@ -1025,7 +1025,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="1" column="1" alignment="Qt::AlignLeft">
-             <widget class="QComboBox" name="pluginPOIDrop">
+             <widget class="QComboBox" name="plugin_selection_2">
               <item>
                <property name="text">
                 <string>Plugin A</string>
@@ -1044,7 +1044,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="0" column="0" colspan="2">
-             <widget class="QLabel" name="detailedPOILabel">
+             <widget class="QLabel" name="detailedPOIView_label_2">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1071,15 +1071,15 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="documentationTab">
+      <widget class="QWidget" name="documentation_tab">
        <attribute name="title">
         <string>Documentation</string>
        </attribute>
        <layout class="QFormLayout" name="formLayout_2">
         <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_8">
+         <layout class="QVBoxLayout" name="documentView_layout">
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="documentView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1098,19 +1098,19 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_5">
+           <widget class="QLineEdit" name="documentView_search">
             <property name="text">
              <string>Search</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit_3">
+           <widget class="QTextEdit" name="documentView_text">
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -1127,9 +1127,9 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item row="0" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_9">
+         <layout class="QVBoxLayout" name="detailedDocumentView_layout">
           <item>
-           <widget class="QLabel" name="label_10">
+           <widget class="QLabel" name="detailedDocumentView_label">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1148,12 +1148,12 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QTextBrowser" name="textBrowser">
+           <widget class="QTextBrowser" name="documentContentArea_text">
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Document Content Area&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
@@ -1171,8 +1171,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1011</width>
-     <height>21</height>
+     <width>969</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
