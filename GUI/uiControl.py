@@ -9,16 +9,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow,self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # Projects tab functionality
-        self.ui.browse_button.clicked.connect(self.browsy)
-        self.ui.save_button.clicked.connect(self.savemsg)
-    # project tab functions for buttons etc..
-    def browsy(self):
-        # os.subprocess.Popen(r'explorer')
-        QMessageBox.about(self, "Project Manager", "Select Path")
 
-    def savemsg(self):
-        QMessageBox.about(self, "Project Manager", "Project Saved Successfully")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
