@@ -1,14 +1,13 @@
-from PyQt5.QtWidgets import QMessageBox
-from GUI.ui import *
 import sys
-import os
+from PyQt5 import QtWidgets
+from ui import Ui_MainWindow
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super(ApplicationWindow,self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        super(ApplicationWindow, self).__init__()
+        self.window = Ui_MainWindow()
+        self.window.setupUi(self)
 
 
 def main():
@@ -16,6 +15,7 @@ def main():
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()
