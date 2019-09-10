@@ -13,12 +13,12 @@ POI's tab: Andrea<br>
 Documentation tab: Ana<br>
 
 # Everything you need to know about branches (hopefully)
-To create a new branch form the command line <br>
+To create a new branch form the command line:
   1. git checkout -b "name_of_branch" <br>
 To create a new branch from github is simple just follow the steps it gives you. <br>
 
 <b> THIS IS IMPORTANT SO YOU DON'T PUSH TO MASTER </b> <br>
-To change to the new branch type in your command line <br>
+To change to the new branch type in your command line:
   1. git pull <br>
   2. git fetch <br>
     a. (optional) git branch -v -a, to check if all the branches are showing up it will look like this. <br>
