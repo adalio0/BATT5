@@ -29,8 +29,11 @@ To change to the new branch type in your command line:
         remotes/origin/master         abc6bd0 Run gui through uicontrol.py <br>
   3. git checkout -b custom_name origin/name_of_branch <br>
     a. custom_name is just what you would like to call it <br>
-  4. Done! Now you can continue as normal. <br>
-  5. To go back to master -> git checkout master <br>
+  4. git status <br>
+    a. This is to make sure you are in the correct branch, it will appear in the top. <br>
+  5. Done! Now you can continue as normal. <br>
+If you would like to go back to master -> git checkout master <br>
+If you would like to go back to the branch you created -> git checkout <br>
 
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
