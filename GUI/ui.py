@@ -6,8 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
+import sys
+import subprocess
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QFont
 
 
 class Ui_MainWindow(object):
@@ -57,6 +60,7 @@ class Ui_MainWindow(object):
         self.detailedProjectView_layout.addWidget(self.projectName_label, 1, 0, 1, 1)
         self.browse_button = QtWidgets.QPushButton(self.project_tab)
         self.browse_button.setObjectName("browse_button")
+        self.browse_button.clicked.connect(self.showFileExplorer)
         self.detailedProjectView_layout.addWidget(self.browse_button, 4, 2, 1, 1)
         self.projectName_text = QtWidgets.QLineEdit(self.project_tab)
         self.projectName_text.setObjectName("projectName_text")
@@ -92,6 +96,7 @@ class Ui_MainWindow(object):
         self.detailedProjectView_layout.addWidget(self.delete_button, 6, 0, 1, 1)
         self.save_button = QtWidgets.QPushButton(self.project_tab)
         self.save_button.setObjectName("save_button")
+        self.save_button.clicked.connect(self.showErrFile)
         self.detailedProjectView_layout.addWidget(self.save_button, 6, 2, 1, 1)
         self.proJectDescription_text = QtWidgets.QTextEdit(self.project_tab)
         self.proJectDescription_text.setObjectName("proJectDescription_text")
@@ -622,3 +627,91 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Document Content Area</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.documentation_tab), _translate("MainWindow", "Documentation"))
+
+    def showFileExplorer(self):
+        subprocess.Popen(r'explorer')
+
+    def showErrFile(self):
+        self.window = ErrFile()
+        self.window.show()
+
+
+class ErrFile(QWidget):
+    def __init__(self):
+        super(ErrFile, self).__init__()
+        self.left = 450
+        self.top = 250
+        self.width = 420
+        self.height = 150
+
+        msg = QLabel("A project is associated with one binary file and cannot be saved \n"
+                     "without a binary file. Please provide a binary file.")
+
+        okButton = QPushButton("OK")
+        okButton.clicked.connect(self.close)
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(10)
+        hbox.addWidget(okButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(msg)
+        vbox.addLayout(hbox)
+
+        self.setWindowTitle("Error Message: File Specified")
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setLayout(vbox)
+
+
+class Errx86(QWidget):
+    def __init__(self):
+        super(Errx86, self).__init__()
+        self.left = 450
+        self.top = 250
+        self.width = 420
+        self.height = 150
+
+        msg = QLabel("The system only supports files that are of x86 architecture")
+
+        okButton = QPushButton("OK")
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(10)
+        hbox.addWidget(okButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(msg)
+        vbox.addLayout(hbox)
+
+        self.setWindowTitle("Error Message: x86 architecture binary file")
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setLayout(vbox)
+
+
+class ErrBFile(QWidget):
+    def __init__(self):
+        super(ErrBFile, self).__init__()
+        self.left = 450
+        self.top = 250
+        self.width = 420
+        self.height = 150
+
+        msg = QLabel("(Returning any Radare2's error message if there are issues extracting\n"
+                     "properties from the binary file.)")
+
+        okButton = QPushButton("OK")
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(10)
+        hbox.addWidget(okButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(msg)
+        vbox.addLayout(hbox)
+
+        self.setWindowTitle("Error Message: Binary File Property Extraction")
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setLayout(vbox)

@@ -6,7 +6,9 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+import sys
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -638,4 +640,9 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Document Content Area</span></p></body></html>", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.documentation_tab), _translate("MainWindow", "Documentation", None))
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Ui_MainWindow()
+    sys.exit(app.exec_())
 
