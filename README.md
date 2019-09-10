@@ -21,14 +21,16 @@ To create a new branch from github is simple just follow the steps it gives you.
 <b> THIS IS IMPORTANT SO YOU DON'T PUSH TO MASTER </b> <br>
 
 To change to the new branch type in your command line:
-  1. git pull <br>
-  2. git fetch <br>
-    a. (optional) git branch -v -a, to check if all the branches are showing up it will look something like this (branches will differ) <br>
+  1. git pull (from master) <br>
+  2. git fetch (to update the branches) <br>
+    a. (optional) git branch -v -a, to check if all the branches are showing up. Looks something like this (branches will differ) <br>
         remotes/origin/HEAD           -> origin/master <br>
         remotes/origin/Projects       b91dc39 Projects tab initial commit <br>
         remotes/origin/master         abc6bd0 Run gui through uicontrol.py <br>
   3. git checkout -b custom_name origin/name_of_branch <br>
     a. custom_name is just what you would like to call it <br>
+  4. Done! Now you can continue as normal. <br>
+  5. To go back to master -> git checkout master <br>
 
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
