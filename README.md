@@ -19,3 +19,15 @@ Documentation tab: Ana<br>
 <b>Congrats!!</b><br><br>
 
 <b>Link to tutorial for QtDesigner:</b> https://youtu.be/Dmo8eZG5I2w
+
+# To checkout a branch, use the follow commands<br>
+
+#first time: make origin/branchname locally available as localname<br>
+#localname = whatever name you want to give to the branch<br>
+#origin/branchname = name of branch in the repo<br>
+git checkout -b localname origin/branchname <br>
+<br>
+#othertimes <br>
+git checkout localname <br>
+<br>
+git push origin<br>
