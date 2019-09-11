@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1122</width>
-    <height>773</height>
+    <width>1176</width>
+    <height>854</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="central_layout">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="8">
+   <layout class="QVBoxLayout" name="verticalLayout_13">
+    <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
        <number>0</number>
@@ -29,90 +29,123 @@
          <layout class="QHBoxLayout" name="project_layout">
           <item>
            <layout class="QVBoxLayout" name="project_sublayout">
-            <item alignment="Qt::AlignLeft">
-             <widget class="QTextEdit" name="projectSearch_search">
+            <item>
+             <widget class="QGroupBox" name="groupBox_4">
               <property name="maximumSize">
                <size>
-                <width>250</width>
-                <height>26</height>
+                <width>300</width>
+                <height>16777215</height>
                </size>
               </property>
-              <property name="html">
-               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+              <property name="acceptDrops">
+               <bool>false</bool>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="title">
+               <string>Projects</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QTextEdit" name="projectSearch_search">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Project Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignLeft">
-             <widget class="QTreeWidget" name="projectNavigator_tree">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <column>
-               <property name="text">
-                <string>Projects</string>
-               </property>
-              </column>
-              <item>
-               <property name="text">
-                <string>project 1</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>C:users/custom_path/executable.exe</string>
-                </property>
+                 </property>
+                </widget>
                </item>
-              </item>
-              <item>
-               <property name="text">
-                <string>project 2</string>
-               </property>
                <item>
-                <property name="text">
-                 <string>C:path/some/random/path/ping.exe</string>
-                </property>
+                <widget class="QTreeWidget" name="projectNavigator_tree">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string>Projects</string>
+                  </property>
+                 </column>
+                 <item>
+                  <property name="text">
+                   <string>project 1</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:users/custom_path/executable.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>project 2</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:path/some/random/path/ping.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>project 3</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:Documents/docs/idk/executable.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                </widget>
                </item>
-              </item>
-              <item>
-               <property name="text">
-                <string>project 3</string>
-               </property>
                <item>
-                <property name="text">
-                 <string>C:Documents/docs/idk/executable.exe</string>
-                </property>
-               </item>
-              </item>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignLeft">
-             <widget class="QTextBrowser" name="projectProperties_text">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="html">
-               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                <widget class="QTextBrowser" name="projectProperties_text">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -131,7 +164,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Relocs:&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Relro:&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Stripped:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -144,7 +180,7 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="maximumSize">
                <size>
-                <width>250</width>
+                <width>300</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -156,7 +192,7 @@ p, li { white-space: pre-wrap; }
                 <widget class="QComboBox" name="pluginSelection_dropdown">
                  <property name="minimumSize">
                   <size>
-                   <width>200</width>
+                   <width>275</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -190,13 +226,13 @@ p, li { white-space: pre-wrap; }
              <widget class="QGroupBox" name="analyisisControls_box">
               <property name="minimumSize">
                <size>
-                <width>250</width>
+                <width>300</width>
                 <height>85</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>250</width>
+                <width>300</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -225,7 +261,7 @@ p, li { white-space: pre-wrap; }
              <widget class="QGroupBox" name="pluginControls_box">
               <property name="minimumSize">
                <size>
-                <width>250</width>
+                <width>300</width>
                 <height>50</height>
                </size>
               </property>
@@ -262,7 +298,7 @@ p, li { white-space: pre-wrap; }
               <property name="minimumSize">
                <size>
                 <width>500</width>
-                <height>0</height>
+                <height>725</height>
                </size>
               </property>
              </widget>
@@ -558,6 +594,113 @@ p, li { white-space: pre-wrap; }
        <attribute name="title">
         <string>Management</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item alignment="Qt::AlignLeft">
+           <widget class="QGroupBox" name="groupBox_3">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="title">
+             <string>Plugin Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <widget class="QTextEdit" name="textEdit_4">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plugin Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="listWidget_2"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Points of Interest Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <widget class="QTextEdit" name="textEdit_5">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Points of Interest Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="listWidget_3"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QTextEdit" name="textEdit_6"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QTextEdit" name="textEdit_7"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -568,11 +711,11 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1122</width>
+     <width>1176</width>
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuWhat">
+   <widget class="QMenu" name="file_menu">
     <property name="title">
      <string>File</string>
     </property>
@@ -580,24 +723,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
    </widget>
-   <widget class="QMenu" name="menuWhat2">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuPlugins">
+   <widget class="QMenu" name="windows_menu">
     <property name="title">
      <string>Windows</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuPoints_of_Interest">
-    <property name="title">
-     <string>Filter</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuDocumentation">
-    <property name="title">
-     <string>Plugins</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -605,11 +733,8 @@ p, li { white-space: pre-wrap; }
      <string>Help</string>
     </property>
    </widget>
-   <addaction name="menuWhat"/>
-   <addaction name="menuWhat2"/>
-   <addaction name="menuPlugins"/>
-   <addaction name="menuPoints_of_Interest"/>
-   <addaction name="menuDocumentation"/>
+   <addaction name="file_menu"/>
+   <addaction name="windows_menu"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
