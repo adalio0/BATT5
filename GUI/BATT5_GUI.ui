@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1122</width>
-    <height>697</height>
+    <height>773</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item row="0" column="1" rowspan="8">
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -33,7 +33,7 @@
              <widget class="QTextEdit" name="projectSearch_search">
               <property name="maximumSize">
                <size>
-                <width>16777215</width>
+                <width>250</width>
                 <height>26</height>
                </size>
               </property>
@@ -42,7 +42,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Project Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </item>
@@ -116,7 +116,9 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Project Properties&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Project Description: &lt;/span&gt;This is a description of the project that is currently selected.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Project Properties:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OS: &lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Binary Type:&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Machine:&lt;/p&gt;
@@ -137,7 +139,7 @@ p, li { white-space: pre-wrap; }
               <property name="minimumSize">
                <size>
                 <width>250</width>
-                <height>50</height>
+                <height>65</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -149,43 +151,39 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Plugin Selection</string>
               </property>
-              <widget class="QComboBox" name="pluginSelection_dropdown">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>20</y>
-                 <width>245</width>
-                 <height>21</height>
-                </rect>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>245</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>245</width>
-                 <height>16777215</height>
-                </size>
-               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <property name="text">
-                 <string>Network Plugin</string>
-                </property>
+                <widget class="QComboBox" name="pluginSelection_dropdown">
+                 <property name="minimumSize">
+                  <size>
+                   <width>200</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>245</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Network Plugin</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Encryption Plugin</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Graph Plugin</string>
+                  </property>
+                 </item>
+                </widget>
                </item>
-               <item>
-                <property name="text">
-                 <string>Encryption Plugin</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Graph Plugin</string>
-                </property>
-               </item>
-              </widget>
+              </layout>
              </widget>
             </item>
             <item alignment="Qt::AlignLeft">
@@ -205,32 +203,22 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Analysis Controls</string>
               </property>
-              <widget class="QPushButton" name="runStaticAnalysis_button">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>20</y>
-                 <width>245</width>
-                 <height>28</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Run Static Analysis</string>
-               </property>
-              </widget>
-              <widget class="QPushButton" name="runDynamicAnalysis_button">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>50</y>
-                 <width>245</width>
-                 <height>28</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Run Dynamic Analysis</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <widget class="QPushButton" name="runDynamicAnalysis_button">
+                 <property name="text">
+                  <string>Run Dynamic Analysis</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="runStaticAnalysis_button">
+                 <property name="text">
+                  <string>Run Static Analysis</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -250,19 +238,15 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Plugin Controls</string>
               </property>
-              <widget class="QPushButton" name="generateScript_button">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>20</y>
-                 <width>245</width>
-                 <height>28</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Generate Script</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <widget class="QPushButton" name="generateScript_button">
+                 <property name="text">
+                  <string>Generate Script</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -272,35 +256,299 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QHBoxLayout" name="detailedAnalysis_layout">
           <item>
-           <widget class="QTextEdit" name="detailedAnalysis_text">
-            <property name="minimumSize">
-             <size>
-              <width>500</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QTextEdit" name="textEdit">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="cmd_layout">
-          <item alignment="Qt::AlignRight">
-           <widget class="QTextEdit" name="cmn_text">
-            <property name="minimumSize">
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item alignment="Qt::AlignRight">
+             <widget class="QTextEdit" name="textEdit_2">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Radare2 Command Prompt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Radare2 Command Promt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Points of Interest</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_11">
+               <item>
+                <widget class="QTextEdit" name="textEdit_3">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>26</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Points of Interest Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListWidget" name="listWidget">
+                 <item>
+                  <property name="text">
+                   <string>POI A</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI B</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI C</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI D</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI E</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI F</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI G</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI H</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI I</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI J</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI K</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI L</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI M</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI N</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI O</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI P</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Q</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI R</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI S</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI T</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI U</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI V</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI W</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI X</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Y</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Z</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
