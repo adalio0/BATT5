@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="central_layout">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1" rowspan="8">
-     <widget class="QTabWidget" name="tabs">
+     <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -26,11 +26,11 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="project_layout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
+           <layout class="QVBoxLayout" name="project_sublayout">
             <item alignment="Qt::AlignLeft">
-             <widget class="QTextEdit" name="textEdit_3">
+             <widget class="QTextEdit" name="projectSearch_search">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -47,7 +47,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item alignment="Qt::AlignLeft">
-             <widget class="QTreeWidget" name="projectNavigator">
+             <widget class="QTreeWidget" name="projectNavigator_tree">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item alignment="Qt::AlignLeft">
-             <widget class="QTextBrowser" name="textBrowser">
+             <widget class="QTextBrowser" name="projectProperties_text">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -133,7 +133,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="groupBox_3">
+             <widget class="QGroupBox" name="pluginSelection_box">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -149,7 +149,7 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Plugin Selection</string>
               </property>
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="pluginSelection_dropdown">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item alignment="Qt::AlignLeft">
-             <widget class="QGroupBox" name="groupBox">
+             <widget class="QGroupBox" name="analyisisControls_box">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -205,7 +205,7 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Analysis Controls</string>
               </property>
-              <widget class="QPushButton" name="staticAnalysisButton">
+              <widget class="QPushButton" name="runStaticAnalysis_button">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -218,7 +218,7 @@ p, li { white-space: pre-wrap; }
                 <string>Run Static Analysis</string>
                </property>
               </widget>
-              <widget class="QPushButton" name="DynamicAnalysisButton">
+              <widget class="QPushButton" name="runDynamicAnalysis_button">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -234,7 +234,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="groupBox_2">
+             <widget class="QGroupBox" name="pluginControls_box">
               <property name="minimumSize">
                <size>
                 <width>250</width>
@@ -250,7 +250,7 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Plugin Controls</string>
               </property>
-              <widget class="QPushButton" name="GenerateScriptButton">
+              <widget class="QPushButton" name="generateScript_button">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -270,9 +270,9 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="detailedAnalysis_layout">
           <item>
-           <widget class="QTextEdit" name="textEdit_2">
+           <widget class="QTextEdit" name="detailedAnalysis_text">
             <property name="minimumSize">
              <size>
               <width>500</width>
@@ -284,9 +284,9 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="cmd_layout">
           <item alignment="Qt::AlignRight">
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QTextEdit" name="cmn_text">
             <property name="minimumSize">
              <size>
               <width>300</width>
