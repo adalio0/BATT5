@@ -14,7 +14,7 @@ Documentation tab: Ana<br>
 
 # Everything you need to know about branches (hopefully)
 
-To create a new branch form the command line:
+To create a new branch from the command line:
   1. git checkout -b "name_of_branch" <br>
 To create a new branch from github is simple just follow the steps it gives you. <br>
 
@@ -33,7 +33,7 @@ To change to the new branch type in your command line:
     a. This is to make sure you are in the correct branch, it will appear in the top. <br>
   5. Done! Now you can continue as normal. <br>
 If you would like to go back to master -> git checkout master <br>
-If you would like to go back to the branch you created -> git checkout <br>
+If you would like to go back to the branch you created -> git checkout custom_name <br>
 
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
