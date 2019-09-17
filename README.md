@@ -41,3 +41,17 @@ If you would like to go back to the branch you created -> git checkout custom_na
 3. Now you should be able to open up with this command: <i>Designer</i> <br>
 
 <b>Link to tutorial for QtDesigner:</b> https://youtu.be/Dmo8eZG5I2w
+
+# Converting QtDesigner .ui to .py using PyCharm with Anaconda installed
+ 1.Go to File > Settings.<br>
+ 2.Select External Tools in the settings window.<br>
+ 3.Use the "+" button to add a new external tool.<br>
+ 4.On the new window, choose a name for the tool (e.g. "converter").<br>
+ 5.Under tool settings in the program field, navigate to the Anaconda directory.<br>
+ 6.Under that directory then choose Scripts > pyuic5.exe.<br>
+ 7.Under the arguments filed type in the following `$FileName$ -o $FileExt$.py`<br>
+ 8.Click ok.<br>
+ 9.In the project windown,right click on the .ui file you want to convert.<br>
+10.Select external tools and then select the tool you created.<br>
+11.A converted .py file should populate.<br>
+ 
