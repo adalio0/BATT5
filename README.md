@@ -35,10 +35,11 @@ To change to the new branch type in your command line:
 If you would like to go back to master -> git checkout master <br>
 If you would like to go back to the branch you created -> git checkout custom_name <br>
 
+# Installing QtDesigner
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
 1. Have python3 installed, if you don't go here: https://www.python.org/downloads/ <br>
-2. Go to your command line and put this command: <i>pip install pyqt5-tools --pre</i> <br>
-3. Now you should be able to open up with this command: <i>Designer</i> <br>
+2. Go to your command line and put this command: `pip install pyqt5-tools --pre` <br>
+3. Now you should be able to open up with this command: `Designer` <br>
 
 <b>Link to tutorial for QtDesigner:</b> https://youtu.be/Dmo8eZG5I2w
 
