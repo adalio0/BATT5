@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1142</width>
-    <height>894</height>
+    <width>1100</width>
+    <height>866</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -75,7 +75,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Project Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Project Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -184,6 +184,9 @@ p, li { white-space: pre-wrap; }
                 <height>16777215</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="title">
                <string>Plugin Selection</string>
               </property>
@@ -214,7 +217,7 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <property name="text">
-                   <string>Graph Plugin</string>
+                   <string>Graphical Plugin</string>
                   </property>
                  </item>
                 </widget>
@@ -235,6 +238,9 @@ p, li { white-space: pre-wrap; }
                 <width>300</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="title">
                <string>Analysis Controls</string>
@@ -271,6 +277,12 @@ p, li { white-space: pre-wrap; }
                 <height>16777215</height>
                </size>
               </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="title">
                <string>Plugin Controls</string>
               </property>
@@ -295,6 +307,9 @@ p, li { white-space: pre-wrap; }
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
              <widget class="QGroupBox" name="groupBox_5">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="title">
                <string>Analysis</string>
               </property>
@@ -304,52 +319,65 @@ p, li { white-space: pre-wrap; }
                  <property name="minimumSize">
                   <size>
                    <width>400</width>
-                   <height>725</height>
+                   <height>550</height>
                   </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#4a4a4a;&quot;&gt;A detailed view of all Points of Interest&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
             </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="cmd_layout">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <widget class="QGroupBox" name="groupBox_8">
               <property name="minimumSize">
                <size>
-                <width>300</width>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>300</width>
-                <height>16777215</height>
+                <width>16777215</width>
+                <height>150</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="title">
-               <string>Radare2 Commane Console</string>
+               <string>Radare2 Command Console</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
                 <widget class="QTextEdit" name="textEdit_2">
                  <property name="minimumSize">
                   <size>
-                   <width>275</width>
-                   <height>0</height>
+                   <width>400</width>
+                   <height>100</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>0</width>
-                   <height>16777215</height>
+                   <width>16777215</width>
+                   <height>100</height>
                   </size>
                  </property>
                  <property name="html">
@@ -397,6 +425,52 @@ p, li { white-space: pre-wrap; }
               </layout>
              </widget>
             </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="cmd_layout">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QGroupBox" name="groupBox_9">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>150</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Comments</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QTextEdit" name="textEdit_8">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;This spot will display any comments made on the currently selected POI. If there is no comment, it can be typed out here and will be saved automatically.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
             <item>
              <widget class="QGroupBox" name="groupBox">
               <property name="minimumSize">
@@ -410,6 +484,9 @@ p, li { white-space: pre-wrap; }
                 <width>300</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="title">
                <string>Points of Interest</string>
@@ -434,7 +511,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Points of Interest Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Points of Interest Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -700,12 +777,69 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Plugin Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Plugin Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QListWidget" name="listWidget_2"/>
+              <widget class="QListWidget" name="listWidget_2">
+               <item>
+                <property name="text">
+                 <string>Network Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Graphical Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Encryption Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Other Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Some Other Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Some Other Other Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Another Plugin</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -717,6 +851,9 @@ p, li { white-space: pre-wrap; }
               <width>250</width>
               <height>0</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="title">
              <string>Points of Interest Management</string>
@@ -735,12 +872,77 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Points of Interest Search&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Points of Interest Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QListWidget" name="listWidget_3"/>
+              <widget class="QListWidget" name="listWidget_3">
+               <item>
+                <property name="text">
+                 <string>POI A</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI B</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI C</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI D</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI E</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI F</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI G</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>POI H</string>
+                </property>
+                <property name="checkState">
+                 <enum>Checked</enum>
+                </property>
+               </item>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -751,6 +953,9 @@ p, li { white-space: pre-wrap; }
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QGroupBox" name="groupBox_7">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="title">
              <string>Detailed Plugin Management</string>
             </property>
@@ -763,6 +968,9 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QGroupBox" name="groupBox_6">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="title">
              <string>Detailed Points of Interest Management</string>
             </property>
@@ -786,7 +994,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1142</width>
+     <width>1100</width>
      <height>26</height>
     </rect>
    </property>
