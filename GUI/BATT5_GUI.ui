@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>866</height>
+    <width>1142</width>
+    <height>894</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,17 +64,8 @@
                    <height>16777215</height>
                   </size>
                  </property>
-<<<<<<< HEAD
                  <property name="text">
                   <string>Search</string>
-=======
-                 <property name="html">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Project Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                  </property>
                 </widget>
                </item>
@@ -183,9 +174,6 @@ p, li { white-space: pre-wrap; }
                 <height>16777215</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
               <property name="title">
                <string>Plugin Selection</string>
               </property>
@@ -216,7 +204,7 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <property name="text">
-                   <string>Graphical Plugin</string>
+                   <string>Graph Plugin</string>
                   </property>
                  </item>
                 </widget>
@@ -237,9 +225,6 @@ p, li { white-space: pre-wrap; }
                 <width>300</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
               </property>
               <property name="title">
                <string>Analysis Controls</string>
@@ -276,12 +261,6 @@ p, li { white-space: pre-wrap; }
                 <height>16777215</height>
                </size>
               </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
               <property name="title">
                <string>Plugin Controls</string>
               </property>
@@ -305,14 +284,7 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
             <item>
-<<<<<<< HEAD
              <widget class="QGroupBox" name="analysis_box">
-=======
-             <widget class="QGroupBox" name="groupBox_5">
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
               <property name="title">
                <string>Analysis</string>
               </property>
@@ -321,32 +293,9 @@ p, li { white-space: pre-wrap; }
                 <widget class="QTextEdit" name="analysis_text">
                  <property name="minimumSize">
                   <size>
-<<<<<<< HEAD
                    <width>0</width>
                    <height>0</height>
-=======
-                   <width>400</width>
-                   <height>550</height>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                   </size>
-                 </property>
-                 <property name="html">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#4a4a4a;&quot;&gt;A detailed view of all Points of Interest&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -357,48 +306,32 @@ p, li { white-space: pre-wrap; }
              <widget class="QGroupBox" name="radareConsole_box">
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>300</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-<<<<<<< HEAD
                 <height>218</height>
-=======
-                <height>150</height>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
               <property name="title">
-               <string>Radare2 Command Console</string>
+               <string>Radare2 Commane Console</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
                 <widget class="QTextEdit" name="radareConsole_text">
                  <property name="minimumSize">
                   <size>
-<<<<<<< HEAD
                    <width>0</width>
                    <height>0</height>
-=======
-                   <width>400</width>
-                   <height>100</height>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-<<<<<<< HEAD
                    <height>200</height>
-=======
-                   <height>100</height>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                   </size>
                  </property>
                  <property name="html">
@@ -451,53 +384,9 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item>
-<<<<<<< HEAD
          <layout class="QHBoxLayout" name="commentAndPoi_layout">
           <item>
            <layout class="QVBoxLayout" name="commentAndPoi_sublayout">
-=======
-         <layout class="QHBoxLayout" name="cmd_layout">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QGroupBox" name="groupBox_9">
-              <property name="minimumSize">
-               <size>
-                <width>300</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>150</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Comments</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
-                <widget class="QTextEdit" name="textEdit_8">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>100</height>
-                  </size>
-                 </property>
-                 <property name="html">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;This spot will display any comments made on the currently selected POI. If there is no comment, it can be typed out here and will be saved automatically.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
             <item>
              <widget class="QGroupBox" name="comment_box">
               <property name="maximumSize">
@@ -505,9 +394,6 @@ p, li { white-space: pre-wrap; }
                 <width>300</width>
                 <height>300</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
               </property>
               <property name="title">
                <string>Comment View</string>
@@ -527,7 +413,6 @@ p, li { white-space: pre-wrap; }
                    <height>16777215</height>
                   </size>
                  </property>
-<<<<<<< HEAD
                 </widget>
                </item>
                <item>
@@ -600,14 +485,6 @@ p, li { white-space: pre-wrap; }
                 <widget class="QLineEdit" name="poiSearch_lineEdit">
                  <property name="text">
                   <string>Search</string>
-=======
-                 <property name="html">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Points of Interest Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
                  </property>
                 </widget>
                </item>
@@ -881,7 +758,6 @@ p, li { white-space: pre-wrap; }
                  <height>16777215</height>
                 </size>
                </property>
-<<<<<<< HEAD
               </widget>
              </item>
              <item>
@@ -889,75 +765,6 @@ p, li { white-space: pre-wrap; }
                <property name="text">
                 <string>New</string>
                </property>
-=======
-               <property name="html">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Plugin Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QListWidget" name="listWidget_2">
-               <item>
-                <property name="text">
-                 <string>Network Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Graphical Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Encryption Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Other Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Some Other Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Some Other Other Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Another Plugin</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
               </widget>
              </item>
             </layout>
@@ -971,16 +778,11 @@ p, li { white-space: pre-wrap; }
               <height>0</height>
              </size>
             </property>
-<<<<<<< HEAD
             <property name="maximumSize">
              <size>
               <width>200</width>
               <height>16777215</height>
              </size>
-=======
-            <property name="styleSheet">
-             <string notr="true"/>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
             </property>
             <property name="title">
              <string>Points of Interest Management</string>
@@ -1001,7 +803,6 @@ p, li { white-space: pre-wrap; }
                  <height>16777215</height>
                 </size>
                </property>
-<<<<<<< HEAD
               </widget>
              </item>
              <item>
@@ -1009,83 +810,6 @@ p, li { white-space: pre-wrap; }
                <property name="text">
                 <string>New</string>
                </property>
-=======
-               <property name="html">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Points of Interest Search&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QListWidget" name="listWidget_3">
-               <item>
-                <property name="text">
-                 <string>POI A</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI B</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI C</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI D</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI E</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI F</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI G</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>POI H</string>
-                </property>
-                <property name="checkState">
-                 <enum>Checked</enum>
-                </property>
-               </item>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
               </widget>
              </item>
             </layout>
@@ -1096,14 +820,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QVBoxLayout" name="detailed_layout">
           <item>
-<<<<<<< HEAD
            <widget class="QGroupBox" name="dpm_box">
-=======
-           <widget class="QGroupBox" name="groupBox_7">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
             <property name="title">
              <string>Detailed Plugin Management</string>
             </property>
@@ -1238,14 +955,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-<<<<<<< HEAD
            <widget class="QGroupBox" name="dpoim_box">
-=======
-           <widget class="QGroupBox" name="groupBox_6">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
             <property name="title">
              <string>Detailed Points of Interest Management</string>
             </property>
@@ -1324,13 +1034,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-<<<<<<< HEAD
      <width>1142</width>
      <height>21</height>
-=======
-     <width>1100</width>
-     <height>26</height>
->>>>>>> dd1931be74b3cdfe874eb0c44ba73345ee2618e5
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">
