@@ -39,7 +39,7 @@ If you would like to go back to the branch you created -> git checkout custom_na
 git push origin HEAD:"name of branch you are trying to push (without quotation marks)"<br>
 <br>
 <b>to delete local branch</b><br>
-git branch -d "name of branch (without quotation marks"<br>
+git branch -d "name of branch (without quotation marks)"<br>
 
 # Installing QtDesigner
 <b>How to install QtDesginer (Assuming you have anaconda installed):</b> <br>
