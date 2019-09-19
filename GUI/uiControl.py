@@ -1,4 +1,3 @@
-
 import sys
 from PyQt5 import QtWidgets
 from ui import Ui_MainWindow

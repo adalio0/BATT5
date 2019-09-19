@@ -1,5 +1,4 @@
 
-  
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'BATT5_SRS_GUI.ui'
@@ -716,4 +715,8 @@ class ErrBFile(QWidget):
 
         self.setWindowTitle("Error Message: Binary File Property Extraction")
         self.setGeometry(self.left, self.top, self.width, self.height)
+<<<<<<< HEAD
         self.setLayout(vbox)
+=======
+        self.setLayout(vbox)
+>>>>>>> d343676616bbdbbe6f346e95c08e39a779471011
