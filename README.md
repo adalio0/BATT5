@@ -36,7 +36,7 @@ If you would like to go back to master -> git checkout master <br>
 If you would like to go back to the branch you created -> git checkout custom_name <br>
 <br>
 <br>
-#To push from your local repository to the remote branch<br>
+# To push from your local repository to the remote branch<br>
 git push origin HEAD:<name of branch you are trying to push><br>
 
 
