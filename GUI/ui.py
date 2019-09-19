@@ -61,7 +61,7 @@ class Ui_MainWindow(object):
         self.detailedProjectView_layout.addWidget(self.projectName_label, 1, 0, 1, 1)
         self.browse_button = QtWidgets.QPushButton(self.project_tab)
         self.browse_button.setObjectName("browse_button")
-        self.browse_button.clicked.connect(self.showFileExplorer)
+        #self.browse_button.clicked.connect(self.showErrFile)
         self.detailedProjectView_layout.addWidget(self.browse_button, 4, 2, 1, 1)
         self.projectName_text = QtWidgets.QLineEdit(self.project_tab)
         self.projectName_text.setObjectName("projectName_text")
@@ -97,7 +97,6 @@ class Ui_MainWindow(object):
         self.detailedProjectView_layout.addWidget(self.delete_button, 6, 0, 1, 1)
         self.save_button = QtWidgets.QPushButton(self.project_tab)
         self.save_button.setObjectName("save_button")
-        self.save_button.clicked.connect(self.showErrFile)
         self.detailedProjectView_layout.addWidget(self.save_button, 6, 2, 1, 1)
         self.proJectDescription_text = QtWidgets.QTextEdit(self.project_tab)
         self.proJectDescription_text.setObjectName("proJectDescription_text")
@@ -628,7 +627,6 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Document Content Area</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.documentation_tab), _translate("MainWindow", "Documentation"))
-
     def showFileExplorer(self):
         subprocess.Popen(r'explorer')
 
@@ -715,8 +713,6 @@ class ErrBFile(QWidget):
 
         self.setWindowTitle("Error Message: Binary File Property Extraction")
         self.setGeometry(self.left, self.top, self.width, self.height)
-<<<<<<< HEAD
+
         self.setLayout(vbox)
-=======
-        self.setLayout(vbox)
->>>>>>> d343676616bbdbbe6f346e95c08e39a779471011
+
