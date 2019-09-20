@@ -27,6 +27,11 @@ class ErrFile(QWidget):
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setLayout(vbox)
 
+        okButton.clicked.connect(self.okClicked)
+
+    def okClicked(self):
+        self.close()
+
 
 class Errx86(QWidget):
     def __init__(self):
@@ -52,6 +57,11 @@ class Errx86(QWidget):
         self.setWindowTitle("Error Message: x86 architecture binary file")
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setLayout(vbox)
+
+        okButton.clicked.connect(self.okClicked)
+
+    def okClicked(self):
+        self.close()
 
 
 class ErrBFile(QWidget):
@@ -80,3 +90,7 @@ class ErrBFile(QWidget):
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setLayout(vbox)
 
+        okButton.clicked.connect(self.okClicked)
+
+    def okClicked(self):
+        self.close()
