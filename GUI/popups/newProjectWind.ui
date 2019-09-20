@@ -26,7 +26,7 @@
      <item row="7" column="3" alignment="Qt::AlignRight">
       <widget class="QPushButton" name="saveNewProject">
        <property name="text">
-        <string>Save</string>
+        <string>Create</string>
        </property>
       </widget>
      </item>
