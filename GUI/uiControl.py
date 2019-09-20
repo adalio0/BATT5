@@ -4,7 +4,7 @@ import sys
 import subprocess
 from PyQt5 import QtWidgets
 from BATT5_GUI import Ui_BATT5
-from errors import ErrFile, Errx86, ErrBFile
+from popups.errors import ErrFile, Errx86, ErrBFile
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
