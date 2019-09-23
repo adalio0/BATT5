@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
+
 import sys
+import r2pipe
 from PyQt5 import QtWidgets
-from ui import Ui_MainWindow
+from GUI.ui import Ui_MainWindow
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -8,7 +11,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_MainWindow()
         self.window.setupUi(self)
+        # self.window.staticAnalysisRun_button.clicked.connect(statrunbutton(self))
+        self.window.POIContentArea_text.setText(statrunbutton(self))
 
+def statrunbutton(self):
+    analyedFile = r2pipe.open("C:\Windows\System32\ping.exe")
+    imports = analyedFile.cmd("fj")
+    return imports
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
