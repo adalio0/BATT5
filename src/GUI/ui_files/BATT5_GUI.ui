@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BATT5</class>
+ <widget class="QMainWindow" name="BATT5">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1142</width>
+    <height>894</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="central_layout">
+   <layout class="QVBoxLayout" name="verticalLayout_13">
+    <item>
+     <widget class="QTabWidget" name="central_tabs">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="analysis_tab">
+       <attribute name="title">
+        <string>Analysis</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="project_layout">
+          <item>
+           <layout class="QVBoxLayout" name="project_sublayout">
+            <item>
+             <widget class="QGroupBox" name="project_box">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="acceptDrops">
+               <bool>false</bool>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="title">
+               <string>Projects</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QLineEdit" name="projectSearch_lineEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>275</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Search</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTreeWidget" name="projectNavigator_tree">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string>Projects</string>
+                  </property>
+                 </column>
+                 <item>
+                  <property name="text">
+                   <string>project 1</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:users/custom_path/executable.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>project 2</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:path/some/random/path/ping.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>project 3</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>C:Documents/docs/idk/executable.exe</string>
+                   </property>
+                  </item>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextBrowser" name="projectProperties_text">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt; font-weight:600;&quot;&gt;Project Description: &lt;/span&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;This is a description of the project that is currently selected.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt; font-weight:600;&quot;&gt;Project Properties:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;OS: &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Binary Type:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Machine:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Class:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Bits:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Language:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Canery:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Crypto:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Nx:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Relocs:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Relro:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;Stripped:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="pluginSelection_box">
+              <property name="minimumSize">
+               <size>
+                <width>250</width>
+                <height>65</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Plugin Selection</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <widget class="QComboBox" name="pluginSelection_dropdown">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>245</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Network Plugin</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Encryption Plugin</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Graph Plugin</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignLeft">
+             <widget class="QGroupBox" name="analyisisControls_box">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>85</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Analysis Controls</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <widget class="QPushButton" name="runStaticAnalysis_button">
+                 <property name="text">
+                  <string>Run Static Analysis</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="runDynamicAnalysis_button">
+                 <property name="text">
+                  <string>Run Dynamic Analysis</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="pluginControls_box">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>250</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Plugin Controls</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <widget class="QPushButton" name="generateScript_button">
+                 <property name="text">
+                  <string>Generate Script</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="detailedAnalysis_layout">
+          <item>
+           <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
+            <item>
+             <widget class="QGroupBox" name="analysis_box">
+              <property name="title">
+               <string>Analysis</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <item>
+                <widget class="QTextEdit" name="analysis_text">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="radareConsole_box">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>218</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Radare2 Commane Console</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_17">
+               <item>
+                <widget class="QTextEdit" name="radareConsole_text">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>200</height>
+                  </size>
+                 </property>
+                 <property name="html">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7.8pt;&quot;&gt;&amp;gt;&amp;gt; cmd&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="commentAndPoi_layout">
+          <item>
+           <layout class="QVBoxLayout" name="commentAndPoi_sublayout">
+            <item>
+             <widget class="QGroupBox" name="comment_box">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Comment View</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QTextEdit" name="comment_text">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="commentButton_layout">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="commentSave_button">
+                   <property name="text">
+                    <string>Save</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <spacer name="commentButton_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="commentClear_button">
+                   <property name="text">
+                    <string>Clear</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="poi_box">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Points of Interest</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_11">
+               <item>
+                <layout class="QGridLayout" name="poi_layout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="poiType_label">
+                   <property name="text">
+                    <string>Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="poiType_dropdown"/>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="poiSearch_lineEdit">
+                 <property name="text">
+                  <string>Search</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListWidget" name="poi_list">
+                 <property name="minimumSize">
+                  <size>
+                   <width>275</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>POI A</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI B</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI C</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI D</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI E</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI F</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI G</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI H</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI I</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI J</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI K</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI L</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI M</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI N</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI O</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI P</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Q</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI R</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI S</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI T</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI U</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI V</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI W</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI X</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Y</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>POI Z</string>
+                  </property>
+                  <property name="checkState">
+                   <enum>Checked</enum>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="management_tab">
+       <attribute name="title">
+        <string>Management</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="management_layout">
+          <item alignment="Qt::AlignLeft">
+           <widget class="QGroupBox" name="pluginManagement_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="title">
+             <string>Plugin Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <widget class="QLineEdit" name="pluginManagementSearch_lineEdit">
+               <property name="text">
+                <string>Search</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="pluginManagement_list">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pluginManagementNew_button">
+               <property name="text">
+                <string>New</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QGroupBox" name="poiManagement_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Points of Interest Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <widget class="QLineEdit" name="poiManagementSeach_lineEdit">
+               <property name="text">
+                <string>Search</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="poiManagement_list">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="poiManagementNew_button">
+               <property name="text">
+                <string>New</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="detailed_layout">
+          <item>
+           <widget class="QGroupBox" name="dpm_box">
+            <property name="title">
+             <string>Detailed Plugin Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <item>
+              <layout class="QGridLayout" name="dpm_layout">
+               <item row="5" column="1">
+                <widget class="QComboBox" name="dpm_comboBox">
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>200</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="dpmPluginPredefined_lineEdit"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="dpmPluginStructure_lineEdit"/>
+               </item>
+               <item row="8" column="0">
+                <widget class="QPushButton" name="dpmDelete_button">
+                 <property name="text">
+                  <string>Delete</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="dpmPluginDescription_label">
+                 <property name="text">
+                  <string>Plugin Description</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="dpmDefaultOutputField_label">
+                 <property name="text">
+                  <string>Default Output Field</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="dpmPluginPredefined_label">
+                 <property name="text">
+                  <string>Plugin Predefined Data Set</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="dpmPluginName_label">
+                 <property name="text">
+                  <string>Plugin Name</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QTextEdit" name="dpmPoi_textEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>75</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QTextEdit" name="dpmPluginDescription_textEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>75</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="2">
+                <widget class="QPushButton" name="dpmSave_button">
+                 <property name="text">
+                  <string>Save</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="dpmPluginStructure_label">
+                 <property name="text">
+                  <string>Plugin Structure</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="dpmPoi_label">
+                 <property name="text">
+                  <string>Points of Interest</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QPushButton" name="dpmPluginStructure_button">
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QPushButton" name="dpmPluginPredefined_button">
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <spacer name="dpm_verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="dpoim_box">
+            <property name="title">
+             <string>Detailed Points of Interest Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_18">
+             <item>
+              <layout class="QGridLayout" name="dpoim_topGrid">
+               <item row="1" column="1">
+                <widget class="QComboBox" name="dpoimPoiType_dropdown"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="dpoimPlugin_dropdown"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="dpoimPoiType_label">
+                 <property name="text">
+                  <string>Point of Interest Type</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="dpoimPlugin_label">
+                 <property name="text">
+                  <string>Plugin</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="dpoim_text"/>
+             </item>
+             <item>
+              <layout class="QGridLayout" name="dpoim_lowGrid">
+               <item row="0" column="1">
+                <spacer name="dpoim_horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="dpoimDelete_button">
+                 <property name="text">
+                  <string>Delete</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="dpoimSave_button">
+                 <property name="text">
+                  <string>Save</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1142</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="file_menu">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_Project"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="actionSave_Analysis"/>
+   </widget>
+   <widget class="QMenu" name="windows_menu">
+    <property name="title">
+     <string>Windows</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <addaction name="file_menu"/>
+   <addaction name="windows_menu"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_Project">
+   <property name="text">
+    <string>New...</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open...</string>
+   </property>
+  </action>
+  <action name="actionSave_Analysis">
+   <property name="text">
+    <string>Save Analysis</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
