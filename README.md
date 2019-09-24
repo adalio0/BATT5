@@ -1,17 +1,5 @@
 # BATT5
 <b>Software II Team 5 project.<br><br></b>
-
-Language: Python<br>
-GUI Library: pyqt<br><br>
-
-(See srs for reference)<br>
-Outside and windows: Alain<br>
-Project tab: Juan<br>
-Analysis tab: Adal<br>
-Plugins tab: Mark<br>
-POI's tab: Andrea<br>
-Documentation tab: Ana<br>
-
 # Everything you need to know about branches (hopefully)
 
 To create a new branch from the command line:
