@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
@@ -105,10 +107,9 @@ class Ui_BATT5(object):
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.analysis_text = QtWidgets.QTextEdit(self.analysis_box)
-        self.analysis_text.setMinimumSize(QtCore.QSize(0, 0))
-        self.analysis_text.setObjectName("analysis_text")
-        self.verticalLayout_16.addWidget(self.analysis_text)
+        self.analysis_list = QtWidgets.QListWidget(self.analysis_box)
+        self.analysis_list.setObjectName("analysis_list")
+        self.verticalLayout_16.addWidget(self.analysis_list)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.analysis_tab)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 0))
@@ -430,7 +431,7 @@ class Ui_BATT5(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(BATT5)
-        self.central_tabs.setCurrentIndex(1)
+        self.central_tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(BATT5)
 
     def retranslateUi(self, BATT5):
@@ -609,4 +610,3 @@ class Ui_BATT5(object):
         self.actionOpen.setText(_translate("BATT5", "Open..."))
         self.actionSave_Analysis.setText(_translate("BATT5", "Save Analysis"))
         self.actionSave_as.setText(_translate("BATT5", "Save as..."))
-

@@ -2,6 +2,7 @@
 
 import sys
 import subprocess
+from src.Functionality.staticAnalysis import *
 from PyQt5 import QtWidgets
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrBFile
@@ -22,6 +23,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on New.. menu bar calls showFileExplorer method
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
+
+        # HArd code static analysis box with a path and poi...will grab this later from GUI
+        results = staticAnalysis("C:\Windows\System32\smss.exe","fj") # passes path, fj for functions for now
+        for i in range(len(results)):
+            self.window.analysis_list.addItem(json.dumps(results[i])) # puts each dictonary into a string then into the list widget
+
 
     # Shows NewProject window TODO: There's a bug here can't figure it out.
     def showNewProject(self):
