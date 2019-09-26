@@ -10,7 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class NewProject(object):
-    def setupUi(self, Form):
+    def __init__(self, Form):
+        super(NewProject, self).__init__()
         Form.setObjectName("Form")
         Form.resize(785, 443)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
@@ -79,7 +80,7 @@ class NewProject(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label_2.setText(_translate("Form", "Project Name"))
         self.saveNewProject.setText(_translate("Form", "Create"))
-        self.label.setText(_translate("Form", "                                                                                                    Create A New Project"))
+        self.label.setText(_translate("Form", " Create A New Project"))
         self.label_5.setText(_translate("Form", "Binary File Properties"))
         self.cancelNewProject.setText(_translate("Form", "Cancel"))
         self.label_4.setText(_translate("Form", "Binary File Path"))
@@ -104,4 +105,3 @@ class NewProject(object):
         self.treeWidget.topLevelItem(12).setText(0, _translate("Form", "Relro"))
         self.treeWidget.topLevelItem(13).setText(0, _translate("Form", "Stripped"))
         self.treeWidget.setSortingEnabled(__sortingEnabled)
-
