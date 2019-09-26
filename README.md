@@ -60,4 +60,7 @@ git push origin<br>
  9.In the project windown,right click on the .ui file you want to convert.<br>
 10.Select external tools and then select the tool you created.<br>
 11.A converted .py file should populate.<br>
+
+# Converting QtDesigner .ui to .py using Linux <br>
+python -m PyQt5.uic.pyuic -x [FILENAME].ui -o [FILENAME].py<br>
  
