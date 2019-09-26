@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -64,8 +64,11 @@
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(136, 138, 133);</string>
+                 </property>
                  <property name="text">
-                  <string>Search</string>
+                  <string>Search..</string>
                  </property>
                 </widget>
                </item>
@@ -239,6 +242,10 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QPushButton" name="runDynamicAnalysis_button">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(136, 138, 133);
+background-color: rgb(186, 189, 182);</string>
+                 </property>
                  <property name="text">
                   <string>Run Dynamic Analysis</string>
                  </property>
@@ -483,8 +490,11 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QLineEdit" name="poiSearch_lineEdit">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(136, 138, 133);</string>
+                 </property>
                  <property name="text">
-                  <string>Search</string>
+                  <string>Search..</string>
                  </property>
                 </widget>
                </item>
@@ -745,8 +755,11 @@ p, li { white-space: pre-wrap; }
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
               <widget class="QLineEdit" name="pluginManagementSearch_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(136, 138, 133);</string>
+               </property>
                <property name="text">
-                <string>Search</string>
+                <string>Search..</string>
                </property>
               </widget>
              </item>
@@ -790,8 +803,11 @@ p, li { white-space: pre-wrap; }
             <layout class="QVBoxLayout" name="verticalLayout_14">
              <item>
               <widget class="QLineEdit" name="poiManagementSeach_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(136, 138, 133);</string>
+               </property>
                <property name="text">
-                <string>Search</string>
+                <string>Search..</string>
                </property>
               </widget>
              </item>
