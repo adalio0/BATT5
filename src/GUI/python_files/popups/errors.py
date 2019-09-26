@@ -64,9 +64,9 @@ class Errx86(QWidget):
         self.close()
 
 
-class ErrBFile(QWidget):
+class ErrRadare(QWidget):
     def __init__(self):
-        super(ErrBFile, self).__init__()
+        super(ErrRadare, self).__init__()
         self.left = 450
         self.top = 250
         self.width = 420
