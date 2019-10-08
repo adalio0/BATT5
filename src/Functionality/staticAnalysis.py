@@ -6,3 +6,4 @@ def staticAnalysis(filePath,poi):
     imports = infile.cmd(poi)
     formatted = json.loads(imports) # formats json output into a python dictionary
     return formatted
+#jhgkjhgjm
