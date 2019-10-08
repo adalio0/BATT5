@@ -10,8 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class NewProject(object):
-    def __init__(self, Form):
-        super(NewProject, self).__init__()
+    def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(785, 443)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
@@ -105,3 +104,12 @@ class NewProject(object):
         self.treeWidget.topLevelItem(12).setText(0, _translate("Form", "Relro"))
         self.treeWidget.topLevelItem(13).setText(0, _translate("Form", "Stripped"))
         self.treeWidget.setSortingEnabled(__sortingEnabled)
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = NewProject()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
