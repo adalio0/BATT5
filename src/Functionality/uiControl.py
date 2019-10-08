@@ -28,42 +28,50 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window = Ui_BATT5()
         self.window.setupUi(self)
 
+		# ---- Menu Bar ------------------------------------
 
-# Menu Bar
-        # Clicking on New.. menu bar calls showNewProject method
-        self.window.actionNew_Project.triggered.connect(self.showNewProject)
+	    # Clicking on New.. menu bar calls showNewProject method
+	    self.window.actionNew_Project.triggered.connect(self.showNewProject)
 
-        # Clicking on Open menu bar calls showFileExplorer method
-        self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
+	    # Clicking on Open menu bar calls showFileExplorer method
+	    self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
 
-        # Clicking on Save as menu bar calls..
-        self.window.actionSave_as.triggered.connect(self.showFileExplorerSimple)
+	    # Clicking on Save as menu bar calls..
+	    self.window.actionSave_as.triggered.connect(self.showFileExplorerSimple)
 
-        # Clicking on Save Analysis menu bar calls showAnalysisWindow method
-        self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
+	    # Clicking on Save Analysis menu bar calls showAnalysisWindow method
+	    self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
 
-        # Clicking on Windows menu bar calls..
+	    # Clicking on Windows menu bar calls..
 
-        # Clicking on Help menu bar calls showDocumentWindow method
-        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
+	    # Clicking on Help menu bar calls showDocumentWindow method
+	    self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
 
-# Plugin Controls
+	    # ---- Analysis Tab ---------------------------------
+
+        # Clicking will clear the comment box text
+        self.window.commentClear_button.clicked.connect(self.Clear)
+
+		# ---- Plugin Controls -----------------------------
+
         # Clicking on Generate Script button calls showOutputWindow method
         self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
-# Plugin Controls
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
         # Clicking on Run Static Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
-# Detailed Plugin Management
+        # ---- Management Tab -------------------------------
+
         # Clicking on Plugin Structure browse button calls showFileExplorer method
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        self.window.dpmPluginPredefined_button.clicked.connect(self.xmlEditor)
+        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer2)
+
+        # ---- Select listener ------------------------------
 
         self.window.projectProperties_text.installEventFilter(self)
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -73,6 +81,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.installEventFilter(self)
         self.window.comment_text.installEventFilter(self)
 
+    # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus
         if event.type() == QEvent.FocusIn:
@@ -85,18 +94,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
-    # Opens up an xml (file) editor TODO: If we open this window it creates a bug where we can't select a file in the
-    # TODO:                                 main window need to figure out a fix.
+    # Opens up an xml (file) editor
     def xmlEditor(self):
         self.window = XMLEditor()
         self.window.show()
 
-        # cur_path = os.getcwd()
-        # file = os.path.join(cur_path, '..', 'Configurations', 'country_data.xml')
-        # tree = ET.parse(file)
-        # root = tree.getroot()
-
         # print(root.tag)
+
    # runs Static Analysis
     def runStatic(self):
         global static
@@ -119,60 +123,65 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows NewProject window
     def showNewProject(self):
-        self.window =QtWidgets.QWidget()
+        self.windowNP = QtWidgets.QWidget()
         self.ui = NewProject()
-        self.ui.setupUi(self.window)
-        self.window.show()
+        self.ui.setupUi(self.windowNP)
+        self.windowNP.show()
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
-        self.window = QtWidgets.QWidget()
+        self.windowAR = QtWidgets.QWidget()
         self.ui = Analysis_Window()
-        self.ui.setupUi(self.window)
-        self.window.show()
+        self.ui.setupUi(self.windowAR)
+        self.windowAR.show()
 
 
     # Shows Documentation window
     def showDocumentationWindow(self):
-        self.window = QtWidgets.QDialog()
+        self.windowDC = QtWidgets.QDialog()
         self.ui = Documentation_Window()
-        self.ui.setupUi(self.window)
-        self.window.show()
+        self.ui.setupUi(self.windowDC)
+        self.windowDC.show()
 
-    # Shows Documentation window
+    # Shows Output window
     def showOutputWindow(self):
-        self.window = QtWidgets.QWidget()
+        self.windowOUT = QtWidgets.QWidget()
         self.ui = OutputWindow()
-        self.ui.setupUi(self.window)
-        self.window.show()
+        self.ui.setupUi(self.windowOUT)
+        self.windowOUT.show()
 
+    # Shows ErrFile window
+    def showErrFile(self):
+        self.windowEF = ErrFile()
+        self.windowEF.show()
+
+    # Shows Errx86 window
+    def showErrx86(self):
+        self.windowE86 = Errx86()
+        self.windowE86.show()
+
+    # Shows ErrRadare window
+    def showErrRadare(self):
+        self.windowER = ErrRadare()
+        self.windowER.show()
 
     # Open up file explorer to select a file
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
+    # Open up file explorer to select a file for Project Predefined line edit
+    def showFileExplorer2(self):
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        self.window.dpmPluginPredefined_lineEdit.setText(name)
+
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
         _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
 
-    # Shows ErrFile window
-    def showErrFile(self):
-        self.window = ErrFile()
-        self.window.show()
-
-    # Shows Errx86 window
-    def showErrx86(self):
-        self.window = Errx86()
-        self.window.show()
-
-    # Shows ErrBFile window
-    def showErrBFile(self):
-        self.window = ErrRadare()
-        self.window.show()
-
-
-
+    # Clear comment text
+    def Clear(self):
+        self.window.comment_text.clear()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
