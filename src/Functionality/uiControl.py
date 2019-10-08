@@ -25,7 +25,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
 
         # HArd code static analysis box with a path and poi...will grab this later from GUI
-        results = staticAnalysis("C:\Windows\System32\smss.exe","fj") # passes path, fj for functions for now
+        results = staticAnalysis("C:\Windows\System32\smss.exe","aflj") # passes path, fj for functions for now
         for i in range(len(results)):
             self.window.analysis_list.addItem(json.dumps(results[i])) # puts each dictonary into a string then into the list widget
 
