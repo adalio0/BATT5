@@ -81,6 +81,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.installEventFilter(self)
         self.window.comment_text.installEventFilter(self)
 
+        # ----- Radare Integration --------------------------
+
+
+        # HArd code static analysis box with a path and poi...will grab this later from GUI
+        results = staticAnalysis("C:\Windows\System32\smss.exe", "fj")  # passes path, fj for functions for now
+        for i in range(len(results)):
+            self.window.analysis_list.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
+
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus

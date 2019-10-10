@@ -297,14 +297,7 @@ background-color: rgb(186, 189, 182);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QTextEdit" name="analysis_text">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
+                <widget class="QListWidget" name="analysis_list"/>
                </item>
               </layout>
              </widget>
