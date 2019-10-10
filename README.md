@@ -1,17 +1,5 @@
 # BATT5
 <b>Software II Team 5 project.<br><br></b>
-
-Language: Python<br>
-GUI Library: pyqt<br><br>
-
-(See srs for reference)<br>
-Outside and windows: Alain<br>
-Project tab: Juan<br>
-Analysis tab: Adal<br>
-Plugins tab: Mark<br>
-POI's tab: Andrea<br>
-Documentation tab: Ana<br>
-
 # Everything you need to know about branches (hopefully)
 
 To create a new branch from the command line:
@@ -72,4 +60,7 @@ git push origin<br>
  9.In the project windown,right click on the .ui file you want to convert.<br>
 10.Select external tools and then select the tool you created.<br>
 11.A converted .py file should populate.<br>
+
+# Converting QtDesigner .ui to .py using Linux <br>
+python -m PyQt5.uic.pyuic -x [FILENAME].ui -o [FILENAME].py<br>
  

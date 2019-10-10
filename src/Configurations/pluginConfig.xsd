@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="plugin">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" 		type="xs:string" use="required" maxOccurs="1"/>
+				<xs:element name="description" 	type="xs:string" default="" maxOccurs="1"/>
+				<xs:element name="pointOfInterest" maxOccurs="unbounded" use="required">
+					<xs:complexType>
+						<xs:element name="name" 	type="xs:string" maxOccurs="1" use="required"/>
+						<xs:element name="value" 	use="required"/>
+						<xs:element name="valueType"maxOccurs="1" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="output" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:element name="name" 			maxOccurs="1"/>
+						<xs:element name="functionName" 	maxOccurs="1"/>
+						<xs:element name="functionSource" 	maxOccurs="1" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

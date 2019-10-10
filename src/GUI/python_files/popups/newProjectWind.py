@@ -79,7 +79,7 @@ class NewProject(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label_2.setText(_translate("Form", "Project Name"))
         self.saveNewProject.setText(_translate("Form", "Create"))
-        self.label.setText(_translate("Form", "                                                                                                    Create A New Project"))
+        self.label.setText(_translate("Form", " Create A New Project"))
         self.label_5.setText(_translate("Form", "Binary File Properties"))
         self.cancelNewProject.setText(_translate("Form", "Cancel"))
         self.label_4.setText(_translate("Form", "Binary File Path"))
@@ -105,3 +105,11 @@ class NewProject(object):
         self.treeWidget.topLevelItem(13).setText(0, _translate("Form", "Stripped"))
         self.treeWidget.setSortingEnabled(__sortingEnabled)
 
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = NewProject()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())

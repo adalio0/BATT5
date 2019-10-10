@@ -1,2 +1,23 @@
-<?xml version="1.0"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="project">
+		<xs:sequence>
+			<xs:element name="name" 		type="xs:string" use="required" maxOccurs="1"/>
+			<xs:element name="description" 	type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="machine" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="class" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="bits" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="bits" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="language" 	type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="canary" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="crypto" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="nx" 			type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="pic" 			type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="relocs" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="relro" 		type="xs:string" default=""  maxOccurs="1"/>
+			<xs:element name="stripped"		type="xs:string" default=""  maxOccurs="1"/>
+		</xs:sequence>
+	</xs:element>
+
+</xs:schema>
