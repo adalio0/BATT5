@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import xml.etree.ElementTree as ET
+import json
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -17,6 +18,7 @@ from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
+from src.Functionality.staticAnalysis import staticAnalysis
 
 
 static = False
@@ -30,8 +32,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.setupUi(self)
 
         # ---- Main Window ---------------------------------
+
+        # Initalize the project properties
         self.setProject()
-        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
         # ---- Menu Bar ------------------------------------
 
@@ -52,7 +55,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.actionSave_as.triggered.connect(self.SaveAs)
 
         # Clicking on Save Analysis.. menu bar calls showAnalysisWindow method
-        self.window.actionSave_Analysis.setShortcut("Ctrl+S+A")
+        self.window.actionSave_Analysis.setShortcut("Ctrl+alt+S")
         self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
 
         # Clicking on Windows menu bar calls..
@@ -64,6 +67,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.Clear)
+
+        # When clicking a Project in the project box, the project properties will update to the selected project
+        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
         # ---- Plugin Controls -----------------------------
 
@@ -99,7 +105,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # HArd code static analysis box with a path and poi...will grab this later from GUI
         # results = staticAnalysis("C:\Windows\System32\smss.exe", "fj")  # passes path, fj for functions for now
         # for i in range(len(results)):
-        #     self.window.analysis_list.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
+        #    self.window.analysis_text.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
@@ -129,7 +135,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             except IndexError or FileNotFoundError:
                 pass
         else:
-            file = os.path.join(cur_path, '..', 'Configurations', 'project1.xml')
+            file = os.path.join(cur_path, '..', 'Configurations', 'newProject.xml')
 
         if file:
             tree = ET.parse(file)
