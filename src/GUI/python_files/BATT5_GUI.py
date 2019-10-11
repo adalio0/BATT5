@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -110,8 +110,7 @@ class Ui_BATT5(object):
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.analysis_text = QtWidgets.QTextEdit(self.analysis_box)
-        self.analysis_text.setMinimumSize(QtCore.QSize(0, 0))
+        self.analysis_text = QtWidgets.QListWidget(self.analysis_box)
         self.analysis_text.setObjectName("analysis_text")
         self.verticalLayout_16.addWidget(self.analysis_text)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
@@ -168,6 +167,12 @@ class Ui_BATT5(object):
         self.poi_layout.addWidget(self.poiType_label, 0, 0, 1, 1)
         self.poiType_dropdown = QtWidgets.QComboBox(self.poi_box)
         self.poiType_dropdown.setObjectName("poiType_dropdown")
+        self.poiType_dropdown.addItem("")
+        self.poiType_dropdown.addItem("")
+        self.poiType_dropdown.addItem("")
+        self.poiType_dropdown.addItem("")
+        self.poiType_dropdown.addItem("")
+        self.poiType_dropdown.addItem("")
         self.poi_layout.addWidget(self.poiType_dropdown, 0, 1, 1, 1)
         self.verticalLayout_11.addLayout(self.poi_layout)
         self.poiSearch_lineEdit = QtWidgets.QLineEdit(self.poi_box)
@@ -177,84 +182,6 @@ class Ui_BATT5(object):
         self.poi_list = QtWidgets.QListWidget(self.poi_box)
         self.poi_list.setMinimumSize(QtCore.QSize(275, 0))
         self.poi_list.setObjectName("poi_list")
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setCheckState(QtCore.Qt.Checked)
-        self.poi_list.addItem(item)
         self.verticalLayout_11.addWidget(self.poi_list)
         self.commentAndPoi_sublayout.addWidget(self.poi_box)
         self.commentAndPoi_layout.addLayout(self.commentAndPoi_sublayout)
@@ -406,7 +333,7 @@ class Ui_BATT5(object):
         self.verticalLayout_13.addWidget(self.central_tabs)
         BATT5.setCentralWidget(self.central_layout)
         self.menubar = QtWidgets.QMenuBar(BATT5)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1142, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1142, 21))
         self.menubar.setObjectName("menubar")
         self.file_menu = QtWidgets.QMenu(self.menubar)
         self.file_menu.setObjectName("file_menu")
@@ -462,22 +389,22 @@ class Ui_BATT5(object):
         self.projectProperties_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:600;\">Project Description: </span><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">This is a description of the project that is currently selected.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:600;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:600;\">Project Properties:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">OS: </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Binary Type:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Machine:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Class:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Bits:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Language:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Canery:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Crypto:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Nx:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Relocs:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Relro:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">Stripped:</span></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt; font-weight:600;\">Project Description: </span><span style=\" font-size:7.8pt;\">This is a description of the project that is currently selected.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt; font-weight:600;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt; font-weight:600;\">Project Properties:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">OS: </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Binary Type:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Machine:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Class:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Bits:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Language:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Canery:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Crypto:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Nx:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Relocs:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Relro:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Stripped:</span></p></body></html>"))
         self.pluginSelection_box.setTitle(_translate("BATT5", "Plugin Selection"))
         self.pluginSelection_dropdown.setItemText(0, _translate("BATT5", "Network Plugin"))
         self.pluginSelection_dropdown.setItemText(1, _translate("BATT5", "Encryption Plugin"))
@@ -492,102 +419,53 @@ class Ui_BATT5(object):
         self.radareConsole_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">&gt;&gt; cmd</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.comment_box.setTitle(_translate("BATT5", "Comment View"))
         self.commentSave_button.setText(_translate("BATT5", "Save"))
         self.commentClear_button.setText(_translate("BATT5", "Clear"))
         self.poi_box.setTitle(_translate("BATT5", "Points of Interest"))
         self.poiType_label.setText(_translate("BATT5", "Type"))
+        self.poiType_dropdown.setItemText(0, _translate("BATT5", "String"))
+        self.poiType_dropdown.setItemText(1, _translate("BATT5", "Variable"))
+        self.poiType_dropdown.setItemText(2, _translate("BATT5", "DLL"))
+        self.poiType_dropdown.setItemText(3, _translate("BATT5", "Function"))
+        self.poiType_dropdown.setItemText(4, _translate("BATT5", "Packet Protocol"))
+        self.poiType_dropdown.setItemText(5, _translate("BATT5", "Struct"))
         self.poiSearch_lineEdit.setText(_translate("BATT5", "Search.."))
-        __sortingEnabled = self.poi_list.isSortingEnabled()
-        self.poi_list.setSortingEnabled(False)
-        item = self.poi_list.item(0)
-        item.setText(_translate("BATT5", "POI A"))
-        item = self.poi_list.item(1)
-        item.setText(_translate("BATT5", "POI B"))
-        item = self.poi_list.item(2)
-        item.setText(_translate("BATT5", "POI C"))
-        item = self.poi_list.item(3)
-        item.setText(_translate("BATT5", "POI D"))
-        item = self.poi_list.item(4)
-        item.setText(_translate("BATT5", "POI E"))
-        item = self.poi_list.item(5)
-        item.setText(_translate("BATT5", "POI F"))
-        item = self.poi_list.item(6)
-        item.setText(_translate("BATT5", "POI G"))
-        item = self.poi_list.item(7)
-        item.setText(_translate("BATT5", "POI H"))
-        item = self.poi_list.item(8)
-        item.setText(_translate("BATT5", "POI I"))
-        item = self.poi_list.item(9)
-        item.setText(_translate("BATT5", "POI J"))
-        item = self.poi_list.item(10)
-        item.setText(_translate("BATT5", "POI K"))
-        item = self.poi_list.item(11)
-        item.setText(_translate("BATT5", "POI L"))
-        item = self.poi_list.item(12)
-        item.setText(_translate("BATT5", "POI M"))
-        item = self.poi_list.item(13)
-        item.setText(_translate("BATT5", "POI N"))
-        item = self.poi_list.item(14)
-        item.setText(_translate("BATT5", "POI O"))
-        item = self.poi_list.item(15)
-        item.setText(_translate("BATT5", "POI P"))
-        item = self.poi_list.item(16)
-        item.setText(_translate("BATT5", "POI Q"))
-        item = self.poi_list.item(17)
-        item.setText(_translate("BATT5", "POI R"))
-        item = self.poi_list.item(18)
-        item.setText(_translate("BATT5", "POI S"))
-        item = self.poi_list.item(19)
-        item.setText(_translate("BATT5", "POI T"))
-        item = self.poi_list.item(20)
-        item.setText(_translate("BATT5", "POI U"))
-        item = self.poi_list.item(21)
-        item.setText(_translate("BATT5", "POI V"))
-        item = self.poi_list.item(22)
-        item.setText(_translate("BATT5", "POI W"))
-        item = self.poi_list.item(23)
-        item.setText(_translate("BATT5", "POI X"))
-        item = self.poi_list.item(24)
-        item.setText(_translate("BATT5", "POI Y"))
-        item = self.poi_list.item(25)
-        item.setText(_translate("BATT5", "POI Z"))
-        self.poi_list.setSortingEnabled(__sortingEnabled)
         self.central_tabs.setTabText(self.central_tabs.indexOf(self.analysis_tab), _translate("BATT5", "Analysis"))
         self.pluginManagement_box.setTitle(_translate("BATT5", "Plugin Management"))
         self.pluginManagementSearch_lineEdit.setText(_translate("BATT5", "Search.."))
