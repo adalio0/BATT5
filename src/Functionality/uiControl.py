@@ -232,6 +232,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def Clear(self):
         self.window.comment_text.clear()
 
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
