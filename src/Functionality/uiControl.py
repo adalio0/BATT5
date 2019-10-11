@@ -30,6 +30,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.setupUi(self)
 
         # ---- Main Window ---------------------------------
+        self.setProject()
+        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
         # ---- Menu Bar ------------------------------------
 
@@ -112,14 +114,35 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
-    # Changes the project description according to the current project TODO
+    # Changes the project description according to the current project
     def setProject(self):
+        selected = self.window.projectNavigator_tree.selectedItems()
         cur_path = os.getcwd()
-        file = os.path.join(cur_path, '..', 'Configurations', 'project.xml')
-        tree = ET.parse(file)
-        root = tree.getroot()
 
-        self.window.projectProperties_text.setText()
+        file = ''
+        if selected:
+            item = selected[0].text(0)
+            item = item.split(" ")
+            try:
+                item = item[0] + item[1]
+                file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
+            except IndexError or FileNotFoundError:
+                pass
+        else:
+            file = os.path.join(cur_path, '..', 'Configurations', 'project1.xml')
+
+        if file:
+            tree = ET.parse(file)
+            root = tree.getroot()
+
+            text = "<font size=2> <b>Project Description</b>: " \
+                   "This is a description of the project that is currently selected. <br><br>"
+            text += "<b>Project Properties</b>: <br> </font> "
+
+            for child in root.iter():
+                if child.tag != "Project" and child.get('name') is not None:
+                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+            self.window.projectProperties_text.setHtml(text)
 
     # Opens up an xml (file) editor
     def xmlEditor(self):
