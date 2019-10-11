@@ -28,31 +28,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window = Ui_BATT5()
         self.window.setupUi(self)
 
-		# ---- Menu Bar ------------------------------------
+        # ---- Menu Bar ------------------------------------
 
-	    # Clicking on New.. menu bar calls showNewProject method
-	    self.window.actionNew_Project.triggered.connect(self.showNewProject)
+        # Clicking on New.. menu bar calls showNewProject method
+        self.window.actionNew_Project.triggered.connect(self.showNewProject)
 
-	    # Clicking on Open menu bar calls showFileExplorer method
-	    self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
+        # Clicking on Open menu bar calls showFileExplorer method
+        self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
 
-	    # Clicking on Save as menu bar calls..
-	    self.window.actionSave_as.triggered.connect(self.showFileExplorerSimple)
+        # Clicking on Save as menu bar calls..
+        self.window.actionSave_as.triggered.connect(self.showFileExplorerSimple)
 
-	    # Clicking on Save Analysis menu bar calls showAnalysisWindow method
-	    self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
+        # Clicking on Save Analysis menu bar calls showAnalysisWindow method
+        self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
 
-	    # Clicking on Windows menu bar calls..
+        # Clicking on Windows menu bar calls..
 
-	    # Clicking on Help menu bar calls showDocumentWindow method
-	    self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
+        # Clicking on Help menu bar calls showDocumentWindow method
+        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
 
-	    # ---- Analysis Tab ---------------------------------
+        # ---- Analysis Tab ---------------------------------
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.Clear)
 
-		# ---- Plugin Controls -----------------------------
+        # ---- Plugin Controls -----------------------------
 
         # Clicking on Generate Script button calls showOutputWindow method
         self.window.generateScript_button.clicked.connect(self.showOutputWindow)
