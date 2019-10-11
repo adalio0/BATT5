@@ -2,10 +2,10 @@ import r2pipe
 import json
 import re
 
-global infile
 
 
 def staticAnalysis(filePath, poi):
+    global infile
     infile = r2pipe.open(filePath)
     infile.cmd('aaa')
     # print(infile.cmd('afll'))
