@@ -96,13 +96,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.comment_text.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
-        poi = str(self.window.poiType_dropdown.currentText())
-        self.window.runStaticAnalysis_button.clicked.connect(lambda : self.runStatic(poi))
-
-        # HArd code static analysis box with a path and poi...will grab this later from GUI
-        #results = staticAnalysis("C:\Windows\System32\ping.exe", "fj")  # passes path, fj for functions for now
-        #for i in range(len(results)):
-            #self.window.analysis_text.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
+        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
@@ -132,11 +126,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.show()
 
    # runs Static Analysis
-    def runStatic(self,poi):
+    def runStatic(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        poi = str(self.window.poiType_dropdown.currentText())
         staticAnalysis("C:\Windows\System32\ping.exe",poi)
 
 
