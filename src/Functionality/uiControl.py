@@ -20,7 +20,6 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 
-
 static = False
 dynamic = False
 
@@ -101,13 +100,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.comment_text.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
-        poi = str(self.window.poiType_dropdown.currentText())
-        self.window.runStaticAnalysis_button.clicked.connect(lambda : self.runStatic(poi))
 
-        # HArd code static analysis box with a path and poi...will grab this later from GUI
-        # results = staticAnalysis("C:\Windows\System32\smss.exe", "fj")  # passes path, fj for functions for now
-        # for i in range(len(results)):
-        #    self.window.analysis_text.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
+        #
+        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
@@ -157,14 +152,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window = XMLEditor()
         self.window.show()
 
-   # runs Static Analysis
-    def runStatic(self,poi):
+    # runs Static Analysis
+    def runStatic(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
-        staticAnalysis("C:\Windows\System32\ping.exe",poi)
 
+        poi = str(self.window.poiType_dropdown.currentText())
+        staticAnalysis("C:\Windows\System32\ping.exe", poi)
 
     # runs Dynamic Analysis
     def runDynamic(self):
@@ -192,7 +188,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = Analysis_Window()
         self.ui.setupUi(self.windowAR)
         self.windowAR.show()
-
 
     # Shows Documentation window
     def showDocumentationWindow(self):
@@ -240,7 +235,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Will save the current modifications of the file
     def Save(self):
         cur_path = os.getcwd()
-        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')    # TODO: Get correct file to Save
+        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')  # TODO: Get correct file to Save
         try:
             file = open(name, 'w')
             text = self.window.projectProperties_text.toPlainText()
