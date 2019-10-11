@@ -297,7 +297,7 @@ background-color: rgb(186, 189, 182);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QListWidget" name="analysis_list"/>
+                <widget class="QListWidget" name="analysis_text"/>
                </item>
               </layout>
              </widget>

@@ -110,9 +110,9 @@ class Ui_BATT5(object):
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.analysis_list = QtWidgets.QListWidget(self.analysis_box)
-        self.analysis_list.setObjectName("analysis_list")
-        self.verticalLayout_16.addWidget(self.analysis_list)
+        self.analysis_edit = QtWidgets.QTextEdit(self.analysis_box)
+        self.analysis_edit.setObjectName("analysis_edit")
+        self.verticalLayout_16.addWidget(self.analysis_edit)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.analysis_tab)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 0))
@@ -499,3 +499,13 @@ class Ui_BATT5(object):
         self.actionSave_Analysis.setText(_translate("BATT5", "Save Analysis"))
         self.actionSave_as.setText(_translate("BATT5", "Save as..."))
         self.actionDocumentation.setText(_translate("BATT5", "Documentation"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    BATT5 = QtWidgets.QMainWindow()
+    ui = Ui_BATT5()
+    ui.setupUi(BATT5)
+    BATT5.show()
+    sys.exit(app.exec_())
