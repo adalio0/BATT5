@@ -8,10 +8,6 @@ def staticAnalysis(filePath, poi):
     global infile
     infile = r2pipe.open(filePath)
     infile.cmd('aaa')
-    # print(infile.cmd('afll'))
-    # imports = infile.cmd(poi)
-    # formatted = json.loads(imports) # formats json output into a python dictionary
-    # return formatted
     if poi == 'String':
         string_analysis()
     elif poi == 'Variable':
@@ -33,7 +29,7 @@ def dll_analysis():
 
 
 def functions_analysis():
-    infile.cmd('afll > functions.txt')
+    infile.cmd('afll > function.txt')
 
 
 def variables_analysis():
