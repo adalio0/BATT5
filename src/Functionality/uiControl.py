@@ -96,6 +96,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.comment_text.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
+        poi = str(self.window.poiType_dropdown.currentText())
+        self.window.runStaticAnalysis_button.clicked.connect(lambda : self.runStatic(poi))
 
         # HArd code static analysis box with a path and poi...will grab this later from GUI
         #results = staticAnalysis("C:\Windows\System32\ping.exe", "fj")  # passes path, fj for functions for now
@@ -130,11 +132,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.show()
 
    # runs Static Analysis
-    def runStatic(self):
+    def runStatic(self,poi):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        staticAnalysis("C:\Windows\System32\ping.exe",poi)
+
 
     # runs Dynamic Analysis
     def runDynamic(self):
