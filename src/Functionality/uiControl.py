@@ -22,24 +22,35 @@ from src.GUI.python_files.popups.outputFieldView import OutputWindow
 static = False
 dynamic = False
 
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
 
+        # ---- Main Window ---------------------------------
+
         # ---- Menu Bar ------------------------------------
 
         # Clicking on New.. menu bar calls showNewProject method
+        self.window.actionNew_Project.setShortcut("Ctrl+N")
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
 
-        # Clicking on Open menu bar calls showFileExplorer method
+        # Clicking on Open.. menu bar calls showFileExplorer method
+        self.window.actionOpen.setShortcut("Ctrl+O")
         self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
 
-        # Clicking on Save as menu bar calls..
-        self.window.actionSave_as.triggered.connect(self.showFileExplorerSimple)
+        # Clicking on Save.. menu bar call Save method
+        self.window.actionSave.setShortcut("Ctrl+S")
+        self.window.actionSave.triggered.connect(self.Save)
 
-        # Clicking on Save Analysis menu bar calls showAnalysisWindow method
+        # Clicking on Save As.. menu bar calls SaveAs method
+        self.window.actionSave_as.setShortcut("Ctrl+Shift+S")
+        self.window.actionSave_as.triggered.connect(self.SaveAs)
+
+        # Clicking on Save Analysis.. menu bar calls showAnalysisWindow method
+        self.window.actionSave_Analysis.setShortcut("Ctrl+S+A")
         self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
 
         # Clicking on Windows menu bar calls..
@@ -83,11 +94,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ----- Radare Integration --------------------------
 
-
         # HArd code static analysis box with a path and poi...will grab this later from GUI
-        results = staticAnalysis("C:\Windows\System32\smss.exe", "fj")  # passes path, fj for functions for now
-        for i in range(len(results)):
-            self.window.analysis_list.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
+        # results = staticAnalysis("C:\Windows\System32\smss.exe", "fj")  # passes path, fj for functions for now
+        # for i in range(len(results)):
+        #     self.window.analysis_list.addItem(json.dumps(results[i]))  # puts each dictonary into a string then into the list widget
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
@@ -102,12 +112,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
+    # Changes the project description according to the current project TODO
+    def setProject(self):
+        cur_path = os.getcwd()
+        file = os.path.join(cur_path, '..', 'Configurations', 'project.xml')
+        tree = ET.parse(file)
+        root = tree.getroot()
+
+        self.window.projectProperties_text.setText()
+
     # Opens up an xml (file) editor
     def xmlEditor(self):
         self.window = XMLEditor()
         self.window.show()
-
-        # print(root.tag)
 
    # runs Static Analysis
     def runStatic(self):
@@ -186,6 +203,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
         _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+
+    # Will save the current modifications of the file
+    def Save(self):
+        cur_path = os.getcwd()
+        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')    # TODO: Get correct file to Save
+        try:
+            file = open(name, 'w')
+            text = self.window.projectProperties_text.toPlainText()
+            file.write(text)
+            file.close()
+        except FileNotFoundError or AttributeError:
+            pass
+
+    # Will allow the user to change the name of the file and saves the current modifications of it
+    def SaveAs(self):
+        name, _ = QFileDialog.getSaveFileName(self, 'Save File', options=QFileDialog.DontUseNativeDialog)
+
+        try:
+            file = open(name, 'w')
+            text = self.window.projectProperties_text.toPlainText()
+            file.write(text)
+            file.close()
+        except FileNotFoundError:
+            pass
 
     # Clear comment text
     def Clear(self):
