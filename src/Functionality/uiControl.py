@@ -159,7 +159,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
         poi = str(self.window.poiType_dropdown.currentText())
-        # staticAnalysis("C:\Windows\System32\ping.exe", poi)
+        staticAnalysis("C:\Windows\System32\ping.exe", poi)
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
