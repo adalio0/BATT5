@@ -4,19 +4,18 @@ import xml.etree.ElementTree as ET
 
 def xmlParser():
     cur_path = os.getcwd()
-    file = os.path.join(cur_path, '..', 'Configurations', 'project.xml')
+    file = os.path.join(cur_path, '..', 'Configurations', 'project1.xml')
     tree = ET.parse(file)
     root = tree.getroot()
 
-    print(root.tag)
-    for child in root:
-        print(child.tag, child.attrib, child[0].text)
+    text = "<b>Project Description</b>: This is a description of the project that is currently selected. \n"
+    text += "<b>Project Properties:</b> \n"
 
-    for element in root.iter('os'):
-        element.set('content', 'Linux')
+    for child in root.iter():
+        if child.get('name') is not None:
+            text += "<b>" + child.tag + "</b>" + ": " + child.get('name') + "\n"
 
-    value = root.find('.//project/os[@name="{}"]'.format('Linux')).text
-    print(value)
+    print(text)
 
     tree.write(file)
 

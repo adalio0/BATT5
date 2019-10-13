@@ -29,7 +29,7 @@ def dll_analysis():
 
 
 def functions_analysis():
-    infile.cmd('afll > functions.txt')
+    infile.cmd('afll > function.txt')
 
 
 def variables_analysis():

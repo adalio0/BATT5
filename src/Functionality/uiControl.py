@@ -6,7 +6,7 @@ import subprocess
 import xml.etree.ElementTree as ET
 import json
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -18,9 +18,7 @@ from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
-
 from src.Functionality.staticAnalysis import staticAnalysis
-
 
 static = False
 dynamic = False
@@ -33,6 +31,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.setupUi(self)
 
         # ---- Main Window ---------------------------------
+
+        # Initalize the project properties
+        self.setProject()
 
         # ---- Menu Bar ------------------------------------
 
@@ -53,7 +54,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.actionSave_as.triggered.connect(self.SaveAs)
 
         # Clicking on Save Analysis.. menu bar calls showAnalysisWindow method
-        self.window.actionSave_Analysis.setShortcut("Ctrl+S+A")
+        self.window.actionSave_Analysis.setShortcut("Ctrl+alt+S")
         self.window.actionSave_Analysis.triggered.connect(self.showAnalysisWindow)
 
         # Clicking on Windows menu bar calls..
@@ -65,6 +66,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.Clear)
+
+        # When clicking a Project in the project box, the project properties will update to the selected project
+        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
+
+        # Highlights the searched elements in the poi list
+        self.window.poiSearch_lineEdit.returnPressed.connect(self.search_poi)
 
         # ---- Plugin Controls -----------------------------
 
@@ -83,7 +90,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer2)
+        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
         # ---- Select listener ------------------------------
 
@@ -93,47 +100,178 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.analysis_text.installEventFilter(self)
         self.window.radareConsole_text.installEventFilter(self)
         self.window.poi_list.installEventFilter(self)
+        self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.comment_text.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
+
+        # Perform static analysis on a binary file
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus
         if event.type() == QEvent.FocusIn:
-            if obj == self.window.projectSearch_lineEdit:
-                self.window.projectSearch_lineEdit.clear()
-                self.window.projectSearch_lineEdit.setStyleSheet("color: black;")
+            if obj == self.window.poiSearch_lineEdit:
+                self.window.poiSearch_lineEdit.clear()
+                self.window.poiSearch_lineEdit.setStyleSheet("color: black;")
             else:
-                self.window.projectSearch_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
-                self.window.projectSearch_lineEdit.setText("Search..")
+                self.window.poiSearch_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
+                self.window.poiSearch_lineEdit.setText("Search..")
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
-    # Changes the project description according to the current project TODO
+    # Changes the project description according to the current project
     def setProject(self):
+        selected = self.window.projectNavigator_tree.selectedItems()
         cur_path = os.getcwd()
-        file = os.path.join(cur_path, '..', 'Configurations', 'project.xml')
-        tree = ET.parse(file)
-        root = tree.getroot()
 
-        self.window.projectProperties_text.setText()
+        file = ''
+        if selected:
+            item = selected[0].text(0)
+            item = item.split(" ")
+            try:
+                item = item[0] + item[1]
+                file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
+            except IndexError or FileNotFoundError:
+                pass
+        else:
+            file = os.path.join(cur_path, '..', 'Configurations', 'newProject.xml')
 
-    # Opens up an xml (file) editor
-    def xmlEditor(self):
-        self.window = XMLEditor()
-        self.window.show()
+        if file:
+            tree = ET.parse(file)
+            root = tree.getroot()
 
-   # runs Static Analysis
+            text = "<font size=2> <b>Project Description</b>: " \
+                   "This is a description of the project that is currently selected. <br><br>"
+            text += "<b>Project Properties</b>: <br> </font> "
+
+            for child in root.iter():
+                if child.tag != "Project" and child.get('name') is not None:
+                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+            self.window.projectProperties_text.setHtml(text)
+
+    # runs Static Analysis
     def runStatic(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
-        poi = str(self.window.poiType_dropdown.currentText())
-        staticAnalysis("C:\Windows\System32\ping.exe",poi)
 
+        poi = str(self.window.poiType_dropdown.currentText())
+        staticAnalysis("C:\Windows\System32\ping.exe", poi)
+
+        self.window.analysis_text.clear()
+        self.window.analysis_text.clear()
+        self.window.poi_list.clear()
+
+        self.display_poi(poi)
+
+    def display_poi(self, poi):
+        try:
+            f = open(poi.lower() + ".txt", "r")
+
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+
+            if poi == 'String':
+                self.displayString()
+            elif poi == 'Variable':
+                self.displayVariable()
+            elif poi == 'DLL':
+                self.displayDll()
+            elif poi == 'Function':
+                self.displayFunctions()
+            elif poi == 'Extract All':
+                self.displayAll()
+        except FileNotFoundError:
+            pass
+
+    def displayString(self):
+        try:
+            f = open("string.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 3:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayVariable(self):
+        try:
+            f = open("variable.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 3:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayDll(self):
+        try:
+            f = open("dll.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 3:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayFunctions(self):
+        try:
+            f = open("function.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 3:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayAll(self):
+        self.displayString()
+        self.displayVariable()
+        self.displayDll()
+        self.displayFunctions()
+
+    def search_poi(self):
+        for i in range(self.window.poi_list.count()):
+            self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
+
+        search = str(self.window.poiSearch_lineEdit.text())
+        result = self.window.poi_list.findItems(search, QtCore.Qt.MatchContains)
+
+        if search:
+            for item in result:
+                item.setSelected(True)
+                item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
 
     # runs Dynamic Analysis
     def runDynamic(self):
@@ -161,7 +299,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = Analysis_Window()
         self.ui.setupUi(self.windowAR)
         self.windowAR.show()
-
 
     # Shows Documentation window
     def showDocumentationWindow(self):
@@ -192,13 +329,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.windowER = ErrRadare()
         self.windowER.show()
 
+    # Opens up an xml (file) editor
+    def xmlEditor(self):
+        self.window = XMLEditor()
+        self.window.show()
+
     # Open up file explorer to select a file
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
     # Open up file explorer to select a file for Project Predefined line edit
-    def showFileExplorer2(self):
+    def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpmPluginPredefined_lineEdit.setText(name)
 
@@ -209,7 +351,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Will save the current modifications of the file
     def Save(self):
         cur_path = os.getcwd()
-        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')    # TODO: Get correct file to Save
+        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')  # TODO: Get correct file to Save
         try:
             file = open(name, 'w')
             text = self.window.projectProperties_text.toPlainText()
@@ -233,6 +375,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

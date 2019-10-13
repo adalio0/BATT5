@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<Project name="project 2">
+		<OS maxOccurs="1" name="Windows" use="required" />
+		<BinaryType maxOccurs="1" name="binaryType" />
+		<Machine maxOccurs="1" name="machine" />
+		<Class maxOccurs="1" name="class" />
+		<Bits maxOccurs="1" name="bits" />
+		<Language maxOccurs="1" name="language" />
+		<Canery maxOccurs="1" name="canery" />
+		<Crypto maxOccurs="1" name="crypto" />
+		<Nx maxOccurs="1" name="nx" />
+		<Relocs maxOccurs="1" name="relocs" />
+		<Stripped maxOccurs="1" name="stripped" />
+		<Relro maxOccurs="1" name="relro" />
+	</Project>
+</data>
