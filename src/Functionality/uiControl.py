@@ -94,15 +94,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Select listener ------------------------------
 
-        self.window.projectProperties_text.installEventFilter(self)
         self.window.projectSearch_lineEdit.installEventFilter(self)
-        self.window.projectNavigator_tree.installEventFilter(self)
-        self.window.analysis_text.installEventFilter(self)
-        self.window.radareConsole_text.installEventFilter(self)
-        self.window.poi_list.installEventFilter(self)
         self.window.poiSearch_lineEdit.installEventFilter(self)
-        self.window.comment_text.installEventFilter(self)
-
+        self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
+        self.window.poiManagementSeach_lineEdit.installEventFilter(self)
         # ----- Radare Integration --------------------------
 
         # Perform static analysis on a binary file
@@ -112,12 +107,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def eventFilter(self, obj, event):
         global focus
         if event.type() == QEvent.FocusIn:
-            if obj == self.window.poiSearch_lineEdit:
-                self.window.poiSearch_lineEdit.clear()
-                self.window.poiSearch_lineEdit.setStyleSheet("color: black;")
-            else:
-                self.window.poiSearch_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
-                self.window.poiSearch_lineEdit.setText("Search..")
+            if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+                if obj.text() == "Search..":
+                    obj.clear()
+                    obj.setStyleSheet("color: black;")
+        elif event.type() == QEvent.FocusOut:
+            if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
@@ -284,7 +282,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.runDynamicAnalysis_button.setText("Stop")
         else:
             dynamic = False
-            self.window.runDynamicAnalysis_button.setText("Run Static Analysis")
+            self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
     # Shows NewProject window
     def showNewProject(self):
