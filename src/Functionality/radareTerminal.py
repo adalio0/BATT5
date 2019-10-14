@@ -14,7 +14,7 @@ class Terminal(object):
         self.binaryPath = b
         self.openBinary()
         # analyze binary file
-        #self.r.cmd('aaa')
+        self.r.cmd('aaa')
         self.launchTerminal()
         
     # might be used for for when interfacing with GUI
@@ -30,15 +30,17 @@ class Terminal(object):
             
     def launchTerminal(self):
         while True:
-            command = input('BATT5$ ')
+            command_in = input('BATT5$ ')
 
-            if(command == 'exit'):
-                print('exiting...')
+            if(command_in == 'exit'):
+                print('exiting terminal.')
                 break
             else:
                 try:
-                    print( self.r.cmd(command) )
+                    print( '>>>', command_in )
+                    print( self.r.cmd(command_in) )
                 except:
-                    print('unable to execute command:', command)
+                    print('unable to execute command:', command_in)
 
-term = Terminal('PING.EXE')
+fullPing = 'C:/Windows/System32/PING.EXE'
+term = Terminal(fullPing)
