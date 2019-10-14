@@ -129,9 +129,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         file = ''
         if selected:
             item = selected[0].text(0)
-            item = item.split(" ")
+            item = item.replace(" ", "")
             try:
-                item = item[0] + item[1]
                 file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
             except IndexError or FileNotFoundError:
                 pass
