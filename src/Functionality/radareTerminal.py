@@ -6,7 +6,6 @@ This program contains stuff
 @author: rivas
 """
 import r2pipe as r2
-import sys
 
 class Terminal(object):
     # constructor, initialize and launce terminal
@@ -14,6 +13,8 @@ class Terminal(object):
         # location of binary file that will be analyzed
         self.binaryPath = b
         self.openBinary()
+        # analyze binary file
+        #self.r.cmd('aaa')
         self.launchTerminal()
         
     # might be used for for when interfacing with GUI
@@ -30,15 +31,14 @@ class Terminal(object):
     def launchTerminal(self):
         while True:
             command = input('BATT5$ ')
-            
+
             if(command == 'exit'):
-                print('goodbye!')
+                print('exiting...')
                 break
             else:
                 try:
-                    rc = self.r.cmd(command)
-                    print('that worked')
+                    print( self.r.cmd(command) )
                 except:
-                    print('that didnt work')
+                    print('unable to execute command:', command)
 
-t = Terminal('PING.EXE')
+term = Terminal('PING.EXE')
