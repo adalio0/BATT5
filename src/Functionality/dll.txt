@@ -1,0 +1,72 @@
+[Imports]
+Num  Vaddr       Bind      Type Name
+   1 0x004060e0    NONE    FUNC msvcrt.dll___set_app_type
+   2 0x004060e4    NONE    FUNC msvcrt.dll___p__fmode
+   3 0x004060e8    NONE    FUNC msvcrt.dll___wgetmainargs
+   4 0x004060ec    NONE    FUNC msvcrt.dll__exit
+   5 0x004060f0    NONE    FUNC msvcrt.dll__cexit
+   6 0x004060f4    NONE    FUNC msvcrt.dll__except_handler4_common
+   7 0x004060f8    NONE    FUNC msvcrt.dll___setusermatherr
+   8 0x004060fc    NONE    FUNC msvcrt.dll___iob_func
+   9 0x00406100    NONE    FUNC msvcrt.dll__get_osfhandle
+  10 0x00406104    NONE    FUNC msvcrt.dll__controlfp
+  11 0x00406108    NONE    FUNC msvcrt.dll_fflush
+  12 0x0040610c    NONE    FUNC msvcrt.dll__setmode
+  13 0x00406110    NONE    FUNC msvcrt.dll__write
+  14 0x00406114    NONE    FUNC msvcrt.dll__fileno
+  15 0x00406118    NONE    FUNC msvcrt.dll_wcschr
+  16 0x0040611c    NONE    FUNC msvcrt.dll_fgetpos
+  17 0x00406120    NONE    FUNC msvcrt.dll_fwprintf
+  18 0x00406124    NONE    FUNC msvcrt.dll__amsg_exit
+  19 0x00406128    NONE    FUNC msvcrt.dll___p__commode
+  20 0x0040612c    NONE    FUNC msvcrt.dll_exit
+  21 0x00406130    NONE    FUNC msvcrt.dll__XcptFilter
+  22 0x00406134    NONE    FUNC msvcrt.dll_memcpy
+  23 0x00406138    NONE    FUNC msvcrt.dll_wcstoul
+  24 0x0040613c    NONE    FUNC msvcrt.dll_iswctype
+  25 0x00406140    NONE    FUNC msvcrt.dll_?terminate@@YAXXZ
+  26 0x00406144    NONE    FUNC msvcrt.dll__wcsicmp
+  27 0x00406148    NONE    FUNC msvcrt.dll__initterm
+  28 0x0040614c    NONE    FUNC msvcrt.dll_memset
+   1 0x00406044    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_SetConsoleCtrlHandler
+   2 0x00406048    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_GetConsoleMode
+   1 0x004060b4    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegCloseKey
+   2 0x004060b8    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegQueryValueExW
+   3 0x004060bc    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegOpenKeyExW
+   1 0x00406000    NONE    FUNC IPHLPAPI.DLL_SetCurrentThreadCompartmentId
+   2 0x00406004    NONE    FUNC IPHLPAPI.DLL_Icmp6SendEcho2
+   3 0x00406008    NONE    FUNC IPHLPAPI.DLL_GetIpForwardTable
+   4 0x0040600c    NONE    FUNC IPHLPAPI.DLL_IcmpCreateFile
+   5 0x00406010    NONE    FUNC IPHLPAPI.DLL_GetIpErrorString
+   6 0x00406014    NONE    FUNC IPHLPAPI.DLL_IcmpCloseHandle
+   7 0x00406018    NONE    FUNC IPHLPAPI.DLL_IcmpSendEcho2Ex
+   8 0x0040601c    NONE    FUNC IPHLPAPI.DLL_InternalIcmpCreateFileEx
+   9 0x00406020    NONE    FUNC IPHLPAPI.DLL_Icmp6CreateFile
+   1 0x00406084    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_SetThreadUILanguage
+   2 0x00406088    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_FormatMessageW
+   1 0x00406028    NONE    FUNC WS2_32.dll_GetAddrInfoW
+   2 0x0040602c    NONE    FUNC WS2_32.dll_InetNtopW
+ 116 0x00406030    NONE    FUNC WS2_32.dll_WSACleanup
+ 117 0x00406034    NONE    FUNC WS2_32.dll_FreeAddrInfoW
+ 115 0x00406038    NONE    FUNC WS2_32.dll_WSAStartup
+ 116 0x0040603c    NONE    FUNC WS2_32.dll_GetNameInfoW
+   1 0x00406070    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalFree
+   2 0x00406074    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalAlloc
+   1 0x004060cc    NONE    FUNC api-ms-win-core-synch-l1-2-0.dll_Sleep
+   1 0x00406050    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_UnhandledExceptionFilter
+   2 0x00406054    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_SetUnhandledExceptionFilter
+   3 0x00406058    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_GetLastError
+   1 0x00406154    NONE    FUNC ntdll.dll_RtlIpv4StringToAddressW
+   1 0x00406068    NONE    FUNC api-ms-win-core-heap-l1-1-0.dll_HeapSetInformation
+   1 0x00406098    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcessId
+   2 0x0040609c    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcess
+   3 0x004060a0    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentThreadId
+   4 0x004060a4    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_TerminateProcess
+   1 0x0040607c    NONE    FUNC api-ms-win-core-libraryloader-l1-2-0.dll_GetModuleHandleW
+   1 0x004060ac    NONE    FUNC api-ms-win-core-profile-l1-1-0.dll_QueryPerformanceCounter
+   1 0x004060d4    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetTickCount
+   2 0x004060d8    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetSystemTimeAsFileTime
+   1 0x00406090    NONE    FUNC api-ms-win-core-processenvironment-l1-1-0.dll_GetEnvironmentVariableW
+   1 0x004060c4    NONE    FUNC api-ms-win-core-string-l1-1-0.dll_WideCharToMultiByte
+   1 0x00406060    NONE    FUNC api-ms-win-core-file-l1-1-0.dll_GetFileType
+

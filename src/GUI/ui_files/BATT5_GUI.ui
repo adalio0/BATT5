@@ -417,6 +417,11 @@ p, li { white-space: pre-wrap; }
                   <widget class="QComboBox" name="poiType_dropdown">
                    <item>
                     <property name="text">
+                     <string>Function</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
                      <string>String</string>
                     </property>
                    </item>
@@ -432,17 +437,17 @@ p, li { white-space: pre-wrap; }
                    </item>
                    <item>
                     <property name="text">
-                     <string>Function</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
                      <string>Packet Protocol</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
                      <string>Struct</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Extract All</string>
                     </property>
                    </item>
                   </widget>
