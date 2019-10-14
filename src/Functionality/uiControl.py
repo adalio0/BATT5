@@ -11,9 +11,10 @@ from PyQt5.QtCore import QEvent
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from src.Functionality.project import Project
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
-from src.GUI.python_files.popups.newProjectWind import NewProject
+from src.Functionality.newProject import ProjectWindow
 from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
@@ -23,6 +24,7 @@ from src.Functionality.staticAnalysis import staticAnalysis
 static = False
 dynamic = False
 
+projectList = []
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -32,7 +34,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Main Window ---------------------------------
 
-        # Initalize the project properties
+        # Initialize the project properties
         self.setProject()
 
         # ---- Menu Bar ------------------------------------
@@ -286,10 +288,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows NewProject window
     def showNewProject(self):
-        self.windowNP = QtWidgets.QWidget()
-        self.ui = NewProject()
-        self.ui.setupUi(self.windowNP)
-        self.windowNP.show()
+        self.ui = ProjectWindow()
+        if self.ui.exec_() == ProjectWindow.Accepted:
+            obj = self.ui.getProject()
+            projectList.append(obj)
+            tree = self.window.projectNavigator_tree
+            item = QTreeWidgetItem([obj.get_name(self.ui)])
+            child = QTreeWidgetItem(item)
+            child.setText(0,obj.get_file(self.ui))
+            tree.addTopLevelItem(item)
+
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):

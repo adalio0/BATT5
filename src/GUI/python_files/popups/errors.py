@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5 import QtWidgets
 
 
 class ErrFile(QWidget):
@@ -87,6 +88,37 @@ class ErrRadare(QWidget):
         vbox.addLayout(hbox)
 
         self.setWindowTitle("Error Message: Binary File Property Extraction")
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setLayout(vbox)
+
+        okButton.clicked.connect(self.okClicked)
+
+    def okClicked(self):
+        self.close()
+
+
+class ErrEmptyFields(QtWidgets.QWidget):
+    def __init__(self):
+        super(ErrEmptyFields, self).__init__()
+        self.left = 450
+        self.top = 250
+        self.width = 300
+        self.height = 50
+
+        msg = QLabel("All fields must be filled to in order to create a Project")
+
+        okButton = QPushButton("OK")
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(okButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(msg)
+        vbox.addLayout(hbox)
+
+        self.setWindowTitle("Error Message: Missing Fields")
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setLayout(vbox)
 
