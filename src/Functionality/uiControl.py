@@ -1,8 +1,8 @@
 #! /usr/bin/env python3.
 
 import os
+import glob
 import sys
-import subprocess
 import xml.etree.ElementTree as ET
 import json
 
@@ -26,6 +26,7 @@ dynamic = False
 
 projectList = []
 
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
@@ -33,6 +34,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.setupUi(self)
 
         # ---- Main Window ---------------------------------
+
+        # Populate the projects box with current projects
+        self.populateProjectBox()
 
         # Initialize the project properties
         self.setProject()
@@ -100,6 +104,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
         self.window.poiManagementSeach_lineEdit.installEventFilter(self)
+
         # ----- Radare Integration --------------------------
 
         # Perform static analysis on a binary file
@@ -121,6 +126,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
+    # Initialize the project box with all the current projects
+    def populateProjectBox(self):
+        cur_path = os.getcwd()
+        new_path = os.path.join(cur_path, '..', 'Configurations')
+
+        projects = []
+        for file in glob.glob(new_path + "/**/" + '*.xml', recursive=True):
+            if file == (new_path + "/newProject.xml"):
+                pass
+            else:
+                tree = ET.parse(file)
+                root = tree.getroot()
+
+                for project in root.iter('Project'):
+                    projects.append(QTreeWidgetItem([project.get('name')]))
+                    child = QTreeWidgetItem(projects[len(projects)-1])
+                    child.setText(0, project.get('file'))
+
+        tree = self.window.projectNavigator_tree
+        tree.addTopLevelItems(projects)
+
     # Changes the project description according to the current project
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
@@ -137,18 +163,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             file = os.path.join(cur_path, '..', 'Configurations', 'newProject.xml')
 
-        if file:
+        try:
             tree = ET.parse(file)
             root = tree.getroot()
 
-            text = "<font size=2> <b>Project Description</b>: " \
-                   "This is a description of the project that is currently selected. <br><br>"
-            text += "<b>Project Properties</b>: <br> </font> "
+            text = ""
+            for project in root.iter('Project'):
+                text = "<font size=2> <b>Project Description</b>: " + project.get('description') + "<br><br>"
+                text += "<b>Project Properties</b>: <br> </font> "
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
                     text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
             self.window.projectProperties_text.setHtml(text)
+        except FileNotFoundError:
+            pass
 
     # runs Static Analysis
     def runStatic(self):
@@ -353,7 +382,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def showFileExplorerSimple(self):
         _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
 
-    # Will save the current modifications of the file
+    # Will save the current modifications of the file TODO: testing not final
     def Save(self):
         cur_path = os.getcwd()
         name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')  # TODO: Get correct file to Save
@@ -365,7 +394,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError or AttributeError:
             pass
 
-    # Will allow the user to change the name of the file and saves the current modifications of it
+    # Will allow the user to change the name of the file, saving the current modifications of it TODO: testing not final
     def SaveAs(self):
         name, _ = QFileDialog.getSaveFileName(self, 'Save File', options=QFileDialog.DontUseNativeDialog)
 

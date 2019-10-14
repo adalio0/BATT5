@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-	<Project name="project 2">
+	<Project name="project 2" description="" file="path/ping.exe">
 		<OS maxOccurs="1" name="Windows" use="required" />
 		<BinaryType maxOccurs="1" name="binaryType" />
 		<Machine maxOccurs="1" name="machine" />

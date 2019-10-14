@@ -34,43 +34,43 @@ class Project:
         return self._os
 
     def get_binary_type(self):
-        return self._os
+        return self._binary_type
 
     def get_machine(self):
-        return self._os
+        return self._machine
 
     def get_class(self):
-        return self._os
+        return self._class
 
     def get_bits(self):
-        return self._os
+        return self._bits
 
     def get_language(self):
-        return self._os
+        return self._language
 
     def get_new_item(self):
-        return self._os
+        return self._new_item
 
     def get_canary(self):
-        return self._os
+        return self._canary
 
     def get_crypto(self):
-        return self._os
+        return self._crypto
 
     def get_nx(self):
-        return self._os
+        return self._nx
 
     def get_pic(self):
-        return self._os
+        return self._pic
 
     def get_relocs(self):
-        return self._os
+        return self._relocs
 
     def get_relro(self):
-        return self._os
+        return self._relro
 
     def get_stripped(self):
-        return self._os
+        return self._stripped
 
     # setter method
     def set_name(self, x):

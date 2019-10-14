@@ -3,6 +3,8 @@ import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QTreeWidgetItem
 from numpy import unicode
+import xml.etree.ElementTree as ET
+import os
 
 from src.Functionality.project import Project
 from src.GUI.python_files.popups.newProjectWind import NewProject
@@ -30,7 +32,7 @@ class ProjectWindow(QtWidgets.QDialog):
         self.window.path_lineEdit.setText(name)
         self.setProperties()
 
-    # ---- Extracts Text From Fields and Assigns Them To Project Object ---------------------------------
+    # ---- Extracts Text From Fields and Assigns Them To Project Object and creates xml file -------
     def createProject(self):
         if self.window.projectName_lineEdit.text() == "":
             self.showErr()
@@ -43,12 +45,59 @@ class ProjectWindow(QtWidgets.QDialog):
             global project
             name = self.window.projectName_lineEdit.text()
             project.set_name(self, name)
+
             # Set Description
             description = self.window.projectDescription_textEdit.toPlainText()
             project.set_description(self, description)
+
             # select file
             file = self.window.path_lineEdit.text()
             project.set_file(self, file)
+
+            # Create xml file for the new project
+            cur_path = os.getcwd()
+            name = name.replace(" ", "")
+            file = os.path.join(cur_path, '..', 'Configurations', name + '.xml')
+            try:
+                with open(file, "w") as f:
+                    newProject = open(os.path.join(cur_path, '..', 'Configurations', 'newProject.xml'), 'r')
+                    f.write(newProject.read())
+                    newProject.close()
+                    f.close()
+                tree = ET.parse(file)
+                root = tree.getroot()
+                for child in root.iter():
+                    if child.tag == "Project":
+                        child.set('name', project.get_name(self))
+                        child.set('description', project.get_description(self))
+                    elif child.tag == "OS":
+                        child.set('name', project.get_os(self))
+                    elif child.tag == "BinaryType":
+                        child.set('name', project.get_binary_type(self))
+                    elif child.tag == "Machine":
+                        child.set('name', project.get_machine(self))
+                    elif child.tag == "Class":
+                        child.set('name', project.get_class(self))
+                    elif child.tag == "Bits":
+                        child.set('name', project.get_bits(self))
+                    elif child.tag == "Language":
+                        child.set('name', project.get_language(self))
+                    elif child.tag == "Canery":
+                        child.set('name', project.get_canary(self))
+                    elif child.tag == "Crypto":
+                        child.set('name', project.get_crypto(self))
+                    elif child.tag == "Nx":
+                        child.set('name', project.get_nx(self))
+                    elif child.tag == "Relocs":
+                        child.set('name', project.get_relocs(self))
+                    elif child.tag == "Stripped":
+                        child.set('name', project.get_stripped(self))
+                    elif child.tag == "Relro":
+                        child.set('name', project.get_relro(self))
+                tree.write(file)
+            except FileNotFoundError:
+                pass
+
             # close window
             self.accept()
             self.close()

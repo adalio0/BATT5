@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-	<Project name="new project">
+	<Project name="project" description="" file="">
 		<OS maxOccurs="1" name="" use="required" />
 		<BinaryType maxOccurs="1" name="" />
 		<Machine maxOccurs="1" name="" />
