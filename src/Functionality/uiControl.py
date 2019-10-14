@@ -141,10 +141,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 tree = ET.parse(file)
                 root = tree.getroot()
 
-                for project in root.iter('Project'):
-                    projects.append(QTreeWidgetItem([project.get('name')]))
+                for p in root.iter('Project'):
+                    projects.append(QTreeWidgetItem([p.get('name')]))
                     child = QTreeWidgetItem(projects[len(projects)-1])
-                    child.setText(0, project.get('file'))
+                    child.setText(0, p.get('file'))
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
@@ -170,8 +170,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             root = tree.getroot()
 
             text = ""
-            for project in root.iter('Project'):
-                text = "<font size=2> <b>Project Description</b>: " + project.get('description') + "<br><br>"
+            for p in root.iter('Project'):
+                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
 
             for child in root.iter():
