@@ -15,9 +15,6 @@ class Terminal(object):
         self.binaryPath = b
         self.openBinary()
         self.launchTerminal()
-    
-    def setBinaryLocation(self, b):
-        self.binaryPath = b
         
     # might be used for for when interfacing with GUI
     def getBinaryLocation(self):
@@ -45,5 +42,3 @@ class Terminal(object):
                     print('that didnt work')
 
 t = Terminal('PING.EXE')
-#r = r2.open('PING.EXE')
-#print( r.cmd('pdf') )
