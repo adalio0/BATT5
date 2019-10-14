@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-	<Project name="project 1">
+	<Project name="project 1" description="" file="path/file.exe">
 		<OS maxOccurs="1" name="Linux" use="required" />
 		<BinaryType maxOccurs="1" name="binaryType" />
 		<Machine maxOccurs="1" name="machine" />
