@@ -162,11 +162,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             try:
                 file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
 
-                tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', 'current.xml'))
+                currentXml = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
+                tree = ET.parse(currentXml)
                 root = tree.getroot()
 
                 for current in root.iter('Current'):
                     current.set('name', (item + '.xml'))
+                tree.write(currentXml)
             except IndexError or FileNotFoundError:
                 pass
         else:
