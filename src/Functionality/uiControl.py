@@ -189,82 +189,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
         poi = str(self.window.poiType_dropdown.currentText())
-        staticAnalysis("C:\Windows\System32\ping.exe", poi)
+        # staticAnalysis("C:\Windows\System32\ping.exe", poi)
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
         self.window.poi_list.clear()
 
-        self.display_poi(poi)
+        self.displayPoi(poi)
 
-    def display_poi(self, poi):
+    def displayPoi(self, poi):
         try:
-            f = open(poi.lower() + ".txt", "r")
-
-            for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
-
-            if poi == 'String':
-                self.displayString()
-            elif poi == 'Variable':
-                self.displayVariable()
-            elif poi == 'DLL':
-                self.displayDll()
-            elif poi == 'Function':
-                self.displayFunctions()
-            elif poi == 'Extract All':
+            if poi == 'Extract All':
                 self.displayAll()
-        except FileNotFoundError:
-            pass
+            else:
+                f = open(poi.lower() + ".txt", "r")
 
-    def displayString(self):
-        try:
-            f = open("string.txt", "r")
+                for line in f.read().split("\n\n")[:]:
+                    self.window.analysis_text.addItem(line)
 
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
-        except FileNotFoundError:
-            pass
-
-    def displayVariable(self):
-        try:
-            f = open("variable.txt", "r")
-
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
-        except FileNotFoundError:
-            pass
-
-    def displayDll(self):
-        try:
-            f = open("dll.txt", "r")
-
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
+                if poi == 'Function':
+                    self.displayFunctions()
+                elif poi == 'String':
+                    self.displayString()
+                elif poi == 'Variable':
+                    self.displayVariable()
+                elif poi == 'DLL':
+                    self.displayDll()
         except FileNotFoundError:
             pass
 
@@ -285,11 +235,114 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    def displayString(self):
+        try:
+            f = open("string.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ", 9)[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayVariable(self):
+        try:
+            f = open("variable.txt", "r")
+
+            for line in f.read().split("\n\n")[:]:
+                try:
+                    line = line.split(" ")[1]
+                    item = QListWidgetItem(line)
+
+                    self.window.poi_list.addItem(item)
+                except IndexError:
+                    pass
+        except FileNotFoundError:
+            pass
+
+    def displayDll(self):
+        try:
+            f = open("dll.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
     def displayAll(self):
-        self.displayString()
-        self.displayVariable()
-        self.displayDll()
-        self.displayFunctions()
+        try:
+            f = open("function.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+
+            f = open("string.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ", 9)[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+
+            f = open("variable.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                try:
+                    line = line.split(" ")[1]
+                    item = QListWidgetItem(line)
+
+                    self.window.poi_list.addItem(item)
+                except IndexError:
+                    pass
+
+            f = open("dll.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
 
     def search_poi(self):
         for i in range(self.window.poi_list.count()):
@@ -327,7 +380,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             child = QTreeWidgetItem(item)
             child.setText(0,obj.get_file(self.ui))
             tree.addTopLevelItem(item)
-
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
