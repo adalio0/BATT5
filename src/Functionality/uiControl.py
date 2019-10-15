@@ -1,10 +1,13 @@
 #! /usr/bin/env python3.
 
 import os
-import glob
 import sys
+import glob
 import xml.etree.ElementTree as ET
 import json
+
+# Adal's hardcoded path to BATT5 repo
+#sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -25,7 +28,6 @@ static = False
 dynamic = False
 
 projectList = []
-
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -76,8 +78,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
+        # Highlights the searched elements in the project list
+        self.window.projectSearch_lineEdit.returnPressed.connect(self.searchProject)
+
         # Highlights the searched elements in the poi list
-        self.window.poiSearch_lineEdit.returnPressed.connect(self.search_poi)
+        self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
 
         # ---- Plugin Controls -----------------------------
 
@@ -133,16 +138,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         projects = []
         for file in glob.glob(new_path + "/**/" + '*.xml', recursive=True):
-            if file == (new_path + "/newProject.xml"):
-                pass
-            else:
-                tree = ET.parse(file)
-                root = tree.getroot()
+            tree = ET.parse(file)
+            root = tree.getroot()
 
-                for project in root.iter('Project'):
-                    projects.append(QTreeWidgetItem([project.get('name')]))
+            for p in root.iter('Project'):
+                if p.get('name') is not "":
+                    projects.append(QTreeWidgetItem([p.get('name')]))
                     child = QTreeWidgetItem(projects[len(projects)-1])
-                    child.setText(0, project.get('file'))
+                    child.setText(0, p.get('file'))
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
@@ -158,18 +161,29 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item = item.replace(" ", "")
             try:
                 file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
+
+                tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', 'current.xml'))
+                root = tree.getroot()
+
+                for current in root.iter('Current'):
+                    current.set('name', (item + '.xml'))
             except IndexError or FileNotFoundError:
                 pass
         else:
-            file = os.path.join(cur_path, '..', 'Configurations', 'newProject.xml')
+            file = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
 
         try:
             tree = ET.parse(file)
             root = tree.getroot()
 
+            if file.endswith('current.xml'):
+                for current in root.iter('Current'):
+                    tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
+                    root = tree.getroot()
+
             text = ""
-            for project in root.iter('Project'):
-                text = "<font size=2> <b>Project Description</b>: " + project.get('description') + "<br><br>"
+            for p in root.iter('Project'):
+                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
 
             for child in root.iter():
@@ -187,82 +201,49 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
         poi = str(self.window.poiType_dropdown.currentText())
-        staticAnalysis("C:\Windows\System32\ping.exe", poi)
+        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
+        root = tree.getroot()
+
+        currentProject = ""
+        for current in root.iter('Current'):
+            currentProject = current.get('name')
+
+        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', currentProject))
+        root = tree.getroot()
+
+        path = ''
+        for p in root.iter('Project'):
+            path = p.get('file')
+
+        try:
+            staticAnalysis(path, poi)
+        except:
+            print("Oopsie")
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
         self.window.poi_list.clear()
 
-        self.display_poi(poi)
+        self.displayPoi(poi)
 
-    def display_poi(self, poi):
+    def displayPoi(self, poi):
         try:
-            f = open(poi.lower() + ".txt", "r")
-
-            for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
-
-            if poi == 'String':
-                self.displayString()
-            elif poi == 'Variable':
-                self.displayVariable()
-            elif poi == 'DLL':
-                self.displayDll()
-            elif poi == 'Function':
-                self.displayFunctions()
-            elif poi == 'Extract All':
+            if poi == 'Extract All':
                 self.displayAll()
-        except FileNotFoundError:
-            pass
+            else:
+                f = open(poi.lower() + ".txt", "r")
 
-    def displayString(self):
-        try:
-            f = open("string.txt", "r")
+                for line in f.read().split("\n\n")[:]:
+                    self.window.analysis_text.addItem(line)
 
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 3:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
-        except FileNotFoundError:
-            pass
-
-    def displayVariable(self):
-        try:
-            f = open("variable.txt", "r")
-
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 3:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
-        except FileNotFoundError:
-            pass
-
-    def displayDll(self):
-        try:
-            f = open("dll.txt", "r")
-
-            i = 0
-            for line in f.read().split("\n\n")[:]:
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 3:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                else:
-                    i += 1
+                if poi == 'Function':
+                    self.displayFunctions()
+                elif poi == 'String':
+                    self.displayString()
+                elif poi == 'Variable':
+                    self.displayVariable()
+                elif poi == 'DLL':
+                    self.displayDll()
         except FileNotFoundError:
             pass
 
@@ -275,7 +256,55 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
 
-                if i > 3:
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayString(self):
+        try:
+            f = open("string.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ", 9)[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def displayVariable(self):
+        try:
+            f = open("variable.txt", "r")
+
+            for line in f.read().split("\n\n")[:]:
+                try:
+                    line = line.split(" ")[1]
+                    item = QListWidgetItem(line)
+
+                    self.window.poi_list.addItem(item)
+                except IndexError:
+                    pass
+        except FileNotFoundError:
+            pass
+
+    def displayDll(self):
+        try:
+            f = open("dll.txt", "r")
+
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
                 else:
@@ -284,12 +313,78 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             pass
 
     def displayAll(self):
-        self.displayString()
-        self.displayVariable()
-        self.displayDll()
-        self.displayFunctions()
+        try:
+            f = open("function.txt", "r")
 
-    def search_poi(self):
+            self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+
+            f = open("string.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ", 9)[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+
+            f = open("variable.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                try:
+                    line = line.split(" ")[1]
+                    item = QListWidgetItem(line)
+
+                    self.window.poi_list.addItem(item)
+                except IndexError:
+                    pass
+
+            f = open("dll.txt", "r")
+
+            self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
+            i = 0
+            for line in f.read().split("\n\n")[:]:
+                self.window.analysis_text.addItem(line)
+                line = line.split(" ")[-1]
+                item = QListWidgetItem(line)
+
+                if i > 1:
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                    self.window.poi_list.addItem(item)
+                else:
+                    i += 1
+        except FileNotFoundError:
+            pass
+
+    def searchProject(self):
+        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
+            self.window.projectNavigator_tree.topLevelItem(i).setBackground(0, QtGui.QBrush(QtCore.Qt.color0))
+
+        search = str(self.window.projectSearch_lineEdit.text())
+        result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
+
+        if search:
+            for item in result:
+                item.setBackground(0, QtGui.QBrush(QtCore.Qt.magenta))
+
+    def searchPoi(self):
         for i in range(self.window.poi_list.count()):
             self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
 
@@ -325,7 +420,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             child = QTreeWidgetItem(item)
             child.setText(0,obj.get_file(self.ui))
             tree.addTopLevelItem(item)
-
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
