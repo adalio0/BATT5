@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 import json
 
 # Adal's hardcoded path to BATT5 repo
-#sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
+sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent

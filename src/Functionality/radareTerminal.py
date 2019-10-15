@@ -7,7 +7,6 @@ This program contains stuff
 """
 import r2pipe as r2
 
-
 class Terminal(object):
     # constructor, initialize and launce terminal
     def __init__(self, b): 
