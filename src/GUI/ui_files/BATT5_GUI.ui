@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1142</width>
-    <height>894</height>
+    <width>1204</width>
+    <height>1008</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -291,7 +291,108 @@ background-color: rgb(186, 189, 182);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
-                <widget class="QPlainTextEdit" name="radareConsole_text"/>
+                <widget class="QTextBrowser" name="radareConsoleOut_text"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
+                 <property name="palette">
+                  <palette>
+                   <active>
+                    <colorrole role="WindowText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="Text">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="ButtonText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                   </active>
+                   <inactive>
+                    <colorrole role="WindowText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="Text">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="ButtonText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                   </inactive>
+                   <disabled>
+                    <colorrole role="WindowText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="Text">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                    <colorrole role="ButtonText">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>136</red>
+                       <green>138</green>
+                       <blue>133</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
+                   </disabled>
+                  </palette>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(136, 138, 133);</string>
+                 </property>
+                 <property name="text">
+                  <string>BATT5$</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -788,7 +889,7 @@ background-color: rgb(186, 189, 182);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1142</width>
+     <width>1204</width>
      <height>26</height>
     </rect>
    </property>

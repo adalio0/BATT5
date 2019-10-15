@@ -1,27 +1,44 @@
 [Strings]
 Num Paddr      Vaddr      Len Size Section  Type  String
-000 0x00003cea 0x004070ea   5  12 (.rsrc) utf16le MUI㼼浸 blocks=Basic Latin,CJK Unified Ideographs Extension A,CJK Unified Ideographs
-001 0x00003cf6 0x004070f6 715 716 (.rsrc) ascii version="1.0" encoding="UTF-8" standalone="yes"?>\r\n<!-- Copyright (c) Microsoft Corporation -->\r\n<assembly xmlns="urn:schemas-microsoft-com:asm.v1"\r\n manifestVersion="1.0"> \r\n\r\n  <assemblyIdentity version="5.1.0.0"\r\n     processorArchitecture="x86"\r\n     name="Microsoft.Windows.Net.ping"\r\n     type="win32"/> \r\n\r\n  <description>ping - ping command line tool.</description> \r\n\r\n  <!-- Identify the application security requirements. -->\r\n\r\n  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">\r\n    <security>\r\n      <requestedPrivileges>\r\n        <requestedExecutionLevel\r\n          level="asInvoker"\r\n          uiAccess="false"/>\r\n        </requestedPrivileges>\r\n       </security>\r\n  </trustInfo>\r\n\r\n</assembly>
-002 0x00003fd2 0x004073d2  13  28 (.rsrc) utf16le _VERSION_INFO
-003 0x0000402a 0x0040742a  14  30 (.rsrc) utf16le StringFileInfo
-004 0x0000404e 0x0040744e   8  18 (.rsrc) utf16le 040904B0
-005 0x00004066 0x00407466  11  24 (.rsrc) utf16le CompanyName
-006 0x00004080 0x00407480  21  44 (.rsrc) utf16le Microsoft Corporation
-007 0x000040b2 0x004074b2  15  32 (.rsrc) utf16le FileDescription
-008 0x000040d4 0x004074d4  19  40 (.rsrc) utf16le TCP/IP Ping Command
-009 0x00004102 0x00407502  11  24 (.rsrc) utf16le FileVersion
-010 0x0000411c 0x0040751c  35  72 (.rsrc) utf16le 10.0.17134.1 (WinBuild.160101.0800)
-011 0x0000416a 0x0040756a  12  26 (.rsrc) utf16le InternalName
-012 0x00004184 0x00407584   8  18 (.rsrc) utf16le ping.exe
-013 0x0000419e 0x0040759e  14  30 (.rsrc) utf16le LegalCopyright
-014 0x000041be 0x004075be  44  90 (.rsrc) utf16le  Microsoft Corporation. All rights reserved.
-015 0x0000421e 0x0040761e  16  34 (.rsrc) utf16le OriginalFilename
-016 0x00004240 0x00407640   8  18 (.rsrc) utf16le ping.exe
-017 0x0000425a 0x0040765a  11  24 (.rsrc) utf16le ProductName
-018 0x00004274 0x00407674  36  74 (.rsrc) utf16le Microsoft® Windows® Operating System blocks=Basic Latin,Latin-1 Supplement
-019 0x000042c6 0x004076c6  14  30 (.rsrc) utf16le ProductVersion
-020 0x000042e4 0x004076e4  12  26 (.rsrc) utf16le 10.0.17134.1
-021 0x00004308 0x00407708  10  22 (.rsrc) utf16le arFileInfo
-022 0x00004326 0x00407726  11  24 (.rsrc) utf16le Translation
-023 0x00004410 0x00407810   5  12 (.rsrc) utf16le en-US
+000 0x00009c6c 0x0040b26c  23  24 (.data) ascii .?AVCAtlException@ATL@@
+001 0x00009ca0 0x0040b2a0  34  70 (.data) utf16le %SystemRoot%\System32\ATBroker.exe
+002 0x00009ce8 0x0040b2e8  10  22 (.data) utf16le SwitchApps
+003 0x00009d00 0x0040b300  20  42 (.data) utf16le SettingConfiguration
+004 0x00009d2c 0x0040b32c  13  28 (.data) utf16le Configuration
+005 0x00009d48 0x0040b348  63 128 (.data) utf16le SOFTWARE\Microsoft\Windows NT\CurrentVersion\Accessibility\OOBE
+006 0x00009dc8 0x0040b3c8  58 118 (.data) utf16le SOFTWARE\Microsoft\Windows NT\CurrentVersion\Accessibility
+007 0x00009e40 0x0040b440  11  24 (.data) utf16le %s\ATConfig
+008 0x00009e58 0x0040b458  67 136 (.data) utf16le SOFTWARE\Microsoft\Windows NT\CurrentVersion\Accessibility\ATConfig
+009 0x00009f4b 0x0040b54b   5   6 (.data) ascii ?333?
+010 0x00009f74 0x0040b574   4   5 (.data) ascii 333?
+011 0x0000a020 0x0040b620   4   5 (.data) ascii 333?
+012 0x0000a033 0x0040b633   5   6 (.data) ascii ?333?
+013 0x0000a0eb 0x0040b6eb   8   9 (.data) ascii >LS\?rpi
+014 0x0000a0ff 0x0040b6ff   9  10 (.data) ascii >\a),?"4B=
+015 0x0000a164 0x0040b764   4   5 (.data) ascii 333?
+016 0x0000a178 0x0040b778   4   5 (.data) ascii 333?
+000 0x0000b0ba 0x0040d0ba  13  28 (.rsrc) utf16le _VERSION_INFO
+001 0x0000b112 0x0040d112  14  30 (.rsrc) utf16le StringFileInfo
+002 0x0000b136 0x0040d136   8  18 (.rsrc) utf16le 040904B0
+003 0x0000b14e 0x0040d14e  11  24 (.rsrc) utf16le CompanyName
+004 0x0000b168 0x0040d168  21  44 (.rsrc) utf16le Microsoft Corporation
+005 0x0000b19a 0x0040d19a  15  32 (.rsrc) utf16le FileDescription
+006 0x0000b1bc 0x0040d1bc  36  74 (.rsrc) utf16le Windows Assistive Technology Manager
+007 0x0000b20e 0x0040d20e  11  24 (.rsrc) utf16le FileVersion
+008 0x0000b228 0x0040d228  35  72 (.rsrc) utf16le 10.0.17134.1 (WinBuild.160101.0800)
+009 0x0000b276 0x0040d276  12  26 (.rsrc) utf16le InternalName
+010 0x0000b290 0x0040d290  12  26 (.rsrc) utf16le ATBroker.exe
+011 0x0000b2b2 0x0040d2b2  14  30 (.rsrc) utf16le LegalCopyright
+012 0x0000b2d2 0x0040d2d2  44  90 (.rsrc) utf16le  Microsoft Corporation. All rights reserved.
+013 0x0000b332 0x0040d332  16  34 (.rsrc) utf16le OriginalFilename
+014 0x0000b354 0x0040d354  12  26 (.rsrc) utf16le ATBroker.exe
+015 0x0000b376 0x0040d376  11  24 (.rsrc) utf16le ProductName
+016 0x0000b390 0x0040d390  36  74 (.rsrc) utf16le Microsoft® Windows® Operating System blocks=Basic Latin,Latin-1 Supplement
+017 0x0000b3e2 0x0040d3e2  14  30 (.rsrc) utf16le ProductVersion
+018 0x0000b400 0x0040d400  12  26 (.rsrc) utf16le 10.0.17134.1
+019 0x0000b424 0x0040d424  10  22 (.rsrc) utf16le arFileInfo
+020 0x0000b442 0x0040d442  11  24 (.rsrc) utf16le Translation
+021 0x0000b499 0x0040d499   5   6 (.rsrc) ascii [T/no
+022 0x0000b4a2 0x0040d4a2   4   5 (.rsrc) ascii "~v6
+023 0x0000b528 0x0040d528   5  12 (.rsrc) utf16le en-US
 

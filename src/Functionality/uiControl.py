@@ -24,6 +24,8 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 
+from src.Functionality.radareTerminal import Terminal
+
 static = False
 dynamic = False
 
@@ -42,6 +44,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Initialize the project properties
         self.setProject()
+        
+        # Initialize command prompt
+        #self.testCmdDisp()
+        self.terminal = Terminal('PING.EXE', self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
         # ---- Menu Bar ------------------------------------
 
@@ -83,6 +89,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Highlights the searched elements in the poi list
         self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
+        
+        # Executes the input command in the radare prompt
+        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
         # ---- Plugin Controls -----------------------------
 
@@ -109,6 +118,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
         self.window.poiManagementSeach_lineEdit.installEventFilter(self)
+        self.window.radareConsoleIn_lineEdit.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
 
@@ -118,16 +128,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus
+        # if selected (clicked on)
         if event.type() == QEvent.FocusIn:
+            # if search box selected, clear "Search.."
             if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "Search..":
                     obj.clear()
                     obj.setStyleSheet("color: black;")
+            # if command input selected, clear "BATT5"
+            elif obj == self.window.radareConsoleIn_lineEdit:
+                if obj.text() == "BATT5$":
+                    obj.clear()
+                    obj.setStyleSheet("color: black;")
+                    
+        # if not selected
         elif event.type() == QEvent.FocusOut:
+            # if clicked out of search bar, fill with "Search.."
             if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
+            # if clicked out of command input bar, fill with "BATT5$"
+            elif obj == self.window.radareConsoleIn_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("BATT5$")
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
@@ -398,6 +423,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item.setSelected(True)
                 item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
 
+    def inputCommand(self):
+        cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
+        self.terminal.processInput(cmd_in)
+        self.window.radareConsoleIn_lineEdit.clear()
+    
     # runs Dynamic Analysis
     def runDynamic(self):
         global static
@@ -505,13 +535,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
-        
-    def testCmdDisp(self):
-        self.window.radareConsole_text.insertPlainText('BATT5$:\n')
-        self.window.radareConsole_text.insertPlainText('cmd')
-        
-        return 0
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
