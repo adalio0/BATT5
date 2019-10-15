@@ -107,14 +107,12 @@ class Ui_BATT5(object):
         self.verticalLayout_16.addWidget(self.analysis_text)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.analysis_tab)
-        self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 0))
+        self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 225))
         self.radareConsole_box.setMaximumSize(QtCore.QSize(16777215, 218))
         self.radareConsole_box.setObjectName("radareConsole_box")
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.radareConsole_box)
         self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.radareConsole_text = QtWidgets.QTextEdit(self.radareConsole_box)
-        self.radareConsole_text.setMinimumSize(QtCore.QSize(0, 0))
-        self.radareConsole_text.setMaximumSize(QtCore.QSize(16777215, 200))
+        self.radareConsole_text = QtWidgets.QPlainTextEdit(self.radareConsole_box)
         self.radareConsole_text.setObjectName("radareConsole_text")
         self.verticalLayout_17.addWidget(self.radareConsole_text)
         self.detailedAnalysis_sublayout.addWidget(self.radareConsole_box)
@@ -400,11 +398,6 @@ class Ui_BATT5(object):
         self.generateScript_button.setText(_translate("BATT5", "Generate Script"))
         self.analysis_box.setTitle(_translate("BATT5", "Analysis"))
         self.radareConsole_box.setTitle(_translate("BATT5", "Radare2 Command Console"))
-        self.radareConsole_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.comment_box.setTitle(_translate("BATT5", "Comment View"))
         self.commentSave_button.setText(_translate("BATT5", "Save"))
         self.commentClear_button.setText(_translate("BATT5", "Clear"))

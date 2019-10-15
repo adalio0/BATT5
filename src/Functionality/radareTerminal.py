@@ -7,6 +7,7 @@ This program contains stuff
 """
 import r2pipe as r2
 
+
 class Terminal(object):
     # constructor, initialize and launce terminal
     def __init__(self, b): 
@@ -42,5 +43,6 @@ class Terminal(object):
                     print( self.r.cmd(command_in) )
                 except:
                     print('unable to execute command:', command_in)
-
+'''
 term = Terminal('C:/Windows/System32/PING.EXE')
+'''
