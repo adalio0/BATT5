@@ -21,11 +21,11 @@ def staticAnalysis(filePath, poi):
 
 
 def string_analysis():
-    infile.cmd('iz > strings.txt')
+    infile.cmd('iz > string.txt')
 
 
 def dll_analysis():
-    infile.cmd('ii > dlls.txt')
+    infile.cmd('ii > dll.txt')
 
 
 def functions_analysis():
@@ -33,7 +33,7 @@ def functions_analysis():
 
 
 def variables_analysis():
-    infile.cmd('afvd > vars.txt')
+    infile.cmd('afvd > variable.txt')
 
 
 def extract_all():

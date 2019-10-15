@@ -4,10 +4,9 @@ import os
 import sys
 import glob
 import xml.etree.ElementTree as ET
-import json
+from pathlib import Path
 
-# Adal's hardcoded path to BATT5 repo
-#sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -23,6 +22,8 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
+
+from src.Functionality.radareTerminal import Terminal
 
 static = False
 dynamic = False
@@ -41,6 +42,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populateProjectBox()
 
         # Initialize the project properties
+        # Terminal also initialized here
         self.setProject()
 
         # ---- Menu Bar ------------------------------------
@@ -83,6 +85,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Highlights the searched elements in the poi list
         self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
+        
+        # Executes the input command in the radare prompt
+        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
         # ---- Plugin Controls -----------------------------
 
@@ -109,6 +114,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
         self.window.poiManagementSeach_lineEdit.installEventFilter(self)
+        self.window.radareConsoleIn_lineEdit.installEventFilter(self)
 
         # ----- Radare Integration --------------------------
 
@@ -118,16 +124,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus
+        # if selected (clicked on)
         if event.type() == QEvent.FocusIn:
+            # if search box selected, clear "Search.."
             if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "Search..":
                     obj.clear()
                     obj.setStyleSheet("color: black;")
+            # if command input selected, clear "BATT5"
+            elif obj == self.window.radareConsoleIn_lineEdit:
+                if obj.text() == "BATT5$":
+                    obj.clear()
+                    obj.setStyleSheet("color: black;")
+                    
+        # if not selected
         elif event.type() == QEvent.FocusOut:
+            # if clicked out of search bar, fill with "Search.."
             if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
+            # if clicked out of command input bar, fill with "BATT5$"
+            elif obj == self.window.radareConsoleIn_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("BATT5$")
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
@@ -162,11 +183,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             try:
                 file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
 
-                tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', 'current.xml'))
+                currentXml = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
+                tree = ET.parse(currentXml)
                 root = tree.getroot()
 
                 for current in root.iter('Current'):
                     current.set('name', (item + '.xml'))
+                tree.write(currentXml)
             except IndexError or FileNotFoundError:
                 pass
         else:
@@ -180,16 +203,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for current in root.iter('Current'):
                     tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
                     root = tree.getroot()
+                    
 
             text = ""
             for p in root.iter('Project'):
                 text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
+                binaryPath = p.get('file')
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
                     text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+                        
             self.window.projectProperties_text.setHtml(text)
+
+            # Set up command prompt
+            self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
         except FileNotFoundError:
             pass
 
@@ -396,6 +426,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item.setSelected(True)
                 item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
 
+    def inputCommand(self):
+        cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
+        self.terminal.processInput(cmd_in)
+        self.window.radareConsoleIn_lineEdit.clear()
+    
     # runs Dynamic Analysis
     def runDynamic(self):
         global static
@@ -503,7 +538,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

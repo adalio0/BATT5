@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 	<Project name="project 3" description="" file="path/other.exe">
-		<OS maxOccurs="1" name="Mac lol" use="required" />
+		<OS maxOccurs="1" name="Mac" use="required" />
 		<BinaryType maxOccurs="1" name="binaryType" />
 		<Machine maxOccurs="1" name="machine" />
 		<Class maxOccurs="1" name="class" />
