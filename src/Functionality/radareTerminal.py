@@ -25,12 +25,11 @@ class Terminal(object):
     def openBinary(self):
         try:
             self.r = r2.open(self.binaryPath)
-            #print(self.binaryPath, 'opened')
         except:
             print('Error opening binary:', self.binaryPath)
             
     def launchTerminal(self):
-        print('launching radare2 terminal analizing binary:', self.binaryPath)
+        print('Analizing binary:', self.binaryPath)
         while True:
             command_in = input('BATT5$ ')
 
@@ -43,6 +42,5 @@ class Terminal(object):
                     print( self.r.cmd(command_in) )
                 except:
                     print('unable to execute command:', command_in)
-'''
-term = Terminal('C:/Windows/System32/PING.EXE')
-'''
+
+#term = Terminal('C:/Windows/System32/PING.EXE')

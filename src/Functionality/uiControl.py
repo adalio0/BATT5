@@ -484,7 +484,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.comment_text.clear()
         
     def testCmdDisp(self):
-        self.window.radareConsole_text.insertPlainText('BATT5$')
+        self.window.radareConsole_text.insertPlainText('BATT5$:\n')
+        self.window.radareConsole_text.insertPlainText('cmd')
+        
         return 0
 
 
