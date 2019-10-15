@@ -1,128 +1,74 @@
 [Imports]
 Num  Vaddr       Bind      Type Name
-   1 0x0040c000    NONE    FUNC ADVAPI32.dll_RegQueryValueExW
-   2 0x0040c004    NONE    FUNC ADVAPI32.dll_OpenServiceW
-   3 0x0040c008    NONE    FUNC ADVAPI32.dll_QueryServiceConfigW
-   4 0x0040c00c    NONE    FUNC ADVAPI32.dll_RegOpenKeyExW
-   5 0x0040c010    NONE    FUNC ADVAPI32.dll_CheckTokenMembership
-   6 0x0040c014    NONE    FUNC ADVAPI32.dll_UnregisterTraceGuids
-   7 0x0040c018    NONE    FUNC ADVAPI32.dll_RegisterTraceGuidsW
-   8 0x0040c01c    NONE    FUNC ADVAPI32.dll_FreeSid
-   9 0x0040c020    NONE    FUNC ADVAPI32.dll_GetTraceEnableLevel
-  10 0x0040c024    NONE    FUNC ADVAPI32.dll_GetTraceEnableFlags
-  11 0x0040c028    NONE    FUNC ADVAPI32.dll_GetTraceLoggerHandle
-  12 0x0040c02c    NONE    FUNC ADVAPI32.dll_TraceMessage
-  13 0x0040c030    NONE    FUNC ADVAPI32.dll_AllocateAndInitializeSid
-  14 0x0040c034    NONE    FUNC ADVAPI32.dll_OpenSCManagerW
-  15 0x0040c038    NONE    FUNC ADVAPI32.dll_CloseServiceHandle
-  16 0x0040c03c    NONE    FUNC ADVAPI32.dll_RegCloseKey
-  17 0x0040c040    NONE    FUNC ADVAPI32.dll_EventWriteTransfer
-   1 0x0040c048    NONE    FUNC KERNEL32.dll_LocalAlloc
-   2 0x0040c04c    NONE    FUNC KERNEL32.dll_GetCurrentThreadId
-   3 0x0040c050    NONE    FUNC KERNEL32.dll_GetVersionExW
-   4 0x0040c054    NONE    FUNC KERNEL32.dll_Sleep
-   5 0x0040c058    NONE    FUNC KERNEL32.dll_CloseHandle
-   6 0x0040c05c    NONE    FUNC KERNEL32.dll_SetProcessShutdownParameters
-   7 0x0040c060    NONE    FUNC KERNEL32.dll_ExpandEnvironmentStringsW
-   8 0x0040c064    NONE    FUNC KERNEL32.dll_lstrcmpiW
-   9 0x0040c068    NONE    FUNC KERNEL32.dll_OpenMutexW
-  10 0x0040c06c    NONE    FUNC KERNEL32.dll_LeaveCriticalSection
-  11 0x0040c070    NONE    FUNC KERNEL32.dll_EnterCriticalSection
-  12 0x0040c074    NONE    FUNC KERNEL32.dll_RaiseException
-  13 0x0040c078    NONE    FUNC KERNEL32.dll_DeleteCriticalSection
-  14 0x0040c07c    NONE    FUNC KERNEL32.dll_InitializeCriticalSection
-  15 0x0040c080    NONE    FUNC KERNEL32.dll_HeapDestroy
-  16 0x0040c084    NONE    FUNC KERNEL32.dll_HeapReAlloc
-  17 0x0040c088    NONE    FUNC KERNEL32.dll_HeapSize
-  18 0x0040c08c    NONE    FUNC KERNEL32.dll_LocalFree
-  19 0x0040c090    NONE    FUNC KERNEL32.dll_IsProcessInJob
-  20 0x0040c094    NONE    FUNC KERNEL32.dll_OpenJobObjectW
-  21 0x0040c098    NONE    FUNC KERNEL32.dll_RegEnumValueW
-  22 0x0040c09c    NONE    FUNC KERNEL32.dll_RegDeleteTreeW
-  23 0x0040c0a0    NONE    FUNC KERNEL32.dll_K32GetModuleBaseNameW
-  24 0x0040c0a4    NONE    FUNC KERNEL32.dll_K32EnumProcessModules
-  25 0x0040c0a8    NONE    FUNC KERNEL32.dll_ProcessIdToSessionId
-  26 0x0040c0ac    NONE    FUNC KERNEL32.dll_K32EnumProcesses
-  27 0x0040c0b0    NONE    FUNC KERNEL32.dll_RegLoadMUIStringW
-  28 0x0040c0b4    NONE    FUNC KERNEL32.dll_MultiByteToWideChar
-  29 0x0040c0b8    NONE    FUNC KERNEL32.dll_DeleteFileW
-  30 0x0040c0bc    NONE    FUNC KERNEL32.dll_GetFileAttributesW
-  31 0x0040c0c0    NONE    FUNC KERNEL32.dll_HeapFree
-  32 0x0040c0c4    NONE    FUNC KERNEL32.dll_DeleteProcThreadAttributeList
-  33 0x0040c0c8    NONE    FUNC KERNEL32.dll_CreateProcessW
-  34 0x0040c0cc    NONE    FUNC KERNEL32.dll_UpdateProcThreadAttribute
-  35 0x0040c0d0    NONE    FUNC KERNEL32.dll_GetProcessHeap
-  36 0x0040c0d4    NONE    FUNC KERNEL32.dll_HeapAlloc
-  37 0x0040c0d8    NONE    FUNC KERNEL32.dll_InitializeProcThreadAttributeList
-  38 0x0040c0dc    NONE    FUNC KERNEL32.dll_OpenProcess
-  39 0x0040c0e0    NONE    FUNC KERNEL32.dll_FindResourceExW
-  40 0x0040c0e4    NONE    FUNC KERNEL32.dll_LoadResource
-  41 0x0040c0e8    NONE    FUNC KERNEL32.dll_LockResource
-  42 0x0040c0ec    NONE    FUNC KERNEL32.dll_SizeofResource
-  43 0x0040c0f0    NONE    FUNC KERNEL32.dll_UnhandledExceptionFilter
-  44 0x0040c0f4    NONE    FUNC KERNEL32.dll_SetUnhandledExceptionFilter
-  45 0x0040c0f8    NONE    FUNC KERNEL32.dll_GetCurrentProcess
-  46 0x0040c0fc    NONE    FUNC KERNEL32.dll_TerminateProcess
-  47 0x0040c100    NONE    FUNC KERNEL32.dll_GetModuleHandleW
-  48 0x0040c104    NONE    FUNC KERNEL32.dll_QueryPerformanceCounter
-  49 0x0040c108    NONE    FUNC KERNEL32.dll_GetCurrentProcessId
-  50 0x0040c10c    NONE    FUNC KERNEL32.dll_GetSystemTimeAsFileTime
-  51 0x0040c110    NONE    FUNC KERNEL32.dll_GetTickCount
-  52 0x0040c114    NONE    FUNC KERNEL32.dll_RegEnumKeyExW
-  53 0x0040c118    NONE    FUNC KERNEL32.dll_RegSetValueExW
-  54 0x0040c11c    NONE    FUNC KERNEL32.dll_RegCreateKeyExW
-  55 0x0040c120    NONE    FUNC KERNEL32.dll_GetLastError
-   1 0x0040c13c    NONE    FUNC USER32.dll_SendNotifyMessageW
-   2 0x0040c140    NONE    FUNC USER32.dll_GetKeyState
-   3 0x0040c144    NONE    FUNC USER32.dll_SendInput
-   4 0x0040c148    NONE    FUNC USER32.dll_GetWindowThreadProcessId
-   5 0x0040c14c    NONE    FUNC USER32.dll_SetDesktopColorTransform
-   6 0x0040c150    NONE    FUNC USER32.dll_SystemParametersInfoW
-   7 0x0040c154    NONE    FUNC USER32.dll_GetUserObjectInformationW
-   8 0x0040c158    NONE    FUNC USER32.dll_GetThreadDesktop
-   9 0x0040c15c    NONE    FUNC USER32.dll_GetShellWindow
-  10 0x0040c160    NONE    FUNC USER32.dll_UnregisterClassA
-   1 0x0040c170    NONE    FUNC msvcrt.dll__controlfp
-   2 0x0040c174    NONE    FUNC msvcrt.dll__except_handler4_common
-   3 0x0040c178    NONE    FUNC msvcrt.dll__initterm
-   4 0x0040c17c    NONE    FUNC msvcrt.dll___setusermatherr
-   5 0x0040c180    NONE    FUNC msvcrt.dll___p__fmode
-   6 0x0040c184    NONE    FUNC msvcrt.dll___CxxFrameHandler3
-   7 0x0040c188    NONE    FUNC msvcrt.dll_memcpy_s
-   8 0x0040c18c    NONE    FUNC msvcrt.dll_memmove_s
-   9 0x0040c190    NONE    FUNC msvcrt.dll__wtoi
-  10 0x0040c194    NONE    FUNC msvcrt.dll_wcsrchr
-  11 0x0040c198    NONE    FUNC msvcrt.dll__vsnwprintf
-  12 0x0040c19c    NONE    FUNC msvcrt.dll_wcsspn
-  13 0x0040c1a0    NONE    FUNC msvcrt.dll_wcscspn
-  14 0x0040c1a4    NONE    FUNC msvcrt.dll__wcslwr_s
-  15 0x0040c1a8    NONE    FUNC msvcrt.dll__ltow_s
-  16 0x0040c1ac    NONE    FUNC msvcrt.dll__callnewh
-  17 0x0040c1b0    NONE    FUNC msvcrt.dll_memset
-  18 0x0040c1b4    NONE    FUNC msvcrt.dll_??1type_info@@UAE@XZ
-  19 0x0040c1b8    NONE    FUNC msvcrt.dll__lock
-  20 0x0040c1bc    NONE    FUNC msvcrt.dll__unlock
-  21 0x0040c1c0    NONE    FUNC msvcrt.dll___dllonexit
-  22 0x0040c1c4    NONE    FUNC msvcrt.dll__onexit
-  23 0x0040c1c8    NONE    FUNC msvcrt.dll_?terminate@@YAXXZ
-  24 0x0040c1cc    NONE    FUNC msvcrt.dll__cexit
-  25 0x0040c1d0    NONE    FUNC msvcrt.dll__exit
-  26 0x0040c1d4    NONE    FUNC msvcrt.dll_exit
-  27 0x0040c1d8    NONE    FUNC msvcrt.dll___set_app_type
-  28 0x0040c1dc    NONE    FUNC msvcrt.dll___wgetmainargs
-  29 0x0040c1e0    NONE    FUNC msvcrt.dll__amsg_exit
-  30 0x0040c1e4    NONE    FUNC msvcrt.dll___p__commode
-  31 0x0040c1e8    NONE    FUNC msvcrt.dll__XcptFilter
-  32 0x0040c1ec    NONE    FUNC msvcrt.dll_malloc
-  33 0x0040c1f0    NONE    FUNC msvcrt.dll_free
-  34 0x0040c1f4    NONE    FUNC msvcrt.dll_wcscpy_s
-  35 0x0040c1f8    NONE    FUNC msvcrt.dll__wcsicmp
-  36 0x0040c1fc    NONE    FUNC msvcrt.dll__CxxThrowException
-   1 0x0040c204    NONE    FUNC ntdll.dll_NtQueryWnfStateData
-   2 0x0040c208    NONE    FUNC ntdll.dll_WinSqmAddToStream
-   3 0x0040c20c    NONE    FUNC ntdll.dll_WinSqmIsOptedIn
-   1 0x0040c128    NONE    FUNC SHELL32.dll_ShellExecuteW
- 460 0x0040c130    NONE    FUNC SHLWAPI.dll_Ordinal_460
- 461 0x0040c134    NONE    FUNC SHLWAPI.dll_PathFileExistsW
-  65 0x0040c168    NONE    FUNC UxTheme.dll_Ordinal_65
+   1 0x1400042f0    NONE    FUNC msvcrt.dll___C_specific_handler
+   2 0x1400042f8    NONE    FUNC msvcrt.dll__cexit
+   3 0x140004300    NONE    FUNC msvcrt.dll___setusermatherr
+   4 0x140004308    NONE    FUNC msvcrt.dll_exit
+   5 0x140004310    NONE    FUNC msvcrt.dll__fmode
+   6 0x140004318    NONE    FUNC msvcrt.dll__commode
+   7 0x140004320    NONE    FUNC msvcrt.dll__initterm
+   8 0x140004328    NONE    FUNC msvcrt.dll__exit
+   9 0x140004330    NONE    FUNC msvcrt.dll___iob_func
+  10 0x140004338    NONE    FUNC msvcrt.dll__get_osfhandle
+  11 0x140004340    NONE    FUNC msvcrt.dll__wcsicmp
+  12 0x140004348    NONE    FUNC msvcrt.dll_fflush
+  13 0x140004350    NONE    FUNC msvcrt.dll__setmode
+  14 0x140004358    NONE    FUNC msvcrt.dll__write
+  15 0x140004360    NONE    FUNC msvcrt.dll__fileno
+  16 0x140004368    NONE    FUNC msvcrt.dll_wcschr
+  17 0x140004370    NONE    FUNC msvcrt.dll_fgetpos
+  18 0x140004378    NONE    FUNC msvcrt.dll_fwprintf
+  19 0x140004380    NONE    FUNC msvcrt.dll_?terminate@@YAXXZ
+  20 0x140004388    NONE    FUNC msvcrt.dll___wgetmainargs
+  21 0x140004390    NONE    FUNC msvcrt.dll__amsg_exit
+  22 0x140004398    NONE    FUNC msvcrt.dll__XcptFilter
+  23 0x1400043a0    NONE    FUNC msvcrt.dll_wcstoul
+  24 0x1400043a8    NONE    FUNC msvcrt.dll_iswctype
+  25 0x1400043b0    NONE    FUNC msvcrt.dll_memcpy
+  26 0x1400043b8    NONE    FUNC msvcrt.dll___set_app_type
+  27 0x1400043c0    NONE    FUNC msvcrt.dll_memset
+   1 0x140004198    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_SetConsoleCtrlHandler
+   2 0x1400041a0    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_GetConsoleMode
+   1 0x140004278    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegOpenKeyExW
+   2 0x140004280    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegQueryValueExW
+   3 0x140004288    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegCloseKey
+   1 0x140004110    NONE    FUNC IPHLPAPI.DLL_GetIpErrorString
+   2 0x140004118    NONE    FUNC IPHLPAPI.DLL_SetCurrentThreadCompartmentId
+   3 0x140004120    NONE    FUNC IPHLPAPI.DLL_GetIpForwardTable
+   4 0x140004128    NONE    FUNC IPHLPAPI.DLL_IcmpSendEcho2Ex
+   5 0x140004130    NONE    FUNC IPHLPAPI.DLL_IcmpCloseHandle
+   6 0x140004138    NONE    FUNC IPHLPAPI.DLL_Icmp6SendEcho2
+   7 0x140004140    NONE    FUNC IPHLPAPI.DLL_IcmpCreateFile
+   8 0x140004148    NONE    FUNC IPHLPAPI.DLL_Icmp6CreateFile
+   9 0x140004150    NONE    FUNC IPHLPAPI.DLL_InternalIcmpCreateFileEx
+   1 0x140004218    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_SetThreadUILanguage
+   2 0x140004220    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_FormatMessageW
+   1 0x140004160    NONE    FUNC WS2_32.dll_InetNtopW
+   2 0x140004168    NONE    FUNC WS2_32.dll_GetAddrInfoW
+   3 0x140004170    NONE    FUNC WS2_32.dll_GetNameInfoW
+ 116 0x140004178    NONE    FUNC WS2_32.dll_WSACleanup
+ 117 0x140004180    NONE    FUNC WS2_32.dll_FreeAddrInfoW
+ 115 0x140004188    NONE    FUNC WS2_32.dll_WSAStartup
+   1 0x1400041f0    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalFree
+   2 0x1400041f8    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalAlloc
+   1 0x1400042c8    NONE    FUNC api-ms-win-core-synch-l1-2-0.dll_Sleep
+   1 0x1400041b0    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_UnhandledExceptionFilter
+   2 0x1400041b8    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_GetLastError
+   3 0x1400041c0    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_SetUnhandledExceptionFilter
+   1 0x1400043d0    NONE    FUNC ntdll.dll_RtlIpv4StringToAddressW
+   1 0x1400041e0    NONE    FUNC api-ms-win-core-heap-l1-1-0.dll_HeapSetInformation
+   1 0x140004298    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlLookupFunctionEntry
+   2 0x1400042a0    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlCaptureContext
+   3 0x1400042a8    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlVirtualUnwind
+   1 0x140004240    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentThreadId
+   2 0x140004248    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_TerminateProcess
+   3 0x140004250    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcessId
+   4 0x140004258    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcess
+   1 0x140004208    NONE    FUNC api-ms-win-core-libraryloader-l1-2-0.dll_GetModuleHandleW
+   1 0x140004268    NONE    FUNC api-ms-win-core-profile-l1-1-0.dll_QueryPerformanceCounter
+   1 0x1400042d8    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetSystemTimeAsFileTime
+   2 0x1400042e0    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetTickCount
+   1 0x140004230    NONE    FUNC api-ms-win-core-processenvironment-l1-1-0.dll_GetEnvironmentVariableW
+   1 0x1400042b8    NONE    FUNC api-ms-win-core-string-l1-1-0.dll_WideCharToMultiByte
+   1 0x1400041d0    NONE    FUNC api-ms-win-core-file-l1-1-0.dll_GetFileType
 

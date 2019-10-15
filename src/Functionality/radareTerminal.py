@@ -22,6 +22,7 @@ class Terminal(object):
         return self.binaryPath
     
     def openBinary(self):
+        self.promptOut.clear()
         try:
             # open binary file
             self.r = r2.open(self.binaryPath)

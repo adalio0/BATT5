@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1204</width>
-    <height>1008</height>
+    <width>975</width>
+    <height>703</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -498,6 +498,11 @@ background-color: rgb(186, 189, 182);</string>
                   <widget class="QComboBox" name="poiType_dropdown">
                    <item>
                     <property name="text">
+                     <string>Extract All</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
                      <string>Function</string>
                     </property>
                    </item>
@@ -524,11 +529,6 @@ background-color: rgb(186, 189, 182);</string>
                    <item>
                     <property name="text">
                      <string>Struct</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Extract All</string>
                     </property>
                    </item>
                   </widget>
@@ -889,8 +889,8 @@ background-color: rgb(186, 189, 182);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1204</width>
-     <height>26</height>
+     <width>975</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">

@@ -4,10 +4,9 @@ import os
 import sys
 import glob
 import xml.etree.ElementTree as ET
-import json
+from pathlib import Path
 
-# Adal's hardcoded path to BATT5 repo
-sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -43,11 +42,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populateProjectBox()
 
         # Initialize the project properties
+        # Terminal also initialized here
         self.setProject()
-        
-        # Initialize command prompt
-        #self.testCmdDisp()
-        self.terminal = Terminal('PING.EXE', self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
         # ---- Menu Bar ------------------------------------
 
@@ -207,16 +203,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for current in root.iter('Current'):
                     tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
                     root = tree.getroot()
+                    
 
             text = ""
             for p in root.iter('Project'):
                 text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
+                binaryPath = p.get('file')
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
                     text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+                        
             self.window.projectProperties_text.setHtml(text)
+
+            # Set up command prompt
+            self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
         except FileNotFoundError:
             pass
 
