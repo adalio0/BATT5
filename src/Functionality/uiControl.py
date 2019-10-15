@@ -82,8 +82,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
+        # Highlights the searched elements in the project list
+        self.window.projectSearch_lineEdit.returnPressed.connect(self.searchProject)
+
         # Highlights the searched elements in the poi list
-        self.window.poiSearch_lineEdit.returnPressed.connect(self.search_poi)
+        self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
 
         # ---- Plugin Controls -----------------------------
 
@@ -193,7 +196,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
         poi = str(self.window.poiType_dropdown.currentText())
-        staticAnalysis("C:\Windows\System32\ping.exe", poi)
+        # staticAnalysis("C:\Windows\System32\ping.exe", poi)
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
@@ -348,7 +351,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
-    def search_poi(self):
+    def searchProject(self):
+        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
+            self.window.projectNavigator_tree.topLevelItem(i).setBackground(0, QtGui.QBrush(QtCore.Qt.color0))
+
+        search = str(self.window.projectSearch_lineEdit.text())
+        result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
+
+        if search:
+            for item in result:
+                item.setBackground(0, QtGui.QBrush(QtCore.Qt.magenta))
+
+    def searchPoi(self):
         for i in range(self.window.poi_list.count()):
             self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
 
