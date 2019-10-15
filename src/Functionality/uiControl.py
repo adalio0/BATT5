@@ -203,9 +203,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for current in root.iter('Current'):
                     tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
                     root = tree.getroot()
-                    
 
             text = ""
+            binaryPath = ""
             for p in root.iter('Project'):
                 text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
@@ -248,7 +248,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         try:
             staticAnalysis(path, poi)
         except:
-            print("Oopsie")
+            print("Radare2 not installed cannot start static analysis.")
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
@@ -256,6 +256,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.displayPoi(poi)
 
+    # Dispalys POIs in the Analysis box
     def displayPoi(self, poi):
         try:
             if poi == 'Extract All':
@@ -277,6 +278,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Displays the functions extracted from Static Analysis in the POI box
     def displayFunctions(self):
         try:
             f = open("function.txt", "r")
@@ -294,6 +296,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Displays the strings extracted from Static Analysis in the POI box
     def displayString(self):
         try:
             f = open("string.txt", "r")
@@ -310,6 +313,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Displays the variables extracted from Static Analysis in the POI box
     def displayVariable(self):
         try:
             f = open("variable.txt", "r")
@@ -325,6 +329,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Displays the dlls extracted from Static Analysis in the POI box
     def displayDll(self):
         try:
             f = open("dll.txt", "r")
@@ -342,6 +347,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Displays the all extracted pois from Static Analysis in the POI box
     def displayAll(self):
         try:
             f = open("function.txt", "r")
@@ -403,6 +409,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
+    # Search functionality for the project box
     def searchProject(self):
         for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
             self.window.projectNavigator_tree.topLevelItem(i).setBackground(0, QtGui.QBrush(QtCore.Qt.color0))
@@ -414,6 +421,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for item in result:
                 item.setBackground(0, QtGui.QBrush(QtCore.Qt.magenta))
 
+    # Search functionality for the poi box
     def searchPoi(self):
         for i in range(self.window.poi_list.count()):
             self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
@@ -426,6 +434,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item.setSelected(True)
                 item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
 
+    # Takes input from user and passes it to the terminal
     def inputCommand(self):
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
         self.terminal.processInput(cmd_in)
