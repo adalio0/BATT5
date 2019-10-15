@@ -4,9 +4,10 @@ import os
 import sys
 import glob
 import xml.etree.ElementTree as ET
+import json
 
 # Adal's hardcoded path to BATT5 repo
-sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
+#sys.path.insert(0, 'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/')
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -22,8 +23,6 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
-
-from src.Functionality.radareTerminal import Terminal
 
 static = False
 dynamic = False
@@ -43,10 +42,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Initialize the project properties
         self.setProject()
-        
-        # Initialize command terminal
-        #self.radareConsole = Terminal('C:/Windows/System32/PING.EXE')
-        self.testCmdDisp()
 
         # ---- Menu Bar ------------------------------------
 
@@ -143,15 +138,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         projects = []
         for file in glob.glob(new_path + "/**/" + '*.xml', recursive=True):
-            if file == (new_path + "/newProject.xml"):
-                pass
-            else:
-                tree = ET.parse(file)
-                root = tree.getroot()
+            tree = ET.parse(file)
+            root = tree.getroot()
 
-                for p in root.iter('Project'):
+            for p in root.iter('Project'):
+                if p.get('name') is not "":
                     projects.append(QTreeWidgetItem([p.get('name')]))
-                    child = QTreeWidgetItem(projects[-1])
+                    child = QTreeWidgetItem(projects[len(projects)-1])
                     child.setText(0, p.get('file'))
 
         tree = self.window.projectNavigator_tree
@@ -168,14 +161,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item = item.replace(" ", "")
             try:
                 file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
+
+                tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', 'current.xml'))
+                root = tree.getroot()
+
+                for current in root.iter('Current'):
+                    current.set('name', (item + '.xml'))
             except IndexError or FileNotFoundError:
                 pass
         else:
-            file = os.path.join(cur_path, '..', 'Configurations', 'newProject.xml')
+            file = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
 
         try:
             tree = ET.parse(file)
             root = tree.getroot()
+
+            if file.endswith('current.xml'):
+                for current in root.iter('Current'):
+                    tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
+                    root = tree.getroot()
 
             text = ""
             for p in root.iter('Project'):
@@ -197,7 +201,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
         poi = str(self.window.poiType_dropdown.currentText())
-        # staticAnalysis("C:\Windows\System32\ping.exe", poi)
+        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
+        root = tree.getroot()
+
+        currentProject = ""
+        for current in root.iter('Current'):
+            currentProject = current.get('name')
+
+        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', currentProject))
+        root = tree.getroot()
+
+        path = ''
+        for p in root.iter('Project'):
+            path = p.get('file')
+
+        try:
+            staticAnalysis(path, poi)
+        except:
+            print("Oopsie")
 
         self.window.analysis_text.clear()
         self.window.analysis_text.clear()
@@ -373,7 +394,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if search:
             for item in result:
                 item.setSelected(True)
-                item.setBackground(QtGui.QBrush(QtCore.Qt.lightgray))
+                item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
 
     # runs Dynamic Analysis
     def runDynamic(self):
