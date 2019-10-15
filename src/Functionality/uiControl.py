@@ -45,7 +45,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.setProject()
         
         # Initialize command terminal
-        self.radareConsole = Terminal('C:/Windows/System32/PING.EXE')
+        #self.radareConsole = Terminal('C:/Windows/System32/PING.EXE')
+        self.testCmdDisp()
 
         # ---- Menu Bar ------------------------------------
 
@@ -481,6 +482,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
+        
+    def testCmdDisp(self):
+        self.window.radareConsole_text.insertPlainText('BATT5$')
+        return 0
 
 
 def main():
