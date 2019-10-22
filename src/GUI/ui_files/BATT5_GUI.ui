@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>975</width>
-    <height>703</height>
+    <height>727</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -229,7 +229,7 @@ background-color: rgb(186, 189, 182);</string>
               <property name="minimumSize">
                <size>
                 <width>300</width>
-                <height>50</height>
+                <height>60</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -267,7 +267,7 @@ background-color: rgb(186, 189, 182);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QListWidget" name="analysis_text"/>
+                <widget class="QTableView" name="POI_tableView"/>
                </item>
               </layout>
              </widget>
@@ -410,7 +410,7 @@ background-color: rgb(186, 189, 182);</string>
               <property name="maximumSize">
                <size>
                 <width>300</width>
-                <height>300</height>
+                <height>150</height>
                </size>
               </property>
               <property name="title">
@@ -428,7 +428,7 @@ background-color: rgb(186, 189, 182);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>16777215</height>
+                   <height>75</height>
                   </size>
                  </property>
                 </widget>
@@ -551,6 +551,12 @@ background-color: rgb(186, 189, 182);</string>
                   <size>
                    <width>275</width>
                    <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                 </widget>
@@ -880,6 +886,19 @@ background-color: rgb(186, 189, 182);</string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="history_tab">
+       <attribute name="title">
+        <string>History</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout"/>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -890,7 +909,7 @@ background-color: rgb(186, 189, 182);</string>
      <x>0</x>
      <y>0</y>
      <width>975</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">
@@ -898,15 +917,7 @@ background-color: rgb(186, 189, 182);</string>
      <string>File</string>
     </property>
     <addaction name="actionNew_Project"/>
-    <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
-    <addaction name="actionSave_as"/>
-    <addaction name="actionSave_Analysis"/>
-   </widget>
-   <widget class="QMenu" name="windows_menu">
-    <property name="title">
-     <string>Windows</string>
-    </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -915,7 +926,6 @@ background-color: rgb(186, 189, 182);</string>
     <addaction name="actionDocumentation"/>
    </widget>
    <addaction name="file_menu"/>
-   <addaction name="windows_menu"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
