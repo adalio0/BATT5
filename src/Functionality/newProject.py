@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QTreeWidgetItem
 from numpy import unicode
 import xml.etree.ElementTree as ET
 import os
+import pymongo
 
 from src.Functionality.project import Project
 from src.GUI.python_files.popups.newProjectWind import NewProject
@@ -54,15 +55,69 @@ class ProjectWindow(QtWidgets.QDialog):
             file = self.window.path_lineEdit.text()
             project.set_file(self, file)
 
+            # Store new project into the database
+            self.insertToDatabase()
+
             # Create xml file for the new project
-            cur_path = os.getcwd()
-            name = name.replace(" ", "")
-            f = os.path.join(cur_path, '..', 'Configurations', name + '.xml')
-            self.createXML(f, cur_path)
+            # cur_path = os.getcwd()
+            # name = name.replace(" ", "")
+            # f = os.path.join(cur_path, '..', 'Configurations', name + '.xml')
+            # self.createXML(f, cur_path)
 
             # close window
             self.accept()
             self.close()
+
+    # ---- Stores the created project into the database -------------------------------
+    def insertToDatabase(self):
+        global project
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['project_data']
+        posts = db['project']
+        data = {
+            'properties': {
+                'name': project.get_name(self),
+                'file': project.get_file(self),
+                'description': project.get_description(self),
+                'os': project.get_os(self),
+                'binary': project.get_binary_type(self),
+                'machine': project.get_machine(self),
+                'class': project.get_class(self),
+                'bits': project.get_bits(self),
+                'language': project.get_language(self),
+                'canary': project.get_canary(self),
+                'crypto': project.get_crypto(self),
+                'nx': project.get_nx(self),
+                'relocs': project.get_relocs(self),
+                'stripped': project.get_stripped(self),
+                'relro': project.get_relro(self)
+            },
+            'static_analysis': {
+                'uncovered_poi': {
+                    'function': {
+                        'associated_plugin': '',
+                        'data': 'stuff',
+                    },
+                    'string': {
+                        'associated_plugin': '',
+                        'data': 'stuff',
+                    },
+                    'variable': {
+                        'associated_plugin': '',
+                        'data': 'stuff',
+                    },
+                    'dll': {
+                        'associated_plugin': '',
+                        'data': 'stuff',
+                    },
+                }
+            },   # End of Static Analysis
+            'dynamic_analysis': {
+
+            }   # End of Dynamic Analysis
+        }
+
+        result = posts.insert_one(data)
 
     # ---- Creates the xml file associated with the new project --------------------------
     def createXML(self, file, cur_path):

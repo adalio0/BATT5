@@ -4,6 +4,7 @@ import os
 import sys
 import glob
 import xml.etree.ElementTree as ET
+import pymongo
 from pathlib import Path
 
 sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -22,7 +23,6 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
-
 from src.Functionality.radareTerminal import Terminal
 
 static = False
@@ -121,6 +121,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Perform static analysis on a binary file
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
+    # ---- Following methods are all the functionality currently implemented into main window -----------------
+
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
         global focus
@@ -152,8 +154,119 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
-    # Initialize the project box with all the current projects
+    # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['project_data']
+        posts = db['project']
+
+        # db.project.drop()
+
+        projects = []
+
+        for x in posts.find():
+            projects.append(QTreeWidgetItem([x['name']]))
+            child = QTreeWidgetItem(projects[len(projects) - 1])
+            child.setText(0, x['file'])
+
+        tree = self.window.projectNavigator_tree
+        tree.addTopLevelItems(projects)
+
+    # Changes the project description according to the current project from database
+    def setProject(self):
+        selected = self.window.projectNavigator_tree.selectedItems()
+
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['project_data']
+        posts = db['project']
+
+        newdb = client['current_project']
+        current = newdb['current']
+
+        data = ""
+        text = ""
+        binaryPath = ""
+        if selected:
+            item = selected[0].text(0)
+            for x in posts.find():
+                if x['name'] == item:
+                    data = {
+                        'properties': {
+                            'id': x['_id'],
+                            'name': x['name'],
+                            'file': x['file'],
+                            'description': x['description'],
+                            'os': x['os'],
+                            'binary': x['binary'],
+                            'machine': x['machine'],
+                            'class': x['class'],
+                            'bits': x['bits'],
+                            'language': x['language'],
+                            'canary': x['canary'],
+                            'crypto': x['crypto'],
+                            'nx': x['nx'],
+                            'relocs': x['relocs'],
+                            'stripped': x['stripped'],
+                            'relro': x['relro']
+                        },  # End of Properties
+
+                        'static_analysis': {
+                            'uncovered_poi': {
+                                'function': {
+                                    'associated_plugin': '',
+                                    'data': 'stuff',
+                                },
+                                'string': {
+                                    'associated_plugin': '',
+                                    'data': 'stuff',
+                                },
+                                'variable': {
+                                    'associated_plugin': '',
+                                    'data': 'stuff',
+                                },
+                                'dll': {
+                                    'associated_plugin': '',
+                                    'data': 'stuff',
+                                },
+                            }
+                        },  # End of Static Analysis
+
+                        'dynamic_analysis': {
+
+                        }  # End of Dynamic Analysis
+                    }
+            newdb.current.drop()
+            try:
+                result = current.insert_one(data)
+            except TypeError:
+                pass
+
+        for p in current.find():
+            text = "<font size=2> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
+            text += "<b>Project Properties</b>: <br>"
+            text += "<b>" + "Os" + "</b>: " + p.get('properties', {}).get('os') + "<br>"
+            text += "<b>" + "Binary" + "</b>: " + p.get('properties', {}).get('binary') + "<br>"
+            text += "<b>" + "Machine" + "</b>: " + p.get('properties', {}).get('machine') + "<br>"
+            text += "<b>" + "Class" + "</b>: " + p.get('properties', {}).get('class') + "<br>"
+            text += "<b>" + "Bits" + "</b>: " + p.get('properties', {}).get('bits') + "<br>"
+            text += "<b>" + "Language" + "</b>: " + p.get('properties', {}).get('language') + "<br>"
+            text += "<b>" + "Canary" + "</b>: " + p.get('properties', {}).get('canary') + "<br>"
+            text += "<b>" + "Crypto" + "</b>: " + p.get('properties', {}).get('crypto') + "<br>"
+            text += "<b>" + "Nx" + "</b>: " + p.get('properties', {}).get('nx') + "<br>"
+            text += "<b>" + "Relocs" + "</b>: " + p.get('properties', {}).get('relocs') + "<br>"
+            text += "<b>" + "Stripped" + "</b>: " + p.get('properties', {}).get('stripped') + "<br>"
+            text += "<b>" + "Relro" + "</b>: " + p.get('properties', {}).get('relro') + "<br> </font>"
+
+        self.window.projectProperties_text.setHtml(text)
+
+        for x in current.properties.find():
+            binaryPath = str(x['file'])
+
+        # Set up command prompt
+        self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
+    # Initialize the project box with all the current projects
+    def populateProjectBox_xml(self):
         cur_path = os.getcwd()
         new_path = os.path.join(cur_path, '..', 'Configurations')
 
@@ -165,14 +278,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for p in root.iter('Project'):
                 if p.get('name') is not "":
                     projects.append(QTreeWidgetItem([p.get('name')]))
-                    child = QTreeWidgetItem(projects[len(projects)-1])
+                    child = QTreeWidgetItem(projects[len(projects) - 1])
                     child.setText(0, p.get('file'))
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
 
     # Changes the project description according to the current project
-    def setProject(self):
+    def setProject_xml(self):
         selected = self.window.projectNavigator_tree.selectedItems()
         cur_path = os.getcwd()
 
@@ -214,7 +327,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
                     text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
-                        
+
             self.window.projectProperties_text.setHtml(text)
 
             # Set up command prompt
@@ -223,8 +336,35 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
-    # runs Static Analysis
+    # runs Static Analysis w/ database stuff
     def runStatic(self):
+        global static
+        static = True
+        self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+        self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
+        poi = str(self.window.poiType_dropdown.currentText())
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['current_project']
+        current = db['current']
+
+        path = ''
+        for p in current.find():
+            path = p['file']
+
+        try:
+            staticAnalysis(path, poi)
+        except:
+            print("Radare2 not installed cannot start static analysis.")
+
+        self.window.analysis_text.clear()
+        self.window.analysis_text.clear()
+        self.window.poi_list.clear()
+
+        self.displayPoi(poi)
+
+    # runs Static Analysis
+    def runStatic_xml(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -256,7 +396,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.displayPoi(poi)
 
-    # Dispalys POIs in the Analysis box
+    # Displays POIs in the Analysis box
     def displayPoi(self, poi):
         try:
             if poi == 'Extract All':
@@ -453,6 +593,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             dynamic = False
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
+    # ---- Following methods are for calling and showing the different windows ------------------------
+
     # Shows NewProject window
     def showNewProject(self):
         self.ui = ProjectWindow()
@@ -519,6 +661,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
         _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+
+    # ---- Following methods are for misc. stuff -------------------------------------------------
 
     # Will save the current modifications of the file TODO: testing not final
     def Save(self):
