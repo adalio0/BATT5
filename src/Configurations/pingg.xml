@@ -1,5 +1,5 @@
 <data>
-	<Project description="pinggg" file="C:/Windows/System32/PING.EXE" name="ping">
+	<Project description="pingggg" file="C:/Windows/System32/PING.EXE" name="pingg">
 		<OS maxOccurs="1" name="some os data" use="required" />
 		<BinaryType maxOccurs="1" name="some binary data" />
 		<Machine maxOccurs="1" name="some machine data" />
