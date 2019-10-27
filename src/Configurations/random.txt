@@ -1,15 +1,15 @@
-Project Description: This is a description of the project that is currently selected. 
+Project Description: fasdf
 
 Project Properties: 
-OS: 
-BinaryType: 
-Machine: 
-Class: 
-Bits: 
-Language: 
-Canery: 
-Crypto: 
-Nx: 
-Relocs: 
-Stripped: 
-Relro: 
+Os: some os data
+Binary: some binary data
+Machine: some machine data
+Class: some class data
+Bits: some bit data
+Language: some language data
+Canary: some canary data
+Crypto: some crypto data
+Nx: some nx data
+Relocs: some relocs data
+Stripped: some stripped data
+Relro: some relro data

@@ -192,7 +192,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if x['name'] == item:
                     data = {
                         'properties': {
-                            'id': x['_id'],
                             'name': x['name'],
                             'file': x['file'],
                             'description': x['description'],
@@ -259,8 +258,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.window.projectProperties_text.setHtml(text)
 
-        for x in current.properties.find():
-            binaryPath = str(x['file'])
+        for p in current.find():
+            binaryPath = p.get('properties', {}).get('file')
 
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
@@ -350,15 +349,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         path = ''
         for p in current.find():
-            path = p['file']
+            path = p.get('properties', {}).get('file')
 
         try:
             staticAnalysis(path, poi)
         except:
             print("Radare2 not installed cannot start static analysis.")
 
-        self.window.analysis_text.clear()
-        self.window.analysis_text.clear()
+        # self.window.analysis_text.clear()
         self.window.poi_list.clear()
 
         self.displayPoi(poi)
@@ -391,7 +389,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             print("Radare2 not installed cannot start static analysis.")
 
         self.window.analysis_text.clear()
-        self.window.analysis_text.clear()
         self.window.poi_list.clear()
 
         self.displayPoi(poi)
@@ -405,7 +402,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 f = open(poi.lower() + ".txt", "r")
 
                 for line in f.read().split("\n\n")[:]:
-                    self.window.analysis_text.addItem(line)
+                    print("")
+                    #self.window.analysis_text.addItem(line)
 
                 if poi == 'Function':
                     self.displayFunctions()
