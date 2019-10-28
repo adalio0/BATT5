@@ -6,7 +6,7 @@ import glob
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
