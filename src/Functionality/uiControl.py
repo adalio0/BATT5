@@ -89,6 +89,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Executes the input command in the radare prompt
         self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
+        # When changing POI type in the drop down will update whats displayed
+        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
+
         # ---- Plugin Controls -----------------------------
 
         # Clicking on Generate Script button calls showOutputWindow method
@@ -165,9 +168,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         projects = []
 
         for x in posts.find():
-            projects.append(QTreeWidgetItem([x['name']]))
+            projects.append(QTreeWidgetItem([x.get('properties', {})['name']]))
             child = QTreeWidgetItem(projects[len(projects) - 1])
-            child.setText(0, x['file'])
+            child.setText(0, x.get('properties', {})['file'])
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
@@ -189,43 +192,46 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if selected:
             item = selected[0].text(0)
             for x in posts.find():
-                if x['name'] == item:
+                prop = x.get('properties', {})
+                if prop['name'] == item:
+                    stats = x.get('static_analysis', {}).get('uncovered_poi', {})
+
                     data = {
                         'properties': {
-                            'name': x['name'],
-                            'file': x['file'],
-                            'description': x['description'],
-                            'os': x['os'],
-                            'binary': x['binary'],
-                            'machine': x['machine'],
-                            'class': x['class'],
-                            'bits': x['bits'],
-                            'language': x['language'],
-                            'canary': x['canary'],
-                            'crypto': x['crypto'],
-                            'nx': x['nx'],
-                            'relocs': x['relocs'],
-                            'stripped': x['stripped'],
-                            'relro': x['relro']
+                            'name': prop['name'],
+                            'file': prop['file'],
+                            'description': prop['description'],
+                            'os': prop['os'],
+                            'binary': prop['binary'],
+                            'machine': prop['machine'],
+                            'class': prop['class'],
+                            'bits': prop['bits'],
+                            'language': prop['language'],
+                            'canary': prop['canary'],
+                            'crypto': prop['crypto'],
+                            'nx': prop['nx'],
+                            'relocs': prop['relocs'],
+                            'stripped': prop['stripped'],
+                            'relro': prop['relro']
                         },  # End of Properties
 
                         'static_analysis': {
                             'uncovered_poi': {
                                 'function': {
-                                    'associated_plugin': '',
-                                    'data': 'stuff',
+                                    'associated_plugin': stats.get('function')['associated_plugin'],
+                                    'data': stats.get('function')['data']
                                 },
                                 'string': {
-                                    'associated_plugin': '',
-                                    'data': 'stuff',
+                                    'associated_plugin': stats.get('string')['associated_plugin'],
+                                    'data': stats.get('string')['data']
                                 },
                                 'variable': {
-                                    'associated_plugin': '',
-                                    'data': 'stuff',
+                                    'associated_plugin': stats.get('variable')['associated_plugin'],
+                                    'data': stats.get('variable')['data']
                                 },
                                 'dll': {
-                                    'associated_plugin': '',
-                                    'data': 'stuff',
+                                    'associated_plugin': stats.get('dll')['associated_plugin'],
+                                    'data': stats.get('dll')['data']
                                 },
                             }
                         },  # End of Static Analysis
@@ -342,7 +348,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        poi = str(self.window.poiType_dropdown.currentText())
         client = pymongo.MongoClient("mongodb://localhost:27017")
         db = client['current_project']
         current = db['current']
@@ -352,14 +357,26 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             path = p.get('properties', {}).get('file')
 
         try:
-            staticAnalysis(path, poi)
+            # function, string, variable, dll = staticAnalysis(path)
+            poi = []
+            for points in staticAnalysis(path):
+                poi.append(points)
+
+            analysis = ''
+            for x in current.find():
+                analysis = x.get('static_analysis', {}).get('uncovered_poi', {})
+
+            i = 0
+            for key in analysis:
+                func = analysis.get(key, {})
+                func['associated_plugin'] = str(self.window.poiType_dropdown.currentText())
+                func['data'] = poi[i]
+                print(poi[i])
+                i += 1
         except:
             print("Radare2 not installed cannot start static analysis.")
 
-        # self.window.analysis_text.clear()
-        self.window.poi_list.clear()
-
-        self.displayPoi(poi)
+        self.displayPoi()
 
     # runs Static Analysis
     def runStatic_xml(self):
@@ -368,7 +385,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        poi = str(self.window.poiType_dropdown.currentText())
         tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
         root = tree.getroot()
 
@@ -384,26 +400,47 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             path = p.get('file')
 
         try:
-            staticAnalysis(path, poi)
+            staticAnalysis(path)
         except:
             print("Radare2 not installed cannot start static analysis.")
 
-        self.window.analysis_text.clear()
+        self.displayPoi()
+
+    # Dispalys POIs in the Analysis box
+    def displayPoi(self):
+        self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
+        poi = str(self.window.poiType_dropdown.currentText())
 
-        self.displayPoi(poi)
-
-    # Displays POIs in the Analysis box
-    def displayPoi(self, poi):
         try:
             if poi == 'Extract All':
                 self.displayAll()
             else:
-                f = open(poi.lower() + ".txt", "r")
+                client = pymongo.MongoClient("mongodb://localhost:27017")
+                db = client['current_project']
+                current = db['current']
 
-                for line in f.read().split("\n\n")[:]:
-                    print("")
-                    #self.window.analysis_text.addItem(line)
+                data = ''
+                for x in current.find():
+                    data = x.get('static_analysis', {}).get('uncovered_poi', {})
+
+                for key in data:
+                    if key == poi.lower():
+                        self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
+                        self.window.POI_tableWidget.setColumnCount(1)
+                        content = data.get(key, {})['data']
+
+                        entries = []
+                        i = 0
+                        try:
+                            for subkey in content:
+                                entries.append(content[subkey])
+                                self.window.POI_tableWidget.setRowCount(len(entries))
+                                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content[subkey])))
+                                i += 1
+                                self.window.POI_tableWidget.resizeColumnToContents(0)
+                        except TypeError:
+                            pass
 
                 if poi == 'Function':
                     self.displayFunctions()
@@ -413,7 +450,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.displayVariable()
                 elif poi == 'DLL':
                     self.displayDll()
-                f.close()
         except FileNotFoundError:
             pass
 
@@ -428,7 +464,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = QListWidgetItem(line)
 
                 if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
+                    item.setCheckState(QtCore.Qt.Checked)
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
@@ -482,7 +518,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = QListWidgetItem(line)
 
                 if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
+                    item.setCheckState(QtCore.Qt.Checked)
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
@@ -496,15 +532,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             f = open("function.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
+            self.window.POI_tableWidget.setColumnCount(4)
+
+            entries = []
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
-
+                entries.append(line)
+                self.window.POI_tableWidget.setRowCount(len(entries))
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
+                    self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(str(line)))
+                    j += 1
+                    self.window.POI_tableWidget.resizeColumnToContents(0)
                 else:
                     i += 1
 
@@ -513,13 +558,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                # rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ", 9)[-1]
                 item = QListWidgetItem(line)
 
                 if i > 1:
                     self.window.poi_list.addItem(item)
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(str(line)))
+                    j += 1
+                    self.window.POI_tableWidget.resizeColumnToContents(1)
                 else:
                     i += 1
 
@@ -527,13 +577,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             f = open("variable.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                # rowPos = self.window.POI_tableWidget.rowCount()
                 try:
                     line = line.split(" ")[1]
                     item = QListWidgetItem(line)
 
                     self.window.poi_list.addItem(item)
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(str(line)))
+                    j += 1
+                    self.window.POI_tableWidget.resizeColumnToContents(2)
                 except IndexError:
                     pass
 
@@ -542,14 +597,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
 
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(str(line)))
+                    j += 1
+                    self.window.POI_tableWidget.resizeColumnToContents(3)
                 else:
                     i += 1
         except FileNotFoundError:
