@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
@@ -99,9 +101,12 @@ class Ui_BATT5(object):
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.POI_tableView = QtWidgets.QTableView(self.analysis_box)
-        self.POI_tableView.setObjectName("POI_tableView")
-        self.verticalLayout_16.addWidget(self.POI_tableView)
+        self.POI_tableWidget = QtWidgets.QTableWidget(self.analysis_box)
+        self.POI_tableWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.POI_tableWidget.setObjectName("POI_tableWidget")
+        self.POI_tableWidget.setColumnCount(0)
+        self.POI_tableWidget.setRowCount(0)
+        self.verticalLayout_16.addWidget(self.POI_tableWidget)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.analysis_tab)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 225))
@@ -123,6 +128,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
@@ -132,6 +140,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -141,6 +152,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.radareConsoleIn_lineEdit.setPalette(palette)
         self.radareConsoleIn_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
         self.radareConsoleIn_lineEdit.setObjectName("radareConsoleIn_lineEdit")
@@ -355,7 +369,7 @@ class Ui_BATT5(object):
         self.verticalLayout_13.addWidget(self.central_tabs)
         BATT5.setCentralWidget(self.central_layout)
         self.menubar = QtWidgets.QMenuBar(BATT5)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 975, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 975, 21))
         self.menubar.setObjectName("menubar")
         self.file_menu = QtWidgets.QMenu(self.menubar)
         self.file_menu.setObjectName("file_menu")
@@ -456,3 +470,12 @@ class Ui_BATT5(object):
         self.actionDocumentation.setText(_translate("BATT5", "Documentation"))
         self.actionSave_Analysis_2.setText(_translate("BATT5", "Save Analysis"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    BATT5 = QtWidgets.QMainWindow()
+    ui = Ui_BATT5()
+    ui.setupUi(BATT5)
+    BATT5.show()
+    sys.exit(app.exec_())
