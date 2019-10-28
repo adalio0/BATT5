@@ -1,4 +1,7 @@
 [Imports]
+
+Num  Vaddr       Bind      Type Name
+
    1 0x1400042f8    NONE    FUNC msvcrt.dll___C_specific_handler
    2 0x140004300    NONE    FUNC msvcrt.dll__cexit
    3 0x140004308    NONE    FUNC msvcrt.dll___setusermatherr
