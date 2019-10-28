@@ -106,13 +106,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+        self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
-        
         # ---- Select listener ------------------------------
 
         self.window.projectSearch_lineEdit.installEventFilter(self)
