@@ -413,6 +413,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.displayVariable()
                 elif poi == 'DLL':
                     self.displayDll()
+                f.close()
         except FileNotFoundError:
             pass
 
@@ -431,6 +432,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -448,6 +450,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -464,6 +467,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 except IndexError:
                     pass
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -482,6 +486,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -503,6 +508,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 else:
                     i += 1
 
+            f.close()
             f = open("string.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
@@ -517,6 +523,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 else:
                     i += 1
 
+            f.close()
             f = open("variable.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
@@ -530,6 +537,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 except IndexError:
                     pass
 
+            f.close()
             f = open("dll.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
