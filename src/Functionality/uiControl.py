@@ -6,7 +6,7 @@ import glob
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-#sys.path.insert(0, Path(__file__).parents[2].as_posix())
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -108,6 +108,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
+        # ---- View Box ------------------------------------
+        self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
+        self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
+
+        
         # ---- Select listener ------------------------------
 
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -573,6 +578,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
+        
+    # From current to history
+    def switchToHistory(self):
+        self.window.changeViews_stack.setCurrentIndex(1)
+        
+    def switchToCurrent(self):
+        self.window.changeViews_stack.setCurrentIndex(0)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
