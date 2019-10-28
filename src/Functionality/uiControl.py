@@ -247,8 +247,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except:
             print("Radare2 not installed cannot start static analysis.")
 
-        self.window.analysis_text.clear()
-        self.window.analysis_text.clear()
+        
+        self.window.POI_tableWidget.clear()
+        
         self.window.poi_list.clear()
 
         self.displayPoi(poi)
@@ -262,7 +263,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 f = open(poi.lower() + ".txt", "r")
 
                 for line in f.read().split("\n\n")[:]:
-                    self.window.analysis_text.addItem(line)
+                    self.window.POI_tableWidget.addItem(line)
 
                 if poi == 'Function':
                     self.displayFunctions()
@@ -350,42 +351,62 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             f = open("function.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions","Strings","Variables","DLL's"])           
+            self.window.POI_tableWidget.setColumnCount(4)
+
+
+            entries=[]
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
-
+                entries.append(line)
+                self.window.POI_tableWidget.setRowCount(len(entries))
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
+                    self.window.POI_tableWidget.setItem(j,0,QTableWidgetItem(str(line)))
+                    j+=1
+                    self.window.POI_tableWidget.resizeColumnToContents(0)
                 else:
                     i += 1
 
             f = open("string.txt", "r")
-
+            
             self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                #rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ", 9)[-1]
                 item = QListWidgetItem(line)
-
+                
                 if i > 1:
                     self.window.poi_list.addItem(item)
+                    #self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j,1,QTableWidgetItem(str(line)))
+                    j+=1
+                    self.window.POI_tableWidget.resizeColumnToContents(1)
                 else:
                     i += 1
 
             f = open("variable.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+            j=0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                #rowPos = self.window.POI_tableWidget.rowCount()
                 try:
                     line = line.split(" ")[1]
                     item = QListWidgetItem(line)
 
                     self.window.poi_list.addItem(item)
+                    #self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j,2,QTableWidgetItem(str(line)))
+                    j+=1
+                    self.window.POI_tableWidget.resizeColumnToContents(2)
                 except IndexError:
                     pass
 
@@ -393,14 +414,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
             i = 0
+            j = 0
             for line in f.read().split("\n\n")[:]:
-                self.window.analysis_text.addItem(line)
+                rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
 
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
+                    #self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j,3,QTableWidgetItem(str(line)))
+                    j+=1
+                    self.window.POI_tableWidget.resizeColumnToContents(3)
                 else:
                     i += 1
         except FileNotFoundError:
