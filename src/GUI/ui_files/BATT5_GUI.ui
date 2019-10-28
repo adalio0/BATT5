@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>975</width>
-    <height>727</height>
+    <width>978</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -156,7 +156,7 @@ p, li { white-space: pre-wrap; }
               </layout>
              </widget>
             </item>
-            <item alignment="Qt::AlignLeft">
+            <item>
              <widget class="QGroupBox" name="analyisisControls_box">
               <property name="minimumSize">
                <size>
@@ -414,19 +414,6 @@ background-color: rgb(186, 189, 182);</string>
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <spacer name="commentButton_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
                   <widget class="QPushButton" name="commentClear_button">
                    <property name="text">
                     <string>Clear</string>
@@ -650,210 +637,7 @@ background-color: rgb(186, 189, 182);</string>
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="detailed_layout">
-          <item>
-           <widget class="QGroupBox" name="dpm_box">
-            <property name="title">
-             <string>Detailed Plugin Management</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_15">
-             <item>
-              <layout class="QGridLayout" name="dpm_layout">
-               <item row="1" column="0">
-                <widget class="QLabel" name="dpmPluginStructure_label">
-                 <property name="text">
-                  <string>Plugin Structure</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="dpmPoi_label">
-                 <property name="text">
-                  <string>Points of Interest</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="dpmPluginPredefined_label">
-                 <property name="text">
-                  <string>Plugin Predefined Data Set</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="dpmPluginDescription_label">
-                 <property name="text">
-                  <string>Plugin Description</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="dpmPluginName_label">
-                 <property name="text">
-                  <string>Plugin Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="dpmDefaultOutputField_label">
-                 <property name="text">
-                  <string>Default Output Field</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="dpmPluginPredefined_lineEdit"/>
-               </item>
-               <item row="8" column="0">
-                <widget class="QPushButton" name="dpmDelete_button">
-                 <property name="text">
-                  <string>Delete</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
-               </item>
-               <item row="6" column="1">
-                <widget class="QTextEdit" name="dpmPoi_textEdit">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>75</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QTextEdit" name="dpmPluginDescription_textEdit">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>75</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="dpmPluginStructure_lineEdit"/>
-               </item>
-               <item row="8" column="2">
-                <widget class="QPushButton" name="dpmSave_button">
-                 <property name="text">
-                  <string>Save</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="1">
-                <spacer name="dpm_verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="2">
-                <widget class="QPushButton" name="dpmPluginStructure_button">
-                 <property name="text">
-                  <string>Browse</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QPushButton" name="dpmPluginPredefined_button">
-                 <property name="text">
-                  <string>Browse</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QComboBox" name="dpm_comboBox">
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>200</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="dpoim_box">
-            <property name="title">
-             <string>Detailed Points of Interest Management</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_18">
-             <item>
-              <layout class="QGridLayout" name="dpoim_topGrid">
-               <item row="1" column="0">
-                <widget class="QLabel" name="dpoimPoiType_label">
-                 <property name="text">
-                  <string>Point of Interest Type</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QComboBox" name="dpoimPoiType_dropdown"/>
-               </item>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="dpoimPlugin_dropdown"/>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="dpoimPlugin_label">
-                 <property name="text">
-                  <string>Plugin</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QTextEdit" name="dpoim_text"/>
-             </item>
-             <item>
-              <layout class="QGridLayout" name="dpoim_lowGrid">
-               <item row="0" column="1">
-                <spacer name="dpoim_horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="0">
-                <widget class="QPushButton" name="dpoimDelete_button">
-                 <property name="text">
-                  <string>Delete</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QPushButton" name="dpoimSave_button">
-                 <property name="text">
-                  <string>Save</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QVBoxLayout" name="detailed_layout"/>
         </item>
        </layout>
       </widget>
@@ -866,7 +650,7 @@ background-color: rgb(186, 189, 182);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>975</width>
+     <width>978</width>
      <height>26</height>
     </rect>
    </property>
