@@ -94,7 +94,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Generate Script button calls showOutputWindow method
         self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
-        # Clicking on Run Dynamic Analysis button calls runDynamic method
+        # Clicking on Run Static Analysis button calls runStatic method
+        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
+
+        # Clicking on Run Static Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -103,7 +106,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -542,7 +545,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer to select a file for Project Predefined line edit
     def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        self.window.dpoimPredefined_lineEdit.setText(name)
+        self.window.dpmPluginPredefined_lineEdit.setText(name)
 
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
