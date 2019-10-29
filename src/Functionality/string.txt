@@ -1,27 +1,0 @@
-[Strings]
-Num Paddr      Vaddr      Len Size Section  Type  String
-000 0x00003cea 0x004070ea   5  12 (.rsrc) utf16le MUI㼼浸 blocks=Basic Latin,CJK Unified Ideographs Extension A,CJK Unified Ideographs
-001 0x00003cf6 0x004070f6 715 716 (.rsrc) ascii version="1.0" encoding="UTF-8" standalone="yes"?>\r\n<!-- Copyright (c) Microsoft Corporation -->\r\n<assembly xmlns="urn:schemas-microsoft-com:asm.v1"\r\n manifestVersion="1.0"> \r\n\r\n  <assemblyIdentity version="5.1.0.0"\r\n     processorArchitecture="x86"\r\n     name="Microsoft.Windows.Net.ping"\r\n     type="win32"/> \r\n\r\n  <description>ping - ping command line tool.</description> \r\n\r\n  <!-- Identify the application security requirements. -->\r\n\r\n  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">\r\n    <security>\r\n      <requestedPrivileges>\r\n        <requestedExecutionLevel\r\n          level="asInvoker"\r\n          uiAccess="false"/>\r\n        </requestedPrivileges>\r\n       </security>\r\n  </trustInfo>\r\n\r\n</assembly>
-002 0x00003fd2 0x004073d2  13  28 (.rsrc) utf16le _VERSION_INFO
-003 0x0000402a 0x0040742a  14  30 (.rsrc) utf16le StringFileInfo
-004 0x0000404e 0x0040744e   8  18 (.rsrc) utf16le 040904B0
-005 0x00004066 0x00407466  11  24 (.rsrc) utf16le CompanyName
-006 0x00004080 0x00407480  21  44 (.rsrc) utf16le Microsoft Corporation
-007 0x000040b2 0x004074b2  15  32 (.rsrc) utf16le FileDescription
-008 0x000040d4 0x004074d4  19  40 (.rsrc) utf16le TCP/IP Ping Command
-009 0x00004102 0x00407502  11  24 (.rsrc) utf16le FileVersion
-010 0x0000411c 0x0040751c  35  72 (.rsrc) utf16le 10.0.17134.1 (WinBuild.160101.0800)
-011 0x0000416a 0x0040756a  12  26 (.rsrc) utf16le InternalName
-012 0x00004184 0x00407584   8  18 (.rsrc) utf16le ping.exe
-013 0x0000419e 0x0040759e  14  30 (.rsrc) utf16le LegalCopyright
-014 0x000041be 0x004075be  44  90 (.rsrc) utf16le  Microsoft Corporation. All rights reserved.
-015 0x0000421e 0x0040761e  16  34 (.rsrc) utf16le OriginalFilename
-016 0x00004240 0x00407640   8  18 (.rsrc) utf16le ping.exe
-017 0x0000425a 0x0040765a  11  24 (.rsrc) utf16le ProductName
-018 0x00004274 0x00407674  36  74 (.rsrc) utf16le Microsoft® Windows® Operating System blocks=Basic Latin,Latin-1 Supplement
-019 0x000042c6 0x004076c6  14  30 (.rsrc) utf16le ProductVersion
-020 0x000042e4 0x004076e4  12  26 (.rsrc) utf16le 10.0.17134.1
-021 0x00004308 0x00407708  10  22 (.rsrc) utf16le arFileInfo
-022 0x00004326 0x00407726  11  24 (.rsrc) utf16le Translation
-023 0x00004410 0x00407810   5  12 (.rsrc) utf16le en-US
-

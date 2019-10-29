@@ -13,6 +13,7 @@ from PyQt5.QtCore import QEvent
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 from src.Functionality.project import Project
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -360,10 +361,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             f = open("function.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions","Strings","Variables","DLL's"])           
             self.window.POI_tableWidget.setColumnCount(4)
-
-
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions","Strings","Variables","DLL's"])           
             entries=[]
             i = 0
             j = 0
@@ -372,7 +371,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
                 entries.append(line)
-                self.window.POI_tableWidget.setRowCount(len(entries))
+                if (len(entries)>= rowPos):
+                    self.window.POI_tableWidget.insertRow(rowPos)
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
@@ -387,17 +387,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
             i = 0
             j = 0
+            entries = []
             for line in f.read().split("\n\n")[:]:
-                #rowPos = self.window.POI_tableWidget.rowCount()
+                rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ", 9)[-1]
                 item = QListWidgetItem(line)
-                
+                entries.append(line)
+                if (len(entries)>= rowPos):
+                    self.window.POI_tableWidget.insertRow(rowPos)
                 if i > 1:
                     self.window.poi_list.addItem(item)
-                    #self.window.POI_tableWidget.insertRow(rowPos)
                     self.window.POI_tableWidget.setItem(j,1,QTableWidgetItem(str(line)))
+                    #self.window.POI_tableWidget.resizeColumnToContents(1)
                     j+=1
-                    self.window.POI_tableWidget.resizeColumnToContents(1)
                 else:
                     i += 1
 
@@ -405,14 +407,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
             j=0
+            entires = []
             for line in f.read().split("\n\n")[:]:
-                #rowPos = self.window.POI_tableWidget.rowCount()
                 try:
                     line = line.split(" ")[1]
                     item = QListWidgetItem(line)
-
+                    rowPos = self.window.POI_tableWidget.rowCount()
+                    entires.append(line)
                     self.window.poi_list.addItem(item)
-                    #self.window.POI_tableWidget.insertRow(rowPos)
+                    if (len(entries)>= rowPos):
+                        self.window.POI_tableWidget.insertRow(rowPos)
                     self.window.POI_tableWidget.setItem(j,2,QTableWidgetItem(str(line)))
                     j+=1
                     self.window.POI_tableWidget.resizeColumnToContents(2)
@@ -424,15 +428,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
             i = 0
             j = 0
+            entries=[]
             for line in f.read().split("\n\n")[:]:
                 rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
-
+                entries.append(line)
+                if (len(entries)>= rowPos):
+                    self.window.POI_tableWidget.insertRow(rowPos)
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
-                    #self.window.POI_tableWidget.insertRow(rowPos)
                     self.window.POI_tableWidget.setItem(j,3,QTableWidgetItem(str(line)))
                     j+=1
                     self.window.POI_tableWidget.resizeColumnToContents(3)
