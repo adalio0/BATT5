@@ -363,28 +363,40 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         try:
             # function, string, variable, dll = staticAnalysis(path)
             poi = staticAnalysis(path)
-            for key in analysis:
-                try:
-                    db.current.update_one({
+            try:
+                db.current.update_one({
 
-                    }, {
-                        '$set': {
-                            'static_analysis': {
-                                'uncovered_poi': {
-                                    key: {
-                                        'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                        'data': poi[i]
-                                    }
+                }, {
+                    '$set': {
+                        'static_analysis': {
+                            'uncovered_poi': {
+                                'function': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': poi[0]
+                                },
+                                'string': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': poi[1]
+                                },
+                                'variable': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': 'stuff'
+                                },
+                                'dll': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': 'stuff'
                                 }
                             }
                         }
-                    }, upsert=False)
-                except IndexError:
-                    pass
-            i += 1
+                    }
+                }, upsert=False)
+            except IndexError:
+                pass
         except:
             print("An error occurred inside Radare2")
 
+        for x in current.find():
+            print(x)
         self.displayPoi()
 
     # runs Static Analysis
@@ -434,6 +446,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 data = x.get('static_analysis', {}).get('uncovered_poi', {})
 
             for key in data:
+                print(key)
                 if key == poi.lower():
                     self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
                     self.window.POI_tableWidget.setColumnCount(1)
