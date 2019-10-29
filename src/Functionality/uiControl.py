@@ -6,7 +6,7 @@ import glob
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-#sys.path.insert(0, Path(__file__).parents[2].as_posix())
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -23,7 +23,6 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
-
 from src.Functionality.radareTerminal import Terminal
 
 static = False
@@ -95,7 +94,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Generate Script button calls showOutputWindow method
         self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
-        # Clicking on Run Dynamic Analysis button calls runDynamic method
+        # Clicking on Run Static Analysis button calls runStatic method
+        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
+
+        # Clicking on Run Static Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -105,6 +107,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+
+        # ---- View Box ------------------------------------
+        self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
+        self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
+        
+        # ---- Create Plugin Selection ----------------------
+        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
 
         # ---- Select listener ------------------------------
 
@@ -205,13 +214,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             text = ""
             binaryPath = ""
             for p in root.iter('Project'):
-                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
+                text = "<font size=3> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
                 binaryPath = p.get('file')
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
-                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+                    text += "<font size=3> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
                         
             self.window.projectProperties_text.setHtml(text)
 
@@ -543,7 +552,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer to select a file for Project Predefined line edit
     def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        self.window.dpoimPredefined_lineEdit.setText(name)
+        self.window.dpmPluginPredefined_lineEdit.setText(name)
 
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
@@ -576,7 +585,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
-
+        
+    # From current to history
+    def switchToHistory(self):
+        self.window.changeViews_stack.setCurrentIndex(1)
+        
+    def switchToCurrent(self):
+        self.window.changeViews_stack.setCurrentIndex(0)
+        
+    def switchPOITypeView(self):
+        poiType = self.window.dpoimPoiType_dropdown.currentText()
+        if poiType == 'Pull From Predefined Dataset':
+            self.window.addPOI_stack.setCurrentIndex(0)
+        elif poiType == 'Function':
+            self.window.addPOI_stack.setCurrentIndex(1)            
+        elif poiType == 'String':
+            self.window.addPOI_stack.setCurrentIndex(2)
+        elif poiType == 'Variable':
+            self.window.addPOI_stack.setCurrentIndex(3)
+        elif poiType == 'DLL':
+            self.window.addPOI_stack.setCurrentIndex(4)
+        elif poiType == 'Packet Protocol':
+            self.window.addPOI_stack.setCurrentIndex(5)
+        elif poiType == 'Struct':
+            self.window.addPOI_stack.setCurrentIndex(6)
+            
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
