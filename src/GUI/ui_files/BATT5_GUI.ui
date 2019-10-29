@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>991</width>
-    <height>765</height>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -1117,7 +1117,7 @@ p, li { white-space: pre-wrap; }
                 </size>
                </property>
                <property name="currentIndex">
-                <number>4</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="fromPredef_page">
                 <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -1129,8 +1129,9 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#7f7f7f;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#7f7f7f;&quot;&gt;Data will be aquired from xml file supplied by user&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Data will be aquired from xml file supplied by user&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
@@ -1145,10 +1146,13 @@ p, li { white-space: pre-wrap; }
                    </property>
                   </widget>
                  </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="funcName_lineEdit"/>
+                 </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="funcNumParam_label">
                    <property name="text">
-                    <string>Number of Parameters:</string>
+                    <string>Parameters</string>
                    </property>
                   </widget>
                  </item>
@@ -1159,12 +1163,18 @@ p, li { white-space: pre-wrap; }
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="funcRetType_lineEdit"/>
+                 </item>
                  <item row="3" column="0">
                   <widget class="QLabel" name="funcRetVal_label">
                    <property name="text">
                     <string>Return Value:</string>
                    </property>
                   </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="funcRetCal_lineEdit"/>
                  </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="funcCallFrom_label">
@@ -1173,6 +1183,9 @@ p, li { white-space: pre-wrap; }
                    </property>
                   </widget>
                  </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="funcCallFrom_lineEdit"/>
+                 </item>
                  <item row="5" column="0">
                   <widget class="QLabel" name="funcDestAddress_label">
                    <property name="text">
@@ -1180,23 +1193,15 @@ p, li { white-space: pre-wrap; }
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="funcName_lineEdit"/>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="funcNumParam_lineEdit"/>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="funcRetType_lineEdit"/>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QLineEdit" name="funcRetCal_lineEdit"/>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QLineEdit" name="funcCallFrom_lineEdit"/>
-                 </item>
                  <item row="5" column="1">
                   <widget class="QLineEdit" name="funcDestAddress_lineEdit"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="text">
+                    <string>Define Parameters</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -1323,10 +1328,56 @@ p, li { white-space: pre-wrap; }
                 </layout>
                </widget>
                <widget class="QWidget" name="pckProto_page">
-                <layout class="QVBoxLayout" name="verticalLayout_29"/>
+                <layout class="QFormLayout" name="formLayout_6">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="protoName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="protoFieldName_label">
+                   <property name="text">
+                    <string>Field Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="protoFieldType_label">
+                   <property name="text">
+                    <string>Field Type</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="protoName_lineEdit"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="protoFieldName_lineEdit"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="protoFieldType_lineEdit"/>
+                 </item>
+                </layout>
                </widget>
                <widget class="QWidget" name="Struct_page">
-                <layout class="QVBoxLayout" name="verticalLayout_30"/>
+                <layout class="QVBoxLayout" name="verticalLayout_30">
+                 <item>
+                  <widget class="QTextBrowser" name="StructTBD_text">
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;TBD (Structure not defined in SRS)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </widget>
              </item>

@@ -211,13 +211,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             text = ""
             binaryPath = ""
             for p in root.iter('Project'):
-                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
+                text = "<font size=3> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
                 binaryPath = p.get('file')
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
-                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+                    text += "<font size=3> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
                         
             self.window.projectProperties_text.setHtml(text)
 
