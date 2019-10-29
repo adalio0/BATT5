@@ -22,7 +22,6 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
-
 from src.Functionality.radareTerminal import Terminal
 
 static = False
@@ -111,6 +110,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
+        
+        # ---- Create Plugin Selection ----------------------
+        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
 
         # ---- Select listener ------------------------------
 
@@ -584,7 +586,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         
     def switchToCurrent(self):
         self.window.changeViews_stack.setCurrentIndex(0)
-
+        
+    def switchPOITypeView(self):
+        poiType = self.window.dpoimPoiType_dropdown.currentText()
+        if poiType == 'Pull From Predefined Dataset':
+            self.window.addPOI_stack.setCurrentIndex(0)
+        elif poiType == 'Function':
+            self.window.addPOI_stack.setCurrentIndex(1)            
+        elif poiType == 'String':
+            self.window.addPOI_stack.setCurrentIndex(2)
+        elif poiType == 'Variable':
+            self.window.addPOI_stack.setCurrentIndex(3)
+        elif poiType == 'DLL':
+            self.window.addPOI_stack.setCurrentIndex(4)
+        elif poiType == 'Packet Protocol':
+            self.window.addPOI_stack.setCurrentIndex(5)
+        elif poiType == 'Struct':
+            self.window.addPOI_stack.setCurrentIndex(6)
+            
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()

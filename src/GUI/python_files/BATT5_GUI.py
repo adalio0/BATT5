@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
         BATT5.setObjectName("BATT5")
-        BATT5.resize(991, 771)
+        BATT5.resize(991, 800)
         self.central_layout = QtWidgets.QWidget(BATT5)
         self.central_layout.setObjectName("central_layout")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.central_layout)
@@ -485,31 +485,37 @@ class Ui_BATT5(object):
         self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.funcNumParam_label)
         self.funcRetType_label = QtWidgets.QLabel(self.function_page)
         self.funcRetType_label.setObjectName("funcRetType_label")
-        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.funcRetType_label)
+        self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.funcRetType_label)
         self.funcRetType_lineEdit = QtWidgets.QLineEdit(self.function_page)
         self.funcRetType_lineEdit.setObjectName("funcRetType_lineEdit")
-        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.funcRetType_lineEdit)
+        self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.funcRetType_lineEdit)
         self.funcRetVal_label = QtWidgets.QLabel(self.function_page)
         self.funcRetVal_label.setObjectName("funcRetVal_label")
-        self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.funcRetVal_label)
+        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.funcRetVal_label)
         self.funcRetCal_lineEdit = QtWidgets.QLineEdit(self.function_page)
         self.funcRetCal_lineEdit.setObjectName("funcRetCal_lineEdit")
-        self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.funcRetCal_lineEdit)
+        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.funcRetCal_lineEdit)
         self.funcCallFrom_label = QtWidgets.QLabel(self.function_page)
         self.funcCallFrom_label.setObjectName("funcCallFrom_label")
-        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.funcCallFrom_label)
+        self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.funcCallFrom_label)
         self.funcCallFrom_lineEdit = QtWidgets.QLineEdit(self.function_page)
         self.funcCallFrom_lineEdit.setObjectName("funcCallFrom_lineEdit")
-        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.funcCallFrom_lineEdit)
+        self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.funcCallFrom_lineEdit)
         self.funcDestAddress_label = QtWidgets.QLabel(self.function_page)
         self.funcDestAddress_label.setObjectName("funcDestAddress_label")
-        self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.funcDestAddress_label)
+        self.formLayout_3.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.funcDestAddress_label)
         self.funcDestAddress_lineEdit = QtWidgets.QLineEdit(self.function_page)
         self.funcDestAddress_lineEdit.setObjectName("funcDestAddress_lineEdit")
-        self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.funcDestAddress_lineEdit)
-        self.pushButton = QtWidgets.QPushButton(self.function_page)
-        self.pushButton.setObjectName("pushButton")
-        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.pushButton)
+        self.formLayout_3.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.funcDestAddress_lineEdit)
+        self.funcNumParam_lineEdit = QtWidgets.QLineEdit(self.function_page)
+        self.funcNumParam_lineEdit.setObjectName("funcNumParam_lineEdit")
+        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.funcNumParam_lineEdit)
+        self.funcParamDetails_label = QtWidgets.QLabel(self.function_page)
+        self.funcParamDetails_label.setObjectName("funcParamDetails_label")
+        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.funcParamDetails_label)
+        self.funcParamDetails_button = QtWidgets.QPushButton(self.function_page)
+        self.funcParamDetails_button.setObjectName("funcParamDetails_button")
+        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.funcParamDetails_button)
         self.addPOI_stack.addWidget(self.function_page)
         self.string_page = QtWidgets.QWidget()
         self.string_page.setObjectName("string_page")
@@ -681,7 +687,7 @@ class Ui_BATT5(object):
         self.retranslateUi(BATT5)
         self.central_tabs.setCurrentIndex(0)
         self.changeViews_stack.setCurrentIndex(0)
-        self.addPOI_stack.setCurrentIndex(0)
+        self.addPOI_stack.setCurrentIndex(6)
         QtCore.QMetaObject.connectSlotsByName(BATT5)
 
     def retranslateUi(self, BATT5):
@@ -777,14 +783,17 @@ class Ui_BATT5(object):
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#4a4a4a;\">Data will be aquired from xml file supplied by user</span></p></body></html>"))
         self.funcName_label.setText(_translate("BATT5", "*Name:"))
-        self.funcNumParam_label.setText(_translate("BATT5", "Parameters"))
-        self.funcRetType_label.setText(_translate("BATT5", "Return Type"))
+        self.funcNumParam_label.setText(_translate("BATT5", "Num. of Parameters:"))
+        self.funcRetType_label.setText(_translate("BATT5", "Return Type:"))
         self.funcRetVal_label.setText(_translate("BATT5", "Return Value:"))
         self.funcCallFrom_label.setText(_translate("BATT5", "Call From Address:"))
         self.funcDestAddress_label.setText(_translate("BATT5", "Destination Address:"))
-        self.pushButton.setText(_translate("BATT5", "Define Parameters"))
+        self.funcParamDetails_label.setText(_translate("BATT5", "Parameter Details:"))
+        self.funcParamDetails_button.setText(_translate("BATT5", "Edit Parameter Details"))
         self.strName_label.setText(_translate("BATT5", "*Name:"))
         self.strType_label.setText(_translate("BATT5", "Type:"))
         self.strSize_label.setText(_translate("BATT5", "Size:"))
@@ -798,11 +807,13 @@ class Ui_BATT5(object):
         self.dllName_label.setText(_translate("BATT5", "*Name:"))
         self.protoName_label.setText(_translate("BATT5", "*Name:"))
         self.protoFieldName_label.setText(_translate("BATT5", "Field Name:"))
-        self.protoFieldType_label.setText(_translate("BATT5", "Field Type"))
+        self.protoFieldType_label.setText(_translate("BATT5", "Field Type:"))
         self.StructTBD_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
