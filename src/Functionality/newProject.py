@@ -96,20 +96,20 @@ class ProjectWindow(QtWidgets.QDialog):
                 'uncovered_poi': {
                     'function': {
                         'associated_plugin': '',
-                        'data': 'stuff',
+                        'data': 'stuff'
                     },
                     'string': {
                         'associated_plugin': '',
-                        'data': 'stuff',
+                        'data': 'stuff'
                     },
                     'variable': {
                         'associated_plugin': '',
-                        'data': 'stuff',
+                        'data': 'stuff'
                     },
                     'dll': {
                         'associated_plugin': '',
-                        'data': 'stuff',
-                    },
+                        'data': 'stuff'
+                    }
                 }
             },   # End of Static Analysis
             'dynamic_analysis': {

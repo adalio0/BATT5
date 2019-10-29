@@ -342,6 +342,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             pass
 
     # runs Static Analysis w/ database stuff
+    # TODO: The static analysis data is too big that it overwrites the other poi types.
     def runStatic(self):
         global static
         static = True
@@ -353,28 +354,36 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         current = db['current']
 
         path = ''
+        analysis = ''
         for p in current.find():
             path = p.get('properties', {}).get('file')
+            analysis = p.get('static_analysis', {}).get('uncovered_poi', {})
 
+        i = 0
         try:
             # function, string, variable, dll = staticAnalysis(path)
-            poi = []
-            for points in staticAnalysis(path):
-                poi.append(points)
-
-            analysis = ''
-            for x in current.find():
-                analysis = x.get('static_analysis', {}).get('uncovered_poi', {})
-
-            i = 0
+            poi = staticAnalysis(path)
             for key in analysis:
-                func = analysis.get(key, {})
-                func['associated_plugin'] = str(self.window.poiType_dropdown.currentText())
-                func['data'] = poi[i]
-                print(poi[i])
-                i += 1
+                try:
+                    db.current.update_one({
+
+                    }, {
+                        '$set': {
+                            'static_analysis': {
+                                'uncovered_poi': {
+                                    key: {
+                                        'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                        'data': poi[i]
+                                    }
+                                }
+                            }
+                        }
+                    }, upsert=False)
+                except IndexError:
+                    pass
+            i += 1
         except:
-            print("Radare2 not installed cannot start static analysis.")
+            print("An error occurred inside Radare2")
 
         self.displayPoi()
 
@@ -407,51 +416,47 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.displayPoi()
 
     # Dispalys POIs in the Analysis box
+    # TODO: make sure the stuff gets properly displayed in the gui
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
 
-        try:
-            if poi == 'Extract All':
-                self.displayAll()
-            else:
-                client = pymongo.MongoClient("mongodb://localhost:27017")
-                db = client['current_project']
-                current = db['current']
+        if poi == 'Extract All':
+            self.displayAll()
+        else:
+            client = pymongo.MongoClient("mongodb://localhost:27017")
+            db = client['current_project']
+            current = db['current']
 
-                data = ''
-                for x in current.find():
-                    data = x.get('static_analysis', {}).get('uncovered_poi', {})
+            data = ''
+            for x in current.find():
+                data = x.get('static_analysis', {}).get('uncovered_poi', {})
 
-                for key in data:
-                    if key == poi.lower():
-                        self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
-                        self.window.POI_tableWidget.setColumnCount(1)
-                        content = data.get(key, {})['data']
-
-                        entries = []
-                        i = 0
-                        try:
-                            for subkey in content:
-                                entries.append(content[subkey])
-                                self.window.POI_tableWidget.setRowCount(len(entries))
-                                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content[subkey])))
-                                i += 1
-                                self.window.POI_tableWidget.resizeColumnToContents(0)
-                        except TypeError:
-                            pass
-
-                if poi == 'Function':
-                    self.displayFunctions()
-                elif poi == 'String':
-                    self.displayString()
-                elif poi == 'Variable':
-                    self.displayVariable()
-                elif poi == 'DLL':
-                    self.displayDll()
-        except FileNotFoundError:
-            pass
+            for key in data:
+                if key == poi.lower():
+                    self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
+                    self.window.POI_tableWidget.setColumnCount(1)
+                    content = data.get(key, {})['data']
+                    entries = []
+                    i = 0
+                    try:
+                        for collection in content[:]:
+                            entries.append(collection)
+                            self.window.POI_tableWidget.setRowCount(len(entries))
+                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(collection)))
+                            self.window.POI_tableWidget.resizeColumnToContents(0)
+                            i += 1
+                    except TypeError:
+                        pass
+            if poi == 'Function':
+                self.displayFunctions()
+            elif poi == 'String':
+                self.displayString()
+            elif poi == 'Variable':
+                self.displayVariable()
+            elif poi == 'DLL':
+                self.displayDll()
 
     # Displays the functions extracted from Static Analysis in the POI box
     def displayFunctions(self):

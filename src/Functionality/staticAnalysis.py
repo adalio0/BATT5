@@ -1,15 +1,6 @@
 import r2pipe
 import json
 import re
-import pymongo
-
-
-client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client['current_project']
-current = db['current']
-
-for x in current.find():
-    static_ = x.get('static_analysis', {}).get('uncovered_poi', {})
 
 
 def staticAnalysis(filePath):
@@ -20,30 +11,33 @@ def staticAnalysis(filePath):
 
 
 def functions_analysis():
-    return infile.cmd("afllj")
+    function = infile.cmd("afllj")
+    formattedF = json.loads(function)
+    return formattedF
 
 
 def string_analysis():
-    strings = infile.cmd('izj')
-    formattedS = json.loads(strings)
+    string = infile.cmd('izj')
+    formattedS = json.loads(string)
     return formattedS
 
 
 def variables_analysis():
-    variables = infile.cmd('afvdj')
-    formattedV = json.loads(variables)
+    variable = infile.cmd('afvdj')
+    formattedV = json.loads(variable)
     return formattedV
 
 
 def dll_analysis():
     dlls = infile.cmd('iij')
-    formattedJ = json.loads(dlls)
-    return formattedJ
+    formattedD = json.loads(dlls)
+    return formattedD
 
 
 def extract_all():
     function = functions_analysis()
     string = string_analysis()
-    variable = variables_analysis()
-    dll = dll_analysis()
-    return function, string, variable, dll
+    # variable = variables_analysis()
+    # dll = dll_analysis()
+    # return [function, string, variable, dll]
+    return [function, string]
