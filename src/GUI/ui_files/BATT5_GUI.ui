@@ -1117,7 +1117,7 @@ p, li { white-space: pre-wrap; }
                 </size>
                </property>
                <property name="currentIndex">
-                <number>6</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="fromPredef_page">
                 <layout class="QVBoxLayout" name="verticalLayout_21">

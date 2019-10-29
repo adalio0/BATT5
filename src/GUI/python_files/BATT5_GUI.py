@@ -687,7 +687,7 @@ class Ui_BATT5(object):
         self.retranslateUi(BATT5)
         self.central_tabs.setCurrentIndex(0)
         self.changeViews_stack.setCurrentIndex(0)
-        self.addPOI_stack.setCurrentIndex(6)
+        self.addPOI_stack.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(BATT5)
 
     def retranslateUi(self, BATT5):
