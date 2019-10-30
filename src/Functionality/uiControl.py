@@ -14,7 +14,6 @@ from PyQt5.QtCore import QEvent
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from src.Functionality.project import Project
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
 from src.Functionality.newProject import ProjectWindow
@@ -150,8 +149,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     
         # if not selected
         elif event.type() == QEvent.FocusOut:
+            # if clicked out of project search bar, fill with "Search.." and repopulate with correct original data
+            if obj == self.window.projectSearch_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.window.projectNavigator_tree.clear()
+                    self.populateProjectBox()
             # if clicked out of search bar, fill with "Search.."
-            if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+            elif obj == self.window.poiSearch_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.displayAll()
+            elif obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
@@ -435,6 +446,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
 
+    # Displays POIs in the Analysis box
+    def displayPoi(self, poi):
+        try:
+            if poi == 'Extract All':
+                self.displayAll()
+            else:
+                f = open(poi.lower() + ".txt", "r")
+
+                for line in f.read().split("\n\n")[:]:
+                    self.window.POI_tableWidget.addItem(line)
+
+                if poi == 'Function':
+                    self.displayFunctions()
+                elif poi == 'String':
+                    self.displayString()
+                elif poi == 'Variable':
+                    self.displayVariable()
+                elif poi == 'DLL':
+                    self.displayDll()
+        except FileNotFoundError:
+            pass
         if poi == 'Extract All':
             self.displayAll()
         else:
@@ -651,7 +683,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if item.text(0) in self.window.projectNavigator_tree.topLevelItem(i).text(0):
                     projects.append(QTreeWidgetItem([item.text(0)]))
                     child_text = item.child(0).text(0)
-                    child = QTreeWidgetItem(projects[len(projects)-1])
+                    child = QTreeWidgetItem(projects[len(projects) - 1])
                     child.setText(0, child_text)
                     j += 1
             tree = self.window.projectNavigator_tree
@@ -664,16 +696,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Search functionality for the poi box
     def searchPoi(self):
-        for i in range(self.window.poi_list.count()):
-            self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
-
         search = str(self.window.poiSearch_lineEdit.text())
         result = self.window.poi_list.findItems(search, QtCore.Qt.MatchContains)
 
+        poi = []
+        item = ''
+
+        j = 0
         if search:
-            for item in result:
-                item.setSelected(True)
-                item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
+            for i in range(self.window.poi_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.poi_list.item(i).text():
+                    poi.append(item.text())
+                    j+=1
+            list = self.window.poi_list
+            list.clear()
+            list.addItems(poi)
+        else:
+            list = self.window.poi_list
+            list.clear()
+            self.displayAll()
+
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
