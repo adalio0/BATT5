@@ -1,3 +1,5 @@
 
 *.pyc
 *.pyc
+*.pyc
+.idea/BATT5.iml

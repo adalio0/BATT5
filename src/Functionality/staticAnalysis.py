@@ -1,5 +1,4 @@
 import r2pipe
-import json
 import re
 
 
@@ -11,26 +10,23 @@ def staticAnalysis(filePath):
 
 
 def functions_analysis():
-    function = infile.cmdj("afllj~{}")
-    return function
+    functions = infile.cmdj("afllj")
+    return functions
 
 
 def string_analysis():
-    string = infile.cmd('izj')
-    formattedS = json.loads(string)
-    return formattedS
+    strings = infile.cmdj('izj')
+    return strings
 
 
 def variables_analysis():
-    variable = infile.cmd('afvdj')
-    formattedV = json.loads(variable)
-    return formattedV
+    variables = infile.cmdj('afvdj')
+    return variables
 
 
 def dll_analysis():
-    dlls = infile.cmd('iij')
-    formattedD = json.loads(dlls)
-    return formattedD
+    dlls = infile.cmdj('iij')
+    return dlls
 
 
 def extract_all():
