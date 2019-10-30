@@ -139,7 +139,7 @@ class ProjectWindow(QtWidgets.QDialog):
         project.set_stripped(self, "some stripped data")
 
         tree = self.window.properties_treeWidget
-        properties = []
+
         # os
         item0 = tree.itemAt(0, 0)
         item0.setText(1, project.get_os(self))

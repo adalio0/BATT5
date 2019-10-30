@@ -146,8 +146,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     
         # if not selected
         elif event.type() == QEvent.FocusOut:
+            # if clicked out of project search bar, fill with "Search.." and repopulate with correct original data
+            if obj == self.window.projectSearch_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.window.projectNavigator_tree.clear()
+                    self.populateProjectBox()
             # if clicked out of search bar, fill with "Search.."
-            if obj == self.window.projectSearch_lineEdit or obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+            elif obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
@@ -161,6 +168,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Initialize the project box with all the current projects
     def populateProjectBox(self):
+        global projectList
         cur_path = os.getcwd()
         new_path = os.path.join(cur_path, '..', 'Configurations')
 
@@ -177,6 +185,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
+        projectList = projects
 
     # Changes the project description according to the current project
     def setProject(self):
@@ -264,7 +273,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.displayPoi(poi)
 
-    # Dispalys POIs in the Analysis box
+    # Displays POIs in the Analysis box
     def displayPoi(self, poi):
         try:
             if poi == 'Extract All':
@@ -449,15 +458,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Search functionality for the project box
     def searchProject(self):
-        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
-            self.window.projectNavigator_tree.topLevelItem(i).setBackground(0, QtGui.QBrush(QtCore.Qt.color0))
+        global projectList
 
+        projectSearch = []
         search = str(self.window.projectSearch_lineEdit.text())
-        result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
 
-        if search:
-            for item in result:
-                item.setBackground(0, QtGui.QBrush(QtCore.Qt.magenta))
+        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
+            item = projectList[i]
+
+            if search in item.text(0):
+                projectSearch.append(QTreeWidgetItem([item.text(0)]))
+                item_child = item.child(0).text(0)
+                child = QTreeWidgetItem(projectSearch[len(projectSearch)-1])
+                child.setText(0, item_child)
+
+        tree = self.window.projectNavigator_tree
+        tree.clear()
+        tree.addTopLevelItems(projectSearch)
 
     # Search functionality for the poi box
     def searchPoi(self):
