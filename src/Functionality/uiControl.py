@@ -109,10 +109,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+        # self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
         # ---- Select listener ------------------------------
-
         self.window.projectSearch_lineEdit.installEventFilter(self)
         self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
@@ -166,7 +165,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # db.project.drop()
 
         projects = []
-
         for x in posts.find():
             projects.append(QTreeWidgetItem([x.get('properties', {})['name']]))
             child = QTreeWidgetItem(projects[len(projects) - 1])
@@ -354,10 +352,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         current = db['current']
 
         path = ''
-        analysis = ''
         for p in current.find():
             path = p.get('properties', {}).get('file')
-            analysis = p.get('static_analysis', {}).get('uncovered_poi', {})
 
         i = 0
         try:
@@ -372,11 +368,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                             'uncovered_poi': {
                                 'function': {
                                     'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': poi[0]
+                                    'data': poi[0][i]
                                 },
                                 'string': {
                                     'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': poi[1]
+                                    'data': poi[1][0]
                                 },
                                 'variable': {
                                     'associated_plugin': str(self.window.poiType_dropdown.currentText()),
@@ -395,8 +391,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except:
             print("An error occurred inside Radare2")
 
-        for x in current.find():
-            print(x)
         self.displayPoi()
 
     # runs Static Analysis
@@ -446,7 +440,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 data = x.get('static_analysis', {}).get('uncovered_poi', {})
 
             for key in data:
-                print(key)
                 if key == poi.lower():
                     self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
                     self.window.POI_tableWidget.setColumnCount(1)
@@ -454,10 +447,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     entries = []
                     i = 0
                     try:
-                        for collection in content[:]:
+                        for collection in content:
                             entries.append(collection)
                             self.window.POI_tableWidget.setRowCount(len(entries))
-                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(collection)))
+                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
                             self.window.POI_tableWidget.resizeColumnToContents(0)
                             i += 1
                     except TypeError:
@@ -635,15 +628,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Search functionality for the project box
     def searchProject(self):
-        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
-            self.window.projectNavigator_tree.topLevelItem(i).setBackground(0, QtGui.QBrush(QtCore.Qt.color0))
-
         search = str(self.window.projectSearch_lineEdit.text())
         result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
 
+        projects = []
+        item = ''
+
+        j = 0
         if search:
-            for item in result:
-                item.setBackground(0, QtGui.QBrush(QtCore.Qt.magenta))
+            for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text(0) in self.window.projectNavigator_tree.topLevelItem(i).text(0):
+                    projects.append(QTreeWidgetItem([item.text(0)]))
+                    child_text = item.child(0).text(0)
+                    child = QTreeWidgetItem(projects[len(projects)-1])
+                    child.setText(0, child_text)
+                    j += 1
+            tree = self.window.projectNavigator_tree
+            tree.clear()
+            tree.addTopLevelItems(projects)
+        else:
+            tree = self.window.projectNavigator_tree
+            tree.clear()
+            self.populateProjectBox()
 
     # Search functionality for the poi box
     def searchPoi(self):
@@ -740,7 +750,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer to select a file for Project Predefined line edit
     def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        self.window.dpmPluginPredefined_lineEdit.setText(name)
+        # self.window.dpmPluginPredefined_lineEdit.setText(name)
 
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
@@ -775,6 +785,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
+
+    # From current to history
+    def switchToHistory(self):
+        self.window.changeViews_stack.setCurrentIndex(1)
+
+    def switchToCurrent(self):
+        self.window.changeViews_stack.setCurrentIndex(0)
+
+    def switchPOITypeView(self):
+        poiType = self.window.dpoimPoiType_dropdown.currentText()
+        if poiType == 'Pull From Predefined Dataset':
+            self.window.addPOI_stack.setCurrentIndex(0)
+        elif poiType == 'Function':
+            self.window.addPOI_stack.setCurrentIndex(1)
+        elif poiType == 'String':
+            self.window.addPOI_stack.setCurrentIndex(2)
+        elif poiType == 'Variable':
+            self.window.addPOI_stack.setCurrentIndex(3)
+        elif poiType == 'DLL':
+            self.window.addPOI_stack.setCurrentIndex(4)
+        elif poiType == 'Packet Protocol':
+            self.window.addPOI_stack.setCurrentIndex(5)
+        elif poiType == 'Struct':
+            self.window.addPOI_stack.setCurrentIndex(6)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

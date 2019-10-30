@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>975</width>
-    <height>727</height>
+    <width>991</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,549 +26,785 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="project_layout">
-          <item>
-           <layout class="QVBoxLayout" name="project_sublayout">
+         <widget class="QStackedWidget" name="changeViews_stack">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="current_view">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QGroupBox" name="project_box">
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="acceptDrops">
-               <bool>false</bool>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="title">
-               <string>Projects</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-              <property name="checkable">
-               <bool>false</bool>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QLineEdit" name="projectSearch_lineEdit">
-                 <property name="maximumSize">
-                  <size>
-                   <width>275</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);</string>
-                 </property>
-                 <property name="text">
-                  <string>Search..</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QTreeWidget" name="projectNavigator_tree">
-                 <property name="minimumSize">
-                  <size>
-                   <width>275</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>250</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <column>
-                  <property name="text">
-                   <string>Projects</string>
-                  </property>
-                 </column>
-                </widget>
-               </item>
-               <item>
-                <widget class="QTextBrowser" name="projectProperties_text">
-                 <property name="minimumSize">
-                  <size>
-                   <width>275</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>250</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="html">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+             <layout class="QVBoxLayout" name="project_sublayout">
+              <item>
+               <widget class="QGroupBox" name="project_box">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="acceptDrops">
+                 <bool>false</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="title">
+                 <string>Projects</string>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QLineEdit" name="projectSearch_lineEdit">
+                   <property name="maximumSize">
+                    <size>
+                     <width>275</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(136, 138, 133);</string>
+                   </property>
+                   <property name="text">
+                    <string>Search..</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTreeWidget" name="projectNavigator_tree">
+                   <property name="minimumSize">
+                    <size>
+                     <width>275</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <column>
+                    <property name="text">
+                     <string>Projects</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTextBrowser" name="projectProperties_text">
+                   <property name="minimumSize">
+                    <size>
+                     <width>275</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="pluginSelection_box">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>65</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Plugin Selection</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QComboBox" name="pluginSelection_dropdown">
-                 <property name="minimumSize">
-                  <size>
-                   <width>275</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>245</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignLeft">
-             <widget class="QGroupBox" name="analyisisControls_box">
-              <property name="minimumSize">
-               <size>
-                <width>300</width>
-                <height>100</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Analysis Controls</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_9">
-               <item>
-                <widget class="QPushButton" name="runStaticAnalysis_button">
-                 <property name="text">
-                  <string>Run Static Analysis</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="runDynamicAnalysis_button">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);
-background-color: rgb(186, 189, 182);</string>
-                 </property>
-                 <property name="text">
-                  <string>Run Dynamic Analysis</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="pluginControls_box">
-              <property name="minimumSize">
-               <size>
-                <width>300</width>
-                <height>70</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Plugin Controls</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_10">
-               <item>
-                <widget class="QPushButton" name="generateScript_button">
-                 <property name="text">
-                  <string>Generate Output Field</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="detailedAnalysis_layout">
-          <item>
-           <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
-            <item>
-             <widget class="QGroupBox" name="analysis_box">
-              <property name="title">
-               <string>Analysis</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_16">
-               <item>
-                <widget class="QTableWidget" name="POI_tableWidget">
-                 <property name="sizeAdjustPolicy">
-                  <enum>QAbstractScrollArea::AdjustToContents</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="radareConsole_box">
-              <property name="minimumSize">
-               <size>
-                <width>300</width>
-                <height>225</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>218</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Radare2 Command Console</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_17">
-               <item>
-                <widget class="QTextBrowser" name="radareConsoleOut_text"/>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
-                 <property name="palette">
-                  <palette>
-                   <active>
-                    <colorrole role="WindowText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="ButtonText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="PlaceholderText">
-                     <brush brushstyle="NoBrush">
-                      <color alpha="128">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </active>
-                   <inactive>
-                    <colorrole role="WindowText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="ButtonText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="PlaceholderText">
-                     <brush brushstyle="NoBrush">
-                      <color alpha="128">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </inactive>
-                   <disabled>
-                    <colorrole role="WindowText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="ButtonText">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="PlaceholderText">
-                     <brush brushstyle="NoBrush">
-                      <color alpha="128">
-                       <red>136</red>
-                       <green>138</green>
-                       <blue>133</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </disabled>
-                  </palette>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);</string>
-                 </property>
-                 <property name="text">
-                  <string>BATT5$</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="commentAndPoi_layout">
-          <item>
-           <layout class="QVBoxLayout" name="commentAndPoi_sublayout">
-            <item>
-             <widget class="QGroupBox" name="comment_box">
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>150</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Comment View</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <widget class="QTextEdit" name="comment_text">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>75</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QGridLayout" name="commentButton_layout">
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="commentSave_button">
-                   <property name="text">
-                    <string>Save</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <spacer name="commentButton_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="pluginSelection_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>65</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Plugin Selection</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <widget class="QComboBox" name="pluginSelection_dropdown">
+                   <property name="minimumSize">
                     <size>
-                     <width>40</width>
-                     <height>20</height>
+                     <width>275</width>
+                     <height>0</height>
                     </size>
                    </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="commentClear_button">
-                   <property name="text">
-                    <string>Clear</string>
+                   <property name="maximumSize">
+                    <size>
+                     <width>245</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
                 </layout>
-               </item>
-              </layout>
-             </widget>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignLeft">
+               <widget class="QGroupBox" name="analyisisControls_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>100</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Analysis Controls</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QPushButton" name="runStaticAnalysis_button">
+                   <property name="text">
+                    <string>Run Static Analysis</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="runDynamicAnalysis_button">
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(136, 138, 133);
+background-color: rgb(186, 189, 182);</string>
+                   </property>
+                   <property name="text">
+                    <string>Run Dynamic Analysis</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="pluginControls_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>250</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Plugin Controls</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
+                  <widget class="QPushButton" name="generateScript_button">
+                   <property name="text">
+                    <string>Generate Output Field</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QGroupBox" name="poi_box">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>300</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Points of Interest</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <item>
-                <layout class="QGridLayout" name="poi_layout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="poiType_label">
-                   <property name="text">
-                    <string>Type</string>
+             <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
+              <item>
+               <widget class="QGroupBox" name="analysis_box">
+                <property name="title">
+                 <string>Analysis</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_16">
+                 <item>
+                  <widget class="QTableWidget" name="POI_tableWidget">
+                   <property name="sizeAdjustPolicy">
+                    <enum>QAbstractScrollArea::AdjustToContents</enum>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="poiType_dropdown">
-                   <item>
-                    <property name="text">
-                     <string>Extract All</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Function</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>String</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Variable</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>DLL</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Packet Protocol</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Struct</string>
-                    </property>
-                   </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="radareConsole_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>225</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>218</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Command Console</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_17">
+                 <item>
+                  <widget class="QTextBrowser" name="radareConsoleOut_text"/>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="WindowText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="ButtonText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="WindowText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="ButtonText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="WindowText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="ButtonText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>136</red>
+                         <green>138</green>
+                         <blue>133</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(136, 138, 133);</string>
+                   </property>
+                   <property name="text">
+                    <string>BATT5$</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="poiSearch_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);</string>
-                 </property>
-                 <property name="text">
-                  <string>Search..</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QListWidget" name="poi_list">
-                 <property name="minimumSize">
-                  <size>
-                   <width>275</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="commentAndPoi_sublayout">
+              <item>
+               <widget class="QGroupBox" name="comment_box">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Comment View</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <item>
+                  <widget class="QTextEdit" name="comment_text">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>75</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="commentButton_layout">
+                   <item row="0" column="0">
+                    <widget class="QPushButton" name="commentSave_button">
+                     <property name="text">
+                      <string>Save</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QPushButton" name="commentClear_button">
+                     <property name="text">
+                      <string>Clear</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="poi_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Points of Interest</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <layout class="QGridLayout" name="poi_layout">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="poiType_label">
+                     <property name="text">
+                      <string>Type</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QComboBox" name="poiType_dropdown">
+                     <item>
+                      <property name="text">
+                       <string>Extract All</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Function</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>String</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Variable</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>DLL</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Packet Protocol</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Struct</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="poiSearch_lineEdit">
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(136, 138, 133);</string>
+                   </property>
+                   <property name="text">
+                    <string>Search..</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="poi_list">
+                   <property name="minimumSize">
+                    <size>
+                     <width>275</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="viewCurrent_box">
+                <property name="title">
+                 <string>Switch View</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QPushButton" name="switchToHistory_button">
+                   <property name="text">
+                    <string>Switch to History View</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-         </layout>
+          </widget>
+          <widget class="QWidget" name="page_4">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <layout class="QVBoxLayout" name="project_sublayout_h">
+              <item>
+               <widget class="QGroupBox" name="project_box_h">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>350</height>
+                 </size>
+                </property>
+                <property name="acceptDrops">
+                 <bool>false</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="title">
+                 <string>Project Properties</string>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_22">
+                 <item>
+                  <widget class="QTextBrowser" name="projectProperties_text_h">
+                   <property name="minimumSize">
+                    <size>
+                     <width>275</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>300</height>
+                    </size>
+                   </property>
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="daRuns_box">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Dynamic Analysis Runs</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QListWidget" name="daRuns_list"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="detailedAnalysis_sublayout_2">
+              <item>
+               <widget class="QGroupBox" name="daRunDetails_box">
+                <property name="title">
+                 <string>Dynamic Analysis Run Details</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_20">
+                 <item>
+                  <widget class="QTableWidget" name="daRunDetails_table"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="commentAndPoi_sublayout_2">
+              <item>
+               <widget class="QGroupBox" name="comment_box_2">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Comment View</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QTextEdit" name="comment_text_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>75</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="commentButton_layout_2">
+                   <item row="0" column="0">
+                    <widget class="QPushButton" name="commentSave_button_2">
+                     <property name="text">
+                      <string>Save</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QPushButton" name="commentClear_button_2">
+                     <property name="text">
+                      <string>Clear</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="poi_box_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Points of Interest</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_19">
+                 <item>
+                  <layout class="QGridLayout" name="poi_layout_2">
+                   <item row="0" column="1">
+                    <widget class="QComboBox" name="poiType_dropdown_2">
+                     <item>
+                      <property name="text">
+                       <string>All</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Function</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>String</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Variable</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>DLL</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Packet Protocol</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Struct</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="poiType_label_2">
+                     <property name="text">
+                      <string>Type</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="poiSearch_lineEdit_2">
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(136, 138, 133);</string>
+                   </property>
+                   <property name="text">
+                    <string>Search..</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="poi_list_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>275</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="switchToCurrent_box">
+                <property name="title">
+                 <string>Switch View</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QPushButton" name="switchToCurrent_button">
+                   <property name="text">
+                    <string>Switch to Curent View</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -690,77 +926,22 @@ background-color: rgb(186, 189, 182);</string>
             <layout class="QVBoxLayout" name="verticalLayout_15">
              <item>
               <layout class="QGridLayout" name="dpm_layout">
-               <item row="1" column="0">
-                <widget class="QLabel" name="dpmPluginStructure_label">
-                 <property name="text">
-                  <string>Plugin Structure</string>
-                 </property>
-                </widget>
-               </item>
                <item row="6" column="0">
-                <widget class="QLabel" name="dpmPoi_label">
-                 <property name="text">
-                  <string>Points of Interest</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="dpmPluginPredefined_label">
-                 <property name="text">
-                  <string>Plugin Predefined Data Set</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="dpmPluginDescription_label">
-                 <property name="text">
-                  <string>Plugin Description</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="dpmPluginName_label">
-                 <property name="text">
-                  <string>Plugin Name</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="dpmDefaultOutputField_label">
-                 <property name="text">
-                  <string>Default Output Field</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="dpmPluginPredefined_lineEdit"/>
-               </item>
-               <item row="8" column="0">
                 <widget class="QPushButton" name="dpmDelete_button">
                  <property name="text">
                   <string>Delete</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
+               <item row="2" column="1">
                 <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
                </item>
-               <item row="6" column="1">
-                <widget class="QTextEdit" name="dpmPoi_textEdit">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>75</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
+               <item row="3" column="1">
                 <widget class="QTextEdit" name="dpmPluginDescription_textEdit">
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>75</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                 </widget>
@@ -768,14 +949,14 @@ background-color: rgb(186, 189, 182);</string>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="dpmPluginStructure_lineEdit"/>
                </item>
-               <item row="8" column="2">
+               <item row="6" column="2">
                 <widget class="QPushButton" name="dpmSave_button">
                  <property name="text">
                   <string>Save</string>
                  </property>
                 </widget>
                </item>
-               <item row="7" column="1">
+               <item row="5" column="1">
                 <spacer name="dpm_verticalSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -788,6 +969,20 @@ background-color: rgb(186, 189, 182);</string>
                  </property>
                 </spacer>
                </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="dpmDefaultOutputField_label">
+                 <property name="text">
+                  <string>Default Output Field</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QPushButton" name="dpmDOF_button">
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
                <item row="1" column="2">
                 <widget class="QPushButton" name="dpmPluginStructure_button">
                  <property name="text">
@@ -795,22 +990,29 @@ background-color: rgb(186, 189, 182);</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="2">
-                <widget class="QPushButton" name="dpmPluginPredefined_button">
+               <item row="1" column="0">
+                <widget class="QLabel" name="dpmPluginStructure_label">
                  <property name="text">
-                  <string>Browse</string>
+                  <string>Plugin Structure</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
-                <widget class="QComboBox" name="dpm_comboBox">
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>200</height>
-                  </size>
+               <item row="3" column="0">
+                <widget class="QLabel" name="dpmPluginDescription_label">
+                 <property name="text">
+                  <string>Plugin Description</string>
                  </property>
                 </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="dpmPluginName_label">
+                 <property name="text">
+                  <string>Plugin Name</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="dpmDOF_lineEdit"/>
                </item>
               </layout>
              </item>
@@ -825,30 +1027,373 @@ background-color: rgb(186, 189, 182);</string>
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <item>
               <layout class="QGridLayout" name="dpoim_topGrid">
-               <item row="1" column="0">
-                <widget class="QLabel" name="dpoimPoiType_label">
-                 <property name="text">
-                  <string>Point of Interest Type</string>
-                 </property>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="dpoimPredefined_lineEdit"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QComboBox" name="dpoimPoiType_dropdown">
+                 <item>
+                  <property name="text">
+                   <string>Pull From Predefined Dataset</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Function</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>String</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Variable</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DLL</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Packet Protocol</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Struct</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QComboBox" name="dpoimPoiType_dropdown"/>
-               </item>
-               <item row="0" column="1">
                 <widget class="QComboBox" name="dpoimPlugin_dropdown"/>
                </item>
-               <item row="0" column="0">
+               <item row="1" column="0">
                 <widget class="QLabel" name="dpoimPlugin_label">
                  <property name="text">
                   <string>Plugin</string>
                  </property>
                 </widget>
                </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="dpoimPredefined_button">
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="dpoimPredefined_label">
+                 <property name="text">
+                  <string>Predefined Data Set</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="dpoimPoiType_label">
+                 <property name="text">
+                  <string>Point of Interest Type</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
              <item>
-              <widget class="QTextEdit" name="dpoim_text"/>
+              <widget class="QStackedWidget" name="addPOI_stack">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="fromPredef_page">
+                <layout class="QVBoxLayout" name="verticalLayout_21">
+                 <item>
+                  <widget class="QTextBrowser" name="predef_text">
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic; color:#4a4a4a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;Data will be aquired from xml file supplied by user&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="function_page">
+                <layout class="QFormLayout" name="formLayout_3">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="funcName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="funcName_lineEdit"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="funcNumParam_label">
+                   <property name="text">
+                    <string>Num. of Parameters:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="funcRetType_label">
+                   <property name="text">
+                    <string>Return Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="funcRetType_lineEdit"/>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="funcRetVal_label">
+                   <property name="text">
+                    <string>Return Value:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="funcRetCal_lineEdit"/>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="funcCallFrom_label">
+                   <property name="text">
+                    <string>Call From Address:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="funcCallFrom_lineEdit"/>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="funcDestAddress_label">
+                   <property name="text">
+                    <string>Destination Address:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QLineEdit" name="funcDestAddress_lineEdit"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="funcNumParam_lineEdit"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="funcParamDetails_label">
+                   <property name="text">
+                    <string>Parameter Details:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QPushButton" name="funcParamDetails_button">
+                   <property name="text">
+                    <string>Edit Parameter Details</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="string_page">
+                <layout class="QFormLayout" name="formLayout_4">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="strName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="strType_label">
+                   <property name="text">
+                    <string>Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="strSize_label">
+                   <property name="text">
+                    <string>Size:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="strCallFrom_label">
+                   <property name="text">
+                    <string>Call From Address:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="strDest_label">
+                   <property name="text">
+                    <string>Destination Address:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="strSection_label">
+                   <property name="text">
+                    <string>Section:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="strName_lineEdit"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="strType_lineEdit"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="strSize_lineEdit"/>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="strCallFrom_lineEdit"/>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="strDest_lineEdit"/>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="strSection_linEdit"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="variable_page">
+                <layout class="QFormLayout" name="formLayout_2">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="varName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="varName_lineEdit"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="varType_label">
+                   <property name="text">
+                    <string>Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="varValue_label">
+                   <property name="text">
+                    <string>Value:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="varSize_label">
+                   <property name="text">
+                    <string>Size:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="varType_lineEdit"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="varValue_lineEdit"/>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="varSize_lineEdit"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="DLL_page">
+                <layout class="QFormLayout" name="formLayout_5">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="dllName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="dllName_lineEdit"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="pckProto_page">
+                <layout class="QFormLayout" name="formLayout_6">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="protoName_label">
+                   <property name="text">
+                    <string>*Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="protoFieldName_label">
+                   <property name="text">
+                    <string>Field Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="protoFieldType_label">
+                   <property name="text">
+                    <string>Field Type:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="protoName_lineEdit"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="protoFieldName_lineEdit"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="protoFieldType_lineEdit"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="Struct_page">
+                <layout class="QVBoxLayout" name="verticalLayout_30">
+                 <item>
+                  <widget class="QTextBrowser" name="StructTBD_text">
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic; color:#4a4a4a;&quot;&gt;TBD (Structure not defined in SRS)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
              </item>
              <item>
               <layout class="QGridLayout" name="dpoim_lowGrid">
@@ -897,8 +1442,8 @@ background-color: rgb(186, 189, 182);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>975</width>
-     <height>21</height>
+     <width>991</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">
@@ -906,6 +1451,9 @@ background-color: rgb(186, 189, 182);</string>
      <string>File</string>
     </property>
     <addaction name="actionNew_Project"/>
+    <addaction name="actionOpen_Project"/>
+    <addaction name="actionExport_Project"/>
+    <addaction name="separator"/>
     <addaction name="actionSave_Analysis_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -951,6 +1499,16 @@ background-color: rgb(186, 189, 182);</string>
   <action name="actionSave_Analysis_2">
    <property name="text">
     <string>Save Analysis</string>
+   </property>
+  </action>
+  <action name="actionOpen_Project">
+   <property name="text">
+    <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionExport_Project">
+   <property name="text">
+    <string>Export Project</string>
    </property>
   </action>
  </widget>

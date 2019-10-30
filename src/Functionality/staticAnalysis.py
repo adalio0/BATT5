@@ -11,9 +11,8 @@ def staticAnalysis(filePath):
 
 
 def functions_analysis():
-    function = infile.cmd("afllj")
-    formattedF = json.loads(function)
-    return formattedF
+    function = infile.cmdj("afllj~{}")
+    return function
 
 
 def string_analysis():

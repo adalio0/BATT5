@@ -1,76 +1,0 @@
-[Imports]
-
-Num  Vaddr       Bind      Type Name
-
-   1 0x1400042f8    NONE    FUNC msvcrt.dll___C_specific_handler
-   2 0x140004300    NONE    FUNC msvcrt.dll__cexit
-   3 0x140004308    NONE    FUNC msvcrt.dll___setusermatherr
-   4 0x140004310    NONE    FUNC msvcrt.dll_exit
-   5 0x140004318    NONE    FUNC msvcrt.dll__fmode
-   6 0x140004320    NONE    FUNC msvcrt.dll__commode
-   7 0x140004328    NONE    FUNC msvcrt.dll__initterm
-   8 0x140004330    NONE    FUNC msvcrt.dll__exit
-   9 0x140004338    NONE    FUNC msvcrt.dll___iob_func
-  10 0x140004340    NONE    FUNC msvcrt.dll__get_osfhandle
-  11 0x140004348    NONE    FUNC msvcrt.dll__wcsicmp
-  12 0x140004350    NONE    FUNC msvcrt.dll_fflush
-  13 0x140004358    NONE    FUNC msvcrt.dll__setmode
-  14 0x140004360    NONE    FUNC msvcrt.dll__write
-  15 0x140004368    NONE    FUNC msvcrt.dll__fileno
-  16 0x140004370    NONE    FUNC msvcrt.dll_wcschr
-  17 0x140004378    NONE    FUNC msvcrt.dll_fgetpos
-  18 0x140004380    NONE    FUNC msvcrt.dll_fwprintf
-  19 0x140004388    NONE    FUNC msvcrt.dll_?terminate@@YAXXZ
-  20 0x140004390    NONE    FUNC msvcrt.dll___wgetmainargs
-  21 0x140004398    NONE    FUNC msvcrt.dll__amsg_exit
-  22 0x1400043a0    NONE    FUNC msvcrt.dll__XcptFilter
-  23 0x1400043a8    NONE    FUNC msvcrt.dll_wcstoul
-  24 0x1400043b0    NONE    FUNC msvcrt.dll_iswctype
-  25 0x1400043b8    NONE    FUNC msvcrt.dll_memcpy
-  26 0x1400043c0    NONE    FUNC msvcrt.dll___set_app_type
-  27 0x1400043c8    NONE    FUNC msvcrt.dll_memset
-   1 0x1400041a0    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_SetConsoleCtrlHandler
-   2 0x1400041a8    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_GetConsoleMode
-   1 0x140004280    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegOpenKeyExW
-   2 0x140004288    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegQueryValueExW
-   3 0x140004290    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegCloseKey
-   1 0x140004118    NONE    FUNC IPHLPAPI.DLL_GetIpErrorString
-   2 0x140004120    NONE    FUNC IPHLPAPI.DLL_SetCurrentThreadCompartmentId
-   3 0x140004128    NONE    FUNC IPHLPAPI.DLL_GetIpForwardTable
-   4 0x140004130    NONE    FUNC IPHLPAPI.DLL_IcmpSendEcho2Ex
-   5 0x140004138    NONE    FUNC IPHLPAPI.DLL_IcmpCloseHandle
-   6 0x140004140    NONE    FUNC IPHLPAPI.DLL_Icmp6SendEcho2
-   7 0x140004148    NONE    FUNC IPHLPAPI.DLL_IcmpCreateFile
-   8 0x140004150    NONE    FUNC IPHLPAPI.DLL_Icmp6CreateFile
-   9 0x140004158    NONE    FUNC IPHLPAPI.DLL_InternalIcmpCreateFileEx
-   1 0x140004220    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_SetThreadUILanguage
-   2 0x140004228    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_FormatMessageW
-   1 0x140004168    NONE    FUNC WS2_32.dll_InetNtopW
-   2 0x140004170    NONE    FUNC WS2_32.dll_GetAddrInfoW
-   3 0x140004178    NONE    FUNC WS2_32.dll_GetNameInfoW
- 116 0x140004180    NONE    FUNC WS2_32.dll_WSACleanup
- 117 0x140004188    NONE    FUNC WS2_32.dll_FreeAddrInfoW
- 115 0x140004190    NONE    FUNC WS2_32.dll_WSAStartup
-   1 0x1400041f8    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalFree
-   2 0x140004200    NONE    FUNC api-ms-win-core-heap-l2-1-0.dll_LocalAlloc
-   1 0x1400042d0    NONE    FUNC api-ms-win-core-synch-l1-2-0.dll_Sleep
-   1 0x1400041b8    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_UnhandledExceptionFilter
-   2 0x1400041c0    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_GetLastError
-   3 0x1400041c8    NONE    FUNC api-ms-win-core-errorhandling-l1-1-0.dll_SetUnhandledExceptionFilter
-   1 0x1400043d8    NONE    FUNC ntdll.dll_RtlIpv4StringToAddressW
-   1 0x1400041e8    NONE    FUNC api-ms-win-core-heap-l1-1-0.dll_HeapSetInformation
-   1 0x1400042a0    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlLookupFunctionEntry
-   2 0x1400042a8    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlCaptureContext
-   3 0x1400042b0    NONE    FUNC api-ms-win-core-rtlsupport-l1-1-0.dll_RtlVirtualUnwind
-   1 0x140004248    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentThreadId
-   2 0x140004250    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_TerminateProcess
-   3 0x140004258    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcessId
-   4 0x140004260    NONE    FUNC api-ms-win-core-processthreads-l1-1-0.dll_GetCurrentProcess
-   1 0x140004210    NONE    FUNC api-ms-win-core-libraryloader-l1-2-0.dll_GetModuleHandleW
-   1 0x140004270    NONE    FUNC api-ms-win-core-profile-l1-1-0.dll_QueryPerformanceCounter
-   1 0x1400042e0    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetSystemTimeAsFileTime
-   2 0x1400042e8    NONE    FUNC api-ms-win-core-sysinfo-l1-1-0.dll_GetTickCount
-   1 0x140004238    NONE    FUNC api-ms-win-core-processenvironment-l1-1-0.dll_GetEnvironmentVariableW
-   1 0x1400042c0    NONE    FUNC api-ms-win-core-string-l1-1-0.dll_WideCharToMultiByte
-   1 0x1400041d8    NONE    FUNC api-ms-win-core-file-l1-1-0.dll_GetFileType
-
