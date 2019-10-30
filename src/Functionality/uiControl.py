@@ -108,7 +108,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
-        # self.window.dpmPluginPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+        self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+
+        # ---- View Box ------------------------------------
+        self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
+        self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
         # ---- Select listener ------------------------------
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -256,7 +260,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 pass
 
         for p in current.find():
-            text = "<font size=2> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
+            text = "<font size=3> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
             text += "<b>Project Properties</b>: <br>"
             text += "<b>" + "Os" + "</b>: " + p.get('properties', {}).get('os') + "<br>"
             text += "<b>" + "Binary" + "</b>: " + p.get('properties', {}).get('binary') + "<br>"
@@ -379,7 +383,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                             'uncovered_poi': {
                                 'function': {
                                     'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': poi[0][i]
+                                    'data': poi[0][1]
                                 },
                                 'string': {
                                     'associated_plugin': str(self.window.poiType_dropdown.currentText()),
