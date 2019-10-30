@@ -115,6 +115,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
+        # ---- Create Plugin Selection ----------------------
+        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
+
         # ---- Select listener ------------------------------
         self.window.projectSearch_lineEdit.installEventFilter(self)
         self.window.poiSearch_lineEdit.installEventFilter(self)

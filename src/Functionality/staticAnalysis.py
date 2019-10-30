@@ -1,4 +1,5 @@
 import r2pipe
+import json
 import re
 
 
@@ -20,13 +21,15 @@ def string_analysis():
 
 
 def variables_analysis():
-    variables = infile.cmdj('afvdj')
-    return variables
+    variable = infile.cmdj('afvdj')
+    formattedV = json.loads(variable)
+    return formattedV
 
 
 def dll_analysis():
-    dlls = infile.cmdj('iij')
-    return dlls
+    dlls = infile.cmd('iij')
+    formattedD = json.loads(dlls)
+    return formattedD
 
 
 def extract_all():
