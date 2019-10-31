@@ -5,15 +5,15 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="name" 		type="xs:string" use="required" maxOccurs="1"/>
-				<xs:element name="description" 	type="xs:string" default="" maxOccurs="1"/>
-				<xs:element name="pointOfInterest" maxOccurs="unbounded" use="required">
+				<xs:element name="description" 	type="xs:string" use="required"	maxOccurs="1" default=" "/>
+				<xs:element name="pointOfInterest" maxOccurs="unbounded" use="optional">
 					<xs:complexType>
 						<xs:element name="name" 	type="xs:string" maxOccurs="1" use="required"/>
-						<xs:element name="value" 	use="required"/>
-						<xs:element name="valueType" maxOccurs="1" use="required"/>
+						<xs:element name="value" 	use="optional"/>
+						<xs:element name="dataType" maxOccurs="1" use="required"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="output" minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="output" 		maxOccurs="unbounded"	use="optional">
 					<xs:complexType>
 						<xs:element name="name" 			maxOccurs="1"/>
 						<xs:element name="functionName" 	maxOccurs="1"/>

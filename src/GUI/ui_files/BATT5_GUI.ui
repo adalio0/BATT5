@@ -239,7 +239,7 @@ background-color: rgb(186, 189, 182);</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item>
-                  <widget class="QTableView" name="POI_tableWidget"/>
+                  <widget class="QTableWidget" name="POI_tableWidget"/>
                  </item>
                 </layout>
                </widget>

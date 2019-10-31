@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+	<name>Network Plugin</name>
+	<description> Network plugin includes six points of interest </description>
+	<pointOfInterest>
+		<name></name>
+		<dataType></dataType>
+	</pointOfInterest>
+	<output>
+		<name>Script</name>
+		<fucntionName>generateScript</functionName>
+		<fucntionSource>C:/fake/address</fucntionSource>
+	</output>
+</plugin>
