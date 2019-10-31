@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -960,14 +960,17 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page">
                 <layout class="QVBoxLayout" name="verticalLayout">
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_13">
-                   <item>
-                    <widget class="QLabel" name="label_2">
+                  <layout class="QGridLayout" name="gridLayout_2">
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="dpmPluginStructure_lineEdit"/>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="dpmPluginStructure_label">
                      <property name="minimumSize">
                       <size>
                        <width>115</width>
@@ -985,15 +988,25 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit"/>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton">
+                   <item row="0" column="2">
+                    <widget class="QPushButton" name="dpmPluginStructure_button">
                      <property name="text">
                       <string>Browse</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <spacer name="verticalSpacer_2">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
@@ -1002,9 +1015,9 @@ p, li { white-space: pre-wrap; }
                <widget class="QWidget" name="page_2">
                 <layout class="QVBoxLayout" name="verticalLayout_24">
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <layout class="QHBoxLayout" name="dpmManualPlugin_layout">
                    <item>
-                    <widget class="QLabel" name="label_3">
+                    <widget class="QLabel" name="dpmPluginName_label">
                      <property name="minimumSize">
                       <size>
                        <width>140</width>
@@ -1102,7 +1115,7 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <widget class="QLabel" name="label_8">
                    <property name="text">
-                    <string>**Points of interest could be added either through XML, or in section below**</string>
+                    <string>POI added through XML or section below</string>
                    </property>
                   </widget>
                  </item>
@@ -1230,8 +1243,11 @@ p, li { white-space: pre-wrap; }
                <widget class="QWidget" name="fromPredef_page">
                 <layout class="QVBoxLayout" name="verticalLayout_21">
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_12">
-                   <item>
+                  <layout class="QGridLayout" name="gridLayout">
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="dpoimPredefined_lineEdit"/>
+                   </item>
+                   <item row="0" column="0">
                     <widget class="QLabel" name="dpoimPredefined_label">
                      <property name="minimumSize">
                       <size>
@@ -1244,15 +1260,25 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QLineEdit" name="dpoimPredefined_lineEdit"/>
-                   </item>
-                   <item>
+                   <item row="0" column="2">
                     <widget class="QPushButton" name="dpoimPredefined_button">
                      <property name="text">
                       <string>Browse</string>
                      </property>
                     </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <spacer name="verticalSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
