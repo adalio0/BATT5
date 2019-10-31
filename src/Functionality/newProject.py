@@ -2,7 +2,6 @@ import sys
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QTreeWidgetItem
-from numpy import unicode
 import xml.etree.ElementTree as ET
 import os
 import pymongo

@@ -79,17 +79,26 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
-        # Highlights the searched elements in the project list
+        # ---- Search Functions ---------------------------------
+        # returns the searched elements in the project list
         self.window.projectSearch_lineEdit.returnPressed.connect(self.searchProject)
 
-        # Highlights the searched elements in the poi list
+        # returns the searched elements in the poi list
         self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
-        
-        # Executes the input command in the radare prompt
-        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
+        # returns the searched elements in the plugin list
+        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.searchPluginM)
+
+        # returns the searched elements in the poi list
+        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.searchPoiM)
+
+        # ---- Filters ---------------------------------
         # When changing POI type in the drop down will update whats displayed
         self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
+
+        # ---- Console -------------------------------------------
+        # Executes the input command in the radare prompt
+        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
         # ---- Plugin Controls -----------------------------
 
@@ -161,11 +170,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
+                    self.window.poi_list.clear()
                     self.displayAll()
-            elif obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+            elif obj == self.window.pluginManagementSearch_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
+                    self.window.pluginManagement_list.clear()
+                    # method to call all plugins
+            elif obj == self.window.poiManagementSeach_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.window.poiManagement_list.clear()
+                    # method to call all pois
             # if clicked out of command input bar, fill with "BATT5$"
             elif obj == self.window.radareConsoleIn_lineEdit:
                 if obj.text() == "":
@@ -714,6 +732,57 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             list = self.window.poi_list
             list.clear()
             self.displayAll()
+
+    def searchPluginM(self):
+        search = str(self.window.pluginManagementSearch_lineEdit.text())
+        result = self.window.pluginManagement_list.findItems(search, QtCore.Qt.MatchContains)
+
+        plugin = []
+        item = ''
+
+        j = 0
+        if search:
+            for i in range(self.window.pluginManagement_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.pluginManagement_list.item(i).text():
+                    plugin.append(item.text())
+                    j+=1
+            list = self.window.pluginManagement_list
+            list.clear()
+            list.addItems(plugin)
+        else:
+            list = self.window.pluginManagement_list
+            list.clear()
+            # method to call all plugins
+
+    def searchPoiM(self):
+        search = str(self.window.poiManagementSeach_lineEdit.text())
+        result = self.window.poiManagement_list.findItems(search, QtCore.Qt.MatchContains)
+
+        poi = []
+        item = ''
+
+        j = 0
+        if search:
+            for i in range(self.window.poiManagement_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.poiManagement_list.item(i).text():
+                    poi.append(item.text())
+                    j += 1
+            list = self.window.poiManagement_list
+            list.clear()
+            list.addItems(poi)
+        else:
+            list = self.window.poiManagement_list
+            list.clear()
+            #method to call all pois
+
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
