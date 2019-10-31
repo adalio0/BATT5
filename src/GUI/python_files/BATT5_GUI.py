@@ -725,7 +725,7 @@ class Ui_BATT5(object):
         self.poiSearch_lineEdit.setText(_translate("BATT5", "Search.."))
         self.viewCurrent_box.setTitle(_translate("BATT5", "Switch View"))
         self.switchToHistory_button.setText(_translate("BATT5", "Switch to History View"))
-        self.project_box_h.setTitle(_translate("BATT5", "Project Properties"))
+        self.project_box_h.setTitle(_translate("BATT5", "Properties"))
         self.projectProperties_text_h.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
