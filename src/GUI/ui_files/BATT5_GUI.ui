@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>991</width>
-    <height>765</height>
+    <height>794</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1015,29 +1015,9 @@ p, li { white-space: pre-wrap; }
                <widget class="QWidget" name="page_2">
                 <layout class="QVBoxLayout" name="verticalLayout_24">
                  <item>
-                  <layout class="QHBoxLayout" name="dpmManualPlugin_layout">
-                   <item>
-                    <widget class="QLabel" name="dpmPluginName_label">
-                     <property name="minimumSize">
-                      <size>
-                       <width>140</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>*Name</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_2"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <item>
-                    <widget class="QLabel" name="label_4">
+                  <layout class="QGridLayout" name="manualPluginAdd">
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="dpmPluginDesc_label">
                      <property name="minimumSize">
                       <size>
                        <width>140</width>
@@ -1055,41 +1035,11 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_4"/>
+                   <item row="2" column="1">
+                    <widget class="QLineEdit" name="dpmOutName_lineEdit"/>
                    </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <item>
-                    <widget class="QLabel" name="label_5">
-                     <property name="minimumSize">
-                      <size>
-                       <width>140</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>140</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>Output Function Name</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_3"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
-                   <item>
-                    <widget class="QLabel" name="label_6">
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="dpmOutFuncSource_label">
                      <property name="minimumSize">
                       <size>
                        <width>140</width>
@@ -1107,15 +1057,76 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_5"/>
+                   <item row="4" column="1">
+                    <widget class="QLineEdit" name="dpmOutFuncSource_lineEdit"/>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="dpmOutFuncName_label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>140</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>140</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Output Function Name</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QLineEdit" name="dpmOutFuncName_lineEdit"/>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="dpmOutName_lable">
+                     <property name="minimumSize">
+                      <size>
+                       <width>140</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Output Name</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="dpmPluginDesc_lineEdit"/>
+                   </item>
+                   <item row="4" column="2">
+                    <widget class="QPushButton" name="dpmOutFuncSource_button">
+                     <property name="text">
+                      <string>Browse</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="dpmPluginName_label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>140</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>*Name</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
                    </item>
                   </layout>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_8">
                    <property name="text">
-                    <string>POI added through XML or section below</string>
+                    <string>POIs will be added through XML or section below</string>
                    </property>
                   </widget>
                  </item>
@@ -1126,7 +1137,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <layout class="QGridLayout" name="dpoim_lowGrid_2">
                <item row="0" column="0">
-                <widget class="QPushButton" name="dpoimDelete_button_2">
+                <widget class="QPushButton" name="dpmDelete_button">
                  <property name="text">
                   <string>Delete</string>
                  </property>
@@ -1146,7 +1157,7 @@ p, li { white-space: pre-wrap; }
                 </spacer>
                </item>
                <item row="0" column="2">
-                <widget class="QPushButton" name="dpoimSave_button_2">
+                <widget class="QPushButton" name="dpmSave_button">
                  <property name="text">
                   <string>Save</string>
                  </property>

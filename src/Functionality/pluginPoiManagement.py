@@ -1,8 +1,14 @@
-from xmljson import BadgerFish
+from xmljson import parker as pk
 import xml.etree.ElementTree as ET
+import json
+import xmlschema
+
 
 def validatePluginXML(filepath):
-    return 1
+    pluginSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
+                                       '4311/BATT5/src/Configurations/pluginConfig.xsd')
+    result = pluginSchema.is_valid(filepath)
+    return result
 
 
 def validatePoiXML(filepath):
@@ -11,18 +17,34 @@ def validatePoiXML(filepath):
 
 def convertPluginXML(filepath):
     if validatePluginXML(filepath):
-        print('doing thing')
         pluginTree = ET.parse(filepath)
         pluginRoot = pluginTree.getroot()
-
+        pluginDict = json.loads(json.dumps(pk.data(pluginRoot)))
     else:
-        print('doing other thing (error)')
-    return 1
+        print('invalid plugin XML (does not conform to  schema)')
+    return pluginDict
 
 
-def convertPoiXML(filepath, plugins):
-    return 1
+def convertPoiXML(filepath):
+    if validatePoiXML(filepath):
+        poiTree = ET.parse(filepath)
+        poiRoot = poiTree.getroot()
+        poiDict = json.loads(json.dumps(pk.data(poiRoot)))
+    else:
+        print('invalid POI XML (does not conform to POI schema)')
+    return poiDict
 
 
-def convertPluginManual(name, desc, outFcnName='', outFcnSource=''):
-    return 1
+def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
+    plugDict = {
+        'name': name,
+        'description': desc,
+        'output': {
+            'name': outName,
+            'functionName': outFcnName,
+            'functionSource': outFcnSource
+        }
+    }
+    return plugDict
+
+# TODO make function to store into db

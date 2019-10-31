@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 import pymongo
 from pathlib import Path
 
-sys.path.insert(0, Path(__file__).parents[2].as_posix())
+# sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QEvent
@@ -23,11 +23,13 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
+from src.Functionality.pluginPoiManagement import convertPluginXML, convertPluginManual
 
 static = False
 dynamic = False
 
 projectList = []
+
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -116,6 +118,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Plugin Structure browse button calls showFileExplorer method
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
+        # Clicking on browse plugin function output source
+        self.window.dpmOutFuncSource_button.clicked.connect(self.showFileExplorer_outFuncSource)
+
+        # Creating new plugin from xml
+        self.window.dpmSave_button.clicked.connect(self.processPluginData)
+
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
@@ -158,7 +166,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if obj.text() == "BATT5$":
                     obj.clear()
                     obj.setStyleSheet("color: black;")
-                    
+
         # if not selected
         elif event.type() == QEvent.FocusOut:
             # if clicked out of project search bar, fill with "Search.." and repopulate with correct original data
@@ -284,7 +292,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 pass
 
         for p in current.find():
-            text = "<font size=3> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
+            text = "<font size=3> <b>Project Description</b>: " + p.get('properties', {}).get(
+                'description') + "<br><br>"
             text += "<b>Project Properties</b>: <br>"
             text += "<b>" + "Os" + "</b>: " + p.get('properties', {}).get('os') + "<br>"
             text += "<b>" + "Binary" + "</b>: " + p.get('properties', {}).get('binary') + "<br>"
@@ -373,7 +382,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.projectProperties_text.setHtml(text)
 
             # Set up command prompt
-            self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+            self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit,
+                                     self.window.radareConsoleOut_text)
 
         except FileNotFoundError:
             pass
@@ -718,7 +728,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     pass
                 if item.text() in self.window.poi_list.item(i).text():
                     poi.append(item.text())
-                    j+=1
+                    j += 1
             list = self.window.poi_list
             list.clear()
             list.addItems(poi)
@@ -743,7 +753,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     pass
                 if item.text() in self.window.pluginManagement_list.item(i).text():
                     plugin.append(item.text())
-                    j+=1
+                    j += 1
             list = self.window.pluginManagement_list
             list.clear()
             list.addItems(plugin)
@@ -775,15 +785,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             list = self.window.poiManagement_list
             list.clear()
-            #method to call all pois
-
+            # method to call all pois
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
         self.terminal.processInput(cmd_in)
         self.window.radareConsoleIn_lineEdit.clear()
-    
+
     # runs Dynamic Analysis
     def runDynamic(self):
         global static
@@ -808,7 +817,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             tree = self.window.projectNavigator_tree
             item = QTreeWidgetItem([obj.get_name(self.ui)])
             child = QTreeWidgetItem(item)
-            child.setText(0,obj.get_file(self.ui))
+            child.setText(0, obj.get_file(self.ui))
             tree.addTopLevelItem(item)
 
     # Shows Analysis Result window
@@ -857,10 +866,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
+    def showFileExplorer_outFuncSource(self):
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        self.window.dpmOutFuncSource_lineEdit.setText(name)
+
     # Open up file explorer to select a file for Project Predefined line edit
     def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        # self.window.dpmPluginPredefined_lineEdit.setText(name)
+        self.window.dpoimPredefined_lineEdit.setText(name)
 
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
@@ -927,6 +940,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if createType == 'Manual Input':
             self.window.createPlugin_stack.setCurrentIndex(1)
 
+    def processPluginData(self):
+        createType = self.window.dpmCreate_dropdown.currentText()
+        if createType == 'Pull From XML File':
+            pluginDict = convertPluginXML(self.window.dpmPluginStructure_lineEdit.text())
+
+        if createType == 'Manual Input':
+            pluginDict = convertPluginManual(self.window.dpmPluginName_lineEdit.text(),
+                                             self.window.dpmPluginDesc_lineEdit.text(),
+                                             self.window.dpmOutName_lineEdit.text(),
+                                             self.window.dpmOutFuncName_lineEdit.text(),
+                                             self.window.dpmOutFuncSource_lineEdit.text())
+
+        print(pluginDict)
+        return pluginDict
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

@@ -12,30 +12,32 @@ def staticAnalysis(filePath):
 
 def functions_analysis():
     functions = infile.cmdj("afllj")
+    print(functions)
     return functions
 
 
 def string_analysis():
     strings = infile.cmdj('izj')
+    print(strings)
     return strings
 
 
 def variables_analysis():
     variable = infile.cmdj('afvdj')
-    formattedV = json.loads(variable)
-    return formattedV
+    print(variable)
+    return variable
 
 
 def dll_analysis():
-    dlls = infile.cmd('iij')
-    formattedD = json.loads(dlls)
-    return formattedD
+    dlls = infile.cmdj('iij')
+    print(dlls)
+    return dlls
 
 
 def extract_all():
     function = functions_analysis()
     string = string_analysis()
-    # variable = variables_analysis()
-    # dll = dll_analysis()
+    variable = variables_analysis()
+    dll = dll_analysis()
     # return [function, string, variable, dll]
     return [function, string]
