@@ -74,47 +74,23 @@ class ProjectWindow(QtWidgets.QDialog):
         client = pymongo.MongoClient("mongodb://localhost:27017")
         db = client['project_data']
         posts = db['project']
-        data = {
-            'properties': {
-                'name': project.get_name(self),
-                'file': project.get_file(self),
-                'description': project.get_description(self),
-                'os': project.get_os(self),
-                'binary': project.get_binary_type(self),
-                'machine': project.get_machine(self),
-                'class': project.get_class(self),
-                'bits': project.get_bits(self),
-                'language': project.get_language(self),
-                'canary': project.get_canary(self),
-                'crypto': project.get_crypto(self),
-                'nx': project.get_nx(self),
-                'relocs': project.get_relocs(self),
-                'stripped': project.get_stripped(self),
-                'relro': project.get_relro(self)
-            },
-            'static_analysis': {
-                'uncovered_poi': {
-                    'function': {
-                        'associated_plugin': '',
-                        'data': 'stuff'
-                    },
-                    'string': {
-                        'associated_plugin': '',
-                        'data': 'stuff'
-                    },
-                    'variable': {
-                        'associated_plugin': '',
-                        'data': 'stuff'
-                    },
-                    'dll': {
-                        'associated_plugin': '',
-                        'data': 'stuff'
-                    }
-                }
-            },   # End of Static Analysis
-            'dynamic_analysis': {
+        project = {
+            # Primary key
+            'name': project.getBane(),
 
-            }   # End of Dynamic Analysis
+            'description': 'some description',
+
+            'file': 'ID of binary file',
+
+            'static_analysis': {
+                'ID of FIRST Static',
+                'ID of SECOND Static'
+            },
+
+            'dynamic_analysis': {
+                'ID of FIRST dynamic',
+                'ID of SECOND dynamic'
+            }
         }
 
         result = posts.insert_one(data)

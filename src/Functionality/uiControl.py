@@ -373,18 +373,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         analysis = ''
         for p in current.find():
             path = p.get('properties', {}).get('file')
+            analysis = p.get('static_analysis', {}).get('uncovered_poi', {}).get('function', {})
 
         try:
             # function, string, variable, dll = staticAnalysis(path)
             poi = staticAnalysis(path)
 
-            i = 0
-            for data in poi[0]:
-                analysis['data0'] = data
-                i += 1
+            for i in range(len(poi[0])):
+                db.current.findOneAndUpdate({
 
-            for x in current.find():
-                print(x)
+                }, {
+                    '$set': {
+                        'function': {
+                            'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                            ('data' + str(i)): poi[0][i]
+                        }
+                    },
+                }, upsert=False)
+                # analysis[('data' + str(i))] = poi[0][i]
+
+            # print(analysis)
+
             try:
                 db.current.update_one({
 
