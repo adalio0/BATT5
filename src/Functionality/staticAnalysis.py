@@ -3,41 +3,39 @@ import json
 import re
 
 
-
-def staticAnalysis(filePath, poi):
+def staticAnalysis(filePath):
     global infile
     infile = r2pipe.open(filePath)
     infile.cmd('aaa')
-    if poi == 'String':
-        string_analysis()
-    elif poi == 'Variable':
-        variables_analysis()
-    elif poi == 'DLL':
-        dll_analysis()
-    elif poi == 'Function':
-        functions_analysis()
-    elif poi == 'Extract All':
-        extract_all()
-
-
-def string_analysis():
-    infile.cmd('iz > string.txt')
-
-
-def dll_analysis():
-    infile.cmd('ii > dll.txt')
+    return extract_all()
 
 
 def functions_analysis():
-    infile.cmd('afll > function.txt')
+    functions = infile.cmdj("afllj")
+    return functions
+
+
+def string_analysis():
+    strings = infile.cmdj('izj')
+    return strings
 
 
 def variables_analysis():
-    infile.cmd('afvd > variable.txt')
+    variable = infile.cmdj('afvdj')
+    formattedV = json.loads(variable)
+    return formattedV
+
+
+def dll_analysis():
+    dlls = infile.cmd('iij')
+    formattedD = json.loads(dlls)
+    return formattedD
 
 
 def extract_all():
-    string_analysis()
-    dll_analysis()
-    functions_analysis()
-    variables_analysis()
+    function = functions_analysis()
+    string = string_analysis()
+    # variable = variables_analysis()
+    # dll = dll_analysis()
+    # return [function, string, variable, dll]
+    return [function, string]

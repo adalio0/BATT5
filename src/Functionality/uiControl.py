@@ -4,6 +4,7 @@ import os
 import sys
 import glob
 import xml.etree.ElementTree as ET
+import pymongo
 from pathlib import Path
 
 sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -13,8 +14,6 @@ from PyQt5.QtCore import QEvent
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-
-from src.Functionality.project import Project
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
 from src.Functionality.newProject import ProjectWindow
@@ -80,12 +79,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
-        # Highlights the searched elements in the project list
+        # ---- Search Functions ---------------------------------
+        # returns the searched elements in the project list
         self.window.projectSearch_lineEdit.returnPressed.connect(self.searchProject)
 
-        # Highlights the searched elements in the poi list
+        # returns the searched elements in the poi list
         self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
-        
+
+        # returns the searched elements in the plugin list
+        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.searchPluginM)
+
+        # returns the searched elements in the poi list
+        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.searchPoiM)
+
+        # ---- Filters ---------------------------------
+        # When changing POI type in the drop down will update whats displayed
+        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
+
+        # ---- Console -------------------------------------------
         # Executes the input command in the radare prompt
         self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
@@ -111,12 +122,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
-        
+
         # ---- Create Plugin Selection ----------------------
         self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
 
         # ---- Select listener ------------------------------
-
         self.window.projectSearch_lineEdit.installEventFilter(self)
         self.window.poiSearch_lineEdit.installEventFilter(self)
         self.window.pluginManagementSearch_lineEdit.installEventFilter(self)
@@ -127,6 +137,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Perform static analysis on a binary file
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
+
+    # ---- Following methods are all the functionality currently implemented into main window -----------------
 
     # Used for letting the user know where they are typing
     def eventFilter(self, obj, event):
@@ -154,10 +166,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.projectNavigator_tree.clear()
                     self.populateProjectBox()
             # if clicked out of search bar, fill with "Search.."
-            elif obj == self.window.poiSearch_lineEdit or obj == self.window.pluginManagementSearch_lineEdit or obj == self.window.poiManagementSeach_lineEdit:
+            elif obj == self.window.poiSearch_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
+                    self.window.poi_list.clear()
+                    self.displayAll()
+            elif obj == self.window.pluginManagementSearch_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.window.pluginManagement_list.clear()
+                    # method to call all plugins
+            elif obj == self.window.poiManagementSeach_lineEdit:
+                if obj.text() == "":
+                    obj.setStyleSheet("color: rgb(136, 138, 133);")
+                    obj.setText("Search..")
+                    self.window.poiManagement_list.clear()
+                    # method to call all pois
             # if clicked out of command input bar, fill with "BATT5$"
             elif obj == self.window.radareConsoleIn_lineEdit:
                 if obj.text() == "":
@@ -166,9 +192,120 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
-    # Initialize the project box with all the current projects
+    # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
-        global projectList
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['project_data']
+        posts = db['project']
+
+        # db.project.drop()
+
+        projects = []
+        for x in posts.find():
+            projects.append(QTreeWidgetItem([x.get('properties', {})['name']]))
+            child = QTreeWidgetItem(projects[len(projects) - 1])
+            child.setText(0, x.get('properties', {})['file'])
+
+        tree = self.window.projectNavigator_tree
+        tree.addTopLevelItems(projects)
+
+    # Changes the project description according to the current project from database
+    def setProject(self):
+        selected = self.window.projectNavigator_tree.selectedItems()
+
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['project_data']
+        posts = db['project']
+
+        newdb = client['current_project']
+        current = newdb['current']
+
+        data = ""
+        text = ""
+        binaryPath = ""
+        if selected:
+            item = selected[0].text(0)
+            for x in posts.find():
+                prop = x.get('properties', {})
+                if prop['name'] == item:
+                    stats = x.get('static_analysis', {}).get('uncovered_poi', {})
+
+                    data = {
+                        'properties': {
+                            'name': prop['name'],
+                            'file': prop['file'],
+                            'description': prop['description'],
+                            'os': prop['os'],
+                            'binary': prop['binary'],
+                            'machine': prop['machine'],
+                            'class': prop['class'],
+                            'bits': prop['bits'],
+                            'language': prop['language'],
+                            'canary': prop['canary'],
+                            'crypto': prop['crypto'],
+                            'nx': prop['nx'],
+                            'relocs': prop['relocs'],
+                            'stripped': prop['stripped'],
+                            'relro': prop['relro']
+                        },  # End of Properties
+
+                        'static_analysis': {
+                            'uncovered_poi': {
+                                'function': {
+                                    'associated_plugin': stats.get('function')['associated_plugin'],
+                                    'data': stats.get('function')['data']
+                                },
+                                'string': {
+                                    'associated_plugin': stats.get('string')['associated_plugin'],
+                                    'data': stats.get('string')['data']
+                                },
+                                'variable': {
+                                    'associated_plugin': stats.get('variable')['associated_plugin'],
+                                    'data': stats.get('variable')['data']
+                                },
+                                'dll': {
+                                    'associated_plugin': stats.get('dll')['associated_plugin'],
+                                    'data': stats.get('dll')['data']
+                                },
+                            }
+                        },  # End of Static Analysis
+
+                        'dynamic_analysis': {
+
+                        }  # End of Dynamic Analysis
+                    }
+            newdb.current.drop()
+            try:
+                result = current.insert_one(data)
+            except TypeError:
+                pass
+
+        for p in current.find():
+            text = "<font size=3> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
+            text += "<b>Project Properties</b>: <br>"
+            text += "<b>" + "Os" + "</b>: " + p.get('properties', {}).get('os') + "<br>"
+            text += "<b>" + "Binary" + "</b>: " + p.get('properties', {}).get('binary') + "<br>"
+            text += "<b>" + "Machine" + "</b>: " + p.get('properties', {}).get('machine') + "<br>"
+            text += "<b>" + "Class" + "</b>: " + p.get('properties', {}).get('class') + "<br>"
+            text += "<b>" + "Bits" + "</b>: " + p.get('properties', {}).get('bits') + "<br>"
+            text += "<b>" + "Language" + "</b>: " + p.get('properties', {}).get('language') + "<br>"
+            text += "<b>" + "Canary" + "</b>: " + p.get('properties', {}).get('canary') + "<br>"
+            text += "<b>" + "Crypto" + "</b>: " + p.get('properties', {}).get('crypto') + "<br>"
+            text += "<b>" + "Nx" + "</b>: " + p.get('properties', {}).get('nx') + "<br>"
+            text += "<b>" + "Relocs" + "</b>: " + p.get('properties', {}).get('relocs') + "<br>"
+            text += "<b>" + "Stripped" + "</b>: " + p.get('properties', {}).get('stripped') + "<br>"
+            text += "<b>" + "Relro" + "</b>: " + p.get('properties', {}).get('relro') + "<br> </font>"
+
+        self.window.projectProperties_text.setHtml(text)
+
+        for p in current.find():
+            binaryPath = p.get('properties', {}).get('file')
+
+        # Set up command prompt
+        self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
+    # Initialize the project box with all the current projects
+    def populateProjectBox_xml(self):
         cur_path = os.getcwd()
         new_path = os.path.join(cur_path, '..', 'Configurations')
 
@@ -180,15 +317,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for p in root.iter('Project'):
                 if p.get('name') is not "":
                     projects.append(QTreeWidgetItem([p.get('name')]))
-                    child = QTreeWidgetItem(projects[len(projects)-1])
+                    child = QTreeWidgetItem(projects[len(projects) - 1])
                     child.setText(0, p.get('file'))
 
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
-        projectList = projects
 
     # Changes the project description according to the current project
-    def setProject(self):
+    def setProject_xml(self):
         selected = self.window.projectNavigator_tree.selectedItems()
         cur_path = os.getcwd()
 
@@ -223,14 +359,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             text = ""
             binaryPath = ""
             for p in root.iter('Project'):
-                text = "<font size=3> <b>Project Description</b>: " + p.get('description') + "<br><br>"
+                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
                 text += "<b>Project Properties</b>: <br> </font> "
                 binaryPath = p.get('file')
 
             for child in root.iter():
                 if child.tag != "Project" and child.get('name') is not None:
-                    text += "<font size=3> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
-                        
+                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+
             self.window.projectProperties_text.setHtml(text)
 
             # Set up command prompt
@@ -239,14 +375,75 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             pass
 
-    # runs Static Analysis
+    # runs Static Analysis w/ database stuff
+    # TODO: The static analysis data is too big that it overwrites the other poi types.
     def runStatic(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        poi = str(self.window.poiType_dropdown.currentText())
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client['current_project']
+        current = db['current']
+
+        path = ''
+        analysis = ''
+        for p in current.find():
+            path = p.get('properties', {}).get('file')
+
+        try:
+            # function, string, variable, dll = staticAnalysis(path)
+            poi = staticAnalysis(path)
+
+            i = 0
+            for data in poi[0]:
+                analysis['data0'] = data
+                i += 1
+
+            for x in current.find():
+                print(x)
+            try:
+                db.current.update_one({
+
+                }, {
+                    '$set': {
+                        'static_analysis': {
+                            'uncovered_poi': {
+                                'function': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': poi[0][1]
+                                },
+                                'string': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': poi[1][0]
+                                },
+                                'variable': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': 'stuff'
+                                },
+                                'dll': {
+                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
+                                    'data': 'stuff'
+                                }
+                            }
+                        }
+                    }
+                }, upsert=False)
+            except IndexError:
+                pass
+        except:
+            print("An error occurred inside Radare2")
+
+        self.displayPoi()
+
+    # runs Static Analysis
+    def runStatic_xml(self):
+        global static
+        static = True
+        self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+        self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
         tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
         root = tree.getroot()
 
@@ -262,38 +459,53 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             path = p.get('file')
 
         try:
-            staticAnalysis(path, poi)
+            staticAnalysis(path)
         except:
             print("Radare2 not installed cannot start static analysis.")
 
-        
+        self.displayPoi()
+
+    # Dispalys POIs in the Analysis box
+    # TODO: make sure the stuff gets properly displayed in the gui
+    def displayPoi(self):
         self.window.POI_tableWidget.clear()
-        
         self.window.poi_list.clear()
+        poi = str(self.window.poiType_dropdown.currentText())
+        if poi == 'Extract All':
+            self.displayAll()
+        else:
+            client = pymongo.MongoClient("mongodb://localhost:27017")
+            db = client['current_project']
+            current = db['current']
 
-        self.displayPoi(poi)
+            data = ''
+            for x in current.find():
+                data = x.get('static_analysis', {}).get('uncovered_poi', {})
 
-    # Displays POIs in the Analysis box
-    def displayPoi(self, poi):
-        try:
-            if poi == 'Extract All':
-                self.displayAll()
-            else:
-                f = open(poi.lower() + ".txt", "r")
-
-                for line in f.read().split("\n\n")[:]:
-                    self.window.POI_tableWidget.addItem(line)
-
-                if poi == 'Function':
-                    self.displayFunctions()
-                elif poi == 'String':
-                    self.displayString()
-                elif poi == 'Variable':
-                    self.displayVariable()
-                elif poi == 'DLL':
-                    self.displayDll()
-        except FileNotFoundError:
-            pass
+            for key in data:
+                if key == poi.lower():
+                    self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
+                    self.window.POI_tableWidget.setColumnCount(1)
+                    content = data.get(key, {})['data']
+                    entries = []
+                    i = 0
+                    try:
+                        for collection in content:
+                            entries.append(collection)
+                            self.window.POI_tableWidget.setRowCount(len(entries))
+                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
+                            self.window.POI_tableWidget.resizeColumnToContents(0)
+                            i += 1
+                    except TypeError:
+                        pass
+            if poi == 'Function':
+                self.displayFunctions()
+            elif poi == 'String':
+                self.displayString()
+            elif poi == 'Variable':
+                self.displayVariable()
+            elif poi == 'DLL':
+                self.displayDll()
 
     # Displays the functions extracted from Static Analysis in the POI box
     def displayFunctions(self):
@@ -306,10 +518,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = QListWidgetItem(line)
 
                 if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
+                    item.setCheckState(QtCore.Qt.Checked)
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -327,6 +540,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -343,6 +557,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
                 except IndexError:
                     pass
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -357,10 +572,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = QListWidgetItem(line)
 
                 if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
+                    item.setCheckState(QtCore.Qt.Checked)
                     self.window.poi_list.addItem(item)
                 else:
                     i += 1
+            f.close()
         except FileNotFoundError:
             pass
 
@@ -370,9 +586,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             f = open("function.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
             self.window.POI_tableWidget.setColumnCount(4)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions","Strings","Variables","DLL's"])           
-            entries=[]
+
+            entries = []
             i = 0
             j = 0
             for line in f.read().split("\n\n")[:]:
@@ -380,76 +597,72 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
                 entries.append(line)
-                if (len(entries)>= rowPos):
-                    self.window.POI_tableWidget.insertRow(rowPos)
+                self.window.POI_tableWidget.setRowCount(len(entries))
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
-                    self.window.POI_tableWidget.setItem(j,0,QTableWidgetItem(str(line)))
-                    j+=1
+                    self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(str(line)))
+                    j += 1
                     self.window.POI_tableWidget.resizeColumnToContents(0)
                 else:
                     i += 1
 
+            f.close()
             f = open("string.txt", "r")
-            
+
             self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
             i = 0
             j = 0
-            entries = []
             for line in f.read().split("\n\n")[:]:
-                rowPos = self.window.POI_tableWidget.rowCount()
+                # rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ", 9)[-1]
                 item = QListWidgetItem(line)
-                entries.append(line)
-                if (len(entries)>= rowPos):
-                    self.window.POI_tableWidget.insertRow(rowPos)
+
                 if i > 1:
                     self.window.poi_list.addItem(item)
-                    self.window.POI_tableWidget.setItem(j,1,QTableWidgetItem(str(line)))
-                    #self.window.POI_tableWidget.resizeColumnToContents(1)
-                    j+=1
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(str(line)))
+                    j += 1
+                    self.window.POI_tableWidget.resizeColumnToContents(1)
                 else:
                     i += 1
 
+            f.close()
             f = open("variable.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
-            j=0
-            entires = []
+            j = 0
             for line in f.read().split("\n\n")[:]:
+                # rowPos = self.window.POI_tableWidget.rowCount()
                 try:
                     line = line.split(" ")[1]
                     item = QListWidgetItem(line)
-                    rowPos = self.window.POI_tableWidget.rowCount()
-                    entires.append(line)
+
                     self.window.poi_list.addItem(item)
-                    if (len(entries)>= rowPos):
-                        self.window.POI_tableWidget.insertRow(rowPos)
-                    self.window.POI_tableWidget.setItem(j,2,QTableWidgetItem(str(line)))
-                    j+=1
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(str(line)))
+                    j += 1
                     self.window.POI_tableWidget.resizeColumnToContents(2)
                 except IndexError:
                     pass
 
+            f.close()
             f = open("dll.txt", "r")
 
             self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
             i = 0
             j = 0
-            entries=[]
             for line in f.read().split("\n\n")[:]:
                 rowPos = self.window.POI_tableWidget.rowCount()
                 line = line.split(" ")[-1]
                 item = QListWidgetItem(line)
-                entries.append(line)
-                if (len(entries)>= rowPos):
-                    self.window.POI_tableWidget.insertRow(rowPos)
+
                 if i > 1:
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.window.poi_list.addItem(item)
-                    self.window.POI_tableWidget.setItem(j,3,QTableWidgetItem(str(line)))
-                    j+=1
+                    # self.window.POI_tableWidget.insertRow(rowPos)
+                    self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(str(line)))
+                    j += 1
                     self.window.POI_tableWidget.resizeColumnToContents(3)
                 else:
                     i += 1
@@ -458,36 +671,109 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Search functionality for the project box
     def searchProject(self):
-        global projectList
-
-        projectSearch = []
         search = str(self.window.projectSearch_lineEdit.text())
+        result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
 
-        for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
-            item = projectList[i]
+        projects = []
+        item = ''
 
-            if search in item.text(0):
-                projectSearch.append(QTreeWidgetItem([item.text(0)]))
-                item_child = item.child(0).text(0)
-                child = QTreeWidgetItem(projectSearch[len(projectSearch)-1])
-                child.setText(0, item_child)
-
-        tree = self.window.projectNavigator_tree
-        tree.clear()
-        tree.addTopLevelItems(projectSearch)
+        j = 0
+        if search:
+            for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text(0) in self.window.projectNavigator_tree.topLevelItem(i).text(0):
+                    projects.append(QTreeWidgetItem([item.text(0)]))
+                    child_text = item.child(0).text(0)
+                    child = QTreeWidgetItem(projects[len(projects) - 1])
+                    child.setText(0, child_text)
+                    j += 1
+            tree = self.window.projectNavigator_tree
+            tree.clear()
+            tree.addTopLevelItems(projects)
+        else:
+            tree = self.window.projectNavigator_tree
+            tree.clear()
+            self.populateProjectBox()
 
     # Search functionality for the poi box
     def searchPoi(self):
-        for i in range(self.window.poi_list.count()):
-            self.window.poi_list.item(i).setBackground(QtGui.QBrush(QtCore.Qt.color0))
-
         search = str(self.window.poiSearch_lineEdit.text())
         result = self.window.poi_list.findItems(search, QtCore.Qt.MatchContains)
 
+        poi = []
+        item = ''
+
+        j = 0
         if search:
-            for item in result:
-                item.setSelected(True)
-                item.setBackground(QtGui.QBrush(QtCore.Qt.magenta))
+            for i in range(self.window.poi_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.poi_list.item(i).text():
+                    poi.append(item.text())
+                    j+=1
+            list = self.window.poi_list
+            list.clear()
+            list.addItems(poi)
+        else:
+            list = self.window.poi_list
+            list.clear()
+            self.displayAll()
+
+    def searchPluginM(self):
+        search = str(self.window.pluginManagementSearch_lineEdit.text())
+        result = self.window.pluginManagement_list.findItems(search, QtCore.Qt.MatchContains)
+
+        plugin = []
+        item = ''
+
+        j = 0
+        if search:
+            for i in range(self.window.pluginManagement_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.pluginManagement_list.item(i).text():
+                    plugin.append(item.text())
+                    j+=1
+            list = self.window.pluginManagement_list
+            list.clear()
+            list.addItems(plugin)
+        else:
+            list = self.window.pluginManagement_list
+            list.clear()
+            # method to call all plugins
+
+    def searchPoiM(self):
+        search = str(self.window.poiManagementSeach_lineEdit.text())
+        result = self.window.poiManagement_list.findItems(search, QtCore.Qt.MatchContains)
+
+        poi = []
+        item = ''
+
+        j = 0
+        if search:
+            for i in range(self.window.poiManagement_list.count()):
+                try:
+                    item = result[j]
+                except IndexError:
+                    pass
+                if item.text() in self.window.poiManagement_list.item(i).text():
+                    poi.append(item.text())
+                    j += 1
+            list = self.window.poiManagement_list
+            list.clear()
+            list.addItems(poi)
+        else:
+            list = self.window.poiManagement_list
+            list.clear()
+            #method to call all pois
+
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
@@ -507,6 +793,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             dynamic = False
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+
+    # ---- Following methods are for calling and showing the different windows ------------------------
 
     # Shows NewProject window
     def showNewProject(self):
@@ -569,11 +857,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Open up file explorer to select a file for Project Predefined line edit
     def showFileExplorer_predefined(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        self.window.dpmPluginPredefined_lineEdit.setText(name)
+        # self.window.dpmPluginPredefined_lineEdit.setText(name)
 
     # Open up file explorer, does not pass any data
     def showFileExplorerSimple(self):
         _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+
+    # ---- Following methods are for misc. stuff -------------------------------------------------
 
     # Will save the current modifications of the file TODO: testing not final
     def Save(self):
@@ -602,20 +892,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def Clear(self):
         self.window.comment_text.clear()
-        
+
     # From current to history
     def switchToHistory(self):
         self.window.changeViews_stack.setCurrentIndex(1)
-        
+
     def switchToCurrent(self):
         self.window.changeViews_stack.setCurrentIndex(0)
-        
+
     def switchPOITypeView(self):
         poiType = self.window.dpoimPoiType_dropdown.currentText()
         if poiType == 'Pull From Predefined Dataset':
             self.window.addPOI_stack.setCurrentIndex(0)
         elif poiType == 'Function':
-            self.window.addPOI_stack.setCurrentIndex(1)            
+            self.window.addPOI_stack.setCurrentIndex(1)
         elif poiType == 'String':
             self.window.addPOI_stack.setCurrentIndex(2)
         elif poiType == 'Variable':
@@ -626,7 +916,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.addPOI_stack.setCurrentIndex(5)
         elif poiType == 'Struct':
             self.window.addPOI_stack.setCurrentIndex(6)
-            
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
