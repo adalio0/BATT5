@@ -367,13 +367,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         current = db['current']
 
         path = ''
+        analysis = ''
         for p in current.find():
             path = p.get('properties', {}).get('file')
 
-        i = 0
         try:
             # function, string, variable, dll = staticAnalysis(path)
             poi = staticAnalysis(path)
+
+            i = 0
+            for data in poi[0]:
+                analysis['data0'] = data
+                i += 1
+
+            for x in current.find():
+                print(x)
             try:
                 db.current.update_one({
 
@@ -442,28 +450,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
-
-    # Displays POIs in the Analysis box
-    def displayPoi(self, poi):
-        try:
-            if poi == 'Extract All':
-                self.displayAll()
-            else:
-                f = open(poi.lower() + ".txt", "r")
-
-                for line in f.read().split("\n\n")[:]:
-                    self.window.POI_tableWidget.addItem(line)
-
-                if poi == 'Function':
-                    self.displayFunctions()
-                elif poi == 'String':
-                    self.displayString()
-                elif poi == 'Variable':
-                    self.displayVariable()
-                elif poi == 'DLL':
-                    self.displayDll()
-        except FileNotFoundError:
-            pass
         if poi == 'Extract All':
             self.displayAll()
         else:
@@ -716,7 +702,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             list = self.window.poi_list
             list.clear()
             self.displayAll()
-
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
