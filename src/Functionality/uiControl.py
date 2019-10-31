@@ -123,8 +123,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
-        # ---- Create Plugin Selection ----------------------
+        # ---- Create POI Selection ----------------------
         self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
+
+        # ---- Create Plugin Selection ----------------------
+        self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.switchPluginCreateView)
 
         # ---- Select listener ------------------------------
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -916,6 +919,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.addPOI_stack.setCurrentIndex(5)
         elif poiType == 'Struct':
             self.window.addPOI_stack.setCurrentIndex(6)
+
+    def switchPluginCreateView(self):
+        createType = self.window.dpmCreate_dropdown.currentText()
+        if createType == 'Pull From XML File':
+            self.window.createPlugin_stack.setCurrentIndex(0)
+        if createType == 'Manual Input':
+            self.window.createPlugin_stack.setCurrentIndex(1)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
