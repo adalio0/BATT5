@@ -72,27 +72,101 @@ class ProjectWindow(QtWidgets.QDialog):
         global project
         client = pymongo.MongoClient("mongodb://localhost:27017")
         db = client['project_data']
-        posts = db['project']
-        project = {
-            # Primary key
-            'name': project.getBane(),
+        project_db = db['project']
+        binary_db = db['binary']
+        static_db = db['static']
+        results_db = db['results']
 
-            'description': 'some description',
+        results = {
+            'static_id': '',
 
-            'file': 'ID of binary file',
+            'associated_plugin': '',
+
+            'function': [
+
+            ],
+
+            'string': [
+
+            ],
+
+            'variable': [
+
+            ],
+
+            'dll': [
+
+            ]
+        }
+        results_outcome = results_db.insert_one(results)
+
+        static_analysis = {
+            'project_id': '',
+
+            'results': {
+                '01': results['_id']
+            }
+        }
+        static_outcome = static_db.insert_one(static_analysis)
+
+        binary = {
+            'project_id': '',
+
+            'file': project.get_file(self),
+            'os': project.get_os(self),
+            'binary': project.get_binary_type(self),
+            'machine': project.get_machine(self),
+            'class': project.get_class(self),
+            'bits': project.get_bits(self),
+            'language': project.get_language(self),
+            'canary': project.get_canary(self),
+            'crypto': project.get_crypto(self),
+            'nx': project.get_nx(self),
+            'relocs': project.get_relocs(self),
+            'stripped': project.get_stripped(self),
+            'relro': project.get_relro(self)
+        }
+        binary_outcome = binary_db.insert_one(binary)
+
+        project_data = {
+            'name': project.get_name(self),
+
+            'description': project.get_description(self),
+
+            'binary': binary['_id'],
 
             'static_analysis': {
-                'ID of FIRST Static',
-                'ID of SECOND Static'
+                '01': static_analysis['_id']
             },
 
             'dynamic_analysis': {
-                'ID of FIRST dynamic',
-                'ID of SECOND dynamic'
+                '01': '',
             }
         }
+        project_outcome = project_db.insert_one(project_data)
 
-        result = posts.insert_one(data)
+        binary_db.find_one_and_update(
+            {'_id': binary['_id']},
+            {'$set': {'project_id': project_data['_id']}}, upsert=True)
+        static_db.find_one_and_update(
+            {'_id': static_analysis['_id']},
+            {'$set': {'project_id': project_data['_id']}}, upsert=True)
+        results_db.find_one_and_update(
+            {'_id': results['_id']},
+            {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
+        # for r in results_db.find():
+        #     function_db.find_one_and_update(
+        #         {'_id': function['_id']},
+        #         {'$set': {'results_id': r['_id']}}, upsert=True)
+        #     string_db.find_one_and_update(
+        #         {'_id': string['_id']},
+        #         {'$set': {'results_id': r['_id']}}, upsert=True)
+        #     variable_db.find_one_and_update(
+        #         {'_id': variable['_id']},
+        #         {'$set': {'results_id': r['_id']}}, upsert=True)
+        #     dll_db.find_one_and_update(
+        #         {'_id': dll['_id']},
+        #         {'$set': {'results_id': r['_id']}}, upsert=True)
 
     # ---- Creates the xml file associated with the new project --------------------------
     def createXML(self, file, cur_path):

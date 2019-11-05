@@ -1,9 +1,6 @@
 #! /usr/bin/env python3.
 
-import os
 import sys
-import glob
-import xml.etree.ElementTree as ET
 import pymongo
 from pathlib import Path
 
@@ -23,11 +20,14 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
+from src.Functionality.database import *
+
 
 static = False
 dynamic = False
 
 projectList = []
+
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -194,18 +194,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
-        client = pymongo.MongoClient("mongodb://localhost:27017")
-        db = client['project_data']
-        posts = db['project']
-
-        # db.project.drop()
-
-        projects = []
-        for x in posts.find():
-            projects.append(QTreeWidgetItem([x.get('properties', {})['name']]))
-            child = QTreeWidgetItem(projects[len(projects) - 1])
-            child.setText(0, x.get('properties', {})['file'])
-
+        projects = getProjects()
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
 
@@ -213,300 +202,83 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
-        client = pymongo.MongoClient("mongodb://localhost:27017")
-        db = client['project_data']
-        posts = db['project']
+        text, binaryPath = getCurrentProject(selected)
 
-        newdb = client['current_project']
-        current = newdb['current']
-
-        data = ""
-        text = ""
-        binaryPath = ""
-        if selected:
-            item = selected[0].text(0)
-            for x in posts.find():
-                prop = x.get('properties', {})
-                if prop['name'] == item:
-                    stats = x.get('static_analysis', {}).get('uncovered_poi', {})
-
-                    data = {
-                        'properties': {
-                            'name': prop['name'],
-                            'file': prop['file'],
-                            'description': prop['description'],
-                            'os': prop['os'],
-                            'binary': prop['binary'],
-                            'machine': prop['machine'],
-                            'class': prop['class'],
-                            'bits': prop['bits'],
-                            'language': prop['language'],
-                            'canary': prop['canary'],
-                            'crypto': prop['crypto'],
-                            'nx': prop['nx'],
-                            'relocs': prop['relocs'],
-                            'stripped': prop['stripped'],
-                            'relro': prop['relro']
-                        },  # End of Properties
-
-                        'static_analysis': {
-                            'uncovered_poi': {
-                                'function': {
-                                    'associated_plugin': stats.get('function')['associated_plugin'],
-                                    'data': stats.get('function')['data']
-                                },
-                                'string': {
-                                    'associated_plugin': stats.get('string')['associated_plugin'],
-                                    'data': stats.get('string')['data']
-                                },
-                                'variable': {
-                                    'associated_plugin': stats.get('variable')['associated_plugin'],
-                                    'data': stats.get('variable')['data']
-                                },
-                                'dll': {
-                                    'associated_plugin': stats.get('dll')['associated_plugin'],
-                                    'data': stats.get('dll')['data']
-                                },
-                            }
-                        },  # End of Static Analysis
-
-                        'dynamic_analysis': {
-
-                        }  # End of Dynamic Analysis
-                    }
-            newdb.current.drop()
-            try:
-                result = current.insert_one(data)
-            except TypeError:
-                pass
-
-        for p in current.find():
-            text = "<font size=3> <b>Project Description</b>: " + p.get('properties', {}).get('description') + "<br><br>"
-            text += "<b>Project Properties</b>: <br>"
-            text += "<b>" + "Os" + "</b>: " + p.get('properties', {}).get('os') + "<br>"
-            text += "<b>" + "Binary" + "</b>: " + p.get('properties', {}).get('binary') + "<br>"
-            text += "<b>" + "Machine" + "</b>: " + p.get('properties', {}).get('machine') + "<br>"
-            text += "<b>" + "Class" + "</b>: " + p.get('properties', {}).get('class') + "<br>"
-            text += "<b>" + "Bits" + "</b>: " + p.get('properties', {}).get('bits') + "<br>"
-            text += "<b>" + "Language" + "</b>: " + p.get('properties', {}).get('language') + "<br>"
-            text += "<b>" + "Canary" + "</b>: " + p.get('properties', {}).get('canary') + "<br>"
-            text += "<b>" + "Crypto" + "</b>: " + p.get('properties', {}).get('crypto') + "<br>"
-            text += "<b>" + "Nx" + "</b>: " + p.get('properties', {}).get('nx') + "<br>"
-            text += "<b>" + "Relocs" + "</b>: " + p.get('properties', {}).get('relocs') + "<br>"
-            text += "<b>" + "Stripped" + "</b>: " + p.get('properties', {}).get('stripped') + "<br>"
-            text += "<b>" + "Relro" + "</b>: " + p.get('properties', {}).get('relro') + "<br> </font>"
-
+        # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
-
-        for p in current.find():
-            binaryPath = p.get('properties', {}).get('file')
 
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
-    # Initialize the project box with all the current projects
-    def populateProjectBox_xml(self):
-        cur_path = os.getcwd()
-        new_path = os.path.join(cur_path, '..', 'Configurations')
-
-        projects = []
-        for file in glob.glob(new_path + "/**/" + '*.xml', recursive=True):
-            tree = ET.parse(file)
-            root = tree.getroot()
-
-            for p in root.iter('Project'):
-                if p.get('name') is not "":
-                    projects.append(QTreeWidgetItem([p.get('name')]))
-                    child = QTreeWidgetItem(projects[len(projects) - 1])
-                    child.setText(0, p.get('file'))
-
-        tree = self.window.projectNavigator_tree
-        tree.addTopLevelItems(projects)
-
-    # Changes the project description according to the current project
-    def setProject_xml(self):
-        selected = self.window.projectNavigator_tree.selectedItems()
-        cur_path = os.getcwd()
-
-        file = ''
-        if selected:
-            item = selected[0].text(0)
-            item = item.replace(" ", "")
-            try:
-                file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
-
-                currentXml = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
-                tree = ET.parse(currentXml)
-                root = tree.getroot()
-
-                for current in root.iter('Current'):
-                    current.set('name', (item + '.xml'))
-                tree.write(currentXml)
-            except IndexError or FileNotFoundError:
-                pass
-        else:
-            file = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
-
-        try:
-            tree = ET.parse(file)
-            root = tree.getroot()
-
-            if file.endswith('current.xml'):
-                for current in root.iter('Current'):
-                    tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
-                    root = tree.getroot()
-
-            text = ""
-            binaryPath = ""
-            for p in root.iter('Project'):
-                text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
-                text += "<b>Project Properties</b>: <br> </font> "
-                binaryPath = p.get('file')
-
-            for child in root.iter():
-                if child.tag != "Project" and child.get('name') is not None:
-                    text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
-
-            self.window.projectProperties_text.setHtml(text)
-
-            # Set up command prompt
-            self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
-
-        except FileNotFoundError:
-            pass
-
     # runs Static Analysis w/ database stuff
-    # TODO: The static analysis data is too big that it overwrites the other poi types.
     def runStatic(self):
         global static
         static = True
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        client = pymongo.MongoClient("mongodb://localhost:27017")
-        db = client['current_project']
-        current = db['current']
-
-        path = ''
-        analysis = ''
-        for p in current.find():
-            path = p.get('properties', {}).get('file')
-            analysis = p.get('static_analysis', {}).get('uncovered_poi', {}).get('function', {})
-
-        try:
-            # function, string, variable, dll = staticAnalysis(path)
-            poi = staticAnalysis(path)
-
-            for i in range(len(poi[0])):
-                db.current.findOneAndUpdate({
-
-                }, {
-                    '$set': {
-                        'function': {
-                            'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                            ('data' + str(i)): poi[0][i]
-                        }
-                    },
-                }, upsert=False)
-                # analysis[('data' + str(i))] = poi[0][i]
-
-            # print(analysis)
-
-            try:
-                db.current.update_one({
-
-                }, {
-                    '$set': {
-                        'static_analysis': {
-                            'uncovered_poi': {
-                                'function': {
-                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': poi[0][1]
-                                },
-                                'string': {
-                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': poi[1][0]
-                                },
-                                'variable': {
-                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': 'stuff'
-                                },
-                                'dll': {
-                                    'associated_plugin': str(self.window.poiType_dropdown.currentText()),
-                                    'data': 'stuff'
-                                }
-                            }
-                        }
-                    }
-                }, upsert=False)
-            except IndexError:
-                pass
-        except:
-            print("An error occurred inside Radare2")
-
-        self.displayPoi()
-
-    # runs Static Analysis
-    def runStatic_xml(self):
-        global static
-        static = True
-        self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-        self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
-
-        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
-        root = tree.getroot()
-
-        currentProject = ""
-        for current in root.iter('Current'):
-            currentProject = current.get('name')
-
-        tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', currentProject))
-        root = tree.getroot()
-
-        path = ''
-        for p in root.iter('Project'):
-            path = p.get('file')
-
-        try:
-            staticAnalysis(path)
-        except:
-            print("Radare2 not installed cannot start static analysis.")
+        # Save the results of static into the database
+        saveStatic()
 
         self.displayPoi()
 
     # Dispalys POIs in the Analysis box
-    # TODO: make sure the stuff gets properly displayed in the gui
+    # TODO: make sure the stuff gets properly displayed in the gui, and move this code to the database file
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
+
+        entries = []
         if poi == 'Extract All':
             self.displayAll()
         else:
             client = pymongo.MongoClient("mongodb://localhost:27017")
-            db = client['current_project']
-            current = db['current']
+            db = client['project_data']
+            project_db = db['project']
+            binary_db = db['binary']
+            static_db = db['static']
+            results_db = db['results']
+            function_db = db['function']
+            string_db = db['string']
+            variable_db = db['variable']
+            dll_db = db['dll']
 
-            data = ''
-            for x in current.find():
-                data = x.get('static_analysis', {}).get('uncovered_poi', {})
+            # for x in results_db.find():
+            #     print(x)
 
-            for key in data:
-                if key == poi.lower():
-                    self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
-                    self.window.POI_tableWidget.setColumnCount(1)
-                    content = data.get(key, {})['data']
-                    entries = []
-                    i = 0
-                    try:
-                        for collection in content:
-                            entries.append(collection)
-                            self.window.POI_tableWidget.setRowCount(len(entries))
-                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
-                            self.window.POI_tableWidget.resizeColumnToContents(0)
-                            i += 1
-                    except TypeError:
-                        pass
+            newdb = client['current_project']
+            current_db = newdb['current']
+            for p in current_db.find():
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                for f in function_db.find():
+                                    # print(len(r.get(poi.lower())[:]))
+                                    for i in range(len(r.get(poi.lower())[:])):
+                                        try:
+                                            key = r.get(poi.lower())[0:][i]
+                                            # print(key[str(i)])
+                                            if f['_id'] == key[str(i)]:
+                                                self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
+                                                self.window.POI_tableWidget.setColumnCount(1)
+                                                content = f.get('data')
+                                                # print(content)
+                                                entries = []
+                                                # i = 0
+                                                try:
+                                                    # for j in content:
+                                                    entries.append(content)
+                                                    # print(len(entries))
+                                                    self.window.POI_tableWidget.setRowCount(len(entries))
+                                                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
+                                                    self.window.POI_tableWidget.resizeColumnToContents(0)
+                                                    # i += 1
+                                                except TypeError:
+                                                    pass
+                                        except KeyError or IndexError:
+                                            pass
             if poi == 'Function':
                 self.displayFunctions()
             elif poi == 'String':
@@ -783,7 +555,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             list.clear()
             #method to call all pois
 
-
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
@@ -874,10 +645,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # ---- Following methods are for misc. stuff -------------------------------------------------
 
-    # Will save the current modifications of the file TODO: testing not final
+    # Will save the current modifications of the project TODO: Saves the current project into our project list
     def Save(self):
         cur_path = os.getcwd()
-        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')  # TODO: Get correct file to Save
+        name = os.path.join(cur_path, '..', 'Configurations', 'random.txt')  # TODO:
         try:
             file = open(name, 'w')
             text = self.window.projectProperties_text.toPlainText()
@@ -886,7 +657,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except FileNotFoundError or AttributeError:
             pass
 
-    # Will allow the user to change the name of the file, saving the current modifications of it TODO: testing not final
+    # Will allow the user to change the name of the file, saving the current modifications of it TODO: ???????
     def SaveAs(self):
         name, _ = QFileDialog.getSaveFileName(self, 'Save File', options=QFileDialog.DontUseNativeDialog)
 
@@ -925,6 +696,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.addPOI_stack.setCurrentIndex(5)
         elif poiType == 'Struct':
             self.window.addPOI_stack.setCurrentIndex(6)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
