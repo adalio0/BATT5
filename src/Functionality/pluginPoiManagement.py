@@ -2,6 +2,7 @@ from xmljson import parker as pk
 import xml.etree.ElementTree as ET
 import json
 import xmlschema
+from pathlib import Path
 
 
 def validatePluginXML(filepath):
@@ -12,7 +13,10 @@ def validatePluginXML(filepath):
 
 
 def validatePoiXML(filepath):
-    return 1
+    poiSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
+                                    '4311/BATT5/src/Configurations/pluginConfig.xsd')
+    result = poiSchema.is_valid(filepath)
+    return result
 
 
 def convertPluginXML(filepath):

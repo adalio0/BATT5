@@ -6,6 +6,8 @@
 			<xs:sequence>
       			<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
 				<xs:element name="description" 	type="xs:string" minOccurs="1" maxOccurs="1" default=""/>
+
+				<!--POINTS OF INTEREST-->
 				<xs:element name="pointOfInterest" minOccurs="0" maxOccurs="unbounded" >
 					<xs:complexType>
 						<xs:sequence>
@@ -15,27 +17,52 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="numOfParams" type="xs:int" minOccurs="0" maxOccurs="1"/>
+
+										<!--PARAMETERS-->
+										<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+													<xs:sequence>
+														<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
+														<xs:element name="type"		type="xs:string" minOccurs="0" maxOccurs="1"/>
+														<xs:element name="value"	type="xs:string" minOccurs="0" maxOccurs="1"/>
+													</xs:sequence>
+											</xs:complexType>
+										</xs:element> <!--END OF PARAMETERS-->
+
+										<xs:element name="returnType" 		type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="returnValue"		type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="callFromAddress"	type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+										<xs:element name="destinationAddress"	type="xs:string" minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
-							</xs:element>
+							</xs:element> <!--END OF FUNCTIONS-->
 
 							<!--STRINGS-->
 							<xs:element name="string" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="size" type="xs:int"	 minOccurs="0" maxOccurs="1"/>
+										<xs:element name="callFromAddress" 		type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+										<xs:element name="destinationAddress" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="section" 				type="xs:string" minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
-							</xs:element>
+							</xs:element>	<!--END OF STRINGS-->
 
 							<!--VARIABLES-->
 							<xs:element name="variable" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="value" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="type"		type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="size"		type="xs:int"	 minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
-							</xs:element>
+							</xs:element> <!--END OF VARIABLES-->
 
 							<!--DLLs-->
 							<xs:element name="dll" minOccurs="0" maxOccurs="unbounded">
@@ -44,11 +71,22 @@
 										<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
-							</xs:element>
+							</xs:element> <!--END OF DLLs-->
+
+							<!--PACKET PROTOCOLS-->
+							<xs:element name="packetProtocol" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="fieldName" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="fieldType" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element> <!--END OF PACKET PROTOCOLS-->
 
 						</xs:sequence>
 					</xs:complexType>
-				</xs:element> <!--END OF POI-->
+				</xs:element> <!--END OF POINTS OF INTEREST-->
 
 				<!--OUTPUT FIELD-->
 				<xs:element name="output" 	minOccurs="0" maxOccurs="unbounded">
@@ -59,7 +97,7 @@
 							<xs:element name="functionSource" minOccurs="1" maxOccurs="1" type="xs:string"/>
 						</xs:sequence>
 					</xs:complexType>
-				</xs:element>
+				</xs:element> <!--END OF OUTPUT FIELD-->
 
 			</xs:sequence>
 		</xs:complexType>

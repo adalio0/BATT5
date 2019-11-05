@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin>
+
 	<name>Network Plugin</name>
 	<description> Network plugin includes six points of interest </description>
 
@@ -12,6 +13,10 @@
 
 		<string>
 			<name>MDQwOTA0QjA=</name>
+		</string>
+
+		<string>
+			<name>TVVJ47y85rW4</name>
 		</string>
 
 	</pointOfInterest>

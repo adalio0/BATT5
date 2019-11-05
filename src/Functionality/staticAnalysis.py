@@ -12,25 +12,21 @@ def staticAnalysis(filePath):
 
 def functions_analysis():
     functions = infile.cmdj("afllj")
-    print(functions)
     return functions
 
 
 def string_analysis():
     strings = infile.cmdj('izj')
-    print(strings)
     return strings
 
 
 def variables_analysis():
     variable = infile.cmdj('afvdj')
-    print(variable)
     return variable
 
 
 def dll_analysis():
     dlls = infile.cmdj('iij')
-    print(dlls)
     return dlls
 
 
