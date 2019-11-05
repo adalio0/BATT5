@@ -14,7 +14,7 @@ def validatePluginXML(filepath):
 
 def validatePoiXML(filepath):
     poiSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
-                                    '4311/BATT5/src/Configurations/pluginConfig.xsd')
+                                    '4311/BATT5/src/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 

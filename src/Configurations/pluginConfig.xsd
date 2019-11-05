@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+	<!--PLUGIN-->
 	<xs:element name="plugin">
 		<xs:complexType>
 			<xs:sequence>
@@ -103,4 +104,4 @@
 		</xs:complexType>
 	</xs:element> <!--END OF PLUGIN-->
 
-</xs:schema>
+</xs:schema> <!--END OF PLUGIN-->
