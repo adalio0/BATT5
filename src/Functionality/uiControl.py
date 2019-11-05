@@ -219,7 +219,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
-
     # runs Static Analysis w/ database stuff
     def runStatic(self):
         global static
@@ -282,7 +281,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                                     entries.append(content)
                                                     # print(len(entries))
                                                     self.window.POI_tableWidget.setRowCount(len(entries))
-                                                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
+                                                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(
+                                                        str(content['name'])))
                                                     self.window.POI_tableWidget.resizeColumnToContents(0)
                                                     # i += 1
                                                 except TypeError:
@@ -733,6 +733,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         print(pluginDict)
         return pluginDict
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
