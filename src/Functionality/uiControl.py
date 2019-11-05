@@ -712,6 +712,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         elif poiType == 'Struct':
             self.window.addPOI_stack.setCurrentIndex(6)
 
+    def switchPluginCreateView(self):
+        createType = self.window.dpmCreate_dropdown.currentText()
+        if createType == 'Pull From XML File':
+            self.window.createPlugin_stack.setCurrentIndex(0)
+        if createType == 'Manual Input':
+            self.window.createPlugin_stack.setCurrentIndex(1)
+
+    def processPluginData(self):
+        createType = self.window.dpmCreate_dropdown.currentText()
+        if createType == 'Pull From XML File':
+            pluginDict = convertPluginXML(self.window.dpmPluginStructure_lineEdit.text())
+
+        if createType == 'Manual Input':
+            pluginDict = convertPluginManual(self.window.dpmPluginName_lineEdit.text(),
+                                             self.window.dpmPluginDesc_lineEdit.text(),
+                                             self.window.dpmOutName_lineEdit.text(),
+                                             self.window.dpmOutFuncName_lineEdit.text(),
+                                             self.window.dpmOutFuncSource_lineEdit.text())
+
+        print(pluginDict)
+        return pluginDict
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
