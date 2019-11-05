@@ -21,7 +21,8 @@ def string_analysis():
 
 
 def variables_analysis():
-    variable = infile.cmdj('afvdj')
+    variable = infile.cmd('afvd')
+    # variable = json.loads(variable)
     return variable
 
 
@@ -33,7 +34,8 @@ def dll_analysis():
 def extract_all():
     function = functions_analysis()
     string = string_analysis()
-    variable = variables_analysis()
+    # variable = variables_analysis()
     dll = dll_analysis()
     # return [function, string, variable, dll]
-    return [function, string]
+    return [function, string, dll]
+    # return [function, string]
