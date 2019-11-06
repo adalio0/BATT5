@@ -3,20 +3,17 @@ import xml.etree.ElementTree as ET
 import json
 import xmlschema
 
-
 def validatePluginXML(filepath):
     pluginSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
                                        '4311/BATT5/src/Configurations/pluginConfig.xsd')
     result = pluginSchema.is_valid(filepath)
     return result
 
-
 def validatePoiXML(filepath):
     poiSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
                                     '4311/BATT5/src/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
-
 
 def convertPluginXML(filepath):
     if validatePluginXML(filepath):
@@ -27,7 +24,6 @@ def convertPluginXML(filepath):
         print('invalid plugin XML (does not conform to  schema)')
     return pluginDict
 
-
 def convertPoiXML(filepath):
     if validatePoiXML(filepath):
         poiTree = ET.parse(filepath)
@@ -36,7 +32,6 @@ def convertPoiXML(filepath):
     else:
         print('invalid POI XML (does not conform to POI schema)')
     return poiDict
-
 
 def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     plugDict = {
@@ -49,7 +44,6 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         }
     }
     return plugDict
-
 
 # SWITCH VIEWS
 def switchPOITypeView(poiType, addPOI_stack):
@@ -68,13 +62,11 @@ def switchPOITypeView(poiType, addPOI_stack):
     elif poiType == 'Struct':
         addPOI_stack.setCurrentIndex(6)
 
-
 def switchPluginCreateView(createType, createPlugin_stack):
     if createType == 'Pull From XML File':
         createPlugin_stack.setCurrentIndex(0)
     if createType == 'Manual Input':
         createPlugin_stack.setCurrentIndex(1)
-
 
 def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit,
                       dpmOutName_lineEdit, dpmOutFuncName_lineEdit, dpmOutFuncSource_lineEdit):
