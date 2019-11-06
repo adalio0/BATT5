@@ -103,3 +103,47 @@ def runStatic_xml(self):
     #     print("Radare2 not installed cannot start static analysis.")
 
     self.displayPoi()
+
+    # ---- Creates the xml file associated with the new project --------------------------
+    def createXML(self, file, cur_path):
+        global project
+        try:
+            with open(file, "w") as f:
+                newProject = open(os.path.join(cur_path, '..', 'Configurations', 'newProject.xml'), 'r')
+                f.write(newProject.read())
+                newProject.close()
+                f.close()
+            tree = ET.parse(file)
+            root = tree.getroot()
+            for child in root.iter():
+                if child.tag == "Project":
+                    child.set('name', project.get_name(self))
+                    child.set('file', project.get_file(self))
+                    child.set('description', project.get_description(self))
+                elif child.tag == "OS":
+                    child.set('name', project.get_os(self))
+                elif child.tag == "BinaryType":
+                    child.set('name', project.get_binary_type(self))
+                elif child.tag == "Machine":
+                    child.set('name', project.get_machine(self))
+                elif child.tag == "Class":
+                    child.set('name', project.get_class(self))
+                elif child.tag == "Bits":
+                    child.set('name', project.get_bits(self))
+                elif child.tag == "Language":
+                    child.set('name', project.get_language(self))
+                elif child.tag == "Canery":
+                    child.set('name', project.get_canary(self))
+                elif child.tag == "Crypto":
+                    child.set('name', project.get_crypto(self))
+                elif child.tag == "Nx":
+                    child.set('name', project.get_nx(self))
+                elif child.tag == "Relocs":
+                    child.set('name', project.get_relocs(self))
+                elif child.tag == "Stripped":
+                    child.set('name', project.get_stripped(self))
+                elif child.tag == "Relro":
+                    child.set('name', project.get_relro(self))
+            tree.write(file)
+        except FileNotFoundError:
+            pass

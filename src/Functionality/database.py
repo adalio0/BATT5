@@ -152,14 +152,8 @@ def saveStatic():
 
 
 # Dispalys POIs in the Analysis box
-# TODO: make sure the stuff gets properly displayed in the gui!!!!!!!!!!!!!
-def getPoi(poi, poiList):
-    entries = []
-    for x in results_db.find():
-        print(x)
-
-    newdb = client['current_project']
-    current_db = newdb['current']
+# TODO: make sure the stuff gets properly displayed in the gui!
+def getPoi(poi):
     for p in current_db.find():
         for s in static_db.find():
             if s['_id'] == p.get('static_analysis', {}).get('01'):
@@ -172,27 +166,18 @@ def getPoi(poi, poiList):
                                     key = r.get(poi.lower())[0:][i]
                                     print(key[str(i)])
                                     if f['_id'] == key[str(i)]:
-                                        self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
-                                        self.window.POI_tableWidget.setColumnCount(1)
                                         content = f.get('data')
                                         print(content)
                                         entries = []
-                                        # i = 0
                                         try:
-                                            # for j in content:
                                             entries.append(content)
-                                            # print(len(entries))
-                                            self.window.POI_tableWidget.setRowCount(len(entries))
-                                            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
-                                            self.window.POI_tableWidget.resizeColumnToContents(0)
-                                            # i += 1
                                         except TypeError:
                                             pass
                                 except KeyError or IndexError:
                                     pass
 
 
-def deleteDatabase(self):
+def deleteDatabase():
     db.project.drop()
     db.binary.drop()
     db.static.drop()
