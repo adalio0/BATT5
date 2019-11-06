@@ -1,16 +1,10 @@
 import sys
-
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QTreeWidgetItem
-import xml.etree.ElementTree as ET
-import os
 import pymongo
+import r2pipe
 
-from src.Functionality.project import Project
+from PyQt5 import QtWidgets
 from src.GUI.python_files.popups.newProjectWind import NewProject
 from src.GUI.python_files.popups.errors import ErrEmptyFields
-
-project = Project
 
 
 class ProjectWindow(QtWidgets.QDialog):
@@ -30,7 +24,6 @@ class ProjectWindow(QtWidgets.QDialog):
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.path_lineEdit.setText(name)
-        self.setProperties()
 
     # ---- Extracts Text From Fields and Assigns Them To Project Object and creates xml file -------
     def createProject(self):
@@ -41,27 +34,8 @@ class ProjectWindow(QtWidgets.QDialog):
         elif self.window.path_lineEdit.text() == "":
             self.showErr()
         else:
-            # Set Name
-            global project
-            name = self.window.projectName_lineEdit.text()
-            project.set_name(self, name)
-
-            # Set Description
-            description = self.window.projectDescription_textEdit.toPlainText()
-            project.set_description(self, description)
-
-            # select file
-            file = self.window.path_lineEdit.text()
-            project.set_file(self, file)
-
             # Store new project into the database
             self.insertToDatabase()
-
-            # Create xml file for the new project
-            # cur_path = os.getcwd()
-            # name = name.replace(" ", "")
-            # f = os.path.join(cur_path, '..', 'Configurations', name + '.xml')
-            # self.createXML(f, cur_path)
 
             # close window
             self.accept()
@@ -69,7 +43,6 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Stores the created project into the database -------------------------------
     def insertToDatabase(self):
-        global project
         client = pymongo.MongoClient("mongodb://localhost:27017")
         db = client['project_data']
         project_db = db['project']
@@ -109,29 +82,33 @@ class ProjectWindow(QtWidgets.QDialog):
         }
         static_outcome = static_db.insert_one(static_analysis)
 
+        # Get properties of the binary with the current project
+        # properties = \
+        prperties = self.getProperties()
+
         binary = {
             'project_id': '',
 
-            'file': project.get_file(self),
-            'os': project.get_os(self),
-            'binary': project.get_binary_type(self),
-            'machine': project.get_machine(self),
-            'class': project.get_class(self),
-            'bits': project.get_bits(self),
-            'language': project.get_language(self),
-            'canary': project.get_canary(self),
-            'crypto': project.get_crypto(self),
-            'nx': project.get_nx(self),
-            'relocs': project.get_relocs(self),
-            'stripped': project.get_stripped(self),
-            'relro': project.get_relro(self)
+            'file': self.window.path_lineEdit.text(),
+            'os': '',
+            'binary': '',
+            'machine': '',
+            'class': '',
+            'bits': '',
+            'language': '',
+            'canary': '',
+            'crypto': '',
+            'nx': '',
+            'relocs': '',
+            'stripped': '',
+            'relro': ''
         }
         binary_outcome = binary_db.insert_one(binary)
 
         project_data = {
-            'name': project.get_name(self),
+            'name': self.window.projectName_lineEdit.text(),
 
-            'description': project.get_description(self),
+            'description': self.window.projectDescription_textEdit.toPlainText(),
 
             'binary': binary['_id'],
 
@@ -154,70 +131,9 @@ class ProjectWindow(QtWidgets.QDialog):
         results_db.find_one_and_update(
             {'_id': results['_id']},
             {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
-        # for r in results_db.find():
-        #     function_db.find_one_and_update(
-        #         {'_id': function['_id']},
-        #         {'$set': {'results_id': r['_id']}}, upsert=True)
-        #     string_db.find_one_and_update(
-        #         {'_id': string['_id']},
-        #         {'$set': {'results_id': r['_id']}}, upsert=True)
-        #     variable_db.find_one_and_update(
-        #         {'_id': variable['_id']},
-        #         {'$set': {'results_id': r['_id']}}, upsert=True)
-        #     dll_db.find_one_and_update(
-        #         {'_id': dll['_id']},
-        #         {'$set': {'results_id': r['_id']}}, upsert=True)
-
-    # ---- Creates the xml file associated with the new project --------------------------
-    def createXML(self, file, cur_path):
-        global project
-        try:
-            with open(file, "w") as f:
-                newProject = open(os.path.join(cur_path, '..', 'Configurations', 'newProject.xml'), 'r')
-                f.write(newProject.read())
-                newProject.close()
-                f.close()
-            tree = ET.parse(file)
-            root = tree.getroot()
-            for child in root.iter():
-                if child.tag == "Project":
-                    child.set('name', project.get_name(self))
-                    child.set('file', project.get_file(self))
-                    child.set('description', project.get_description(self))
-                elif child.tag == "OS":
-                    child.set('name', project.get_os(self))
-                elif child.tag == "BinaryType":
-                    child.set('name', project.get_binary_type(self))
-                elif child.tag == "Machine":
-                    child.set('name', project.get_machine(self))
-                elif child.tag == "Class":
-                    child.set('name', project.get_class(self))
-                elif child.tag == "Bits":
-                    child.set('name', project.get_bits(self))
-                elif child.tag == "Language":
-                    child.set('name', project.get_language(self))
-                elif child.tag == "Canery":
-                    child.set('name', project.get_canary(self))
-                elif child.tag == "Crypto":
-                    child.set('name', project.get_crypto(self))
-                elif child.tag == "Nx":
-                    child.set('name', project.get_nx(self))
-                elif child.tag == "Relocs":
-                    child.set('name', project.get_relocs(self))
-                elif child.tag == "Stripped":
-                    child.set('name', project.get_stripped(self))
-                elif child.tag == "Relro":
-                    child.set('name', project.get_relro(self))
-            tree.write(file)
-        except FileNotFoundError:
-            pass
 
     def accept(self):
-        self.obj = project
         super(ProjectWindow, self).accept()
-
-    def getProject(self):
-        return self.obj
 
     # ---- Show Error Message ---------------------------------
     def showErr(self):
@@ -225,67 +141,61 @@ class ProjectWindow(QtWidgets.QDialog):
         self.windowEF.show()
 
     # ---- Sets Data To Project Object and Displays it in Tree Widget -------------------------------------
-    def setProperties(self):
-        global project
-        project.set_os(self, "some os data")
-        project.set_binary_type(self, "some binary data")
-        project.set_machine(self, "some machine data")
-        project.set_class(self, "some class data")
-        project.set_bits(self, "some bit data")
-        project.set_language(self, "some language data")
-        project.set_new_item(self, "some new item data")
-        project.set_canary(self, "some canary data")
-        project.set_crypto(self, "some crypto data")
-        project.set_nx(self, "some nx data")
-        project.set_pic(self, "some pic data")
-        project.set_relocs(self, "some relocs data")
-        project.set_relro(self, "some relro data")
-        project.set_stripped(self, "some stripped data")
+    def getProperties(self):
+        infile = r2pipe.open(self.window.path_lineEdit.text())
+        property = infile.cmdj("ij")
 
+        bin = property.get('bin', {})
         tree = self.window.properties_treeWidget
 
         # os
         item0 = tree.itemAt(0, 0)
-        item0.setText(1, project.get_os(self))
+        item0.setText(1, bin['os'])
         # binary type
         item1 = tree.itemBelow(item0)
-        item1.setText(1, project.get_binary_type(self))
+        item1.setText(1, bin['bintype'])
         # machine
         item2 = tree.itemBelow(item1)
-        item2.setText(1, project.get_machine(self))
+        item2.setText(1, bin['machine'])
         # class
         item3 = tree.itemBelow(item2)
-        item3.setText(1, project.get_class(self))
+        item3.setText(1, bin['class'])
         # bits
         item4 = tree.itemBelow(item3)
-        item4.setText(1, project.get_bits(self))
+        try:
+            item4.setText(1, str(bin['bits']))
+        except KeyError:
+            item4.setText(1, "Does not exist")
         # language
         item5 = tree.itemBelow(item4)
-        item5.setText(1, project.get_language(self))
+        item5.setText(1, str(bin['lang']))
         # new item
         item6 = tree.itemBelow(item5)
-        item6.setText(1, project.get_new_item(self))
+        item6.setText(1, "do not need this")
         # canary
         item7 = tree.itemBelow(item6)
-        item7.setText(1, project.get_canary(self))
+        item7.setText(1, str(bin['canary']))
         # crypto
         item8 = tree.itemBelow(item7)
-        item8.setText(1, project.get_crypto(self))
+        item8.setText(1, str(bin['crypto']))
         # nx
         item9 = tree.itemBelow(item8)
-        item9.setText(1, project.get_nx(self))
+        item9.setText(1, str(bin['nx']))
         # pic
         item10 = tree.itemBelow(item9)
-        item10.setText(1, project.get_pic(self))
+        item10.setText(1, str(bin['pic']))
         # relocs
         item11 = tree.itemBelow(item10)
-        item11.setText(1, project.get_relocs(self))
+        item11.setText(1, str(bin['relocs']))
         # relro
         item12 = tree.itemBelow(item11)
-        item12.setText(1, project.get_relro(self))
+        try:
+            item12.setText(1, str(bin['relro']))
+        except KeyError:
+            item12.setText(1, "Does not exist")
         # stripped
         item13 = tree.itemBelow(item12)
-        item13.setText(1, project.get_stripped(self))
+        item13.setText(1, str(bin['stripped']))
 
 
 def main():

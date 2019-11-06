@@ -233,52 +233,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if poi == 'Extract All':
             self.displayAll()
         else:
-            client = pymongo.MongoClient("mongodb://localhost:27017")
-            db = client['project_data']
-            project_db = db['project']
-            binary_db = db['binary']
-            static_db = db['static']
-            results_db = db['results']
-            function_db = db['function']
-            string_db = db['string']
-            variable_db = db['variable']
-            dll_db = db['dll']
+            content = getPoi(poi)
+            # for j in content:
+            entries.append(content)
+            # print(len(entries))
+            self.window.POI_tableWidget.setRowCount(len(entries))
+            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
+            self.window.POI_tableWidget.resizeColumnToContents(0)
 
-            # for x in results_db.find():
-            #     print(x)
-
-            newdb = client['current_project']
-            current_db = newdb['current']
-            for p in current_db.find():
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                for f in function_db.find():
-                                    # print(len(r.get(poi.lower())[:]))
-                                    for i in range(len(r.get(poi.lower())[:])):
-                                        try:
-                                            key = r.get(poi.lower())[0:][i]
-                                            # print(key[str(i)])
-                                            if f['_id'] == key[str(i)]:
-                                                self.window.POI_tableWidget.setHorizontalHeaderLabels([poi])
-                                                self.window.POI_tableWidget.setColumnCount(1)
-                                                content = f.get('data')
-                                                # print(content)
-                                                entries = []
-                                                # i = 0
-                                                try:
-                                                    # for j in content:
-                                                    entries.append(content)
-                                                    # print(len(entries))
-                                                    self.window.POI_tableWidget.setRowCount(len(entries))
-                                                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
-                                                    self.window.POI_tableWidget.resizeColumnToContents(0)
-                                                    # i += 1
-                                                except TypeError:
-                                                    pass
-                                        except KeyError or IndexError:
-                                            pass
             if poi == 'Function':
                 self.displayFunctions()
             elif poi == 'String':
@@ -580,13 +542,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def showNewProject(self):
         self.ui = ProjectWindow()
         if self.ui.exec_() == ProjectWindow.Accepted:
-            obj = self.ui.getProject()
-            projectList.append(obj)
-            tree = self.window.projectNavigator_tree
-            item = QTreeWidgetItem([obj.get_name(self.ui)])
-            child = QTreeWidgetItem(item)
-            child.setText(0,obj.get_file(self.ui))
-            tree.addTopLevelItem(item)
+            self.window.projectNavigator_tree.clear()
+            self.populateProjectBox()
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
