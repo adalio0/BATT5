@@ -238,7 +238,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
-
         entries = []
         if poi == 'Extract All':
             self.displayAll()
