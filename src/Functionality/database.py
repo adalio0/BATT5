@@ -23,7 +23,7 @@ current_db = newdb['current']
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    # deleteDatabase()
+    #deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(QTreeWidgetItem([p.get('name')]))
@@ -75,9 +75,10 @@ def getCurrentProject(selected):
                 text += "<b>" + "Canary" + "</b>: " + b.get('canary') + "<br>"
                 text += "<b>" + "Crypto" + "</b>: " + b.get('crypto') + "<br>"
                 text += "<b>" + "Nx" + "</b>: " + b.get('nx') + "<br>"
+                text += "<b>" + "Pic" + "</b>: " + b.get('pic') + "<br>"
                 text += "<b>" + "Relocs" + "</b>: " + b.get('relocs') + "<br>"
-                text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br>"
-                text += "<b>" + "Relro" + "</b>: " + b.get('relro') + "<br> </font>"
+                text += "<b>" + "Relro" + "</b>: " + b.get('relro') + "<br>"
+                text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br> </font>"
                 binaryPath = b.get('file')
 
     return text, binaryPath
