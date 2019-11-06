@@ -238,18 +238,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
-        entries = []
         if poi == 'Extract All':
+            content = getPoi(poi)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
+            self.window.POI_tableWidget.setColumnCount(4)
+
+            for i in range(len(content)):
+                self.window.POI_tableWidget.setRowCount(len(content))
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['string']))
+                self.window.POI_tableWidget.resizeColumnToContents(0)
+
             self.displayAll()
         else:
-
             content = getPoi(poi)
-            # for j in content:
-            entries.append(content)
-            # print(len(entries))
-            self.window.POI_tableWidget.setRowCount(len(entries))
-            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content['name'])))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels([str(poi)])
+            self.window.POI_tableWidget.setColumnCount(1)
+
+            for i in range(len(content)):
+                self.window.POI_tableWidget.setRowCount(len(content))
+                if poi == "Function":
+                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
+                if poi == "String":
+                    self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['string']))
+                self.window.POI_tableWidget.resizeColumnToContents(0)
 
             if poi == 'Function':
                 self.displayFunctions()
