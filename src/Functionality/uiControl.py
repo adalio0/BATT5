@@ -20,7 +20,7 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
-from src.Functionality.pluginPoiManagement import convertPluginXML, convertPluginManual
+from src.Functionality.pluginPoiManagement import *
 from src.Functionality.database import *
 
 static = False
@@ -130,10 +130,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
         # ---- Create POI Selection ----------------------
-        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.switchPOITypeView)
+        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.callSwitchPOITypeView)
 
         # ---- Create Plugin Selection ----------------------
-        self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.switchPluginCreateView)
+        self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.callSwitchPluginCreateView)
 
         # ---- Select listener ------------------------------
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -695,43 +695,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def switchToCurrent(self):
         self.window.changeViews_stack.setCurrentIndex(0)
 
-    def switchPOITypeView(self):
-        poiType = self.window.dpoimPoiType_dropdown.currentText()
-        if poiType == 'Pull From Predefined Dataset':
-            self.window.addPOI_stack.setCurrentIndex(0)
-        elif poiType == 'Function':
-            self.window.addPOI_stack.setCurrentIndex(1)
-        elif poiType == 'String':
-            self.window.addPOI_stack.setCurrentIndex(2)
-        elif poiType == 'Variable':
-            self.window.addPOI_stack.setCurrentIndex(3)
-        elif poiType == 'DLL':
-            self.window.addPOI_stack.setCurrentIndex(4)
-        elif poiType == 'Packet Protocol':
-            self.window.addPOI_stack.setCurrentIndex(5)
-        elif poiType == 'Struct':
-            self.window.addPOI_stack.setCurrentIndex(6)
+    def callSwitchPOITypeView(self):
+        switchPOITypeView(self.window.dpoimPoiType_dropdown.currentText(), self.window.addPOI_stack)
 
-    def switchPluginCreateView(self):
-        createType = self.window.dpmCreate_dropdown.currentText()
-        if createType == 'Pull From XML File':
-            self.window.createPlugin_stack.setCurrentIndex(0)
-        if createType == 'Manual Input':
-            self.window.createPlugin_stack.setCurrentIndex(1)
+    def callSwitchPluginCreateView(self):
+        switchPluginCreateView(self.window.dpmCreate_dropdown.currentText(), self.window.createPlugin_stack)
 
     def processPluginData(self):
         createType = self.window.dpmCreate_dropdown.currentText()
         if createType == 'Pull From XML File':
             pluginDict = convertPluginXML(self.window.dpmPluginStructure_lineEdit.text())
 
-        if createType == 'Manual Input':
-            pluginDict = convertPluginManual(self.window.dpmPluginName_lineEdit.text(),
-                                             self.window.dpmPluginDesc_lineEdit.text(),
-                                             self.window.dpmOutName_lineEdit.text(),
-                                             self.window.dpmOutFuncName_lineEdit.text(),
+        elif createType == 'Manual Input':
+            pluginDict = convertPluginManual(self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text(),
+                                             self.window.dpmOutName_lineEdit.text(), self.window.dpmOutFuncName_lineEdit.text(),
                                              self.window.dpmOutFuncSource_lineEdit.text())
-
-        print(pluginDict)
         return pluginDict
 
 

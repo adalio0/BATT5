@@ -2,8 +2,6 @@ from xmljson import parker as pk
 import xml.etree.ElementTree as ET
 import json
 import xmlschema
-from pathlib import Path
-
 
 def validatePluginXML(filepath):
     pluginSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
@@ -50,5 +48,31 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         }
     }
     return plugDict
+
+
+# SWITCH VIEWS
+def switchPOITypeView(poiType, addPOI_stack):
+    if poiType == 'Pull From Predefined Dataset':
+        addPOI_stack.setCurrentIndex(0)
+    elif poiType == 'Function':
+        addPOI_stack.setCurrentIndex(1)
+    elif poiType == 'String':
+        addPOI_stack.setCurrentIndex(2)
+    elif poiType == 'Variable':
+        addPOI_stack.setCurrentIndex(3)
+    elif poiType == 'DLL':
+        addPOI_stack.setCurrentIndex(4)
+    elif poiType == 'Packet Protocol':
+        addPOI_stack.setCurrentIndex(5)
+    elif poiType == 'Struct':
+        addPOI_stack.setCurrentIndex(6)
+
+
+def switchPluginCreateView(createType, createPlugin_stack):
+
+    if createType == 'Pull From XML File':
+        createPlugin_stack.setCurrentIndex(0)
+    if createType == 'Manual Input':
+        createPlugin_stack.setCurrentIndex(1)
 
 # TODO make function to store into db
