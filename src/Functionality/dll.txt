@@ -1,150 +1,0 @@
-﻿[Imports]
-<<<<<<< HEAD
-   1 0x1400042f8    NONE    FUNC msvcrt.dll___C_specific_handler
-   2 0x140004300    NONE    FUNC msvcrt.dll__cexit
-   3 0x140004308    NONE    FUNC msvcrt.dll___setusermatherr
-   4 0x140004310    NONE    FUNC msvcrt.dll_exit
-   5 0x140004318    NONE    FUNC msvcrt.dll__fmode
-   6 0x140004320    NONE    FUNC msvcrt.dll__commode
-   7 0x140004328    NONE    FUNC msvcrt.dll__initterm
-   8 0x140004330    NONE    FUNC msvcrt.dll__exit
-   9 0x140004338    NONE    FUNC msvcrt.dll___iob_func
-  10 0x140004340    NONE    FUNC msvcrt.dll__get_osfhandle
-  11 0x140004348    NONE    FUNC msvcrt.dll__wcsicmp
-  12 0x140004350    NONE    FUNC msvcrt.dll_fflush
-  13 0x140004358    NONE    FUNC msvcrt.dll__setmode
-  14 0x140004360    NONE    FUNC msvcrt.dll__write
-  15 0x140004368    NONE    FUNC msvcrt.dll__fileno
-  16 0x140004370    NONE    FUNC msvcrt.dll_wcschr
-  17 0x140004378    NONE    FUNC msvcrt.dll_fgetpos
-  18 0x140004380    NONE    FUNC msvcrt.dll_fwprintf
-  19 0x140004388    NONE    FUNC msvcrt.dll_?terminate@@YAXXZ
-  20 0x140004390    NONE    FUNC msvcrt.dll___wgetmainargs
-  21 0x140004398    NONE    FUNC msvcrt.dll__amsg_exit
-  22 0x1400043a0    NONE    FUNC msvcrt.dll__XcptFilter
-  23 0x1400043a8    NONE    FUNC msvcrt.dll_wcstoul
-  24 0x1400043b0    NONE    FUNC msvcrt.dll_iswctype
-  25 0x1400043b8    NONE    FUNC msvcrt.dll_memcpy
-  26 0x1400043c0    NONE    FUNC msvcrt.dll___set_app_type
-  27 0x1400043c8    NONE    FUNC msvcrt.dll_memset
-   1 0x1400041a0    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_SetConsoleCtrlHandler
-   2 0x1400041a8    NONE    FUNC api-ms-win-core-console-l1-1-0.dll_GetConsoleMode
-   1 0x140004280    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegOpenKeyExW
-   2 0x140004288    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegQueryValueExW
-   3 0x140004290    NONE    FUNC api-ms-win-core-registry-l1-1-0.dll_RegCloseKey
-   1 0x140004118    NONE    FUNC IPHLPAPI.DLL_GetIpErrorString
-   2 0x140004120    NONE    FUNC IPHLPAPI.DLL_SetCurrentThreadCompartmentId
-   3 0x140004128    NONE    FUNC IPHLPAPI.DLL_GetIpForwardTable
-   4 0x140004130    NONE    FUNC IPHLPAPI.DLL_IcmpSendEcho2Ex
-   5 0x140004138    NONE    FUNC IPHLPAPI.DLL_IcmpCloseHandle
-   6 0x140004140    NONE    FUNC IPHLPAPI.DLL_Icmp6SendEcho2
-   7 0x140004148    NONE    FUNC IPHLPAPI.DLL_IcmpCreateFile
-   8 0x140004150    NONE    FUNC IPHLPAPI.DLL_Icmp6CreateFile
-   9 0x140004158    NONE    FUNC IPHLPAPI.DLL_InternalIcmpCreateFileEx
-   1 0x140004220    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_SetThreadUILanguage
-   2 0x140004228    NONE    FUNC api-ms-win-core-localization-l1-2-0.dll_FormatMessageW
-   1 0x140004168    NONE    FUNC WS2_32.dll_InetNtopW
-   2 0x140004170    NONE    FUNC WS2_32.dll_GetAddrInfoW
-   3 0x140004178    NONE    FUNC WS2_32.dll_GetNameInfoW
- 116 0x140004180    NONE    FUNC WS2_32.dll_WSACleanup
-
-nth vaddr      bind   type   name
-―――――――――――――――――――――――――――――――――
-1   0x000029f0 GLOBAL FUNC   nettle_md5_update
-2   0x00002a00 GLOBAL FUNC   inet_ntop
-3   0x00002a10 GLOBAL FUNC   sigprocmask
-4   0x00002a20 GLOBAL FUNC   __snprintf_chk
-5   0x00002a30 GLOBAL FUNC   free
-6   0x00002a40 GLOBAL FUNC   putchar
-7   0x00002a50 GLOBAL FUNC   abort
-8   0x00002a60 GLOBAL FUNC   __errno_location
-9   0x00002a70 GLOBAL FUNC   strncpy
-10  0x00002a80 GLOBAL FUNC   strncmp
-11  0x00000000 WEAK   NOTYPE _ITM_deregisterTMCloneTable
-12  0x00002a90 GLOBAL FUNC   sendmsg
-13  0x00002aa0 GLOBAL FUNC   puts
-14  0x00002ab0 GLOBAL FUNC   isatty
-15  0x00002ac0 GLOBAL FUNC   sigaction
-16  0x00002ad0 GLOBAL FUNC   strtod
-17  0x00002ae0 GLOBAL FUNC   setsockopt
-18  0x00002af0 GLOBAL FUNC   write
-19  0x00002b00 GLOBAL FUNC   getpid
-20  0x00002b10 GLOBAL FUNC   inet_ntoa
-21  0x00002b20 GLOBAL FUNC   strlen
-22  0x00002b30 GLOBAL FUNC   __stack_chk_fail
-23  0x00002b40 GLOBAL FUNC   getuid
-24  0x00002b50 GLOBAL FUNC   setbuf
-25  0x00002b60 GLOBAL FUNC   __dn_comp
-26  0x00002b70 GLOBAL FUNC   strchr
-27  0x00002b80 GLOBAL FUNC   _IO_putc
-28  0x00002b90 GLOBAL FUNC   stringprep_locale_to_utf8
-29  0x00002ba0 GLOBAL FUNC   snprintf
-30  0x00002bb0 GLOBAL FUNC   gai_strerror
-31  0x00002bc0 GLOBAL FUNC   gettimeofday
-32  0x00002bd0 GLOBAL FUNC   __assert_fail
-33  0x00002be0 GLOBAL FUNC   geteuid
-34  0x00002bf0 GLOBAL FUNC   ioctl
-35  0x00002c00 GLOBAL FUNC   sendto
-36  0x00002c10 GLOBAL FUNC   close
-37  0x00002c20 GLOBAL FUNC   getnameinfo
-38  0x00002c30 GLOBAL FUNC   idna_to_ascii_8z
-39  0x00002c40 GLOBAL FUNC   fputc
-40  0x00002c50 GLOBAL FUNC   sched_yield
-41  0x00002c60 GLOBAL FUNC   memchr
-42  0x00002c70 GLOBAL FUNC   cap_get_flag
-43  0x00000000 GLOBAL FUNC   __libc_start_main
-44  0x00002c80 GLOBAL FUNC   memcmp
-45  0x00002c90 GLOBAL FUNC   getsockopt
-46  0x00002ca0 GLOBAL FUNC   _setjmp
-47  0x00002cb0 GLOBAL FUNC   cap_set_proc
-48  0x00002cc0 GLOBAL FUNC   strcmp
-49  0x00002cd0 GLOBAL FUNC   __memcpy_chk
-50  0x00002ce0 GLOBAL FUNC   sigemptyset
-51  0x00000000 WEAK   NOTYPE __gmon_start__
-52  0x00002cf0 GLOBAL FUNC   if_nametoindex
-53  0x00002d00 GLOBAL FUNC   strtol
-54  0x00002d10 GLOBAL FUNC   memcpy
-55  0x00002d20 GLOBAL FUNC   prctl
-56  0x00002d30 GLOBAL FUNC   inet_pton
-57  0x00002d40 GLOBAL FUNC   cap_init
-58  0x00002d50 GLOBAL FUNC   inet_aton
-59  0x00002d60 GLOBAL FUNC   malloc
-60  0x00002d70 GLOBAL FUNC   fflush
-61  0x00002d80 GLOBAL FUNC   cap_get_proc
-62  0x00002d90 GLOBAL FUNC   getifaddrs
-63  0x00002da0 GLOBAL FUNC   sscanf
-64  0x00002db0 GLOBAL FUNC   nettle_md5_init
-65  0x00002dc0 GLOBAL FUNC   idna_strerror
-66  0x00002dd0 GLOBAL FUNC   setitimer
-67  0x00002de0 GLOBAL FUNC   recvmsg
-68  0x00002df0 GLOBAL FUNC   setlocale
-69  0x00002e00 GLOBAL FUNC   __printf_chk
-70  0x00002e10 GLOBAL FUNC   freeifaddrs
-71  0x00002e20 GLOBAL FUNC   poll
-72  0x00002e30 GLOBAL FUNC   bind
-73  0x00002e40 GLOBAL FUNC   __longjmp_chk
-74  0x00002e50 GLOBAL FUNC   __dn_expand
-75  0x00002e60 GLOBAL FUNC   perror
-76  0x00002e70 GLOBAL FUNC   getopt
-77  0x00002e80 GLOBAL FUNC   cap_free
-78  0x00002e90 GLOBAL FUNC   getsockname
-79  0x00002ea0 GLOBAL FUNC   strtoul
-80  0x00002eb0 GLOBAL FUNC   cap_set_flag
-81  0x00002ec0 GLOBAL FUNC   exit
-82  0x00002ed0 GLOBAL FUNC   connect
-83  0x00002ee0 GLOBAL FUNC   fwrite
-84  0x00002ef0 GLOBAL FUNC   __fprintf_chk
-85  0x00000000 WEAK   NOTYPE _ITM_registerTMCloneTable
-86  0x00002f00 GLOBAL FUNC   setuid
-87  0x00002f10 GLOBAL FUNC   getaddrinfo
-88  0x00002f20 GLOBAL FUNC   strdup
-89  0x00002f30 GLOBAL FUNC   strerror
-90  0x00000000 WEAK   FUNC   __cxa_finalize
-91  0x00002f40 GLOBAL FUNC   __ctype_tolower_loc
-92  0x00002f50 GLOBAL FUNC   __ctype_b_loc
-93  0x00002f60 GLOBAL FUNC   freeaddrinfo
-94  0x00002f70 GLOBAL FUNC   nettle_md5_digest
-95  0x00002f80 GLOBAL FUNC   __sprintf_chk
-96  0x00002f90 GLOBAL FUNC   socket
-
-
