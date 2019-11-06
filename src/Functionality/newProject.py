@@ -83,26 +83,7 @@ class ProjectWindow(QtWidgets.QDialog):
         static_outcome = static_db.insert_one(static_analysis)
 
         # Get properties of the binary with the current project
-        # properties = \
-        prperties = self.getProperties()
-
-        binary = {
-            'project_id': '',
-
-            'file': self.window.path_lineEdit.text(),
-            'os': '',
-            'binary': '',
-            'machine': '',
-            'class': '',
-            'bits': '',
-            'language': '',
-            'canary': '',
-            'crypto': '',
-            'nx': '',
-            'relocs': '',
-            'stripped': '',
-            'relro': ''
-        }
+        binary = self.setProperties()
         binary_outcome = binary_db.insert_one(binary)
 
         project_data = {
@@ -141,25 +122,25 @@ class ProjectWindow(QtWidgets.QDialog):
         self.windowEF.show()
 
     # ---- Sets Data To Project Object and Displays it in Tree Widget -------------------------------------
-    def getProperties(self):
+    def setProperties(self):
         infile = r2pipe.open(self.window.path_lineEdit.text())
-        property = infile.cmdj("ij")
+        properties = infile.cmdj("ij")
 
-        bin = property.get('bin', {})
+        bin = properties.get('bin', {})
         tree = self.window.properties_treeWidget
 
         # os
         item0 = tree.itemAt(0, 0)
-        item0.setText(1, bin['os'])
+        item0.setText(1, str(bin['os']))
         # binary type
         item1 = tree.itemBelow(item0)
-        item1.setText(1, bin['bintype'])
+        item1.setText(1, str(bin['bintype']))
         # machine
         item2 = tree.itemBelow(item1)
-        item2.setText(1, bin['machine'])
+        item2.setText(1, str(bin['machine']))
         # class
         item3 = tree.itemBelow(item2)
-        item3.setText(1, bin['class'])
+        item3.setText(1, str(bin['class']))
         # bits
         item4 = tree.itemBelow(item3)
         try:
@@ -196,6 +177,27 @@ class ProjectWindow(QtWidgets.QDialog):
         # stripped
         item13 = tree.itemBelow(item12)
         item13.setText(1, str(bin['stripped']))
+
+        binary = {
+            'project_id': '',
+
+            'file': self.window.path_lineEdit.text(),
+            'os': str(bin['os']),
+            'binary': str(bin['bintype']),
+            'machine': str(bin['machine']),
+            'class': str(bin['class']),
+            'bits': '',
+            'language': str(bin['lang']),
+            'canary': str(bin['canary']),
+            'crypto': str(bin['crypto']),
+            'nx': str(bin['nx']),
+            'pic': str(bin['pic']),
+            'relocs': str(bin['relocs']),
+            'relro': '',
+            'stripped': str(bin['stripped'])
+        }
+
+        return binary
 
 
 def main():
