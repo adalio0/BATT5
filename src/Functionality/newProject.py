@@ -24,6 +24,7 @@ class ProjectWindow(QtWidgets.QDialog):
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.path_lineEdit.setText(name)
+        self.getProperties()
 
     # ---- Extracts Text From Fields and Assigns Them To Project Object and creates xml file -------
     def createProject(self):
@@ -84,24 +85,24 @@ class ProjectWindow(QtWidgets.QDialog):
 
         # Get properties of the binary with the current project
         # properties = \
-        prperties = self.getProperties()
+        p = self.getProperties()
 
         binary = {
             'project_id': '',
 
             'file': self.window.path_lineEdit.text(),
-            'os': '',
-            'binary': '',
-            'machine': '',
-            'class': '',
-            'bits': '',
-            'language': '',
-            'canary': '',
-            'crypto': '',
-            'nx': '',
-            'relocs': '',
-            'stripped': '',
-            'relro': ''
+            'os': str(p['os']),
+            'binary': str(p['bintype']),
+            'machine': str(p['machine']),
+            'class': str(p['class']),
+            'bits': str(p['bits']),
+            'language': str(p['lang']),
+            'canary': str(p['canary']),
+            'crypto': str(p['crypto']),
+            'nx': str(p['nx']),
+            'relocs': str(p['relocs']),
+            'stripped': str(p['stripped']),
+            'relro': str(p['relro'])
         }
         binary_outcome = binary_db.insert_one(binary)
 
@@ -143,9 +144,9 @@ class ProjectWindow(QtWidgets.QDialog):
     # ---- Sets Data To Project Object and Displays it in Tree Widget -------------------------------------
     def getProperties(self):
         infile = r2pipe.open(self.window.path_lineEdit.text())
-        property = infile.cmdj("ij")
+        properties = infile.cmdj("ij")
 
-        bin = property.get('bin', {})
+        bin = properties.get('bin', {})
         tree = self.window.properties_treeWidget
 
         # os
@@ -196,6 +197,8 @@ class ProjectWindow(QtWidgets.QDialog):
         # stripped
         item13 = tree.itemBelow(item12)
         item13.setText(1, str(bin['stripped']))
+
+        return bin
 
 
 def main():
