@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 import json
 import xmlschema
 
+
 def validatePluginXML(filepath):
     pluginSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
                                        '4311/BATT5/src/Configurations/pluginConfig.xsd')
@@ -69,10 +70,21 @@ def switchPOITypeView(poiType, addPOI_stack):
 
 
 def switchPluginCreateView(createType, createPlugin_stack):
-
     if createType == 'Pull From XML File':
         createPlugin_stack.setCurrentIndex(0)
     if createType == 'Manual Input':
         createPlugin_stack.setCurrentIndex(1)
 
+
+def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit,
+                      dpmOutName_lineEdit, dpmOutFuncName_lineEdit, dpmOutFuncSource_lineEdit):
+    if createType == 'Pull From XML File':
+        pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
+
+    elif createType == 'Manual Input':
+        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
+                                         dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
+                                         dpmOutFuncSource_lineEdit.text())
+    print(pluginDict)
+    return pluginDict
 # TODO make function to store into db

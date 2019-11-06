@@ -74,7 +74,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- Analysis Tab ---------------------------------
 
         # Clicking will clear the comment box text
-        self.window.commentClear_button.clicked.connect(self.Clear)
+        self.window.commentClear_button.clicked.connect(self.clearComment)
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
@@ -120,7 +120,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_button.clicked.connect(self.showFileExplorer_outFuncSource)
 
         # Creating new plugin from xml
-        self.window.dpmSave_button.clicked.connect(self.processPluginData)
+        self.window.dpmSave_button.clicked.connect(self.callProcessPluginData)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
@@ -685,7 +685,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             pass
 
     # Clear comment text
-    def Clear(self):
+    def clearComment(self):
         self.window.comment_text.clear()
 
     # From current to history
@@ -701,16 +701,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSwitchPluginCreateView(self):
         switchPluginCreateView(self.window.dpmCreate_dropdown.currentText(), self.window.createPlugin_stack)
 
-    def processPluginData(self):
-        createType = self.window.dpmCreate_dropdown.currentText()
-        if createType == 'Pull From XML File':
-            pluginDict = convertPluginXML(self.window.dpmPluginStructure_lineEdit.text())
-
-        elif createType == 'Manual Input':
-            pluginDict = convertPluginManual(self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text(),
-                                             self.window.dpmOutName_lineEdit.text(), self.window.dpmOutFuncName_lineEdit.text(),
-                                             self.window.dpmOutFuncSource_lineEdit.text())
-        return pluginDict
+    def callProcessPluginData(self):
+        processPluginData(self.window.dpmCreate_dropdown.currentText(), self.window.dpmPluginStructure_lineEdit,
+                          self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                          self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                          self.window.dpmOutFuncSource_lineEdit)
 
 
 def main():
