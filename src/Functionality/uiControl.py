@@ -22,6 +22,7 @@ from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
 from src.Functionality.pluginPoiManagement import *
 from src.Functionality.database import *
+from src.Functionality.search import *
 
 static = False
 dynamic = False
@@ -81,16 +82,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Search Functions ---------------------------------
         # returns the searched elements in the project list
-        self.window.projectSearch_lineEdit.returnPressed.connect(self.searchProject)
+        self.window.projectSearch_lineEdit.returnPressed.connect(self.callSearchProject)
 
         # returns the searched elements in the poi list
-        self.window.poiSearch_lineEdit.returnPressed.connect(self.searchPoi)
+        self.window.poiSearch_lineEdit.returnPressed.connect(self.callSearchPoi)
 
         # returns the searched elements in the plugin list
-        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.searchPluginM)
+        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.callSearchPluginM)
 
         # returns the searched elements in the poi list
-        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.searchPoiM)
+        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
         # ---- Filters ---------------------------------
         # When changing POI type in the drop down will update whats displayed
@@ -423,110 +424,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             pass
 
     # Search functionality for the project box
-    def searchProject(self):
-        search = str(self.window.projectSearch_lineEdit.text())
-        result = self.window.projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
-
-        projects = []
-        item = ''
-
-        j = 0
-        if search:
-            for i in range(self.window.projectNavigator_tree.topLevelItemCount()):
-                try:
-                    item = result[j]
-                except IndexError:
-                    pass
-                if item.text(0) in self.window.projectNavigator_tree.topLevelItem(i).text(0):
-                    projects.append(QTreeWidgetItem([item.text(0)]))
-                    child_text = item.child(0).text(0)
-                    child = QTreeWidgetItem(projects[len(projects) - 1])
-                    child.setText(0, child_text)
-                    j += 1
-            tree = self.window.projectNavigator_tree
-            tree.clear()
-            tree.addTopLevelItems(projects)
-        else:
-            tree = self.window.projectNavigator_tree
-            tree.clear()
-            self.populateProjectBox()
+    def callSearchProject(self):
+        searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
 
     # Search functionality for the poi box
-    def searchPoi(self):
-        search = str(self.window.poiSearch_lineEdit.text())
-        result = self.window.poi_list.findItems(search, QtCore.Qt.MatchContains)
+    def callSearchPoi(self):
+        searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
 
-        poi = []
-        item = ''
+    def callSearchPluginM(self):
+        searchPluginM(str(self.window.pluginManagementSearch_lineEdit.text()), self.window.pluginManagement_list)
 
-        j = 0
-        if search:
-            for i in range(self.window.poi_list.count()):
-                try:
-                    item = result[j]
-                except IndexError:
-                    pass
-                if item.text() in self.window.poi_list.item(i).text():
-                    poi.append(item.text())
-                    j += 1
-            list = self.window.poi_list
-            list.clear()
-            list.addItems(poi)
-        else:
-            list = self.window.poi_list
-            list.clear()
-            self.displayAll()
-
-    def searchPluginM(self):
-        search = str(self.window.pluginManagementSearch_lineEdit.text())
-        result = self.window.pluginManagement_list.findItems(search, QtCore.Qt.MatchContains)
-
-        plugin = []
-        item = ''
-
-        j = 0
-        if search:
-            for i in range(self.window.pluginManagement_list.count()):
-                try:
-                    item = result[j]
-                except IndexError:
-                    pass
-                if item.text() in self.window.pluginManagement_list.item(i).text():
-                    plugin.append(item.text())
-                    j += 1
-            list = self.window.pluginManagement_list
-            list.clear()
-            list.addItems(plugin)
-        else:
-            list = self.window.pluginManagement_list
-            list.clear()
-            # method to call all plugins
-
-    def searchPoiM(self):
-        search = str(self.window.poiManagementSeach_lineEdit.text())
-        result = self.window.poiManagement_list.findItems(search, QtCore.Qt.MatchContains)
-
-        poi = []
-        item = ''
-
-        j = 0
-        if search:
-            for i in range(self.window.poiManagement_list.count()):
-                try:
-                    item = result[j]
-                except IndexError:
-                    pass
-                if item.text() in self.window.poiManagement_list.item(i).text():
-                    poi.append(item.text())
-                    j += 1
-            list = self.window.poiManagement_list
-            list.clear()
-            list.addItems(poi)
-        else:
-            list = self.window.poiManagement_list
-            list.clear()
-
-            # method to call all pois
+    def callSearchPoiM(self):
+        searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
