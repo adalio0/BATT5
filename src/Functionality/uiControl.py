@@ -181,7 +181,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
                     self.window.poi_list.clear()
-                    self.displayAll()
+                    self.displayPoi()
             elif obj == self.window.pluginManagementSearch_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
@@ -233,23 +233,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.displayPoi()
 
     # Dispalys POIs in the Analysis box
-    # TODO: make sure the stuff gets properly displayed in the gui, and move this code to the database file
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
-            content = getAllPoi(poi)
+            functions, strings, variables, dlls = getAllPoi(poi)
             self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
             self.window.POI_tableWidget.setColumnCount(4)
 
             # Call method to display every poi
-            self.displayAll(content)
+            self.displayAll(functions, strings, variables, dlls)
         else:
             content = getPoi(poi)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels([str(poi)])
-            self.window.POI_tableWidget.setColumnCount(1)
-
             # Call appropriate method to display poi
             if poi == 'Function':
                 self.displayFunctions(content)
@@ -262,10 +258,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'callrefs', 'spvars', 'regvars'])
+        self.window.POI_tableWidget.setColumnCount(6)
+        self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
-            self.window.POI_tableWidget.setRowCount(len(content))
-            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
+            if 'offset' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content[i]['offset'])))
+            if 'name' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['name']))
+            if 'size' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(str(content[i]['size'])))
+            if 'callrefs' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(str(len(content[i]['callrefs']))))
+            if 'spvars' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(str(len(content[i]['spvars']))))
+            if 'regvars' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 5, QTableWidgetItem(str(len(content[i]['regvars']))))
 
             item = QListWidgetItem(content[i]['name'])
             item.setCheckState(QtCore.Qt.Checked)
@@ -273,18 +281,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
+        self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
-            self.window.POI_tableWidget.setRowCount(len(content))
-            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['string']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
+            if 'type' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['type']))
+            if 'size' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(str(content[i]['size'])))
+            if 'length' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(str(content[i]['length'])))
+            if 'section' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(str(content[i]['section'])))
+            if 'string' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(content[i]['string']))
 
             item = QListWidgetItem(content[i]['string'])
             self.window.poi_list.addItem(item)
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
+        self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
-            self.window.POI_tableWidget.setRowCount(len(content))
             self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]))
             self.window.POI_tableWidget.resizeColumnToContents(0)
 
@@ -293,107 +311,64 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the dlls extracted from Static Analysis in Analysis box and POI box
     def displayDll(self, content):
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'type', 'bind', 'vaddr'])
+        self.window.POI_tableWidget.setColumnCount(4)
+        self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
-            self.window.POI_tableWidget.setRowCount(len(content))
-            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
+            if 'name' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
+            if 'type' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['type']))
+            if 'bind' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(content[i]['bind']))
+            if 'vaddr' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['vaddr']))
 
             item = QListWidgetItem(content[i]['name'])
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
     # Displays all extracted pois from Static Analysis in Analysis box and POI box
-    def displayAll(self, content):
-        # TODO: Still doesn't work
-        for i in range(len(content[0])):
-            self.window.POI_tableWidget.setRowCount(len(content[0]))
-            # self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[0][i]['name']))
-            # self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[1][i]['string']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
-        try:
-            f = open("function.txt", "r")
+    def displayAll(self, functions, strings, variables, dlls):
+        # Get the longest number of keys between functions, strings, variables, dlls
+        length = len(functions)
+        if len(strings) > length:
+            length = len(strings)
+        elif len(variables) > length:
+            length = len(variables)
+        elif len(dlls) > length:
+            length = len(dlls)
+        self.window.POI_tableWidget.setRowCount(length)
 
-            self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+        self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+        for i in range(len(functions)):
+            if 'name' in functions[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(functions[i]['name']))
+            item = QListWidgetItem(functions[i]['name'])
+            item.setCheckState(QtCore.Qt.Checked)
+            self.window.poi_list.addItem(item)
 
-            entries = []
-            i = 0
-            j = 0
-            for line in f.read().split("\n\n")[:]:
-                rowPos = self.window.POI_tableWidget.rowCount()
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-                entries.append(line)
-                self.window.POI_tableWidget.setRowCount(len(entries))
-                if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                    self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(str(line)))
-                    j += 1
-                    self.window.POI_tableWidget.resizeColumnToContents(0)
-                else:
-                    i += 1
+        self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
+        for i in range(len(strings)):
+            if 'string' in strings[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
+            item = QListWidgetItem(strings[i]['string'])
+            self.window.poi_list.addItem(item)
 
-            f.close()
-            f = open("string.txt", "r")
+        self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+        # for i in range(len(variables)):
+        #     self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]))
+        #     self.window.POI_tableWidget.resizeColumnToContents(0)
+        #     item = QListWidgetItem(variables[i])
+        #     self.window.poi_list.addItem(item)
 
-            self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
-            i = 0
-            j = 0
-            for line in f.read().split("\n\n")[:]:
-                # rowPos = self.window.POI_tableWidget.rowCount()
-                line = line.split(" ", 9)[-1]
-                item = QListWidgetItem(line)
-
-                if i > 1:
-                    self.window.poi_list.addItem(item)
-                    # self.window.POI_tableWidget.insertRow(rowPos)
-                    self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(str(line)))
-                    j += 1
-                    self.window.POI_tableWidget.resizeColumnToContents(1)
-                else:
-                    i += 1
-
-            f.close()
-            f = open("variable.txt", "r")
-
-            self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
-            j = 0
-            for line in f.read().split("\n\n")[:]:
-                # rowPos = self.window.POI_tableWidget.rowCount()
-                try:
-                    line = line.split(" ")[1]
-                    item = QListWidgetItem(line)
-
-                    self.window.poi_list.addItem(item)
-                    # self.window.POI_tableWidget.insertRow(rowPos)
-                    self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(str(line)))
-                    j += 1
-                    self.window.POI_tableWidget.resizeColumnToContents(2)
-                except IndexError:
-                    pass
-
-            f.close()
-            f = open("dll.txt", "r")
-
-            self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
-            i = 0
-            j = 0
-            for line in f.read().split("\n\n")[:]:
-                rowPos = self.window.POI_tableWidget.rowCount()
-                line = line.split(" ")[-1]
-                item = QListWidgetItem(line)
-
-                if i > 1:
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                    self.window.poi_list.addItem(item)
-                    # self.window.POI_tableWidget.insertRow(rowPos)
-                    self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(str(line)))
-                    j += 1
-                    self.window.POI_tableWidget.resizeColumnToContents(3)
-                else:
-                    i += 1
-        except FileNotFoundError:
-            pass
+        self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
+        for i in range(len(dlls)):
+            if 'name' in dlls[i]:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
+            item = QListWidgetItem(dlls[i]['name'])
+            item.setCheckState(QtCore.Qt.Checked)
+            self.window.poi_list.addItem(item)
 
     # Search functionality for the project box
     def callSearchProject(self):
