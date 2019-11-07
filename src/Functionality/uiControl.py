@@ -545,13 +545,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                           self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                           self.window.dpmOutFuncSource_lineEdit)
 
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     main()

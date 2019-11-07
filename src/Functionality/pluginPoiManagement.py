@@ -2,16 +2,15 @@ from xmljson import parker as pk
 import xml.etree.ElementTree as ET
 import json
 import xmlschema
+from pathlib import Path
 
 def validatePluginXML(filepath):
-    pluginSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
-                                       '4311/BATT5/src/Configurations/pluginConfig.xsd')
+    pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/pluginConfig.xsd')
     result = pluginSchema.is_valid(filepath)
     return result
 
 def validatePoiXML(filepath):
-    poiSchema = xmlschema.XMLSchema('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS '
-                                    '4311/BATT5/src/Configurations/poiConfig.xsd')
+    poiSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 
@@ -22,6 +21,7 @@ def convertPluginXML(filepath):
         pluginDict = json.loads(json.dumps(pk.data(pluginRoot)))
     else:
         print('invalid plugin XML (does not conform to  schema)')
+        # TODO display error window
     return pluginDict
 
 def convertPoiXML(filepath):
@@ -31,6 +31,7 @@ def convertPoiXML(filepath):
         poiDict = json.loads(json.dumps(pk.data(poiRoot)))
     else:
         print('invalid POI XML (does not conform to POI schema)')
+        # TODO display error window
     return poiDict
 
 def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
@@ -44,6 +45,19 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         }
     }
     return plugDict
+
+# -------- MANUAL POI INPUT --------
+def convertFuncManual():
+    return 0
+
+def convertStringManual():
+    return 0
+
+def convertDllManual():
+    return 0
+
+def convertVarManual():
+    return 0
 
 # SWITCH VIEWS
 def switchPOITypeView(poiType, addPOI_stack):
