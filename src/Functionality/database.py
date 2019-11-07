@@ -23,14 +23,10 @@ current_db = newdb['current']
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    #deleteDatabase()
+    # deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(QTreeWidgetItem([p.get('name')]))
-        child = QTreeWidgetItem(projects[len(projects) - 1])
-        for b in binary_db.find():
-            if b['_id'] == p.get('binary'):
-                child.setText(0, b.get('file'))
     return projects
 
 
@@ -92,92 +88,137 @@ def saveStatic():
             if b['_id'] == p.get('binary'):
                 path = b.get('file')
 
-    poi = ''
-    try:
-        # function, string, variable, dll = staticAnalysis(path)
-        poi = staticAnalysis(path)
-        for p in current_db.find():
-            for s in static_db.find():
-                if s['_id'] == p.get('static_analysis', {}).get('01'):
-                    for r in results_db.find():
-                        if r['_id'] == s.get('results').get('01'):
-                            for i in range(len(poi[0])):
-                                function = {
-                                    'results_id': r['_id'],
-                                    'comment': '',
-                                    'data': poi[0][i]
-                                }
-                                function_outcome = function_db.insert_one(function)
-
-                                results_db.find_one_and_update(
-                                    {'_id': r['_id']},
-                                    {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
-
-                            for i in range(len(poi[1])):
-                                string = {
-                                    'results_id': r['_id'],
-                                    'comment': '',
-                                    'data': poi[1][i]
-                                }
-                                function_outcome = string_db.insert_one(string)
-
-                                results_db.find_one_and_update(
-                                    {'_id': s['_id']},
-                                    {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
-
-                            # for i in range(len(poi[2])):
-                            #     variable = {
-                            #         'results_id': r['_id'],
-                            #         'comment': '',
-                            #         'data': poi[2][i]
-                            #     }
-                            #     function_outcome = variable_db.insert_one(variable)
-                            #
-                            #     results_db.find_one_and_update(
-                            #         {'_id': s['_id']},
-                            #         {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                            for i in range(len(poi[2])):
-                                dll = {
-                                    'results_id': r['_id'],
-                                    'comment': '',
-                                    'data': poi[2][i]
-                                }
-                                function_outcome = dll_db.insert_one(dll)
-
-                                results_db.find_one_and_update(
-                                    {'_id': s['_id']},
-                                    {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
-    except:
-        print("An error occurred inside Radare2")
-
-
-# Dispalys POIs in the Analysis box
-# TODO: make sure the stuff gets properly displayed in the gui!
-def getPoi(poi):
+    poi = staticAnalysis(path)
     for p in current_db.find():
         for s in static_db.find():
             if s['_id'] == p.get('static_analysis', {}).get('01'):
                 for r in results_db.find():
                     if r['_id'] == s.get('results').get('01'):
-                        for f in function_db.find():
-                            # print(len(r.get(poi.lower())[:]))
-                            for i in range(len(r.get(poi.lower())[:])):
+                        for i in range(len(poi[0])):
+                            function = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[0][i]
+                            }
+                            try:
+                                function_outcome = function_db.insert_one(function)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': r['_id']},
+                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[1])):
+                            string = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[1][i]
+                            }
+                            try:
+                                function_outcome = string_db.insert_one(string)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
+
+                        # for i in range(len(poi[2])):
+                        #     variable = {
+                        #         'results_id': r['_id'],
+                        #         'comment': '',
+                        #         'data': poi[2][i]
+                        #     }
+                        #     function_outcome = variable_db.insert_one(variable)
+                        #
+                        #     results_db.find_one_and_update(
+                        #         {'_id': s['_id']},
+                        #         {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[2])):
+                            dll = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[2][i]
+                            }
+                            try:
+                                function_outcome = dll_db.insert_one(dll)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+
+
+# Display all POI in the Analysis box
+def getAllPoi(poi):
+    data = []
+    functions = []
+    strings = []
+    variables = []
+    dlls = []
+    for p in current_db.find():
+        for s in static_db.find():
+            if s['_id'] == p.get('static_analysis', {}).get('01'):
+                for r in results_db.find():
+                    if r['_id'] == s.get('results').get('01'):
+                        database = getAppropriatePoi(poi)
+                        for i in range(len(database)):
+                            for d in database[i].find():
+                                if r['_id'] == d.get('results_id'):
+                                    content = d.get('data')
+                                    try:
+                                        data.append(content)
+                                    except TypeError:
+                                        pass
+                            if i == 0:
+                                functions.append(data)
+                            elif i == 1:
+                                strings.append(data)
+                            elif i == 2:
+                                variables.append(data)
+                            elif i == 3:
+                                dlls.append(data)
+                            data = []
+    return functions[0], strings[0], variables[0], dlls[0]
+
+
+# Dispalys specific POI in the Analysis box
+def getPoi(poi):
+    entries = []
+    for p in current_db.find():
+        for s in static_db.find():
+            if s['_id'] == p.get('static_analysis', {}).get('01'):
+                for r in results_db.find():
+                    if r['_id'] == s.get('results').get('01'):
+                        database = getAppropriatePoi(poi)
+                        for d in database.find():
+                            if r['_id'] == d.get('results_id'):
+                                content = d.get('data')
                                 try:
-                                    key = r.get(poi.lower())[0:][i]
-                                    print(key[str(i)])
-                                    if f['_id'] == key[str(i)]:
-                                        content = f.get('data')
-                                        print(content)
-                                        entries = []
-                                        try:
-                                            entries.append(content)
-                                        except TypeError:
-                                            pass
-                                except KeyError or IndexError:
+                                    entries.append(content)
+                                except TypeError:
                                     pass
+    return entries
 
 
+# Gets the appropriate database
+def getAppropriatePoi(poi):
+    if poi == "Extract All":
+        return [function_db, string_db, variable_db, dll_db]
+    elif poi == "Function":
+        return function_db
+    elif poi == "String":
+        return string_db
+    elif poi == "Variable":
+        return variable_db
+    elif poi == "DLL":
+        return dll_db
+
+
+# Delete EVERYTHING
 def deleteDatabase():
     db.project.drop()
     db.binary.drop()
