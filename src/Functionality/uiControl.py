@@ -305,7 +305,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
         self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
-        self.window.POI_tableWidget.setColumnCount(4)
+        self.window.POI_tableWidget.setColumnCount(5)
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'name' in content[i]:
@@ -317,7 +317,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'offset' in content[i]['ref']:
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['base']))
             if 'offset' in content[i]['ref']:
-                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['offset']))
+                self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(content[i]['ref']['offset']))
             self.window.POI_tableWidget.resizeColumnToContents(0)
 
             item = QListWidgetItem(content[i]['name'])
