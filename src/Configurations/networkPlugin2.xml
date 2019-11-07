@@ -1,34 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <plugin>
-
 	<name>Network Plugin</name>
 	<description> Network plugin includes six points of interest </description>
-
 	<pointOfInterest>
-
 		<function>
 			<name>fcn.00401460</name>
 		</function>
-
-		<function>
-			<name>fcn.00401460</name>
-		</function>
-
 		<string>
-			<name>MDQwOTA0QjA=</name>
+			<item><name>MDQwOTA0QjA=</name></item>
+			<item><name>TVVJ47y85rW4</name></item>
 		</string>
-
-		<string>
-			<name>TVVJ47y85rW4</name>
-		</string>
-
 	</pointOfInterest>
-
 	<output>
 		<name>Script</name>
 		<functionName>generateScript</functionName>
 		<functionSource>C:/fake/address</functionSource>
 	</output>
-
 </plugin>
