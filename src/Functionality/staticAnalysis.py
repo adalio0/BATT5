@@ -16,7 +16,7 @@ def functions_analysis():
 
 
 def string_analysis():
-    strings = infile.cmdj('izj')
+    strings = infile.cmdj('izzj')
     return strings
 
 

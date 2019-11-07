@@ -44,11 +44,11 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         'name': name,
         'description': desc,
         'pointOfInterest': {
-            'function': None,
-            'string': None,
-            'variable': None,
-            'dll': None,
-            'packetProtocol': None
+            'function': '',
+            'string': '',
+            'variable': '',
+            'dll': '',
+            'packetProtocol': ''
         },
         'output': {
             'name': outName,
