@@ -159,7 +159,10 @@ def saveStatic():
 # Display all POI in the Analysis box
 def getAllPoi(poi):
     data = []
-    entries = []
+    functions = []
+    strings = []
+    variables = []
+    dlls = []
     for p in current_db.find():
         for s in static_db.find():
             if s['_id'] == p.get('static_analysis', {}).get('01'):
@@ -174,12 +177,19 @@ def getAllPoi(poi):
                                         data.append(content)
                                     except TypeError:
                                         pass
-                            entries.append(data)
-    return entries
+                            if i == 0:
+                                functions.append(data)
+                            elif i == 1:
+                                strings.append(data)
+                            elif i == 2:
+                                variables.append(data)
+                            elif i == 3:
+                                dlls.append(data)
+                            data = []
+    return functions[0], strings[0], variables[0], dlls[0]
 
 
 # Dispalys specific POI in the Analysis box
-# TODO: make sure the stuff gets properly displayed in the gui!
 def getPoi(poi):
     entries = []
     for p in current_db.find():
