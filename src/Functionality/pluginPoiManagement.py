@@ -3,7 +3,6 @@ import xml.etree.ElementTree as ET
 import json
 import xmlschema
 from pathlib import Path
-# from dicttoxml import dicttoxml
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
@@ -61,6 +60,7 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
 
 # ---------------- MANUAL POI CONVERSION ----------------
 def convertFuncManual():
+    # TODO
     return 0
 
 def convertStringManual(name, type='', size='', callFromAdd='', destAdd='', section=''):
@@ -89,26 +89,51 @@ def convertVarManual(name, type='', val='', size=''):
     }
     return varDict
 
-def convertPacketProtocolManual():
+def convertPacketProtocolManual(name, fieldName='', fieldType=''):
+    ppDict = {
+        'name': name,
+        'fieldName': fieldName,
+        'fieldType': fieldType
+    }
+    return ppDict
+
+def convertStructManual():
     # TODO
     return 0
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
 
-def addStringToPlugin(pluginDict, poiDict):
-    return 0
+def addFuncToPlugin(pluginDict, funcDict):
+    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
+    pluginList[2][1]['function'].append(funcDict)  # append new poi
+    pluginDict['pointOfInterest']['function'] = pluginList[2][1]['function']  # add to dict
+    return pluginDict
 
-def addFuncToPlugin(pluginDict, poiDict):
-    return 0
+def addStringToPlugin(pluginDict, strDict):
+    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
+    pluginList[2][1]['string'].append(strDict)  # append new poi
+    pluginDict['pointOfInterest']['string'] = pluginList[2][1]['string']  # add to dict
+    return pluginDict
 
-def addVarToPlugin(pluginDict, poiDict):
-    return 0
+def addVarToPlugin(pluginDict, varDict):
+    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
+    pluginList[2][1]['variable'].append(varDict)  # append new poi
+    pluginDict['pointOfInterest']['variable'] = pluginList[2][1]['variable']  # add to dict
+    return pluginDict
 
-def addDllToPlugin(pluginDict, poiDict):
-    return 0
+def addDllToPlugin(pluginDict, dllDict):
+    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
+    pluginList[2][1]['dll'].append(dllDict)  # append new poi
+    pluginDict['pointOfInterest']['dll'] = pluginList[2][1]['dll']  # add to dict
+    return pluginDict
 
-def addPacketProtocolToPlugin(pluginDict, poiDict):
-    return 0
+def addPacketProtocolToPlugin(pluginDict, ppDict):
+    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
+    pluginList[2][1]['packetProtocol'].append(ppDict)  # append new poi
+    pluginDict['pointOfInterest']['packetProtocol'] = pluginList[2][1]['packetProtocol']  # add to dict
+    return pluginDict
+
+# ---------------- FORMAT XML ----------------
 
 # ---------------- GUI ----------------
 def switchPOITypeView(poiType, addPOI_stack):
@@ -150,25 +175,4 @@ def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lin
 '''
 # ---------------- TESTING ----------------
 # create network plugin dict
-testPlugin = convertPluginXML('C:/Users/rivas/OneDrive/School/5 - '
-                              'Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')
-print(testPlugin, '\n')
-
-# create str to add to plugin
-testStr = convertStringManual(name='yuh', size=2)
-print(testStr, '\n')
-
-# convert netPlugin to list
-testList = [[k, v] for k, v in testPlugin.items()]
-print(testList, '\n')
-
-# append new poi to list
-testList[2][1]['string'].append(testStr)
-print(testList[2][1]['string'][2], '\n')  # new poi added!
-
-# modify dict to include new str
-testPlugin['pointOfInterest']['string'] = testList[2][1]['string']
-print(testPlugin['pointOfInterest'])
-print(testPlugin['pointOfInterest']['string'])
-print(testList[2][1]['function'])
 '''

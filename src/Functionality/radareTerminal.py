@@ -44,8 +44,11 @@ class Terminal(object):
     def processInput(self, command_in):
         self.promptOut.insertPlainText('>>> ' + command_in + '\n')
         try:
-            cmd = self.r.cmd(command_in)
-            self._displayOutput(cmd)
+            if command_in == 'clear':
+                self.promptOut.clear()
+            else:
+                cmd = self.r.cmd(command_in)
+                self._displayOutput(cmd)
 
         except:
             self.promptOut.insertPlainText('unable to execute command: ' + command_in + '\n')

@@ -21,8 +21,7 @@ def string_analysis():
 
 
 def variables_analysis():
-    variable = infile.cmd('afvd')
-    # variable = json.loads(variable)
+    variable = infile.cmdj('afvj')
     return variable
 
 
