@@ -211,7 +211,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projects)
 
-
     # Changes the project description according to the current project from database
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
@@ -389,7 +388,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
 
     def callHighlightTable(self):
-        highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
+        try:
+            highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
+        except AttributeError:
+            pass
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
