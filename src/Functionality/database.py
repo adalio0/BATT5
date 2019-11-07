@@ -23,14 +23,10 @@ current_db = newdb['current']
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    # deleteDatabase()
+    #deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(QTreeWidgetItem([p.get('name')]))
-        child = QTreeWidgetItem(projects[len(projects) - 1])
-        for b in binary_db.find():
-            if b['_id'] == p.get('binary'):
-                child.setText(0, b.get('file'))
     return projects
 
 

@@ -134,11 +134,6 @@
        </item>
        <item>
         <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>Canary</string>
         </property>
        </item>
