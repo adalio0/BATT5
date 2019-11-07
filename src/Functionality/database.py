@@ -208,6 +208,7 @@ def getPoi(poi):
     return entries
 
 
+# Gets the appropriate database
 def getAppropriatePoi(poi):
     if poi == "Extract All":
         return [function_db, string_db, variable_db, dll_db]
@@ -221,6 +222,7 @@ def getAppropriatePoi(poi):
         return dll_db
 
 
+# Delete EVERYTHING
 def deleteDatabase():
     db.project.drop()
     db.binary.drop()
