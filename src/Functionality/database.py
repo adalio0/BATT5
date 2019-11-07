@@ -23,7 +23,7 @@ current_db = newdb['current']
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    # deleteDatabase()
+    #deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(QTreeWidgetItem([p.get('name')]))
