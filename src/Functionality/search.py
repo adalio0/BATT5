@@ -1,9 +1,8 @@
-# Search functionality for the project box
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
 
-
+# Search functionality for the project box
 def searchProject(search, projectNavigator_tree):
     result = projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
 

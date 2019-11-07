@@ -156,7 +156,29 @@ def saveStatic():
                                 {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
-# Dispalys POIs in the Analysis box
+# Display all POI in the Analysis box
+def getAllPoi(poi):
+    data = []
+    entries = []
+    for p in current_db.find():
+        for s in static_db.find():
+            if s['_id'] == p.get('static_analysis', {}).get('01'):
+                for r in results_db.find():
+                    if r['_id'] == s.get('results').get('01'):
+                        database = getAppropriatePoi(poi)
+                        for i in range(len(database)):
+                            for d in database[i].find():
+                                if r['_id'] == d.get('results_id'):
+                                    content = d.get('data')
+                                    try:
+                                        data.append(content)
+                                    except TypeError:
+                                        pass
+                            entries.append(data)
+    return entries
+
+
+# Dispalys specific POI in the Analysis box
 # TODO: make sure the stuff gets properly displayed in the gui!
 def getPoi(poi):
     entries = []
@@ -177,13 +199,15 @@ def getPoi(poi):
 
 
 def getAppropriatePoi(poi):
-    if poi == "Function":
+    if poi == "Extract All":
+        return [function_db, string_db, variable_db, dll_db]
+    elif poi == "Function":
         return function_db
     elif poi == "String":
         return string_db
     elif poi == "Variable":
         return variable_db
-    elif poi == "Dll":
+    elif poi == "DLL":
         return dll_db
 
 
