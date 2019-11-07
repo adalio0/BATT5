@@ -93,6 +93,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
+        # ---- Comment Functionality ---------------------------------
+        self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
+
         # ---- Filters ---------------------------------
         # When changing POI type in the drop down will update whats displayed
         self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
@@ -384,6 +387,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSearchPoiM(self):
         searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
 
+    def callHighlightTable(self):
+        try:
+            highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
+        except AttributeError:
+            pass
+
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
@@ -519,6 +528,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                           self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                           self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                           self.window.dpmOutFuncSource_lineEdit)
+
 
 
 def main():
