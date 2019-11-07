@@ -304,12 +304,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
+        self.window.POI_tableWidget.setColumnCount(4)
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
-            self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]))
+            if 'name' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['name']))
+            if 'kind' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['kind']))
+            if 'type' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(content[i]['type']))
+            if 'offset' in content[i]['ref']:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['base']))
+            if 'offset' in content[i]['ref']:
+                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['offset']))
             self.window.POI_tableWidget.resizeColumnToContents(0)
 
-            item = QListWidgetItem(content[i])
+            item = QListWidgetItem(content[i]['name'])
             self.window.poi_list.addItem(item)
 
     # Displays the dlls extracted from Static Analysis in Analysis box and POI box
@@ -359,11 +370,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.poi_list.addItem(item)
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
-        # for i in range(len(variables)):
-        #     self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]))
-        #     self.window.POI_tableWidget.resizeColumnToContents(0)
-        #     item = QListWidgetItem(variables[i])
-        #     self.window.poi_list.addItem(item)
+        for i in range(len(variables)):
+            if 'name' in variables[i]:
+                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]['name']))
+            item = QListWidgetItem(variables[i]['name'])
+            self.window.poi_list.addItem(item)
 
         self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
         for i in range(len(dlls)):

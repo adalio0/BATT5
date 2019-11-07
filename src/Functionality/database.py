@@ -124,23 +124,23 @@ def saveStatic():
                                 {'_id': s['_id']},
                                 {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
 
-                        # for i in range(len(poi[2])):
-                        #     variable = {
-                        #         'results_id': r['_id'],
-                        #         'comment': '',
-                        #         'data': poi[2][i]
-                        #     }
-                        #     function_outcome = variable_db.insert_one(variable)
-                        #
-                        #     results_db.find_one_and_update(
-                        #         {'_id': s['_id']},
-                        #         {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+                        for i in range(len(poi[2]['sp'])):
+                            variable = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[2]['sp'][i]
+                            }
+                            function_outcome = variable_db.insert_one(variable)
 
-                        for i in range(len(poi[2])):
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[3])):
                             dll = {
                                 'results_id': r['_id'],
                                 'comment': '',
-                                'data': poi[2][i]
+                                'data': poi[3][i]
                             }
                             try:
                                 function_outcome = dll_db.insert_one(dll)
