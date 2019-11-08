@@ -1,15 +1,13 @@
 #! /usr/bin/env python3.
 
+import os
 import sys
-import pymongo
 from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
-from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -208,8 +206,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
+        projectTree = []
+        for i in range(len(projects)):
+            projectTree.append(QTreeWidgetItem([projects[i]]))
         tree = self.window.projectNavigator_tree
-        tree.addTopLevelItems(projects)
+        tree.addTopLevelItems(projectTree)
 
     # Changes the project description according to the current project from database
     def setProject(self):
@@ -230,8 +231,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
         self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
+        # Get the path of the binary file and run static analysis
+        path = getCurrentFilePath()
+        poi = staticAnalysis(path)
+
         # Save the results of static into the database
-        saveStatic()
+        saveStatic(poi)
 
         self.displayPoi()
 
@@ -539,7 +544,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                           self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                           self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                           self.window.dpmOutFuncSource_lineEdit)
-
 
 
 def main():

@@ -1,9 +1,4 @@
-import os
-import sys
 import pymongo
-
-from PyQt5.QtWidgets import *
-from src.Functionality.staticAnalysis import staticAnalysis
 
 # Initializes the connection with our local database
 client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -26,7 +21,7 @@ def getProjects():
     # deleteDatabase()
     projects = []
     for p in project_db.find():
-        projects.append(QTreeWidgetItem([p.get('name')]))
+        projects.append(p.get('name'))
     return projects
 
 
@@ -80,15 +75,16 @@ def getCurrentProject(selected):
     return text, binaryPath
 
 
-# Gets and saves Static Analysis results into database
-def saveStatic():
-    path = ''
+# Gets the path of the current project's file
+def getCurrentFilePath():
     for p in current_db.find():
         for b in binary_db.find():
             if b['_id'] == p.get('binary'):
-                path = b.get('file')
+                return b.get('file')
 
-    poi = staticAnalysis(path)
+
+# Gets and saves Static Analysis results into database
+def saveStatic(poi):
     for p in current_db.find():
         for s in static_db.find():
             if s['_id'] == p.get('static_analysis', {}).get('01'):
