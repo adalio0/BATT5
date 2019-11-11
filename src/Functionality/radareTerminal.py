@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-
 import r2pipe as r2
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QLineEdit
-from PyQt5.QtWidgets import QTextBrowser
-
 
 class Terminal(object):
     # constructor, initialize and launce terminal

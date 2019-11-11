@@ -11,7 +11,7 @@ def staticAnalysis(filePath):
 
 
 def functions_analysis():
-    functions = infile.cmdj("afllj")
+    functions = infile.cmdj('afllj')
     return functions
 
 

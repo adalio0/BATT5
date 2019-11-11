@@ -20,7 +20,8 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
-from src.Functionality.pluginPoiManagement import *
+from src.Functionality.poiManagement import *
+from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
 
