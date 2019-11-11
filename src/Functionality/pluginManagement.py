@@ -44,6 +44,8 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     return plugDict
 
 # ---------------- FORMAT XML ----------------
+def formatPluginXml():
+    return 0
 
 # ---------------- GUI ----------------
 

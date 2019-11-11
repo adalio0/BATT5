@@ -5,14 +5,12 @@ import xmlschema
 from pathlib import Path
 
 # ---------------- XML VALIDATION ----------------
-
 def validatePoiXML(filepath):
     poiSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 
 # ---------------- XML CONVERSION ----------------
-
 def convertPoiXML(filepath):
     if validatePoiXML(filepath):
         poiTree = ET.parse(filepath)

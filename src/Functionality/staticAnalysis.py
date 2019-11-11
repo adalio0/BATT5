@@ -1,7 +1,4 @@
 import r2pipe
-import json
-import re
-
 
 def staticAnalysis(filePath):
     global infile
