@@ -46,6 +46,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the dropdown list of plugins
         self.populatePluginDD()
 
+        # Populate the management plugin dropdown
+        self.populateManagePluginDD()
+
         # Initialize the project properties
         # Terminal also initialized here
         self.setProject()
@@ -245,6 +248,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def populatePluginDD(self):
         plugins = getPlugins()
         self.window.pluginSelection_dropdown.addItems(plugins)
+
+    # Initialize the management plugin dropdown list with all the current plugins from database
+    def populateManagePluginDD(self):
+        plugins = getPlugins()
+        self.window.dpoimPlugin_dropdown.addItems(plugins)
 
     def setPlugin(self):
         selected = self.window.pluginSelection_dropdown.currentText()
@@ -590,8 +598,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.window.pluginManagement_list.clear()
         self.window.pluginSelection_dropdown.clear()
+        self.window.dpoimPlugin_dropdown.clear()
+
         self.populatePluginBox()
         self.populatePluginDD()
+        self.populateManagePluginDD()
 
 
 def main():
