@@ -516,6 +516,13 @@ background-color: rgb(186, 189, 182);</string>
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="text">
+                    <string>Check/Uncheck All</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -548,7 +555,7 @@ background-color: rgb(186, 189, 182);</string>
                 <property name="maximumSize">
                  <size>
                   <width>300</width>
-                  <height>350</height>
+                  <height>200</height>
                  </size>
                 </property>
                 <property name="acceptDrops">
@@ -581,7 +588,7 @@ background-color: rgb(186, 189, 182);</string>
                    <property name="maximumSize">
                     <size>
                      <width>250</width>
-                     <height>300</height>
+                     <height>250</height>
                     </size>
                    </property>
                    <property name="html">
@@ -610,6 +617,24 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_6">
                  <item>
                   <widget class="QListWidget" name="daRuns_list"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="recentCmd_box">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Recent Command History</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_25">
+                 <item>
+                  <widget class="QTextBrowser" name="recentCmd_text"/>
                  </item>
                 </layout>
                </widget>

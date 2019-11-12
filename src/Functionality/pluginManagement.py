@@ -66,10 +66,3 @@ def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lin
                                          dpmOutFuncSource_lineEdit.text())
     print(pluginDict)
     return pluginDict
-
-# TODO make function to store into db
-
-'''
-# ---------------- TESTING ----------------
-# create network plugin dict
-'''

@@ -115,10 +115,3 @@ def switchPOITypeView(poiType, addPOI_stack):
         addPOI_stack.setCurrentIndex(5)
     elif poiType == 'Struct':
         addPOI_stack.setCurrentIndex(6)
-
-# TODO make function to store into db
-
-'''
-# ---------------- TESTING ----------------
-# create network plugin dict
-'''
