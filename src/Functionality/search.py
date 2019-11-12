@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
+from src.Functionality.database import getPlugins
 
 
 # Search functionality for the project box
@@ -80,7 +81,8 @@ def searchPluginM(search, pluginManagement_list):
     else:
         list = pluginManagement_list
         list.clear()
-        # method to call all plugins
+        plugins = getPlugins()
+        pluginManagement_list.addItems(plugins)
 
 
 def searchPoiM(search, poiManagement_list):
