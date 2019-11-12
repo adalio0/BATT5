@@ -40,6 +40,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the projects box with current projects
         self.populateProjectBox()
 
+        # Populate the plugin box with the current plugins
+        self.populatePluginBox()
+
+        # Populate the dropdown list of plugins
+        self.populatePluginDD()
+
         # Initialize the project properties
         # Terminal also initialized here
         self.setProject()
@@ -78,6 +84,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
+
+        # When clicking a plugin in the plugin dropdown, the database will update the selected plugin
+        self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.setPlugin)
 
         # ---- Search Functions ---------------------------------
         # returns the searched elements in the project list
@@ -204,6 +213,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
+    # ---- Following methods initialize the main window with all the project, plugin and poi data -----------
+
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
@@ -224,6 +235,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
+    # Initialize the plugin box with all the current plugins from database
+    def populatePluginBox(self):
+        plugins = getPlugins()
+        self.window.pluginManagement_list.addItems(plugins)
+
+    # Initialize the plugin dropdown list with all the current plugins from database
+    def populatePluginDD(self):
+        plugins = getPlugins()
+        self.window.pluginSelection_dropdown.addItems(plugins)
+
+    def setPlugin(self):
+        selected = self.window.pluginSelection_dropdown.currentText()
+        setCurrentPlugin(selected)
+
+    # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
     # runs Static Analysis w/ database stuff
     def runStatic(self):
@@ -324,7 +351,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['base']))
             if 'offset' in content[i]['ref']:
                 self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(content[i]['ref']['offset']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
 
             item = QListWidgetItem(content[i]['name'])
             self.window.poi_list.addItem(item)
@@ -390,25 +416,41 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
+    # ---- Following methods provide all the search functionality ----------------------------------------
+
     # Search functionality for the project box
     def callSearchProject(self):
-        searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+        try:
+            searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+        except AttributeError:
+            pass
 
     # Search functionality for the poi box
     def callSearchPoi(self):
-        searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+        try:
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+        except AttributeError:
+            pass
 
     def callSearchPluginM(self):
-        searchPluginM(str(self.window.pluginManagementSearch_lineEdit.text()), self.window.pluginManagement_list)
+        try:
+            searchPluginM(str(self.window.pluginManagementSearch_lineEdit.text()), self.window.pluginManagement_list)
+        except AttributeError:
+            pass
 
     def callSearchPoiM(self):
-        searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+        try:
+            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+        except AttributeError:
+            pass
 
     def callHighlightTable(self):
         try:
             highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
         except AttributeError:
             pass
+
+    # ---- Following methods provide vital (word) during dynamic analysis --------------------------------
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
@@ -429,7 +471,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             dynamic = False
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
-    # ---- Following methods are for calling and showing the different windows ------------------------
+    # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
     def showNewProject(self):
@@ -545,6 +587,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                           self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                           self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                           self.window.dpmOutFuncSource_lineEdit)
+
+        self.window.pluginManagement_list.clear()
+        self.window.pluginSelection_dropdown.clear()
+        self.populatePluginBox()
+        self.populatePluginDD()
 
 
 def main():

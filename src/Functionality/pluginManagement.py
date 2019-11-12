@@ -3,12 +3,15 @@ import xml.etree.ElementTree as ET
 import json
 import xmlschema
 from pathlib import Path
+from src.Functionality.database import *
+
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
     pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/pluginConfig.xsd')
     result = pluginSchema.is_valid(filepath)
     return result
+
 
 # ---------------- XML CONVERSION ----------------
 def convertPluginXML(filepath):
@@ -43,11 +46,13 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     }
     return plugDict
 
+
 # ---------------- FORMAT XML ----------------
 def formatPluginXml():
     return 0
 
 # ---------------- GUI ----------------
+
 
 def switchPluginCreateView(createType, createPlugin_stack):
     if createType == 'Pull From XML File':
@@ -55,8 +60,10 @@ def switchPluginCreateView(createType, createPlugin_stack):
     if createType == 'Manual Input':
         createPlugin_stack.setCurrentIndex(1)
 
+
 def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit,
                       dpmOutName_lineEdit, dpmOutFuncName_lineEdit, dpmOutFuncSource_lineEdit):
+    pluginDict = ''
     if createType == 'Pull From XML File':
         pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
 
@@ -64,10 +71,15 @@ def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lin
         pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
                                          dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
                                          dpmOutFuncSource_lineEdit.text())
-    print(pluginDict)
+    # print(pluginDict)
+    savePlugin(pluginDict)
+
     return pluginDict
 
+
 # TODO make function to store into db
+def saveToDatabase(plugin):
+    savePlugin(plugin)
 
 '''
 # ---------------- TESTING ----------------

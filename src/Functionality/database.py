@@ -12,8 +12,12 @@ string_db = db['string']
 variable_db = db['variable']
 dll_db = db['dll']
 
-newdb = client['current_project']
-current_db = newdb['current']
+db_1 = client['current_project']
+current_db = db_1['current']
+current_plugin_db = db_1['current_plugin']
+
+db_2 = client['plugin_data']
+plugin_db = db_2['plugins']
 
 
 # Gets all of the projects that were created from the database
@@ -28,7 +32,7 @@ def getProjects():
 # Gets all the information of the current project from the database
 def getCurrentProject(selected):
     if selected:
-        newdb.current.drop()
+        db_1.current.drop()
         item = selected[0].text(0)
         for p in project_db.find():
             if p['name'] == item:
@@ -81,71 +85,6 @@ def getCurrentFilePath():
         for b in binary_db.find():
             if b['_id'] == p.get('binary'):
                 return b.get('file')
-
-
-# Gets and saves Static Analysis results into database
-def saveStatic(poi):
-    for p in current_db.find():
-        for s in static_db.find():
-            if s['_id'] == p.get('static_analysis', {}).get('01'):
-                for r in results_db.find():
-                    if r['_id'] == s.get('results').get('01'):
-                        for i in range(len(poi[0])):
-                            function = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[0][i]
-                            }
-                            try:
-                                function_outcome = function_db.insert_one(function)
-                            except OverflowError:
-                                pass
-
-                            results_db.find_one_and_update(
-                                {'_id': r['_id']},
-                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
-
-                        for i in range(len(poi[1])):
-                            string = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[1][i]
-                            }
-                            try:
-                                function_outcome = string_db.insert_one(string)
-                            except OverflowError:
-                                pass
-
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
-
-                        for i in range(len(poi[2]['sp'])):
-                            variable = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[2]['sp'][i]
-                            }
-                            function_outcome = variable_db.insert_one(variable)
-
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                        for i in range(len(poi[3])):
-                            dll = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[3][i]
-                            }
-                            try:
-                                function_outcome = dll_db.insert_one(dll)
-                            except OverflowError:
-                                pass
-
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
 # Display all POI in the Analysis box
@@ -214,7 +153,107 @@ def getAppropriatePoi(poi):
         return dll_db
 
 
-# Delete EVERYTHING
+# Gets all the current plugins for the project
+def getPlugins():
+    # deletePluginDatabase()
+    plugins = []
+    for p in plugin_db.find():
+        plugins.append(p.get('name'))
+    return plugins
+
+
+# Get the current selected plugin
+def setCurrentPlugin(selected):
+    if selected:
+        db_1.current_plugin.drop()
+        for p in plugin_db.find():
+            if p['name'] == selected:
+                plugin_data = {
+                    'name': p['name'],
+
+                    'description': p['description'],
+
+                    'pointOfInterest': p['pointOfInterest'],
+
+                    'output': p['output']
+                }
+                current_outcome = current_plugin_db.insert_one(plugin_data)
+
+
+# Gets and saves the created plugin into the database
+def savePlugin(plugin):
+    plugin_db.insert_one(plugin)
+
+
+# Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
+def saveStatic(poi):
+    for p in current_db.find():
+        for s in static_db.find():
+            if s['_id'] == p.get('static_analysis', {}).get('01'):
+                for r in results_db.find():
+                    if r['_id'] == s.get('results').get('01'):
+                        for i in range(len(poi[0])):
+                            function = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[0][i]
+                            }
+                            try:
+                                function_outcome = function_db.insert_one(function)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': r['_id']},
+                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[1])):
+                            string = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[1][i]
+                            }
+                            try:
+                                string_outcome = string_db.insert_one(string)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[2]['sp'])):
+                            variable = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[2]['sp'][i]
+                            }
+                            try:
+                                variable_outcome = variable_db.insert_one(variable)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+
+                        for i in range(len(poi[3])):
+                            dll = {
+                                'results_id': r['_id'],
+                                'comment': '',
+                                'data': poi[3][i]
+                            }
+                            try:
+                                dll_outcome = dll_db.insert_one(dll)
+                            except OverflowError:
+                                pass
+
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+
+
+# Delete EVERYTHING from project
 def deleteDatabase():
     db.project.drop()
     db.binary.drop()
@@ -224,3 +263,8 @@ def deleteDatabase():
     db.string.drop()
     db.variable.drop()
     db.dll.drop()
+
+
+# Delete EVERYTHING from plugins
+def deletePluginDatabase():
+    db_2.plugins.drop()
