@@ -262,7 +262,7 @@ class Ui_BATT5(object):
         self.verticalLayout_6.addWidget(self.daRuns_list)
         self.project_sublayout_h.addWidget(self.daRuns_box)
         self.recentCmd_box = QtWidgets.QGroupBox(self.page_4)
-        self.recentCmd_box.setMaximumSize(QtCore.QSize(16777215, 200))
+        self.recentCmd_box.setMaximumSize(QtCore.QSize(300, 200))
         self.recentCmd_box.setObjectName("recentCmd_box")
         self.verticalLayout_25 = QtWidgets.QVBoxLayout(self.recentCmd_box)
         self.verticalLayout_25.setObjectName("verticalLayout_25")
