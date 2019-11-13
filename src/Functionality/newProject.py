@@ -202,15 +202,6 @@ class ProjectWindow(QtWidgets.QDialog):
             item5.setText(1, "N/A")
             properties.append("N/A")
 
-        # # new item
-        # item6 = tree.itemBelow(item5)
-        # try:
-        #     item6.setText(1, "do not need this")
-        #     properties.append()
-        # except KeyError:
-        #     item6.setText(1, "N/A")
-        #     properties.append("N/A")
-
         # canary
         item6 = tree.itemBelow(item5)
         try:

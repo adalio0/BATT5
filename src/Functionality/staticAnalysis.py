@@ -16,13 +16,12 @@ def functions_analysis():
 
 
 def string_analysis():
-    strings = infile.cmdj('izj')
+    strings = infile.cmdj('izzj')
     return strings
 
 
 def variables_analysis():
-    variable = infile.cmd('afvd')
-    # variable = json.loads(variable)
+    variable = infile.cmdj('afvj')
     return variable
 
 
@@ -34,8 +33,6 @@ def dll_analysis():
 def extract_all():
     function = functions_analysis()
     string = string_analysis()
-    # variable = variables_analysis()
+    variable = variables_analysis()
     dll = dll_analysis()
-    # return [function, string, variable, dll]
-    return [function, string, dll]
-    # return [function, string]
+    return [function, string, variable, dll]
