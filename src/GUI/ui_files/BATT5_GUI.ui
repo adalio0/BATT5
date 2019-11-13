@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>973</width>
+    <width>1011</width>
     <height>794</height>
    </rect>
   </property>
@@ -156,6 +156,11 @@ p, li { white-space: pre-wrap; }
                      <height>16777215</height>
                     </size>
                    </property>
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
@@ -231,172 +236,160 @@ background-color: rgb(186, 189, 182);</string>
              </layout>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
-              <item>
-               <widget class="QGroupBox" name="analysis_box">
-                <property name="title">
-                 <string>Analysis</string>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_16">
-                 <item>
-                  <widget class="QTableWidget" name="POI_tableWidget"/>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QGroupBox" name="radareConsole_box">
-                <property name="minimumSize">
-                 <size>
-                  <width>300</width>
-                  <height>225</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>218</height>
-                 </size>
-                </property>
-                <property name="title">
-                 <string>Command Console</string>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_17">
-                 <item>
-                  <widget class="QTextBrowser" name="radareConsoleOut_text"/>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="PlaceholderText">
-                       <brush brushstyle="NoBrush">
-                        <color alpha="128">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="PlaceholderText">
-                       <brush brushstyle="NoBrush">
-                        <color alpha="128">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="PlaceholderText">
-                       <brush brushstyle="NoBrush">
-                        <color alpha="128">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(136, 138, 133);</string>
-                   </property>
-                   <property name="text">
-                    <string>BATT5$</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QStackedWidget" name="analysisType_stack">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="sa_page">
+               <layout class="QVBoxLayout" name="verticalLayout_27">
+                <item>
+                 <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
+                  <item>
+                   <widget class="QGroupBox" name="analysis_box">
+                    <property name="title">
+                     <string>Static Analysis View</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_16">
+                     <item>
+                      <widget class="QTableWidget" name="POI_tableWidget"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="da_stack">
+               <layout class="QVBoxLayout" name="verticalLayout_28">
+                <item>
+                 <widget class="QGroupBox" name="radareConsole_box">
+                  <property name="minimumSize">
+                   <size>
+                    <width>300</width>
+                    <height>225</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="title">
+                   <string>Dynamic Analysis View</string>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_17">
+                   <item>
+                    <widget class="QTextBrowser" name="radareConsoleOut_text"/>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="ButtonText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="ButtonText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="ButtonText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: rgb(136, 138, 133);</string>
+                     </property>
+                     <property name="text">
+                      <string>BATT5$</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
             </item>
             <item>
              <layout class="QVBoxLayout" name="commentAndPoi_sublayout">
@@ -550,6 +543,13 @@ background-color: rgb(186, 189, 182);</string>
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="text">
+                    <string>Check/Uncheck All</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -582,7 +582,7 @@ background-color: rgb(186, 189, 182);</string>
                 <property name="maximumSize">
                  <size>
                   <width>300</width>
-                  <height>350</height>
+                  <height>200</height>
                  </size>
                 </property>
                 <property name="acceptDrops">
@@ -615,7 +615,7 @@ background-color: rgb(186, 189, 182);</string>
                    <property name="maximumSize">
                     <size>
                      <width>250</width>
-                     <height>300</height>
+                     <height>250</height>
                     </size>
                    </property>
                    <property name="html">
@@ -644,6 +644,24 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_6">
                  <item>
                   <widget class="QListWidget" name="daRuns_list"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="recentCmd_box">
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string>Recent Command History</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_25">
+                 <item>
+                  <widget class="QTextBrowser" name="recentCmd_text"/>
                  </item>
                 </layout>
                </widget>
@@ -741,7 +759,7 @@ p, li { white-space: pre-wrap; }
                     <widget class="QComboBox" name="poiType_dropdown_2">
                      <item>
                       <property name="text">
-                       <string>All</string>
+                       <string>Extract All</string>
                       </property>
                      </item>
                      <item>
@@ -957,16 +975,29 @@ p, li { white-space: pre-wrap; }
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
                 <widget class="QLabel" name="dpmCreate_label">
                  <property name="minimumSize">
                   <size>
-                   <width>350</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>93</width>
+                   <width>100</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -977,6 +1008,18 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QComboBox" name="dpmCreate_dropdown">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <item>
                   <property name="text">
                    <string>Pull From XML File</string>
@@ -988,6 +1031,19 @@ p, li { white-space: pre-wrap; }
                   </property>
                  </item>
                 </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -1210,7 +1266,7 @@ p, li { white-space: pre-wrap; }
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <item>
               <layout class="QGridLayout" name="dpoim_topGrid">
-               <item row="2" column="1">
+               <item row="2" column="2">
                 <widget class="QComboBox" name="dpoimPoiType_dropdown">
                  <item>
                   <property name="text">
@@ -1249,22 +1305,54 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </widget>
                </item>
-               <item row="1" column="1">
+               <item row="1" column="2">
                 <widget class="QComboBox" name="dpoimPlugin_dropdown"/>
                </item>
-               <item row="1" column="0">
+               <item row="1" column="1">
                 <widget class="QLabel" name="dpoimPlugin_label">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Plugin</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="2" column="1">
                 <widget class="QLabel" name="dpoimPoiType_label">
                  <property name="text">
                   <string>Point of Interest Type</string>
                  </property>
                 </widget>
+               </item>
+               <item row="1" column="3">
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>
@@ -1632,8 +1720,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>973</width>
-     <height>21</height>
+     <width>1011</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">

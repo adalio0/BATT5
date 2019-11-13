@@ -20,7 +20,8 @@ from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
-from src.Functionality.pluginPoiManagement import *
+from src.Functionality.poiManagement import *
+from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
 
@@ -40,6 +41,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Populate the projects box with current projects
         self.populateProjectBox()
+
+        # Populate the plugin box with the current plugins
+        self.populatePluginBox()
+
+        # Populate the dropdown list of plugins
+        self.populatePluginDD()
+
+        # Populate the management plugin dropdown
+        self.populateManagePluginDD()
 
         # Initialize the project properties
         # Terminal also initialized here
@@ -79,6 +89,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
+
+        # When clicking a plugin in the plugin dropdown, the database will update the selected plugin
+        self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.setPlugin)
 
         # ---- Search Functions ---------------------------------
         # returns the searched elements in the project list
@@ -148,11 +161,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.installEventFilter(self)
         self.window.radareConsoleIn_lineEdit.installEventFilter(self)
 
-        # ----- Radare Integration --------------------------
-
-        # Perform static analysis on a binary file
-        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
-
     # ---- Following methods are all the functionality currently implemented into main window -----------------
 
     # Used for letting the user know where they are typing
@@ -207,6 +215,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
+    # ---- Following methods initialize the main window with all the project, plugin and poi data -----------
+
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
@@ -228,21 +238,49 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
+    # Initialize the plugin box with all the current plugins from database
+    def populatePluginBox(self):
+        plugins = getPlugins()
+        self.window.pluginManagement_list.addItems(plugins)
+
+    # Initialize the plugin dropdown list with all the current plugins from database
+    def populatePluginDD(self):
+        plugins = getPlugins()
+        self.window.pluginSelection_dropdown.addItems(plugins)
+
+    # Initialize the management plugin dropdown list with all the current plugins from database
+    def populateManagePluginDD(self):
+        plugins = getPlugins()
+        self.window.dpoimPlugin_dropdown.addItems(plugins)
+
+    def setPlugin(self):
+        selected = self.window.pluginSelection_dropdown.currentText()
+        setCurrentPlugin(selected)
+
+    # ---- Following methods provide vital (word) for performing static analysis ---------------------------
+
     # runs Static Analysis w/ database stuff
     def runStatic(self):
         global static
         static = True
-        self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-        self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        if self.window.runStaticAnalysis_button.text() == 'Run Static Analysis':
+            # print('PERFORMING SA')
+            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        # Get the path of the binary file and run static analysis
-        path = getCurrentFilePath()
-        poi = staticAnalysis(path)
+            # Get the path of the binary file and run static analysis
+            path = getCurrentFilePath()
+            poi = staticAnalysis(path)
 
-        # Save the results of static into the database
-        saveStatic(poi)
+            # Save the results of static into the database
+            saveStatic(poi)
 
-        self.displayPoi()
+            self.displayPoi()
+
+        elif self.window.runStaticAnalysis_button.text() == 'Return to Static Analysis':
+            # print('RETURNING TO SA')
+            self.window.analysisType_stack.setCurrentIndex(0)
+            self.window.runStaticAnalysis_button.setText('Run Static Analysis')
 
     # Dispalys POIs in the Analysis box
     def displayPoi(self):
@@ -327,7 +365,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['ref']['base']))
             if 'offset' in content[i]['ref']:
                 self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(content[i]['ref']['offset']))
-            self.window.POI_tableWidget.resizeColumnToContents(0)
 
             item = QListWidgetItem(content[i]['name'])
             self.window.poi_list.addItem(item)
@@ -393,25 +430,41 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
+    # ---- Following methods provide all the search functionality ----------------------------------------
+
     # Search functionality for the project box
     def callSearchProject(self):
-        searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+        try:
+            searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+        except AttributeError:
+            pass
 
     # Search functionality for the poi box
     def callSearchPoi(self):
-        searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+        try:
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+        except AttributeError:
+            pass
 
     def callSearchPluginM(self):
-        searchPluginM(str(self.window.pluginManagementSearch_lineEdit.text()), self.window.pluginManagement_list)
+        try:
+            searchPluginM(str(self.window.pluginManagementSearch_lineEdit.text()), self.window.pluginManagement_list)
+        except AttributeError:
+            pass
 
     def callSearchPoiM(self):
-        searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+        try:
+            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+        except AttributeError:
+            pass
 
     def callHighlightTable(self):
         try:
             highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
         except AttributeError:
             pass
+
+    # ---- Following methods provide vital (word) during dynamic analysis --------------------------------
 
     # Takes input from user and passes it to the terminal
     def inputCommand(self):
@@ -421,18 +474,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Dynamic Analysis
     def runDynamic(self):
+
+        # switch views
+        self.window.analysisType_stack.setCurrentIndex(1)
+        self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
+
         global static
         global dynamic
         if static is False:
             pass
         elif dynamic is False:
             dynamic = True
-            self.window.runDynamicAnalysis_button.setText("Stop")
+            # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
         else:
             dynamic = False
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
-    # ---- Following methods are for calling and showing the different windows ------------------------
+    # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
     def showNewProject(self):
@@ -561,6 +619,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                           self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                           self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                           self.window.dpmOutFuncSource_lineEdit)
+
+        self.window.pluginManagement_list.clear()
+        self.window.pluginSelection_dropdown.clear()
+        self.window.dpoimPlugin_dropdown.clear()
+
+        self.populatePluginBox()
+        self.populatePluginDD()
+        self.populateManagePluginDD()
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
