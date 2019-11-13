@@ -29,62 +29,54 @@ def getProjects():
     return projects
 
 
-# Gets all the information of the current project from the database
-def getCurrentProject(selected):
+# Gets all the information of the current project from the database and sets it into the database
+def setCurrentProject(selected):
     if selected:
         db_1.current.drop()
         item = selected[0].text(0)
         for p in project_db.find():
             if p['name'] == item:
                 project_data = {
-                    'name': p['name'],
-
-                    'description': p['description'],
-
-                    'binary': p['binary'],
-
-                    'static_analysis': {
-                        '01': p.get('static_analysis', {}).get('01')
-                    },
-
-                    'dynamic_analysis': {
-                        '01': ''
-                    }
+                    'id': p['_id']
                 }
                 current_outcome = current_db.insert_one(project_data)
 
     text = ""
     binaryPath = ""
-    for p in current_db.find():
-        for b in binary_db.find():
-            if b['_id'] == p.get('binary'):
-                text = "<font size=3> <b>Project Description</b>: " + p.get('description') + "<br><br>"
-                text += "<b>Binary Properties</b>: <br>"
-                text += "<b>" + "File" + "</b>: " + b.get('file') + "<br>"
-                text += "<b>" + "Os" + "</b>: " + b.get('os') + "<br>"
-                text += "<b>" + "Binary" + "</b>: " + b.get('binary') + "<br>"
-                text += "<b>" + "Machine" + "</b>: " + b.get('machine') + "<br>"
-                text += "<b>" + "Class" + "</b>: " + b.get('class') + "<br>"
-                text += "<b>" + "Bits" + "</b>: " + b.get('bits') + "<br>"
-                text += "<b>" + "Language" + "</b>: " + b.get('language') + "<br>"
-                text += "<b>" + "Canary" + "</b>: " + b.get('canary') + "<br>"
-                text += "<b>" + "Crypto" + "</b>: " + b.get('crypto') + "<br>"
-                text += "<b>" + "Nx" + "</b>: " + b.get('nx') + "<br>"
-                text += "<b>" + "Pic" + "</b>: " + b.get('pic') + "<br>"
-                text += "<b>" + "Relocs" + "</b>: " + b.get('relocs') + "<br>"
-                text += "<b>" + "Relro" + "</b>: " + b.get('relro') + "<br>"
-                text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br> </font>"
-                binaryPath = b.get('file')
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for b in binary_db.find():
+                    if b['_id'] == p.get('binary'):
+                        text = "<font size=3> <b>Project Description</b>: " + p.get('description') + "<br><br>"
+                        text += "<b>Binary Properties</b>: <br>"
+                        text += "<b>" + "File" + "</b>: " + b.get('file') + "<br>"
+                        text += "<b>" + "Os" + "</b>: " + b.get('os') + "<br>"
+                        text += "<b>" + "Binary" + "</b>: " + b.get('binary') + "<br>"
+                        text += "<b>" + "Machine" + "</b>: " + b.get('machine') + "<br>"
+                        text += "<b>" + "Class" + "</b>: " + b.get('class') + "<br>"
+                        text += "<b>" + "Bits" + "</b>: " + b.get('bits') + "<br>"
+                        text += "<b>" + "Language" + "</b>: " + b.get('language') + "<br>"
+                        text += "<b>" + "Canary" + "</b>: " + b.get('canary') + "<br>"
+                        text += "<b>" + "Crypto" + "</b>: " + b.get('crypto') + "<br>"
+                        text += "<b>" + "Nx" + "</b>: " + b.get('nx') + "<br>"
+                        text += "<b>" + "Pic" + "</b>: " + b.get('pic') + "<br>"
+                        text += "<b>" + "Relocs" + "</b>: " + b.get('relocs') + "<br>"
+                        text += "<b>" + "Relro" + "</b>: " + b.get('relro') + "<br>"
+                        text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br> </font>"
+                        binaryPath = b.get('file')
 
     return text, binaryPath
 
 
 # Gets the path of the current project's file
 def getCurrentFilePath():
-    for p in current_db.find():
-        for b in binary_db.find():
-            if b['_id'] == p.get('binary'):
-                return b.get('file')
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for b in binary_db.find():
+                    if b['_id'] == p.get('binary'):
+                        return b.get('file')
 
 
 # Display all POI in the Analysis box
@@ -94,48 +86,52 @@ def getAllPoi(poi):
     strings = []
     variables = []
     dlls = []
-    for p in current_db.find():
-        for s in static_db.find():
-            if s['_id'] == p.get('static_analysis', {}).get('01'):
-                for r in results_db.find():
-                    if r['_id'] == s.get('results').get('01'):
-                        database = getAppropriatePoi(poi)
-                        for i in range(len(database)):
-                            for d in database[i].find():
-                                if r['_id'] == d.get('results_id'):
-                                    content = d.get('data')
-                                    try:
-                                        data.append(content)
-                                    except TypeError:
-                                        pass
-                            if i == 0:
-                                functions.append(data)
-                            elif i == 1:
-                                strings.append(data)
-                            elif i == 2:
-                                variables.append(data)
-                            elif i == 3:
-                                dlls.append(data)
-                            data = []
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                database = getAppropriatePoi(poi)
+                                for i in range(len(database)):
+                                    for d in database[i].find():
+                                        if r['_id'] == d.get('results_id'):
+                                            content = d.get('data')
+                                            try:
+                                                data.append(content)
+                                            except TypeError:
+                                                pass
+                                    if i == 0:
+                                        functions.append(data)
+                                    elif i == 1:
+                                        strings.append(data)
+                                    elif i == 2:
+                                        variables.append(data)
+                                    elif i == 3:
+                                        dlls.append(data)
+                                    data = []
     return functions[0], strings[0], variables[0], dlls[0]
 
 
 # Dispalys specific POI in the Analysis box
 def getPoi(poi):
     entries = []
-    for p in current_db.find():
-        for s in static_db.find():
-            if s['_id'] == p.get('static_analysis', {}).get('01'):
-                for r in results_db.find():
-                    if r['_id'] == s.get('results').get('01'):
-                        database = getAppropriatePoi(poi)
-                        for d in database.find():
-                            if r['_id'] == d.get('results_id'):
-                                content = d.get('data')
-                                try:
-                                    entries.append(content)
-                                except TypeError:
-                                    pass
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                database = getAppropriatePoi(poi)
+                                for d in database.find():
+                                    if r['_id'] == d.get('results_id'):
+                                        content = d.get('data')
+                                        try:
+                                            entries.append(content)
+                                        except TypeError:
+                                            pass
     return entries
 
 
@@ -162,22 +158,26 @@ def getPlugins():
     return plugins
 
 
-# Get the current selected plugin
+# Get the current selected plugin and sets the current plugin in the database
 def setCurrentPlugin(selected):
+    name = ''
+    description = ''
+    pointOfInterest = ''
+    output = ''
     if selected:
         db_1.current_plugin.drop()
         for p in plugin_db.find():
             if p['name'] == selected:
+                name = p['name']
+                description = p['description']
+                pointOfInterest = p['pointOfInterest']
+                output = p['output']
+
                 plugin_data = {
-                    'name': p['name'],
-
-                    'description': p['description'],
-
-                    'pointOfInterest': p['pointOfInterest'],
-
-                    'output': p['output']
+                    'id': p['_id']
                 }
                 current_outcome = current_plugin_db.insert_one(plugin_data)
+    return name, description, pointOfInterest, output
 
 
 # Gets and saves the created plugin into the database
@@ -187,70 +187,85 @@ def savePlugin(plugin):
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
-    for p in current_db.find():
-        for s in static_db.find():
-            if s['_id'] == p.get('static_analysis', {}).get('01'):
-                for r in results_db.find():
-                    if r['_id'] == s.get('results').get('01'):
-                        for i in range(len(poi[0])):
-                            function = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[0][i]
-                            }
-                            try:
-                                function_outcome = function_db.insert_one(function)
-                            except OverflowError:
-                                pass
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        project_db.find_one_and_update(
+                            {'_id': c['id']},
+                            {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                for i in range(len(poi[0])):
+                                    function = {
+                                        'results_id': r['_id'],
+                                        'comment': '',
+                                        'data': poi[0][i]
+                                    }
+                                    try:
+                                        function_outcome = function_db.insert_one(function)
+                                    except OverflowError:
+                                        pass
 
-                            results_db.find_one_and_update(
-                                {'_id': r['_id']},
-                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
 
-                        for i in range(len(poi[1])):
-                            string = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[1][i]
-                            }
-                            try:
-                                string_outcome = string_db.insert_one(string)
-                            except OverflowError:
-                                pass
+                                for i in range(len(poi[1])):
+                                    string = {
+                                        'results_id': r['_id'],
+                                        'comment': '',
+                                        'data': poi[1][i]
+                                    }
+                                    try:
+                                        string_outcome = string_db.insert_one(string)
+                                    except OverflowError:
+                                        pass
 
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
 
-                        for i in range(len(poi[2]['sp'])):
-                            variable = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[2]['sp'][i]
-                            }
-                            try:
-                                variable_outcome = variable_db.insert_one(variable)
-                            except OverflowError:
-                                pass
+                                for i in range(len(poi[2]['sp'])):
+                                    variable = {
+                                        'results_id': r['_id'],
+                                        'comment': '',
+                                        'data': poi[2]['sp'][i]
+                                    }
+                                    try:
+                                        variable_outcome = variable_db.insert_one(variable)
+                                    except OverflowError:
+                                        pass
 
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
 
-                        for i in range(len(poi[3])):
-                            dll = {
-                                'results_id': r['_id'],
-                                'comment': '',
-                                'data': poi[3][i]
-                            }
-                            try:
-                                dll_outcome = dll_db.insert_one(dll)
-                            except OverflowError:
-                                pass
+                                for i in range(len(poi[3])):
+                                    dll = {
+                                        'results_id': r['_id'],
+                                        'comment': '',
+                                        'data': poi[3][i]
+                                    }
+                                    try:
+                                        dll_outcome = dll_db.insert_one(dll)
+                                    except OverflowError:
+                                        pass
 
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+
+
+# Checks if static analysis has been performed on the current selected project
+def checkStatic():
+    flag = ''
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                flag = p.get('static_analysis', {}).get('performed')
+    return flag
 
 
 # Delete EVERYTHING from project
