@@ -640,7 +640,7 @@ p, li { white-space: pre-wrap; }
                <widget class="QGroupBox" name="recentCmd_box">
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>300</width>
                   <height>200</height>
                  </size>
                 </property>
