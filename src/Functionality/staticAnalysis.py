@@ -32,4 +32,6 @@ def extract_all():
     string = string_analysis()
     variable = variables_analysis()
     dll = dll_analysis()
+    #print(type(function)) for testing
     return [function, string, variable, dll]
+

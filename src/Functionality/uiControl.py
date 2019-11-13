@@ -273,6 +273,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             poi = staticAnalysis(path)
 
             # Save the results of static into the database
+            print('\n'.join(map(str, poi)))
             saveStatic(poi)
 
             self.displayPoi()
@@ -311,6 +312,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'callrefs', 'spvars', 'regvars'])
         self.window.POI_tableWidget.setColumnCount(6)
         self.window.POI_tableWidget.setRowCount(len(content))
+        #print('\n'.join(map(str, content)))
         for i in range(len(content)):
             if 'offset' in content[i]:
                 self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(str(content[i]['offset'])))
