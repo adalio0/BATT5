@@ -113,6 +113,8 @@ class ProjectWindow(QtWidgets.QDialog):
             'binary': binary['_id'],
 
             'static_analysis': {
+                'performed': False,
+
                 '01': static_analysis['_id']
             },
 

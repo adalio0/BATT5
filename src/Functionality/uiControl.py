@@ -4,10 +4,9 @@ import os
 import sys
 from pathlib import Path
 
-#sys.path.insert(0, Path(__file__).parents[2].as_posix())
+# sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets
-
 from PyQt5.QtCore import QEvent
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
@@ -54,6 +53,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Initialize the project properties
         # Terminal also initialized here
         self.setProject()
+
+        # Unlocks dynamic if static has already been performed on the project
+        self.unlockDynamic()
 
         # ---- Menu Bar ------------------------------------
 
@@ -106,7 +108,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
-        #check or uncheck all elements in poi list
+        # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
         # ---- Comment Functionality ---------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
@@ -143,6 +145,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
+
+        # Clicking on a plugin inside the list will show a detailed view of it
+        self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -200,7 +205,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
                     obj.setText("Search..")
                     self.window.pluginManagement_list.clear()
-                    # method to call all plugins
+                    self.populatePluginBox()
             elif obj == self.window.poiManagementSeach_lineEdit:
                 if obj.text() == "":
                     obj.setStyleSheet("color: rgb(136, 138, 133);")
@@ -230,10 +235,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
-        text, binaryPath = getCurrentProject(selected)
+        text, binaryPath = setCurrentProject(selected)
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
+
+        # Checks if static has already been performed, if so unlock dynamic
+        self.unlockDynamic()
 
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
@@ -268,14 +276,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
             self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-            # Get the path of the binary file and run static analysis
-            path = getCurrentFilePath()
-            poi = staticAnalysis(path)
+            if not checkStatic():
+                # Get the path of the binary file and run static analysis
+                path = getCurrentFilePath()
+                poi = staticAnalysis(path)
 
-            # Save the results of static into the database
-            saveStatic(poi)
+                # Save the results of static into the database
+                saveStatic(poi)
 
-            self.displayPoi()
+                self.displayPoi()
 
         elif self.window.runStaticAnalysis_button.text() == 'Return to Static Analysis':
             # print('RETURNING TO SA')
@@ -430,6 +439,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
+    # Displays a detailed view of the plugin
+    def displayPlugin(self):
+        item = self.window.pluginManagement_list.currentItem().text()
+        name, description, poi, output = setCurrentPlugin(item)
+
+        self.window.dpmCreate_dropdown.setCurrentIndex(1)
+        self.window.dpmPluginName_lineEdit.setText(name)
+        self.window. dpmPluginDesc_lineEdit.setText(description)
+        self.window.dpmOutName_lineEdit.setText(output['name'])
+        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
+        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
+
     # ---- Following methods provide all the search functionality ----------------------------------------
 
     # Search functionality for the project box
@@ -474,7 +495,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Dynamic Analysis
     def runDynamic(self):
-
         # switch views
         self.window.analysisType_stack.setCurrentIndex(1)
         self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
@@ -587,19 +607,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def clearComment(self):
         self.window.comment_text.clear()
 
-    #Check or Uncheck poi List
+    # Checks if static has been performed, if it has unlock dynamic
+    def unlockDynamic(self):
+        if checkStatic():
+            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        else:
+            self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
+            self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+
+    # Check or Uncheck poi List
     def checkstate_poi(self):
         if self.window.check_allpoi.isChecked():
             for i in range(self.window.poi_list.count()):
                 item = self.window.poi_list.item(i)
                 item.setCheckState(QtCore.Qt.Checked)
-
-            
         else:
             for i in range(self.window.poi_list.count()):
                 item = self.window.poi_list.item(i)
                 item.setCheckState(QtCore.Qt.Unchecked)
-            
 
     # From current to history
     def switchToHistory(self):
@@ -634,6 +660,7 @@ def main():
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()
