@@ -26,6 +26,9 @@ def dll_analysis():
     dlls = infile.cmdj('iij')
     return dlls
 
+def struct_analysis():
+    structs = infile.cmdj('tsj')
+    return structs
 
 def extract_all():
     function = functions_analysis()
