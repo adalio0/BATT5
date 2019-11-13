@@ -1,0 +1,28 @@
+{'OUTPUT NAME'}
+{{name}} 
+
+{'OUTPUT DESCRIPTION'}
+{{description}}
+
+{'OUTPUT LOCATION'}
+{{location}}
+
+{'VARIABLES'}
+{% for var in variables %} 
+	{{var}}
+{% endfor %}
+
+{'FUNCTIONS '}
+{% for function in functions %} 
+	{{function}}
+{% endfor %}
+
+{'STRINGS'}
+{% for string in strings %} 
+	{{string}}
+{% endfor %}
+
+{'DLLS'}
+{% for dll in dlls %} 
+	{{dll}}
+{% endfor %}
