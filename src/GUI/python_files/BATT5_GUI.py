@@ -2,16 +2,18 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
         BATT5.setObjectName("BATT5")
-        BATT5.resize(991, 794)
+        BATT5.resize(973, 794)
         self.central_layout = QtWidgets.QWidget(BATT5)
         self.central_layout.setObjectName("central_layout")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.central_layout)
@@ -126,6 +128,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
@@ -135,6 +140,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -144,6 +152,9 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.radareConsoleIn_lineEdit.setPalette(palette)
         self.radareConsoleIn_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
         self.radareConsoleIn_lineEdit.setObjectName("radareConsoleIn_lineEdit")
@@ -194,6 +205,9 @@ class Ui_BATT5(object):
         self.poiType_dropdown.addItem("")
         self.poi_layout.addWidget(self.poiType_dropdown, 0, 1, 1, 1)
         self.verticalLayout_11.addLayout(self.poi_layout)
+        self.check_allpoi = QtWidgets.QCheckBox(self.poi_box)
+        self.check_allpoi.setObjectName("check_allpoi")
+        self.verticalLayout_11.addWidget(self.check_allpoi)
         self.poiSearch_lineEdit = QtWidgets.QLineEdit(self.poi_box)
         self.poiSearch_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
         self.poiSearch_lineEdit.setObjectName("poiSearch_lineEdit")
@@ -707,7 +721,7 @@ class Ui_BATT5(object):
         self.verticalLayout_13.addWidget(self.central_tabs)
         BATT5.setCentralWidget(self.central_layout)
         self.menubar = QtWidgets.QMenuBar(BATT5)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 991, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 973, 21))
         self.menubar.setObjectName("menubar")
         self.file_menu = QtWidgets.QMenu(self.menubar)
         self.file_menu.setObjectName("file_menu")
@@ -760,8 +774,8 @@ class Ui_BATT5(object):
         self.projectProperties_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.pluginSelection_box.setTitle(_translate("BATT5", "Plugin Selection"))
         self.analyisisControls_box.setTitle(_translate("BATT5", "Analysis Controls"))
         self.runStaticAnalysis_button.setText(_translate("BATT5", "Run Static Analysis"))
@@ -783,6 +797,7 @@ class Ui_BATT5(object):
         self.poiType_dropdown.setItemText(4, _translate("BATT5", "DLL"))
         self.poiType_dropdown.setItemText(5, _translate("BATT5", "Packet Protocol"))
         self.poiType_dropdown.setItemText(6, _translate("BATT5", "Struct"))
+        self.check_allpoi.setText(_translate("BATT5", "Check/Uncheck ALL"))
         self.poiSearch_lineEdit.setText(_translate("BATT5", "Search.."))
         self.viewCurrent_box.setTitle(_translate("BATT5", "Switch View"))
         self.switchToHistory_button.setText(_translate("BATT5", "Switch to History View"))
@@ -790,8 +805,8 @@ class Ui_BATT5(object):
         self.projectProperties_text_h.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.daRuns_box.setTitle(_translate("BATT5", "Dynamic Analysis Runs"))
         self.daRunDetails_box.setTitle(_translate("BATT5", "Dynamic Analysis Run Details"))
         self.comment_box_2.setTitle(_translate("BATT5", "Comment View"))
@@ -868,13 +883,13 @@ class Ui_BATT5(object):
         self.StructTBD_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#4a4a4a;\">TBD (Structure not defined in SRS)</span></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt; font-style:italic; color:#4a4a4a;\">TBD (Structure not defined in SRS)</span></p></body></html>"))
         self.dpoimDelete_button.setText(_translate("BATT5", "Delete"))
         self.dpoimSave_button.setText(_translate("BATT5", "Save"))
         self.central_tabs.setTabText(self.central_tabs.indexOf(self.management_tab), _translate("BATT5", "Management"))
@@ -890,3 +905,12 @@ class Ui_BATT5(object):
         self.actionOpen_Project.setText(_translate("BATT5", "Open Project"))
         self.actionExport_Project.setText(_translate("BATT5", "Export Project"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    BATT5 = QtWidgets.QMainWindow()
+    ui = Ui_BATT5()
+    ui.setupUi(BATT5)
+    BATT5.show()
+    sys.exit(app.exec_())

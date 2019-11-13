@@ -4,7 +4,7 @@ import os
 import sys
 from pathlib import Path
 
-# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets
 
@@ -93,6 +93,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
+        #check or uncheck all elements in poi list
+        self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
         # ---- Comment Functionality ---------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
@@ -526,6 +528,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
+
+    #Check or Uncheck poi List
+    def checkstate_poi(self):
+        if self.window.check_allpoi.isChecked():
+            for i in range(self.window.poi_list.count()):
+                item = self.window.poi_list.item(i)
+                item.setCheckState(QtCore.Qt.Checked)
+
+            
+        else:
+            for i in range(self.window.poi_list.count()):
+                item = self.window.poi_list.item(i)
+                item.setCheckState(QtCore.Qt.Unchecked)
+            
 
     # From current to history
     def switchToHistory(self):
