@@ -7,11 +7,13 @@ from pathlib import Path
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 
 from PyQt5 import QtWidgets
+
 from PyQt5.QtCore import QEvent
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
 from src.Functionality.newProject import ProjectWindow
+from src.Functionality.newOutput import NOutputWindow
 from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
@@ -512,9 +514,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Shows Output window
     def showOutputWindow(self):
         self.windowOUT = QtWidgets.QWidget()
-        self.ui = OutputWindow()
-        self.ui.setupUi(self.windowOUT)
-        self.windowOUT.show()
+        self.ui = NOutputWindow()
+        self.ui.show()
 
     # Shows ErrFile window
     def showErrFile(self):
@@ -617,7 +618,6 @@ def main():
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     main()
