@@ -24,7 +24,6 @@ from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
 
-static = False
 dynamic = False
 
 projectList = []
@@ -269,8 +268,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Static Analysis w/ database stuff
     def runStatic(self):
-        global static
-        static = True
         if self.window.runStaticAnalysis_button.text() == 'Run Static Analysis':
             # print('PERFORMING SA')
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -495,20 +492,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Dynamic Analysis
     def runDynamic(self):
-        # switch views
-        self.window.analysisType_stack.setCurrentIndex(1)
-        self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
-
-        global static
         global dynamic
-        if static is False:
-            pass
-        elif dynamic is False:
-            dynamic = True
-            # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
-        else:
-            dynamic = False
-            self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+        if checkStatic():
+            # switch views
+            self.window.analysisType_stack.setCurrentIndex(1)
+            self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
+
+            if dynamic is False:
+                dynamic = True
+                # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
+            else:
+                dynamic = False
+                self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
