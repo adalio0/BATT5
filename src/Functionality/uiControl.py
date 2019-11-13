@@ -298,8 +298,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
             functions, strings, variables, dlls = getAllPoi(poi)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
             self.window.POI_tableWidget.setColumnCount(4)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
 
             # Call method to display every poi
             self.displayAll(functions, strings, variables, dlls)
@@ -317,8 +317,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'callrefs', 'spvars', 'regvars'])
         self.window.POI_tableWidget.setColumnCount(6)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'offset' in content[i]:
@@ -340,8 +340,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'type' in content[i]:
@@ -360,8 +360,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'name' in content[i]:
@@ -653,7 +653,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

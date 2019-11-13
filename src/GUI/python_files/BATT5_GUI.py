@@ -108,9 +108,18 @@ class Ui_BATT5(object):
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
         self.POI_tableWidget = QtWidgets.QTableWidget(self.analysis_box)
+        self.POI_tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.AnyKeyPressed)
+        self.POI_tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.POI_tableWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.POI_tableWidget.setShowGrid(True)
+        self.POI_tableWidget.setGridStyle(QtCore.Qt.SolidLine)
         self.POI_tableWidget.setObjectName("POI_tableWidget")
         self.POI_tableWidget.setColumnCount(0)
         self.POI_tableWidget.setRowCount(0)
+        self.POI_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
+        self.POI_tableWidget.horizontalHeader().setDefaultSectionSize(190)
+        self.POI_tableWidget.horizontalHeader().setMinimumSectionSize(50)
+        self.POI_tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_16.addWidget(self.POI_tableWidget)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.verticalLayout_27.addLayout(self.detailedAnalysis_sublayout)
@@ -744,7 +753,7 @@ class Ui_BATT5(object):
         self.verticalLayout_13.addWidget(self.central_tabs)
         BATT5.setCentralWidget(self.central_layout)
         self.menubar = QtWidgets.QMenuBar(BATT5)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1011, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1011, 21))
         self.menubar.setObjectName("menubar")
         self.file_menu = QtWidgets.QMenu(self.menubar)
         self.file_menu.setObjectName("file_menu")
@@ -798,8 +807,8 @@ class Ui_BATT5(object):
         self.projectProperties_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:9.75pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.pluginSelection_box.setTitle(_translate("BATT5", "Plugin Selection"))
         self.pluginSelection_dropdown.setItemText(0, _translate("BATT5", "None"))
         self.analyisisControls_box.setTitle(_translate("BATT5", "Analysis Controls"))
@@ -830,8 +839,8 @@ class Ui_BATT5(object):
         self.projectProperties_text_h.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:9.75pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.daRuns_box.setTitle(_translate("BATT5", "Dynamic Analysis Runs"))
         self.recentCmd_box.setTitle(_translate("BATT5", "Recent Command History"))
         self.daRunDetails_box.setTitle(_translate("BATT5", "Dynamic Analysis Run Details"))
@@ -909,13 +918,13 @@ class Ui_BATT5(object):
         self.StructTBD_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#4a4a4a;\">TBD (Structure not defined in SRS)</span></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:9.75pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt; font-style:italic; color:#4a4a4a;\">TBD (Structure not defined in SRS)</span></p></body></html>"))
         self.dpoimDelete_button.setText(_translate("BATT5", "Delete"))
         self.dpoimSave_button.setText(_translate("BATT5", "Save"))
         self.central_tabs.setTabText(self.central_tabs.indexOf(self.management_tab), _translate("BATT5", "Management"))
