@@ -511,6 +511,13 @@ background-color: rgb(186, 189, 182);</string>
                   </layout>
                  </item>
                  <item>
+                  <widget class="QCheckBox" name="check_allpoi">
+                   <property name="text">
+                    <string>Check/Uncheck ALL</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QLineEdit" name="poiSearch_lineEdit">
                    <property name="styleSheet">
                     <string notr="true">color: rgb(136, 138, 133);</string>
