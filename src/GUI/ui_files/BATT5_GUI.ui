@@ -236,11 +236,11 @@ background-color: rgb(186, 189, 182);</string>
              </layout>
             </item>
             <item>
-             <widget class="QStackedWidget" name="stackedWidget">
+             <widget class="QStackedWidget" name="analysisType_stack">
               <property name="currentIndex">
                <number>0</number>
               </property>
-              <widget class="QWidget" name="page_10">
+              <widget class="QWidget" name="sa_page">
                <layout class="QVBoxLayout" name="verticalLayout_27">
                 <item>
                  <layout class="QVBoxLayout" name="detailedAnalysis_sublayout">
@@ -260,7 +260,7 @@ background-color: rgb(186, 189, 182);</string>
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="page_11">
+              <widget class="QWidget" name="da_stack">
                <layout class="QVBoxLayout" name="verticalLayout_28">
                 <item>
                  <widget class="QGroupBox" name="radareConsole_box">

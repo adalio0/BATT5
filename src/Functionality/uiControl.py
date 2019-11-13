@@ -157,11 +157,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.installEventFilter(self)
         self.window.radareConsoleIn_lineEdit.installEventFilter(self)
 
-        # ----- Radare Integration --------------------------
-
-        # Perform static analysis on a binary file
-        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
-
     # ---- Following methods are all the functionality currently implemented into main window -----------------
 
     # Used for letting the user know where they are typing
@@ -264,17 +259,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def runStatic(self):
         global static
         static = True
-        self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-        self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        if self.window.runStaticAnalysis_button.text() == 'Run Static Analysis':
+            # print('PERFORMING SA')
+            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-        # Get the path of the binary file and run static analysis
-        path = getCurrentFilePath()
-        poi = staticAnalysis(path)
+            # Get the path of the binary file and run static analysis
+            path = getCurrentFilePath()
+            poi = staticAnalysis(path)
 
-        # Save the results of static into the database
-        saveStatic(poi)
+            # Save the results of static into the database
+            saveStatic(poi)
 
-        self.displayPoi()
+            self.displayPoi()
+
+        elif self.window.runStaticAnalysis_button.text() == 'Return to Static Analysis':
+            # print('RETURNING TO SA')
+            self.window.analysisType_stack.setCurrentIndex(0)
+            self.window.runStaticAnalysis_button.setText('Run Static Analysis')
 
     # Dispalys POIs in the Analysis box
     def displayPoi(self):
@@ -468,13 +470,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Dynamic Analysis
     def runDynamic(self):
+
+        # switch views
+        self.window.analysisType_stack.setCurrentIndex(1)
+        self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
+
         global static
         global dynamic
         if static is False:
             pass
         elif dynamic is False:
             dynamic = True
-            self.window.runDynamicAnalysis_button.setText("Stop")
+            # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
         else:
             dynamic = False
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
