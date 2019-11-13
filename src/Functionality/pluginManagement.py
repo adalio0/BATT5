@@ -70,6 +70,5 @@ def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lin
     return pluginDict
 
 # ---------------- DATABASE ----------------
-# TODO make function to store into db
 def saveToDatabase(plugin):
     savePlugin(plugin)
