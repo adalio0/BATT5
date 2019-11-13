@@ -6,26 +6,30 @@ def staticAnalysis(filePath):
     infile.cmd('aaa')
     return extract_all()
 
-
 def functions_analysis():
     functions = infile.cmdj('afllj')
     return functions
-
 
 def string_analysis():
     strings = infile.cmdj('izzj')
     return strings
 
-
 def variables_analysis():
     variable = infile.cmdj('afvj')
     return variable
-
 
 def dll_analysis():
     dlls = infile.cmdj('iij')
     return dlls
 
+def struct_analysis():
+    structs = infile.cmdj('tscj')
+    return structs
+
+def packet_protocol_analysis():
+    # TODO
+    protocols = []
+    return protocols
 
 def extract_all():
     function = functions_analysis()
