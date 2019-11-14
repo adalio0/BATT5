@@ -300,13 +300,47 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
 
-                                # SAVE VARIABLES
+                                # SAVE SP VARIABLES
                                 for i in range(len(poi[2]['sp'])):
                                     variable = {
                                         'results_id': r['_id'],
                                         'name': poi[2]['sp'][i]['name'],
                                         'comment': '',
                                         'data': poi[2]['sp'][i]
+                                    }
+                                    try:
+                                        variable_outcome = variable_db.insert_one(variable)
+                                    except OverflowError:
+                                        pass
+
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+
+                                # SAVE BP VARIABLES
+                                for i in range(len(poi[2]['bp'])):
+                                    variable = {
+                                        'results_id': r['_id'],
+                                        'name': poi[2]['bp'][i]['name'],
+                                        'comment': '',
+                                        'data': poi[2]['bp'][i]
+                                    }
+                                    try:
+                                        variable_outcome = variable_db.insert_one(variable)
+                                    except OverflowError:
+                                        pass
+
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+
+                                # SAVE REG VARIABLES
+                                for i in range(len(poi[2]['reg'])):
+                                    variable = {
+                                        'results_id': r['_id'],
+                                        'name': poi[2]['reg'][i]['name'],
+                                        'comment': '',
+                                        'data': poi[2]['reg'][i]
                                     }
                                     try:
                                         variable_outcome = variable_db.insert_one(variable)
