@@ -66,7 +66,6 @@ class Ui_BATT5(object):
         self.pluginSelection_dropdown.setMinimumSize(QtCore.QSize(275, 0))
         self.pluginSelection_dropdown.setMaximumSize(QtCore.QSize(245, 16777215))
         self.pluginSelection_dropdown.setObjectName("pluginSelection_dropdown")
-        self.pluginSelection_dropdown.addItem("")
         self.verticalLayout_8.addWidget(self.pluginSelection_dropdown)
         self.project_sublayout.addWidget(self.pluginSelection_box)
         self.analyisisControls_box = QtWidgets.QGroupBox(self.current_view)
@@ -817,7 +816,6 @@ class Ui_BATT5(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.pluginSelection_box.setTitle(_translate("BATT5", "Plugin Selection"))
-        self.pluginSelection_dropdown.setItemText(0, _translate("BATT5", "None"))
         self.analyisisControls_box.setTitle(_translate("BATT5", "Analysis Controls"))
         self.runStaticAnalysis_button.setText(_translate("BATT5", "Run Static Analysis"))
         self.refresh_button.setText(_translate("BATT5", "Refresh"))
