@@ -31,11 +31,11 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         'name': name,
         'description': desc,
         'pointOfInterest': {
-            'function': '',
-            'string': '',
-            'variable': '',
-            'dll': '',
-            'packetProtocol': ''
+            'function': [],
+            'string': [],
+            'variable': [],
+            'dll': [],
+            'packetProtocol': []
         },
         'output': {
             'name': outName,
@@ -47,7 +47,7 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
 
 # ---------------- FORMAT XML ----------------
 def formatPluginXml(pluginDict):
-    emptyPluginDict = {
+    newPluginDict = {
         'name': pluginDict['name'],
         'description': pluginDict['description'],
         'pointOfInterest': {
@@ -65,32 +65,49 @@ def formatPluginXml(pluginDict):
     }
 
     if 'pointOfInterest' in pluginDict:
+
         if 'function' in pluginDict['pointOfInterest']:
-            emptyPluginDict['pointOfInterest']['function'] = pluginDict['pointOfInterest']['function']
+            if len(pluginDict['pointOfInterest']['function']) == 1:
+                newPluginDict['pointOfInterest']['function'] = [pluginDict['pointOfInterest']['function']]
+            elif len(pluginDict['pointOfInterest']['function']) > 1:
+                newPluginDict['pointOfInterest']['function'] = pluginDict['pointOfInterest']['function']
 
         if 'string' in pluginDict['pointOfInterest']:
-            emptyPluginDict['pointOfInterest']['string'] = pluginDict['pointOfInterest']['string']
+            if len(pluginDict['pointOfInterest']['string']) == 1:
+                newPluginDict['pointOfInterest']['string'] = [pluginDict['pointOfInterest']['string']]
+            elif len(pluginDict['pointOfInterest']['string']) > 1:
+                newPluginDict['pointOfInterest']['string'] = pluginDict['pointOfInterest']['string']
 
         if 'variable' in pluginDict['pointOfInterest']:
-            emptyPluginDict['pointOfInterest']['variable'] = pluginDict['pointOfInterest']['variable']
+            if len(pluginDict['pointOfInterest']['variable']) == 1:
+                newPluginDict['pointOfInterest']['variable'] = [pluginDict['pointOfInterest']['variable']]
+            elif len(pluginDict['pointOfInterest']['variable']) > 1:
+                newPluginDict['pointOfInterest']['variable'] = pluginDict['pointOfInterest']['variable']
 
         if 'dll' in pluginDict['pointOfInterest']:
-            emptyPluginDict['pointOfInterest']['dll'] = pluginDict['pointOfInterest']['dll']
+            if len(pluginDict['pointOfInterest']['dll']) == 1:
+                newPluginDict['pointOfInterest']['dll'] = [pluginDict['pointOfInterest']['dll']]
+            elif len(pluginDict['pointOfInterest']['dll']) > 1:
+                newPluginDict['pointOfInterest']['dll'] = pluginDict['pointOfInterest']['dll']
 
         if 'packetProtocol' in pluginDict['pointOfInterest']:
-            emptyPluginDict['pointOfInterest']['packetProtocol'] = pluginDict['pointOfInterest']['packetProtocol']
+            if len(pluginDict['pointOfInterest']['packetProtocol']) == 1:
+                newPluginDict['pointOfInterest']['packetProtocol'] = [pluginDict['pointOfInterest']['packetProtocol']]
+            elif len(pluginDict['pointOfInterest']['packetProtocol']) > 1:
+                newPluginDict['pointOfInterest']['packetProtocol'] = pluginDict['pointOfInterest']['packetProtocol']
 
     if 'output' in pluginDict:
         if 'name' in pluginDict['output']:
-            emptyPluginDict['output']['name'] = pluginDict['output']['name']
+            newPluginDict['output']['name'] = pluginDict['output']['name']
 
         if 'functionName' in pluginDict['output']:
-            emptyPluginDict['output']['functionName'] = pluginDict['output']['functionName']
+            newPluginDict['output']['functionName'] = pluginDict['output']['functionName']
 
         if 'functionSource' in pluginDict['output']:
-            emptyPluginDict['output']['functionSource'] = pluginDict['output']['functionSource']
+            newPluginDict['output']['functionSource'] = pluginDict['output']['functionSource']
 
-    return emptyPluginDict
+    print(newPluginDict)
+    return newPluginDict
 
 # ---------------- GUI ----------------
 

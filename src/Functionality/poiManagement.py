@@ -72,47 +72,28 @@ def convertStructManual():
 # ---------------- ADDING POIS TO PLUGINS ----------------
 
 def addFuncToPlugin(pluginDict, funcDict):
-    # if there is only 1 value (it is not a list)
-    if len(pluginDict['pointOfInterest']['function']) == 1:
-        pluginDict['pointOfInterest']['function'] = [pluginDict['pointOfInterest']['function'], funcDict]
-    # if there is 0 or 2 or more of this type (it is a list)
-    else:
-        pluginDict['pointOfInterest']['function'].append(funcDict)
+    pluginDict['pointOfInterest']['function'].append(funcDict)
+    print(pluginDict)
     return pluginDict
 
 def addStringToPlugin(pluginDict, strDict):
-    # if there is only 1 value (it is not a list)
-    if len(pluginDict['pointOfInterest']['string']) == 1:
-        pluginDict['pointOfInterest']['string'] = [pluginDict['pointOfInterest']['string'], strDict]
-    # if there is 0 or 2 or more of this type (it is a list)
-    else:
-        pluginDict['pointOfInterest']['string'].append(strDict)
+    pluginDict['pointOfInterest']['string'].append(strDict)
+    print(pluginDict)
     return pluginDict
 
 def addVarToPlugin(pluginDict, varDict):
-    # if there is only 1 value (it is not a list)
-    if len(pluginDict['pointOfInterest']['variable']) == 1:
-        pluginDict['pointOfInterest']['variable'] = [pluginDict['pointOfInterest']['variable'], varDict]
-    # if there is 0 or 2 or more of this type (it is a list)
-    else:
-        pluginDict['pointOfInterest']['variable'].append(varDict)
+    pluginDict['pointOfInterest']['variable'].append(varDict)
+    print(pluginDict)
     return pluginDict
 
 def addDllToPlugin(pluginDict, dllDict):
-    # if there is only 1 value (it is not a list)
-    if len(pluginDict['pointOfInterest']['dll']) == 1:
-        pluginDict['pointOfInterest']['dll'] = [pluginDict['pointOfInterest']['dll'], dllDict]
-    # if there is 0 or 2 or more of this type (it is a list)
-    else:
-        pluginDict['pointOfInterest']['dll'].append(dllDict)
+    pluginDict['pointOfInterest']['dll'].append(dllDict)
+    print(pluginDict)
     return pluginDict
 
 def addPacketProtocolToPlugin(pluginDict, ppDict):
-    if len(pluginDict['pointOfInterest']['packetProtocol']) == 1:
-        pluginDict['pointOfInterest']['packetProtocol'] = [pluginDict['pointOfInterest']['packetProtocol'], ppDict]
-    # if there is 0 or 2 or more of this type (it is a list)
-    else:
-        pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
+    pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
+    print(pluginDict)
     return pluginDict
 
 # ---------------- FORMAT XML ----------------
