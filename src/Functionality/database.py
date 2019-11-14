@@ -29,6 +29,12 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
+
+def getFilterPoi(plugin):
+    for p in plugin_db.find():
+        if p['name'] == plugin:
+            return p.get('pointOfInterest', {})
+
 # ---- Setters for the database (sets the current project/plugin) --------------------------------------------
 
 

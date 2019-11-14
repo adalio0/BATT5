@@ -8,20 +8,36 @@
 	<pointOfInterest>
 
 		<function>
-			<name>fcn.00401460</name>
+			<name>entry0</name>
 		</function>
 
 		<function>
-			<name>fcn.00401460</name>
+			<name>fcn.140003800</name>
 		</function>
 
 		<string>
-			<name>MDQwOTA0QjA=</name>
+			<name>Sleep</name>
 		</string>
 
 		<string>
-			<name>TVVJ47y85rW4</name>
+			<name>LocalFree</name>
 		</string>
+
+		<variable>
+			<name>var_8h</name>
+		</variable>
+
+		<variable>
+			<name>var_10h</name>
+		</variable>
+
+		<dll>
+			<name>msvcrt.dll___C_specific_handler</name>
+		</dll>
+
+		<dll>
+			<name>msvcrt.dll_exit</name>
+		</dll>
 
 	</pointOfInterest>
 
