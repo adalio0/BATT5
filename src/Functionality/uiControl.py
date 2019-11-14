@@ -250,7 +250,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
 
-        # Checks if static has already been performed, if so unlock dynamic
+        # Checks if static has already been performed, if so unlock dynamic and display poi
+        if checkStatic():
+            self.displayPoi()
         self.unlockDynamic()
 
         # Set up command prompt
@@ -643,11 +645,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def clearComment(self):
         self.window.comment_text.clear()
 
-    #disable checkbox 
+    # disable checkbox
     def disableCheck(self):
         self.window.check_allpoi.setCheckable(False)
-    #enable checkbox
-    
+
+    # enable checkbox
     def enableCheck(self):
         self.window.check_allpoi.setCheckable(True)    
 
@@ -668,7 +670,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = self.window.poi_list.item(i)
                 if item.text() == "-----FUNCTIONS-----":
                     continue
-                if item.text() == "-----STRINGS-----":
+                elif item.text() == "-----STRINGS-----":
                     break
                 else:
                     if self.window.check_allpoi.isChecked():
@@ -686,7 +688,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for i in range(self.window.poi_list.count()):
                     item = self.window.poi_list.item(i)
                     item.setCheckState(QtCore.Qt.Unchecked)
-
 
     # From current to history
     def switchToHistory(self):
