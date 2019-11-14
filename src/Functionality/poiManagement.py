@@ -32,12 +32,12 @@ def convertFuncManual(name):
 
 def convertStringManual(name, type='', size='', callFromAdd='', destAdd='', section=''):
     strDict = {
-        'name': name,
-        'type': type,
-        'size': size,
-        'callFromAddress': callFromAdd,
-        'destinationAddress': destAdd,
-        'section': section
+        'name': name
+        # 'type': type,
+        # 'size': size,
+        # 'callFromAddress': callFromAdd,
+        # 'destinationAddress': destAdd,
+        # 'section': section
     }
     return strDict
 
@@ -49,28 +49,26 @@ def convertDllManual(name):
 
 def convertVarManual(name, type='', val='', size=''):
     varDict = {
-        'name': name,
-        'type': type,
-        'value': val,
-        'size': size
+        'name': name
+        # 'type': type,
+        # 'value': val,
+        # 'size': size
     }
     return varDict
 
 def convertPacketProtocolManual(name, fieldName='', fieldType=''):
     ppDict = {
-        'name': name,
-        'fieldName': fieldName,
-        'fieldType': fieldType
+        'name': name
+        # 'fieldName': fieldName,
+        # 'fieldType': fieldType
     }
     return ppDict
-
 
 def convertStructManual():
     # TODO
     return 0
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
-
 def addFuncToPlugin(pluginDict, funcDict):
     pluginDict['pointOfInterest']['function'].append(funcDict)
     print(pluginDict)
@@ -95,6 +93,28 @@ def addPacketProtocolToPlugin(pluginDict, ppDict):
     pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
     print(pluginDict)
     return pluginDict
+
+# ---------------- ADDING POIS TO PLUGINS ----------------
+def removePoiFromPlugin(pluginDict, poiName):
+    for i in range(len(pluginDict['pointOfInterest']['function'])):
+        if pluginDict['pointOfInterest']['function'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['function'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['string'])):
+        if pluginDict['pointOfInterest']['string'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['string'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['variable'])):
+        if pluginDict['pointOfInterest']['variable'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['variable'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['dll'])):
+        if pluginDict['pointOfInterest']['dll'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['dll'].pop(i)
+            return pluginDict
 
 # ---------------- FORMAT XML ----------------
 
@@ -150,5 +170,5 @@ def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself,
     pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
 
-#def processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text):
+# ---------------- TESTING ----------------
 

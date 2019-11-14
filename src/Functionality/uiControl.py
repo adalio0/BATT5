@@ -38,7 +38,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
-        self.setWindowTitle("BATT5")
 
         # ---- Main Window ---------------------------------
 
@@ -173,7 +172,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementNew_button.clicked.connect(self.newPoiTemplate)
 
         # Clicking on the delete button while a poi is selected on the management poi list will delete it
-        self.window.dpoimDelete_button.clicked.connect(self.deletePoiFromPlugin)
+        self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -800,18 +799,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         items = []
         for i in range(self.window.poi_list.count()):
             items.append(self.window.poi_list.item(i).text())
-        #test by hardcoding two known functions
+        # test by hardcoding two known functions
         items.append("sym.secret_stuff")
         items.append("sym.even_more_secret")
 
         path = getCurrentFilePath().strip()
         print(path)
         dynamic = dynamicAnalysis(path, items)
-        #print(dynamic)
-        #print(self.window.poi_list.item(i).text())
+        # print(dynamic)
+        # print(self.window.poi_list.item(i).text())
         for j in range(len(dynamic)):
             self.window.radareConsoleOut_text.append(dynamic[j])
-
 
     # ---- Following methods are for deleting a project or plugin from the database -------------------
 
@@ -839,15 +837,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populateManagePluginDD()
 
     # Deletes a poi from plugin
-    def deletePoiFromPlugin(self):
+    def callDeletePoiFromPlugin(self):
         if self.window.poiManagement_list.currentItem():
-            pluginDict = ''
+            pluginDict = getCurrentPluginInfo(self.window.dpoimPlugin_dropdown.currentText())
             name = self.window.dpoimPlugin_dropdown.currentText()
-
-            # Used for deleting poi from the plugin
-            poi = self.window.poiManagement_list.currentItem().text()
-
-            deleteAPoiFromPlugin(name, pluginDict)
+            modifiedPlugin = removePoiFromPlugin(pluginDict, self.window.poiManagement_list.currentItem().text())
+            deleteAPoiFromPlugin(name, modifiedPlugin)
+            self.window.poiManagement_list.clear()
+            self.populatePoiFromPlugin()
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
