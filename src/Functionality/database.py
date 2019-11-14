@@ -30,17 +30,23 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
+
 def setWindowTitle():
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
+                print(p['name'])
                 return p['name']
+
+            else:
+                return "BATT5"
 
 
 def getFilterPoi(plugin):
     for p in plugin_db.find():
         if p['name'] == plugin:
             return p.get('pointOfInterest', {})
+
 
 # ---- Setters for the database (sets the current project/plugin) --------------------------------------------
 
@@ -138,6 +144,7 @@ def getProjects():
         projects.append(p.get('name'))
     return projects
 
+
 # Gets all the current plugins for the project
 def getPlugins():
     # deletePluginDatabase()
@@ -145,6 +152,7 @@ def getPlugins():
     for p in plugin_db.find():
         plugins.append(p.get('name'))
     return plugins
+
 
 # Gets the path of the current project's file
 def getCurrentFilePath():
@@ -464,6 +472,7 @@ def deleteDatabase():
     db.string.drop()
     db.variable.drop()
     db.dll.drop()
+
 
 # Delete EVERYTHING from plugins
 def deletePluginDatabase():
