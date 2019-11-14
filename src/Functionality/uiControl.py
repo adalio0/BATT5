@@ -275,6 +275,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
             self.displayPoi()
+        else:
+            self.window.POI_tableWidget.clear()
+            self.window.poi_list.clear()
         self.unlockDynamic()
 
         # Set up command prompt
