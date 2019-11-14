@@ -3,9 +3,10 @@
 import os
 import sys
 from pathlib import Path
-#sys.path.insert(0, Path(__file__).parents[2].as_posix())
-#sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
-#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+# sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -87,6 +88,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.clearComment)
+        self.window.commentSave_button.clicked.connect(self.callSaveComment)
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
@@ -152,8 +154,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on a plugin inside the list will show a detailed view of it
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
-        # Clicking on the new button below the management plugin box
+        # Clicking on the new button below the management plugin box will allow user to create new plugin
         self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
+
+        # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
+        self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -318,8 +323,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
             functions, strings, variables, dlls = getAllPoi(poi)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
             self.window.POI_tableWidget.setColumnCount(4)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
 
             # Call method to display every poi
             self.displayAll(functions, strings, variables, dlls)
@@ -337,8 +342,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'callrefs', 'spvars', 'regvars'])
         self.window.POI_tableWidget.setColumnCount(6)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'offset' in content[i]:
@@ -360,8 +365,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'type' in content[i]:
@@ -380,8 +385,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'name' in content[i]:
@@ -515,7 +520,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             else:
                 dynamic = False
                 self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
-
         items = []
         for i in range(self.window.poi_list.count()):
             items.append(self.window.poi_list.item(i).text())
@@ -526,10 +530,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(len(dynamic)):
             self.promptOut.insertPlainText(dynamic[i])
 
-        # ---- Following methods are for deleting a project or plugin from the database -------------------
+    # ---- Following methods are for deleting a project or plugin from the database -------------------
 
-        # Deletes a project
-
+    # Deletes a project
     def deleteProject(self):
         if self.window.projectNavigator_tree.currentItem():
             project = self.window.projectNavigator_tree.currentItem().text(0)
@@ -538,17 +541,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
 
+    # Deletes a plugin
     def deletePlugin(self):
-        plugin = self.window.pluginManagement_list.currentItem().text()
-        deleteAPlugin(plugin)
+        if self.window.pluginManagement_list.currentItem():
+            plugin = self.window.pluginManagement_list.currentItem().text()
+            deleteAPlugin(plugin)
 
-        self.window.pluginManagement_list.clear()
-        self.window.pluginSelection_dropdown.clear()
-        self.window.dpoimPlugin_dropdown.clear()
+            self.window.pluginManagement_list.clear()
+            self.window.pluginSelection_dropdown.clear()
+            self.window.dpoimPlugin_dropdown.clear()
 
-        self.populatePluginBox()
-        self.populatePluginDD()
-        self.populateManagePluginDD()
+            self.populatePluginBox()
+            self.populatePluginDD()
+            self.populateManagePluginDD()
+
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
@@ -692,6 +698,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
+
+    def callSaveComment(self):
+        print('nut')
+        return
 
     # Displays a detailed view of the plugin
     def displayPlugin(self):
