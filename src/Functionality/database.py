@@ -14,7 +14,6 @@ variable_db = db['variable']
 dll_db = db['dll']
 db_1 = client['current_project']
 current_db = db_1['current']
-current_plugin_db = db_1['current_plugin']
 
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
@@ -79,25 +78,27 @@ def setCurrentProject(selected):
 
 
 # Get the current selected plugin and sets the current plugin in the database
-def setCurrentPlugin(selected):
+def getCurrentPlugin(selected):
     name = ''
     description = ''
     pointOfInterest = ''
     output = ''
     if selected:
-        db_1.current_plugin.drop()
         for p in plugin_db.find():
             if p['name'] == selected:
                 name = p['name']
                 description = p['description']
                 pointOfInterest = p['pointOfInterest']
                 output = p['output']
-
-                plugin_data = {
-                    'id': p['_id']
-                }
-                current_outcome = current_plugin_db.insert_one(plugin_data)
     return name, description, pointOfInterest, output
+
+
+def getCurrentPluginInfo(selected):
+    if selected:
+        for p in plugin_db.find():
+            if p['name'] == selected:
+                return p
+
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
 
@@ -199,6 +200,7 @@ def getAllPoi(poi):
                                     data = []
     return functions[0], strings[0], variables[0], dlls[0]
 
+
 def getComment(poiName, dropText, commentBox):
     database = getAppropriatePoi(dropText)
     if dropText == 'Extract All':
@@ -206,16 +208,30 @@ def getComment(poiName, dropText, commentBox):
             for d in database[i].find():
                 if poiName == d.get('name'):
                     commentBox.setText(d.get('comment'))
+                    if d.get('comment'):
+                        return 1
+
     else:
         for d in database.find():
             if poiName == d.get('name'):
                 commentBox.setText(d.get('comment'))
+                if d.get('comment'):
+                    return 1
+
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
 # Gets and saves the created plugin into the database
 def savePlugin(plugin):
     plugin_db.insert_one(plugin)
+
+
+def updatePlugin(plugin, name):
+    plugin_db.find_one_and_delete(
+        {'name': name}
+    )
+    plugin_db.insert_one(plugin)
+
 
 def saveComment(comment, poiName, dropText):
     database = getAppropriatePoi(dropText)
@@ -230,6 +246,7 @@ def saveComment(comment, poiName, dropText):
             {'name': poiName},
             {'$set': {'comment': comment}},
             upsert=False)
+
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
@@ -316,11 +333,13 @@ def deleteAProject(project):
         {'name': project}
     )
 
+
 # Deletes a project from the database
 def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
+
 
 # Delete EVERYTHING from project
 def deleteDatabase():

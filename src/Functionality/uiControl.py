@@ -4,6 +4,7 @@ import os
 import sys
 from pathlib import Path
 
+
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -170,6 +171,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Create POI Selection ----------------------
         self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.callSwitchPOITypeView)
+        self.window.dpoimSave_button.clicked.connect(self.callProcessPOIData)
 
         # ---- Create Plugin Selection ----------------------
         self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.callSwitchPluginCreateView)
@@ -299,7 +301,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def setPlugin(self):
         selected = self.window.pluginSelection_dropdown.currentText()
-        setCurrentPlugin(selected)
+        getCurrentPlugin(selected)
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
@@ -861,6 +863,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginDD()
         self.populateManagePluginDD()
 
+    #save data from poi view in management tab
+    def callProcessPOIData(self):
+        if self.window.dpoimPoiType_dropdown.currentText() == "Function":
+            processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit, self.window.funcRetType_lineEdit, self.window.funcRetCal_lineEdit,
+                self.window.funcCallFrom_lineEdit,self.window.funcDestAddress_lineEdit, self.window.funcNumParam_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "String":
+            processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit,self.window.strType_lineEdit,self.window.strSize_lineEdit, 
+                self.window.strCallFrom_lineEdit,self.window.strDest_lineEdit,self.window.strSection_linEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Variable":
+            processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit,self.window.varType_lineEdit,self.window.varValue_lineEdit,self.window.varSize_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "DLL":
+            processPOIDataDLL(self.window.dpoimPlugin_dropdown,self.window.dllName_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Packet Protocol":
+            processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit,
+                self.window.protoFieldName_lineEdit,self.window.protoFieldType_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Struct":
+            processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text)
     def callSaveComment(self):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
@@ -875,7 +899,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays a detailed view of the plugin
     def displayPlugin(self):
         item = self.window.pluginManagement_list.currentItem().text()
-        name, description, poi, output = setCurrentPlugin(item)
+        name, description, poi, output = getCurrentPlugin(item)
 
         self.window.dpmCreate_dropdown.setCurrentIndex(1)
         self.window.dpmPluginName_lineEdit.setText(name)

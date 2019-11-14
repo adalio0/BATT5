@@ -1,4 +1,5 @@
 from PyQt5 import QtCore
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
 from src.Functionality.database import getPlugins
@@ -125,3 +126,6 @@ def HighlightList(poi, poi_list):
             poi_list.setCurrentItem(item)
             return
 
+
+def addIcon(poi):
+    poi.setIcon(QIcon(r"comment-24px.svg"));
