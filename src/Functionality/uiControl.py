@@ -121,6 +121,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- Comment Functionality ---------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
+        self.window.POI_tableWidget.currentItemChanged.connect(self.callHighlightList)
+
         # ---- Filters ---------------------------------
         # When changing POI type in the drop down will update whats displayed
         self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
@@ -738,6 +740,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSaveComment(self):
         print('nut')
         return
+
+    def callHighlightList(self):
+        try:
+            HighlightList(self.window.POI_tableWidget.currentItem().text(), self.window.poi_list)
+        except AttributeError:
+            pass
 
     # Displays a detailed view of the plugin
     def displayPlugin(self):

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
 from src.Functionality.database import getPlugins
 
+
 # Search functionality for the project box
 def searchProject(search, projectNavigator_tree):
     result = projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
@@ -31,6 +32,7 @@ def searchProject(search, projectNavigator_tree):
         projects = getProjects()
         projectNavigator_tree.addTopLevelItems(projects)
 
+
 # Search functionality for the poi box
 def searchPoi(search, poi_list):
     result = poi_list.findItems(search, QtCore.Qt.MatchContains)
@@ -55,6 +57,7 @@ def searchPoi(search, poi_list):
         list = poi_list
         list.clear()
         # displayAll()
+
 
 def searchPluginM(search, pluginManagement_list):
     result = pluginManagement_list.findItems(search, QtCore.Qt.MatchContains)
@@ -81,6 +84,7 @@ def searchPluginM(search, pluginManagement_list):
         plugins = getPlugins()
         pluginManagement_list.addItems(plugins)
 
+
 def searchPoiM(search, poiManagement_list):
     result = poiManagement_list.findItems(search, QtCore.Qt.MatchContains)
 
@@ -105,10 +109,19 @@ def searchPoiM(search, poiManagement_list):
         list.clear()
         # method to call all pois
 
+
 # highlight table widget when poi is selected from poi list
 def highlightTable(poi, POI_tableWidget):
     POI_tableWidget.clearSelection()
     tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
 
     for item in tablePoi:
+        item.setSelected(True)
+
+
+def HighlightList(poi, poi_list):
+    poi_list.clearSelection()
+    list_of_pois = poi_list.findItems(poi, QtCore.Qt.MatchContains)
+
+    for item in list_of_pois:
         item.setSelected(True)
