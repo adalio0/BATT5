@@ -267,6 +267,9 @@ def checkStatic():
     return flag
 
 
+def saveComment(comment, poi):
+    return
+
 # Delete EVERYTHING from project
 def deleteDatabase():
     db.project.drop()

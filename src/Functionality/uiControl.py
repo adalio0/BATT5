@@ -88,6 +88,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.clearComment)
+        self.window.commentSave_button.clicked.connect(self.callSaveComment)
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
@@ -653,6 +654,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
+
+    def callSaveComment(self):
+        print('nut')
+        return
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
