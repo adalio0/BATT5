@@ -21,6 +21,7 @@ from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.outputFieldView import OutputWindow
+from src.GUI.python_files.popups.areyousure import Ui_Form
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
 from src.Functionality.poiManagement import *
@@ -261,7 +262,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # We build the menu.
         menu = QtWidgets.QMenu()
         menu.addAction("Delete", self.deleteProject)
-
         menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
     # Initialize the project box with all the current projects from database
@@ -874,6 +874,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.windowOUT = QtWidgets.QWidget()
         self.ui = NOutputWindow()
         self.ui.show()
+
+    # Shows confirmation to delete project
+    def showConfirmationDeleteProject(self):
+        self.windowAUS = QtWidgets.QWidget()
+        self.ui = Ui_Form()
+        self.ui.setupUi(self.windowAUS)
+        self.ui.windowAUS()
 
     # Shows ErrFile window
     def showErrFile(self):
