@@ -256,7 +256,7 @@ background-color: rgb(186, 189, 182);</string>
                         <set>QAbstractItemView::AnyKeyPressed</set>
                        </property>
                        <property name="selectionBehavior">
-                        <enum>QAbstractItemView::SelectRows</enum>
+                        <enum>QAbstractItemView::SelectItems</enum>
                        </property>
                        <property name="verticalScrollMode">
                         <enum>QAbstractItemView::ScrollPerPixel</enum>

@@ -110,6 +110,5 @@ def highlightTable(poi, POI_tableWidget):
     POI_tableWidget.clearSelection()
     tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
 
-    tablePoi.setSelected(True)
     for item in tablePoi:
         item.setSelected(True)

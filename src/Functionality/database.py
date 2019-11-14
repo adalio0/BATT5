@@ -192,6 +192,8 @@ def getAllPoi(poi):
                                     data = []
     return functions[0], strings[0], variables[0], dlls[0]
 
+def getCurrComment(selectedCell):
+    return
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
@@ -199,16 +201,22 @@ def getAllPoi(poi):
 def savePlugin(plugin):
     plugin_db.insert_one(plugin)
 
-def saveComment(comment, poi, dropText, table):
+def saveComment(comment, poi, dropText, table, ):
     if dropText == 'Extract All':
         print(0)
-    else:
+    elif dropText == 'Function':
+        print(1)
+    elif dropText == 'String':
+        print(1)
+    elif dropText == 'Variable':
+        print(1)
+    elif dropText == 'DLL':
+        print(1)
+    elif dropText == 'Packet Protocol':
+        print(1)
+    elif dropText == 'Struct':
         print(1)
     return
-
-def saveComment(comment, poi):
-    return
-
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):

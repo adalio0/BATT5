@@ -109,7 +109,7 @@ class Ui_BATT5(object):
         self.verticalLayout_16.setObjectName("verticalLayout_16")
         self.POI_tableWidget = QtWidgets.QTableWidget(self.analysis_box)
         self.POI_tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.AnyKeyPressed)
-        self.POI_tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.POI_tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
         self.POI_tableWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.POI_tableWidget.setShowGrid(True)
         self.POI_tableWidget.setGridStyle(QtCore.Qt.SolidLine)

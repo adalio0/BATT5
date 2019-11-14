@@ -4,9 +4,11 @@ import os
 import sys
 from pathlib import Path
 
+
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -28,6 +30,7 @@ from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import dynamicAnalysis
 
 dynamic = False
+allpoiTypeCheck = False
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -322,6 +325,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.clear()
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
+            self.enableCheck()
             functions, strings, variables, dlls = getAllPoi(poi)
             self.window.POI_tableWidget.setColumnCount(4)
             self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
@@ -332,12 +336,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             content = getPoi(poi)
             # Call appropriate method to display poi
             if poi == 'Function':
+                self.enableCheck()
                 self.displayFunctions(content)
             elif poi == 'String':
+                self.disableCheck()
                 self.displayString(content)
             elif poi == 'Variable':
+                self.disableCheck()
                 self.displayVariable(content)
             elif poi == 'DLL':
+                self.disableCheck()
                 self.displayDll(content)
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
@@ -419,11 +427,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['vaddr']))
 
             item = QListWidgetItem(content[i]['name'])
-            item.setCheckState(QtCore.Qt.Checked)
+            #item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
     # Displays all extracted pois from Static Analysis in Analysis box and POI box
     def displayAll(self, functions, strings, variables, dlls):
+        global allpoiTypeCheck
+        allpoiTypeCheck = True
         # Get the longest number of keys between functions, strings, variables, dlls
         length = len(functions)
         if len(strings) > length:
@@ -448,6 +458,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
             item = QListWidgetItem(strings[i]['string'])
             self.window.poi_list.addItem(item)
+            
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
@@ -461,7 +472,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'name' in dlls[i]:
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
             item = QListWidgetItem(dlls[i]['name'])
-            item.setCheckState(QtCore.Qt.Checked)
+            #item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
     # ---- Following methods provide all the search functionality ----------------------------------------
@@ -652,6 +663,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def clearComment(self):
         self.window.comment_text.clear()
 
+    #disable checkbox 
+    def disableCheck(self):
+        self.window.check_allpoi.setCheckable(False)
+    #enable checkbox
+    
+    def enableCheck(self):
+        self.window.check_allpoi.setCheckable(True)    
+
     # Checks if static has been performed, if it has unlock dynamic
     def unlockDynamic(self):
         if checkStatic():
@@ -663,14 +682,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Check or Uncheck poi List
     def checkstate_poi(self):
-        if self.window.check_allpoi.isChecked():
+        global allpoiTypeCheck
+        if allpoiTypeCheck is True:
             for i in range(self.window.poi_list.count()):
                 item = self.window.poi_list.item(i)
-                item.setCheckState(QtCore.Qt.Checked)
-        else:
-            for i in range(self.window.poi_list.count()):
-                item = self.window.poi_list.item(i)
-                item.setCheckState(QtCore.Qt.Unchecked)
+                if item.text() == "-----FUNCTIONS-----":
+                    continue
+                if item.text() == "-----STRINGS-----":
+                    break
+                else:
+                    if self.window.check_allpoi.isChecked():
+                        item.setCheckState(QtCore.Qt.Checked)
+                    elif self.window.check_allpoi.checkState() == 0:
+                        item.setCheckState(QtCore.Qt.Unchecked)
+
+        elif allpoiTypeCheck is False:
+            if self.window.check_allpoi.isChecked():
+                for i in range(self.window.poi_list.count()):
+                    item = self.window.poi_list.item(i)
+                    item.setCheckState(QtCore.Qt.Checked)
+       
+            elif self.window.check_allpoi.checkState() == 0:
+                for i in range(self.window.poi_list.count()):
+                    item = self.window.poi_list.item(i)
+                    item.setCheckState(QtCore.Qt.Unchecked)
+
 
     # From current to history
     def switchToHistory(self):
