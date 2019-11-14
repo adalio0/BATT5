@@ -91,6 +91,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
+        # right click functionality
+        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.window.projectNavigator_tree.customContextMenuRequested.connect(self.menuContextTree)
+
         # When clicking a plugin in the plugin dropdown, the database will update the selected plugin
         self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.setPlugin)
 
@@ -223,6 +227,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         return super(ApplicationWindow, self).eventFilter(obj, event)
 
     # ---- Following methods initialize the main window with all the project, plugin and poi data -----------
+
+    def menuContextTree(self, point):
+        # Infos about the node selected.
+        index = self.window.projectNavigator_tree.indexAt(point)
+
+        if not index.isValid():
+            return
+
+        item = self.window.projectNavigator_tree.itemAt(point)
+        name = item.text(0)  # The text of the node.
+
+        # We build the menu.
+        menu = QtWidgets.QMenu()
+        menu.addAction("Delete", self.deleteProject)
+
+        menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
@@ -511,9 +531,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Deletes a project
 
     def deleteProject(self):
-        print('delete')
+        if self.window.projectNavigator_tree.currentItem():
+            project = self.window.projectNavigator_tree.currentItem().text(0)
+            deleteAProject(project)
 
-        # Deletes a plugin
+            self.window.projectNavigator_tree.clear()
+            self.populateProjectBox()
 
     def deletePlugin(self):
         plugin = self.window.pluginManagement_list.currentItem().text()
