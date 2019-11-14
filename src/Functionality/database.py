@@ -206,6 +206,10 @@ def saveComment(comment, poi, dropText, table):
         print(1)
     return
 
+def saveComment(comment, poi):
+    return
+
+
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
     for c in current_db.find():
@@ -283,7 +287,18 @@ def saveStatic(poi):
 
 # Deletes a project from the database
 def deleteAProject(project):
-    print('delete')
+    project_db.find_one_and_delete(
+        {'name': project}
+    )
+
+    # for i in len(database):
+    #     database.find_one_and_update(
+    #         {'data': {'name': function}},
+    #
+    #
+    #
+    #         {'$push': {'comment': actualcomment}},
+    #         upsert=False)
 
 
 # Deletes a project from the database
