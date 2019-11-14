@@ -176,7 +176,7 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>300</width>
+                  <width>310</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -264,7 +264,7 @@ background-color: rgb(186, 189, 182);</string>
                     <bool>false</bool>
                    </attribute>
                    <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>190</number>
+                    <number>100</number>
                    </attribute>
                    <attribute name="horizontalHeaderMinimumSectionSize">
                     <number>50</number>
@@ -291,7 +291,7 @@ background-color: rgb(186, 189, 182);</string>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>250</height>
+                  <height>247</height>
                  </size>
                 </property>
                 <property name="title">
