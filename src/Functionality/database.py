@@ -96,7 +96,6 @@ def getProjects():
         projects.append(p.get('name'))
     return projects
 
-
 # Gets all the current plugins for the project
 def getPlugins():
     # deletePluginDatabase()
@@ -104,7 +103,6 @@ def getPlugins():
     for p in plugin_db.find():
         plugins.append(p.get('name'))
     return plugins
-
 
 # Get the current selected plugin and sets the current plugin in the database
 def getCurrentPlugin(selected):

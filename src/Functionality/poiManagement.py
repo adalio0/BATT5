@@ -69,7 +69,6 @@ def convertStructManual():
     return 0
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
-
 def addFuncToPlugin(pluginDict, funcDict):
     pluginDict['pointOfInterest']['function'].append(funcDict)
     print(pluginDict)
@@ -94,6 +93,28 @@ def addPacketProtocolToPlugin(pluginDict, ppDict):
     pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
     print(pluginDict)
     return pluginDict
+
+# ---------------- ADDING POIS TO PLUGINS ----------------
+def removePoiFromPlugin(pluginDict, poiName):
+    for i in range(len(pluginDict['pointOfInterest']['function'])):
+        if pluginDict['pointOfInterest']['function'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['function'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['string'])):
+        if pluginDict['pointOfInterest']['string'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['string'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['variable'])):
+        if pluginDict['pointOfInterest']['variable'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['variable'].pop(i)
+            return pluginDict
+
+    for i in range(len(pluginDict['pointOfInterest']['dll'])):
+        if pluginDict['pointOfInterest']['dll'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['dll'].pop(i)
+            return pluginDict
 
 # ---------------- FORMAT XML ----------------
 
@@ -149,5 +170,5 @@ def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself,
     pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
 
-#def processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text):
+# ---------------- TESTING ----------------
 
