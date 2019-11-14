@@ -35,9 +35,7 @@ def setWindowTitle():
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
-                print(p['name'])
                 return p['name']
-
             else:
                 return "BATT5"
 
@@ -133,27 +131,6 @@ def getCurrentPluginInfo(selected):
         for p in plugin_db.find():
             if p['name'] == selected:
                 return p
-
-
-# ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
-
-
-# Gets all of the projects that were created from the database
-def getProjects():
-    # deleteDatabase()
-    projects = []
-    for p in project_db.find():
-        projects.append(p.get('name'))
-    return projects
-
-
-# Gets all the current plugins for the project
-def getPlugins():
-    # deletePluginDatabase()
-    plugins = []
-    for p in plugin_db.find():
-        plugins.append(p.get('name'))
-    return plugins
 
 
 # Gets the path of the current project's file
