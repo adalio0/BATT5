@@ -7,7 +7,6 @@ from src.Functionality.database import getPlugins
 # Search functionality for the project box
 def searchProject(search, projectNavigator_tree):
     result = projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
-
     projects = []
     item = ''
     j = 0
@@ -19,9 +18,6 @@ def searchProject(search, projectNavigator_tree):
                 pass
             if item.text(0) in projectNavigator_tree.topLevelItem(i).text(0):
                 projects.append(QTreeWidgetItem([item.text(0)]))
-                child_text = item.child(0).text(0)
-                child = QTreeWidgetItem(projects[len(projects) - 1])
-                child.setText(0, child_text)
                 j += 1
         tree = projectNavigator_tree
         tree.clear()
@@ -29,8 +25,6 @@ def searchProject(search, projectNavigator_tree):
     else:
         tree = projectNavigator_tree
         tree.clear()
-        projects = getProjects()
-        projectNavigator_tree.addTopLevelItems(projects)
 
 
 # Search functionality for the poi box
@@ -56,7 +50,6 @@ def searchPoi(search, poi_list):
     else:
         list = poi_list
         list.clear()
-        # displayAll()
 
 
 def searchPluginM(search, pluginManagement_list):
@@ -117,6 +110,7 @@ def highlightTable(poi, POI_tableWidget):
 
     for item in tablePoi:
         item.setSelected(True)
+        POI_tableWidget.setCurrentItem(item)
 
 
 def HighlightList(poi, poi_list):
@@ -125,3 +119,5 @@ def HighlightList(poi, poi_list):
 
     for item in list_of_pois:
         item.setSelected(True)
+        poi_list.setCurrentItem(item)
+
