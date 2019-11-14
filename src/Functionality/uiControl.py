@@ -3,9 +3,10 @@
 import os
 import sys
 from pathlib import Path
-#sys.path.insert(0, Path(__file__).parents[2].as_posix())
-#sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
-#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+# sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -129,7 +130,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
-        # Clicking on Run Dynamic Analysis button calls runDynamic method
+        # Clicking on Run Static Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -149,8 +150,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on a plugin inside the list will show a detailed view of it
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
-        # Clicking on the new button below the management plugin box
+        # Clicking on the new button below the management plugin box will allow user to create new plugin
         self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
+
+        # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
+        self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -496,7 +500,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             else:
                 dynamic = False
                 self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
-
         items = []
         for i in range(self.window.poi_list.count()):
             items.append(self.window.poi_list.item(i).text())
@@ -507,26 +510,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(len(dynamic)):
             self.promptOut.insertPlainText(dynamic[i])
 
-        # ---- Following methods are for deleting a project or plugin from the database -------------------
+    # ---- Following methods are for deleting a project or plugin from the database -------------------
 
-        # Deletes a project
-
+    # Deletes a project
     def deleteProject(self):
-        print('delete')
+        if self.window.projectNavigator_tree.currentItem():
+            project = self.window.projectNavigator_tree.currentItem().text()
+            deleteAProject(project)
 
-        # Deletes a plugin
+            self.window.projectNavigator_tree.clear()
+            self.populateProjectBox()
 
+    # Deletes a plugin
     def deletePlugin(self):
-        plugin = self.window.pluginManagement_list.currentItem().text()
-        deleteAPlugin(plugin)
+        if self.window.pluginManagement_list.currentItem():
+            plugin = self.window.pluginManagement_list.currentItem().text()
+            deleteAPlugin(plugin)
 
-        self.window.pluginManagement_list.clear()
-        self.window.pluginSelection_dropdown.clear()
-        self.window.dpoimPlugin_dropdown.clear()
+            self.window.pluginManagement_list.clear()
+            self.window.pluginSelection_dropdown.clear()
+            self.window.dpoimPlugin_dropdown.clear()
 
-        self.populatePluginBox()
-        self.populatePluginDD()
-        self.populateManagePluginDD()
+            self.populatePluginBox()
+            self.populatePluginDD()
+            self.populateManagePluginDD()
+
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
@@ -695,6 +703,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutName_lineEdit.setText("")
         self.window.dpmOutFuncName_lineEdit.setText("")
         self.window.dpmOutFuncSource_lineEdit.setText("")
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
