@@ -26,8 +26,6 @@ from src.Functionality.search import *
 
 dynamic = False
 
-projectList = []
-
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -40,7 +38,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the projects box with current projects
         self.populateProjectBox()
 
-        # Populate the plugin box with the current plugins
+        # Populate the management plugin box with the current plugins
         self.populatePluginBox()
 
         # Populate the dropdown list of plugins
@@ -147,6 +145,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on a plugin inside the list will show a detailed view of it
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
+
+        # Clicking on the new button below the management plugin box
+        self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -436,18 +437,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
-    # Displays a detailed view of the plugin
-    def displayPlugin(self):
-        item = self.window.pluginManagement_list.currentItem().text()
-        name, description, poi, output = setCurrentPlugin(item)
-
-        self.window.dpmCreate_dropdown.setCurrentIndex(1)
-        self.window.dpmPluginName_lineEdit.setText(name)
-        self.window. dpmPluginDesc_lineEdit.setText(description)
-        self.window.dpmOutName_lineEdit.setText(output['name'])
-        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
-        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
-
     # ---- Following methods provide all the search functionality ----------------------------------------
 
     # Search functionality for the project box
@@ -504,6 +493,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             else:
                 dynamic = False
                 self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+
+    # ---- Following methods are for deleting a project or plugin from the database -------------------
+
+    # Deletes a project
+    def deleteProject(self):
+        print('delete')
+
+    # Deletes a plugin
+    def deletePlugin(self):
+        plugin = self.window.pluginManagement_list.currentItem().text()
+        deleteAPlugin(plugin)
+
+        self.window.pluginManagement_list.clear()
+        self.window.pluginSelection_dropdown.clear()
+        self.window.dpoimPlugin_dropdown.clear()
+
+        self.populatePluginBox()
+        self.populatePluginDD()
+        self.populateManagePluginDD()
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
@@ -648,6 +656,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
+
+    # Displays a detailed view of the plugin
+    def displayPlugin(self):
+        item = self.window.pluginManagement_list.currentItem().text()
+        name, description, poi, output = setCurrentPlugin(item)
+
+        self.window.dpmCreate_dropdown.setCurrentIndex(1)
+        self.window.dpmPluginName_lineEdit.setText(name)
+        self.window. dpmPluginDesc_lineEdit.setText(description)
+        self.window.dpmOutName_lineEdit.setText(output['name'])
+        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
+        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
+
+    # Clears the labels that are used for creating a new plugin to create a new plugin
+    def newPluginTemplate(self):
+        self.window.dpmCreate_dropdown.setCurrentIndex(1)
+        self.window.dpmPluginName_lineEdit.setText("")
+        self.window.dpmPluginDesc_lineEdit.setText("")
+        self.window.dpmOutName_lineEdit.setText("")
+        self.window.dpmOutFuncName_lineEdit.setText("")
+        self.window.dpmOutFuncSource_lineEdit.setText("")
 
 
 def main():

@@ -26,7 +26,8 @@ class ProjectWindow(QtWidgets.QDialog):
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.path_lineEdit.setText(name)
-        self.setProperties()
+        if name:
+            self.setProperties()
 
     # ---- Extracts text from fields and inserts them into the project database -----------------
     def createProject(self):

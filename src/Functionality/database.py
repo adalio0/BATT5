@@ -20,13 +20,16 @@ db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
 
-# Gets all of the projects that were created from the database
-def getProjects():
-    # deleteDatabase()
-    projects = []
-    for p in project_db.find():
-        projects.append(p.get('name'))
-    return projects
+# Checks if static analysis has been performed on the current selected project
+def checkStatic():
+    flag = ''
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                flag = p.get('static_analysis', {}).get('performed')
+    return flag
+
+# ---- Setters for the database (sets the current project/plugin) --------------------------------------------
 
 
 # Gets all the information of the current project from the database and sets it into the database
@@ -69,6 +72,48 @@ def setCurrentProject(selected):
     return text, binaryPath
 
 
+# Get the current selected plugin and sets the current plugin in the database
+def setCurrentPlugin(selected):
+    name = ''
+    description = ''
+    pointOfInterest = ''
+    output = ''
+    if selected:
+        db_1.current_plugin.drop()
+        for p in plugin_db.find():
+            if p['name'] == selected:
+                name = p['name']
+                description = p['description']
+                pointOfInterest = p['pointOfInterest']
+                output = p['output']
+
+                plugin_data = {
+                    'id': p['_id']
+                }
+                current_outcome = current_plugin_db.insert_one(plugin_data)
+    return name, description, pointOfInterest, output
+
+# ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
+
+
+# Gets all of the projects that were created from the database
+def getProjects():
+    # deleteDatabase()
+    projects = []
+    for p in project_db.find():
+        projects.append(p.get('name'))
+    return projects
+
+
+# Gets all the current plugins for the project
+def getPlugins():
+    # deletePluginDatabase()
+    plugins = []
+    for p in plugin_db.find():
+        plugins.append(p.get('name'))
+    return plugins
+
+
 # Gets the path of the current project's file
 def getCurrentFilePath():
     for c in current_db.find():
@@ -77,6 +122,41 @@ def getCurrentFilePath():
                 for b in binary_db.find():
                     if b['_id'] == p.get('binary'):
                         return b.get('file')
+
+
+# Gets the appropriate database
+def getAppropriatePoi(poi):
+    if poi == "Extract All":
+        return [function_db, string_db, variable_db, dll_db]
+    elif poi == "Function":
+        return function_db
+    elif poi == "String":
+        return string_db
+    elif poi == "Variable":
+        return variable_db
+    elif poi == "DLL":
+        return dll_db
+
+
+# Displays specific POI in the Analysis box
+def getPoi(poi):
+    entries = []
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                database = getAppropriatePoi(poi)
+                                for d in database.find():
+                                    if r['_id'] == d.get('results_id'):
+                                        content = d.get('data')
+                                        try:
+                                            entries.append(content)
+                                        except TypeError:
+                                            pass
+    return entries
 
 
 # Display all POI in the Analysis box
@@ -114,71 +194,7 @@ def getAllPoi(poi):
     return functions[0], strings[0], variables[0], dlls[0]
 
 
-# Dispalys specific POI in the Analysis box
-def getPoi(poi):
-    entries = []
-    for c in current_db.find():
-        for p in project_db.find():
-            if p['_id'] == c.get('id'):
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                database = getAppropriatePoi(poi)
-                                for d in database.find():
-                                    if r['_id'] == d.get('results_id'):
-                                        content = d.get('data')
-                                        try:
-                                            entries.append(content)
-                                        except TypeError:
-                                            pass
-    return entries
-
-
-# Gets the appropriate database
-def getAppropriatePoi(poi):
-    if poi == "Extract All":
-        return [function_db, string_db, variable_db, dll_db]
-    elif poi == "Function":
-        return function_db
-    elif poi == "String":
-        return string_db
-    elif poi == "Variable":
-        return variable_db
-    elif poi == "DLL":
-        return dll_db
-
-
-# Gets all the current plugins for the project
-def getPlugins():
-    # deletePluginDatabase()
-    plugins = []
-    for p in plugin_db.find():
-        plugins.append(p.get('name'))
-    return plugins
-
-
-# Get the current selected plugin and sets the current plugin in the database
-def setCurrentPlugin(selected):
-    name = ''
-    description = ''
-    pointOfInterest = ''
-    output = ''
-    if selected:
-        db_1.current_plugin.drop()
-        for p in plugin_db.find():
-            if p['name'] == selected:
-                name = p['name']
-                description = p['description']
-                pointOfInterest = p['pointOfInterest']
-                output = p['output']
-
-                plugin_data = {
-                    'id': p['_id']
-                }
-                current_outcome = current_plugin_db.insert_one(plugin_data)
-    return name, description, pointOfInterest, output
-
+# ---- Methods that save/insert data into the database -----------------------------------------------
 
 # Gets and saves the created plugin into the database
 def savePlugin(plugin):
@@ -258,14 +274,18 @@ def saveStatic(poi):
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
-# Checks if static analysis has been performed on the current selected project
-def checkStatic():
-    flag = ''
-    for c in current_db.find():
-        for p in project_db.find():
-            if p['_id'] == c.get('id'):
-                flag = p.get('static_analysis', {}).get('performed')
-    return flag
+# ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
+
+# Deletes a project from the database
+def deleteAProject(project):
+    print('delete')
+
+
+# Deletes a project from the database
+def deleteAPlugin(plugin):
+    plugin_db.find_one_and_delete(
+        {'name': plugin}
+    )
 
 
 # Delete EVERYTHING from project
