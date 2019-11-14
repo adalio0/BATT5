@@ -3,8 +3,9 @@
 import os
 import sys
 from pathlib import Path
-
-# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -23,6 +24,7 @@ from src.Functionality.poiManagement import *
 from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
+from src.Functionality.dynamicAnalysis import dynamicAnalysis
 
 dynamic = False
 
@@ -126,7 +128,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
-        # Clicking on Run Static Analysis button calls runDynamic method
+        # Clicking on Run Dynamic Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -494,13 +496,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 dynamic = False
                 self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
 
-    # ---- Following methods are for deleting a project or plugin from the database -------------------
+        items = []
+        for i in range(self.window.poi_list.count()):
+            items.append(self.window.poi_list.item(i))
 
-    # Deletes a project
+        path = getCurrentFilePath()
+        dynamic = dynamicAnalysis(path, items)
+
+        for i in range(len(dynamic)):
+            self.promptOut.insertPlainText(dynamic[i])
+
+        # ---- Following methods are for deleting a project or plugin from the database -------------------
+
+        # Deletes a project
+
     def deleteProject(self):
         print('delete')
 
-    # Deletes a plugin
+        # Deletes a plugin
+
     def deletePlugin(self):
         plugin = self.window.pluginManagement_list.currentItem().text()
         deleteAPlugin(plugin)
@@ -512,7 +526,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
-
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
