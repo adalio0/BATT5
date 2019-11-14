@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
 from src.Functionality.database import getPlugins
@@ -129,3 +129,7 @@ def HighlightList(poi, poi_list):
 
 def addIcon(poi):
     poi.setIcon(QIcon(r"comment-24px.svg"))
+
+
+def highlightCell(cell):
+    cell.setBackground(QColor(255, 240, 189))

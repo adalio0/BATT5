@@ -41,6 +41,7 @@ def getFilterPoi(plugin):
 
 # Gets all the information of the current project from the database and sets it into the database
 def setCurrentProject(selected):
+    item = ""
     if selected:
         db_1.current.drop()
         item = selected[0].text(0)
@@ -76,7 +77,7 @@ def setCurrentProject(selected):
                         text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br> </font>"
                         binaryPath = b.get('file')
 
-    return text, binaryPath
+    return item, text, binaryPath
 
 
 # Get the current selected plugin and sets the current plugin in the database
@@ -107,7 +108,7 @@ def getCurrentPluginInfo(selected):
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    # deleteDatabase()
+    #deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(p.get('name'))
