@@ -113,7 +113,6 @@ def getProjects():
         projects.append(p.get('name'))
     return projects
 
-
 # Gets all the current plugins for the project
 def getPlugins():
     # deletePluginDatabase()
@@ -121,7 +120,6 @@ def getPlugins():
     for p in plugin_db.find():
         plugins.append(p.get('name'))
     return plugins
-
 
 # Gets the path of the current project's file
 def getCurrentFilePath():
@@ -177,6 +175,7 @@ def getAllPoi(poi):
     strings = []
     variables = []
     dlls = []
+    structs = []
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -201,8 +200,11 @@ def getAllPoi(poi):
                                         variables.append(data)
                                     elif i == 3:
                                         dlls.append(data)
+                                    elif i == 4:
+                                        structs.append(data)
                                     data = []
-    return functions[0], strings[0], variables[0], dlls[0]
+
+    return functions[0], strings[0], variables[0], dlls[0], structs[0]
 
 
 def getComment(poiName, dropText, commentBox):
@@ -339,7 +341,7 @@ def saveStatic(poi):
                                 for i in range(len(poi[4])):
                                     struct = {
                                         'results_id': r['_id'],
-                                        'name:': poi[4][i]['type'],
+                                        'name': poi[4][i]['type'],
                                         'comment': '',
                                         'data': poi[4][i]
                                     }
@@ -350,7 +352,7 @@ def saveStatic(poi):
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
-                                        {'$push': {'dll': {str(i): struct['_id']}}}, upsert=True)
+                                        {'$push': {'struct': {str(i): struct['_id']}}}, upsert=True)
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------

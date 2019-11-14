@@ -334,12 +334,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
             self.enableCheck()
-            functions, strings, variables, dlls = getAllPoi(poi)
-            self.window.POI_tableWidget.setColumnCount(4)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
+            functions, strings, variables, dlls, structs = getAllPoi(poi)
+            self.window.POI_tableWidget.setColumnCount(5)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's", "Structs"])
 
             # Call method to display every poi
-            self.displayAll(functions, strings, variables, dlls)
+            self.displayAll(functions, strings, variables, dlls, structs)
         else:
             content = getPoi(poi)
             # Call appropriate method to display poi
@@ -366,16 +366,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.displayFilteredVariable(filterContent, content)
             elif poi == 'DLL':
                 self.disableCheck()
-                self.displayDll(content)
-            elif poi == 'Struct':
-                self.disableCheck()
-                self.displayStruct(content)
-
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     self.displayDll(content)
                 else:
                     filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
                     self.displayFilteredDll(filterContent, content)
+            elif poi == 'Struct':
+                self.disableCheck()
+                if self.window.pluginSelection_dropdown.currentText() == 'None':
+                    self.displayStruct(content)
+
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
@@ -441,7 +441,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(str(content[i]['section'])))
             if 'string' in content[i]:
                 self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(content[i]['string']))
-
             item = QListWidgetItem(content[i]['string'])
             self.window.poi_list.addItem(item)
 
@@ -535,7 +534,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'type' in content[i]:
                 self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['type']))
             if 'size' in content[i]:
-                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['size']))
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(str(content[i]['size'])))
 
             item = QListWidgetItem(content[i]['type'])
             self.window.poi_list.addItem(item)
@@ -561,7 +560,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
 
     # Displays all extracted pois from Static Analysis in Analysis box and POI box
-    def displayAll(self, functions, strings, variables, dlls):
+    def displayAll(self, functions, strings, variables, dlls, structs):
         global allpoiTypeCheck
         allpoiTypeCheck = True
         # Get the longest number of keys between functions, strings, variables, dlls
@@ -572,6 +571,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             length = len(variables)
         elif len(dlls) > length:
             length = len(dlls)
+        elif len(structs) > length:
+            length = len(structs)
+
         self.window.POI_tableWidget.setRowCount(length)
 
         self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
@@ -611,6 +613,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
             item = QListWidgetItem(dlls[i]['name'])
             if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----STRUCTS-----"))
+        for i in range(len(structs)):
+            if 'type' in structs[i]:
+                self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(structs[i]['type']))
+            item = QListWidgetItem(structs[i]['type'])
+            if getComment(structs[i]['type'], "Struct", self.window.comment_text):
                 addIcon(item)
             self.window.poi_list.addItem(item)
 
@@ -901,8 +912,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit,
                 self.window.protoFieldName_lineEdit,self.window.protoFieldType_lineEdit)
 
-        if self.window.dpoimPoiType_dropdown.currentText() == "Struct":
-            processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text)
+        # if self.window.dpoimPoiType_dropdown.currentText() == "Struct":
+        #     processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text)
+
     def callSaveComment(self):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
