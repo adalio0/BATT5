@@ -641,12 +641,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Clear comment text
     def clearComment(self):
-	self.window.comment_text.clear()
+        self.window.comment_text.clear()
 
     #disable checkbox 
     def disableCheck(self):
         self.window.check_allpoi.setCheckable(False)
     #enable checkbox
+    
     def enableCheck(self):
         self.window.check_allpoi.setCheckable(True)    
 
