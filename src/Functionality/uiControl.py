@@ -262,6 +262,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # We build the menu.
         menu = QtWidgets.QMenu()
         menu.addAction("Delete", self.deleteProject)
+        # menu.addAction("Delete", self.showConfirmationDeleteProject)
+
         menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
     # Initialize the project box with all the current projects from database
@@ -697,7 +699,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.addItem(QListWidgetItem("-----STRUCTS-----"))
         for i in range(len(structs)):
             if 'type' in structs[i]:
-                self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(structs[i]['type']))
+                tableItem = QTableWidgetItem(structs[i]['type'])
+                if getComment(structs[i]['type'], "Struct", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 4, tableItem)
             item = QListWidgetItem(structs[i]['type'])
             if getComment(structs[i]['type'], "Struct", self.window.comment_text):
                 addIcon(item)
@@ -928,10 +933,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
-        self.windowAUS = QtWidgets.QWidget()
+        self.windowAUS = QtWidgets.QDialog()
         self.ui = Ui_Form()
         self.ui.setupUi(self.windowAUS)
-        self.ui.windowAUS()
+        self.ui.windowAUS.show()
 
     # Shows ErrFile window
     def showErrFile(self):
