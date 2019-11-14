@@ -26,6 +26,7 @@ def convertPluginXML(filepath):
 # ---------------- MANUAL PLUGIN CONVERSION ----------------
 def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     plugDict = {
+        '_id': '',
         'name': name,
         'description': desc,
         'pointOfInterest': {

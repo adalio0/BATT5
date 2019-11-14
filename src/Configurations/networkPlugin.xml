@@ -23,6 +23,30 @@
 			<name>TVVJ47y85rW4</name>
 		</string>
 
+		<variable>
+			<name>var_8h</name>
+		</variable>
+
+		<variable>
+			<name>var_16h</name>
+		</variable>
+
+		<dll>
+			<name>msvcrt.dll_exit</name>
+		</dll>
+
+		<dll>
+			<name>msvcrt.dll_exit222</name>
+		</dll>
+
+		<packetProtocol>
+			<name>fakeName</name>
+		</packetProtocol>
+
+		<packetProtocol>
+			<name>fakeName2</name>
+		</packetProtocol>
+
 	</pointOfInterest>
 
 	<output>
