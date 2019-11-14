@@ -801,7 +801,7 @@ class Ui_BATT5(object):
 
     def retranslateUi(self, BATT5):
         _translate = QtCore.QCoreApplication.translate
-        BATT5.setWindowTitle(_translate("BATT5", "MainWindow"))
+        BATT5.setWindowTitle(_translate("BATT5", "BATT5"))
         self.project_box.setTitle(_translate("BATT5", "Projects"))
         self.projectSearch_lineEdit.setText(_translate("BATT5", "Search.."))
         self.projectNavigator_tree.headerItem().setText(0, _translate("BATT5", "Projects"))

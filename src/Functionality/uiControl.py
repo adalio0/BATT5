@@ -277,11 +277,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
-        item, text, binaryPath = setCurrentProject(selected)
-        if selected:
-            self.setWindowTitle(item)
-        else:
-            self.setWindowTitle("BATT5")
+        text, binaryPath = setCurrentProject(selected)
+        self.setWindowTitle(setWindowTitle())
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
@@ -929,6 +926,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginBox()
         self.populatePluginDD()
         self.populateManagePluginDD()
+        self.populatePoiFromPlugin()
 
     # save data from poi view in management tab
     def callProcessPOIData(self):

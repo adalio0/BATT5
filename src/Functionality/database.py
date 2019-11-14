@@ -30,6 +30,12 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
+def setWindowTitle():
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                return p['name']
+
 
 def getFilterPoi(plugin):
     for p in plugin_db.find():
@@ -41,7 +47,6 @@ def getFilterPoi(plugin):
 
 # Gets all the information of the current project from the database and sets it into the database
 def setCurrentProject(selected):
-    item = ""
     if selected:
         db_1.current.drop()
         item = selected[0].text(0)
@@ -77,7 +82,7 @@ def setCurrentProject(selected):
                         text += "<b>" + "Stripped" + "</b>: " + b.get('stripped') + "<br> </font>"
                         binaryPath = b.get('file')
 
-    return item, text, binaryPath
+    return text, binaryPath
 
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
