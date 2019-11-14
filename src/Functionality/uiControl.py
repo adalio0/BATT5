@@ -171,6 +171,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Create POI Selection ----------------------
         self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.callSwitchPOITypeView)
+        self.window.dpoimSave_button.clicked.connect(self.callProcessPOIData)
 
         # ---- Create Plugin Selection ----------------------
         self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.callSwitchPluginCreateView)
@@ -300,7 +301,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def setPlugin(self):
         selected = self.window.pluginSelection_dropdown.currentText()
-        setCurrentPlugin(selected)
+        getCurrentPlugin(selected)
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
@@ -344,19 +345,37 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             # Call appropriate method to display poi
             if poi == 'Function':
                 self.enableCheck()
-                self.displayFunctions(content)
+                if self.window.pluginSelection_dropdown.currentText() == 'None':
+                    self.displayFunctions(content)
+                else:
+                    filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
+                    self.displayFilteredFunctions(filterContent, content)
             elif poi == 'String':
                 self.disableCheck()
-                self.displayString(content)
+                if self.window.pluginSelection_dropdown.currentText() == 'None':
+                    self.displayString(content)
+                else:
+                    filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
+                    self.displayFilterStrings(filterContent, content)
             elif poi == 'Variable':
                 self.disableCheck()
-                self.displayVariable(content)
+                if self.window.pluginSelection_dropdown.currentText() == 'None':
+                    self.displayVariable(content)
+                else:
+                    filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
+                    self.displayFilteredVariable(filterContent, content)
             elif poi == 'DLL':
                 self.disableCheck()
                 self.displayDll(content)
             elif poi == 'Struct':
                 self.disableCheck()
                 self.displayStruct(content)
+
+                if self.window.pluginSelection_dropdown.currentText() == 'None':
+                    self.displayDll(content)
+                else:
+                    filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
+                    self.displayFilteredDll(filterContent, content)
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
@@ -381,6 +400,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
+    # Displays the filtered functions based on the selected plugin in Analysis box and POI box
+    def displayFilteredFunctions(self, filterContent, content):
+        self.window.POI_tableWidget.setColumnCount(6)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
+        self.window.POI_tableWidget.setRowCount(len(filterContent['function']))
+        for j in range(len(filterContent['function'])):
+            for i in range(len(content)):
+                if content[i]['name'] in filterContent['function'][j]['name']:
+                    if 'offset' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(str(content[i]['offset'])))
+                    if 'name' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(content[i]['name']))
+                    if 'size' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(str(content[i]['size'])))
+                    if 'callrefs' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(str(len(content[i]['callrefs']))))
+                    if 'spvars' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 4, QTableWidgetItem(str(len(content[i]['spvars']))))
+                    if 'regvars' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 5, QTableWidgetItem(str(len(content[i]['regvars']))))
+
+                    item = QListWidgetItem(content[i]['name'])
+                    item.setCheckState(QtCore.Qt.Checked)
+                    self.window.poi_list.addItem(item)
+
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
         self.window.POI_tableWidget.setColumnCount(5)
@@ -400,6 +444,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             item = QListWidgetItem(content[i]['string'])
             self.window.poi_list.addItem(item)
+
+    # Displays the filtered strings based on the selected plugin in Analysis box and POI box
+    def displayFilterStrings(self, filterContent, content):
+        self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
+        self.window.POI_tableWidget.setRowCount(len(filterContent['string']))
+        for j in range(len(filterContent['string'])):
+            for i in range(len(content)):
+                if content[i]['string'] in filterContent['string'][j]['name']:
+                    if 'type' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(content[i]['type']))
+                    if 'size' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(str(content[i]['size'])))
+                    if 'length' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(str(content[i]['length'])))
+                    if 'section' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(str(content[i]['section'])))
+                    if 'string' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 4, QTableWidgetItem(content[i]['string']))
+
+                    item = QListWidgetItem(content[i]['string'])
+                    self.window.poi_list.addItem(item)
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
@@ -421,10 +487,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item = QListWidgetItem(content[i]['name'])
             self.window.poi_list.addItem(item)
 
+    # Displays the filtered variables based on the selected plugin in Analysis box and POI box
+    def displayFilteredVariable(self, filterContent, content):
+        self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
+        self.window.POI_tableWidget.setRowCount(len(filterContent['variable']))
+        for j in range(len(filterContent['variable'])):
+            for i in range(len(content)):
+                if content[i]['name'] in filterContent['variable'][j]['name']:
+                    if 'name' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(content[i]['name']))
+                    if 'kind' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(content[i]['kind']))
+                    if 'type' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(content[i]['type']))
+                    if 'offset' in content[i]['ref']:
+                        self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(content[i]['ref']['base']))
+                    if 'offset' in content[i]['ref']:
+                        self.window.POI_tableWidget.setItem(j, 4, QTableWidgetItem(content[i]['ref']['offset']))
+
+                    item = QListWidgetItem(content[i]['name'])
+                    self.window.poi_list.addItem(item)
+
     # Displays the dlls extracted from Static Analysis in Analysis box and POI box
     def displayDll(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'type', 'bind', 'vaddr'])
         self.window.POI_tableWidget.setColumnCount(4)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'type', 'bind', 'vaddr'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'name' in content[i]:
@@ -452,6 +540,26 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item = QListWidgetItem(content[i]['type'])
             self.window.poi_list.addItem(item)
 
+    # Displays the filtered dlls based on the selected plugin in Analysis box and POI box
+    def displayFilteredDll(self, filterContent, content):
+        self.window.POI_tableWidget.setColumnCount(4)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'type', 'bind', 'vaddr'])
+        self.window.POI_tableWidget.setRowCount(len(filterContent['dll']))
+        for j in range(len(filterContent['dll'])):
+            for i in range(len(content)):
+                if content[i]['name'] in filterContent['dll'][j]['name']:
+                    if 'name' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 0, QTableWidgetItem(content[i]['name']))
+                    if 'type' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 1, QTableWidgetItem(content[i]['type']))
+                    if 'bind' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 2, QTableWidgetItem(content[i]['bind']))
+                    if 'vaddr' in content[i]:
+                        self.window.POI_tableWidget.setItem(j, 3, QTableWidgetItem(content[i]['vaddr']))
+
+                    item = QListWidgetItem(content[i]['name'])
+                    self.window.poi_list.addItem(item)
+
     # Displays all extracted pois from Static Analysis in Analysis box and POI box
     def displayAll(self, functions, strings, variables, dlls):
         global allpoiTypeCheck
@@ -471,6 +579,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'name' in functions[i]:
                 self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(functions[i]['name']))
             item = QListWidgetItem(functions[i]['name'])
+            # set icon
+            if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                addIcon(item)
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
@@ -479,14 +590,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'string' in strings[i]:
                 self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
             item = QListWidgetItem(strings[i]['string'])
+            # set icon
+            if getComment(strings[i]['string'], "String", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
-
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
             if 'name' in variables[i]:
                 self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]['name']))
             item = QListWidgetItem(variables[i]['name'])
+            # set icon
+            if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
 
         self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
@@ -494,7 +610,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'name' in dlls[i]:
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
             item = QListWidgetItem(dlls[i]['name'])
-            #item.setCheckState(QtCore.Qt.Checked)
+            if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
 
     # ---- Following methods provide all the search functionality ----------------------------------------
@@ -764,9 +881,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginDD()
         self.populateManagePluginDD()
 
+    #save data from poi view in management tab
+    def callProcessPOIData(self):
+        if self.window.dpoimPoiType_dropdown.currentText() == "Function":
+            processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit, self.window.funcRetType_lineEdit, self.window.funcRetCal_lineEdit,
+                self.window.funcCallFrom_lineEdit,self.window.funcDestAddress_lineEdit, self.window.funcNumParam_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "String":
+            processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit,self.window.strType_lineEdit,self.window.strSize_lineEdit, 
+                self.window.strCallFrom_lineEdit,self.window.strDest_lineEdit,self.window.strSection_linEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Variable":
+            processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit,self.window.varType_lineEdit,self.window.varValue_lineEdit,self.window.varSize_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "DLL":
+            processPOIDataDLL(self.window.dpoimPlugin_dropdown,self.window.dllName_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Packet Protocol":
+            processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit,
+                self.window.protoFieldName_lineEdit,self.window.protoFieldType_lineEdit)
+
+        if self.window.dpoimPoiType_dropdown.currentText() == "Struct":
+            processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text)
     def callSaveComment(self):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
+        addIcon(self.window.poi_list.currentItem())
 
     def callHighlightList(self):
         try:
@@ -777,7 +917,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays a detailed view of the plugin
     def displayPlugin(self):
         item = self.window.pluginManagement_list.currentItem().text()
-        name, description, poi, output = setCurrentPlugin(item)
+        name, description, poi, output = getCurrentPlugin(item)
 
         self.window.dpmCreate_dropdown.setCurrentIndex(1)
         self.window.dpmPluginName_lineEdit.setText(name)
@@ -794,6 +934,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutName_lineEdit.setText("")
         self.window.dpmOutFuncName_lineEdit.setText("")
         self.window.dpmOutFuncSource_lineEdit.setText("")
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
