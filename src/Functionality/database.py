@@ -11,7 +11,6 @@ function_db = db['function']
 string_db = db['string']
 variable_db = db['variable']
 dll_db = db['dll']
-
 db_1 = client['current_project']
 current_db = db_1['current']
 current_plugin_db = db_1['current_plugin']
@@ -298,6 +297,9 @@ def deleteAPlugin(plugin):
         {'name': plugin}
     )
 
+
+def saveComment(comment, poi):
+    return
 
 # Delete EVERYTHING from project
 def deleteDatabase():

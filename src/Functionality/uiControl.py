@@ -88,6 +88,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.clearComment)
+        self.window.commentSave_button.clicked.connect(self.callSaveComment)
 
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
@@ -302,8 +303,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         poi = str(self.window.poiType_dropdown.currentText())
         if poi == 'Extract All':
             functions, strings, variables, dlls = getAllPoi(poi)
-            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
             self.window.POI_tableWidget.setColumnCount(4)
+            self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's"])
 
             # Call method to display every poi
             self.displayAll(functions, strings, variables, dlls)
@@ -321,8 +322,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'callrefs', 'spvars', 'regvars'])
         self.window.POI_tableWidget.setColumnCount(6)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'offset' in content[i]:
@@ -344,8 +345,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['type', 'size', 'length', 'section', 'string'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'type' in content[i]:
@@ -364,8 +365,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'kind', 'type', 'base', 'offset'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'name' in content[i]:
@@ -678,6 +679,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginDD()
         self.populateManagePluginDD()
 
+    def callSaveComment(self):
+        print('nut')
+        return
+
     # Displays a detailed view of the plugin
     def displayPlugin(self):
         item = self.window.pluginManagement_list.currentItem().text()
@@ -698,7 +703,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutName_lineEdit.setText("")
         self.window.dpmOutFuncName_lineEdit.setText("")
         self.window.dpmOutFuncSource_lineEdit.setText("")
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
