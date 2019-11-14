@@ -486,6 +486,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callHighlightTable(self):
         try:
             highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
+            getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
+                       self.window.comment_text)
         except AttributeError:
             pass
 
@@ -716,8 +718,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populateManagePluginDD()
 
     def callSaveComment(self):
-        print('nut')
-        return
+        saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                    self.window.poiType_dropdown.currentText())
 
     # Displays a detailed view of the plugin
     def displayPlugin(self):
