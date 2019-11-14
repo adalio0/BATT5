@@ -96,6 +96,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # When clicking a Project in the project box, the project properties will update to the selected project
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)
 
+        # right click functionality
+        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.window.projectNavigator_tree.customContextMenuRequested.connect(self.menuContextTree)
+
         # When clicking a plugin in the plugin dropdown, the database will update the selected plugin
         self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.setPlugin)
 
@@ -117,6 +121,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- Comment Functionality ---------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
+        self.window.POI_tableWidget.currentItemChanged.connect(self.callHighlightList)
+
         # ---- Filters ---------------------------------
         # When changing POI type in the drop down will update whats displayed
         self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
@@ -133,7 +139,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
-        # Clicking on Run Static Analysis button calls runDynamic method
+        # Clicking on Run Dynamic Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -232,6 +238,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # ---- Following methods initialize the main window with all the project, plugin and poi data -----------
 
+    def menuContextTree(self, point):
+        # Infos about the node selected.
+        index = self.window.projectNavigator_tree.indexAt(point)
+
+        if not index.isValid():
+            return
+
+        item = self.window.projectNavigator_tree.itemAt(point)
+        name = item.text(0)  # The text of the node.
+
+        # We build the menu.
+        menu = QtWidgets.QMenu()
+        menu.addAction("Delete", self.deleteProject)
+
+        menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
+
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
@@ -301,7 +323,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.analysisType_stack.setCurrentIndex(0)
             self.window.runStaticAnalysis_button.setText('Run Static Analysis')
 
-    # Dispalys POIs in the Analysis box
+    # Displays POIs in the Analysis box
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
@@ -440,7 +462,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
             item = QListWidgetItem(strings[i]['string'])
             self.window.poi_list.addItem(item)
-            
+
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
@@ -463,6 +485,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSearchProject(self):
         try:
             searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+            if not self.window.projectSearch_lineEdit.text():
+                self.populateProjectBox()
         except AttributeError:
             pass
 
@@ -470,6 +494,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSearchPoi(self):
         try:
             searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+            if not self.window.poiSearch_lineEdit.text():
+                self.displayPoi()
         except AttributeError:
             pass
 
@@ -528,7 +554,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Deletes a project
     def deleteProject(self):
         if self.window.projectNavigator_tree.currentItem():
-            project = self.window.projectNavigator_tree.currentItem().text()
+            project = self.window.projectNavigator_tree.currentItem().text(0)
             deleteAProject(project)
 
             self.window.projectNavigator_tree.clear()
@@ -650,10 +676,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.check_allpoi.setCheckable(False)
 
     # enable checkbox
-    def enableCheck(self):
-        self.window.check_allpoi.setCheckable(True)    
 
-    # Checks if static has been performed, if it has unlock dynamic
+    def enableCheck(self):
+        self.window.check_allpoi.setCheckable(True)
+
+        # Checks if static has been performed, if it has unlock dynamic
+
     def unlockDynamic(self):
         if checkStatic():
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -683,7 +711,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for i in range(self.window.poi_list.count()):
                     item = self.window.poi_list.item(i)
                     item.setCheckState(QtCore.Qt.Checked)
-       
+
             elif self.window.check_allpoi.checkState() == 0:
                 for i in range(self.window.poi_list.count()):
                     item = self.window.poi_list.item(i)
@@ -720,6 +748,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         print('nut')
         return
 
+    def callHighlightList(self):
+        try:
+            HighlightList(self.window.POI_tableWidget.currentItem().text(), self.window.poi_list)
+        except AttributeError:
+            pass
+
     # Displays a detailed view of the plugin
     def displayPlugin(self):
         item = self.window.pluginManagement_list.currentItem().text()
@@ -727,7 +761,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.window.dpmCreate_dropdown.setCurrentIndex(1)
         self.window.dpmPluginName_lineEdit.setText(name)
-        self.window. dpmPluginDesc_lineEdit.setText(description)
+        self.window.dpmPluginDesc_lineEdit.setText(description)
         self.window.dpmOutName_lineEdit.setText(output['name'])
         self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
         self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
