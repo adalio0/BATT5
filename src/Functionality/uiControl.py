@@ -780,7 +780,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncName_lineEdit.setText("")
         self.window.dpmOutFuncSource_lineEdit.setText("")
 
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()

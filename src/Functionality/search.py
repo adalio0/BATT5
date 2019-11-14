@@ -109,8 +109,10 @@ def highlightTable(poi, POI_tableWidget):
     tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
 
     for item in tablePoi:
-        item.setSelected(True)
-        POI_tableWidget.setCurrentItem(item)
+        if item == poi:
+            item.setSelected(True)
+            POI_tableWidget.setCurrentItem(item)
+            return
 
 
 def HighlightList(poi, poi_list):
@@ -118,6 +120,9 @@ def HighlightList(poi, poi_list):
     list_of_pois = poi_list.findItems(poi, QtCore.Qt.MatchContains)
 
     for item in list_of_pois:
-        item.setSelected(True)
-        poi_list.setCurrentItem(item)
+        print(item.text(), poi)
+        if item.text() == poi:
+            item.setSelected(True)
+            poi_list.setCurrentItem(item)
+            return
 
