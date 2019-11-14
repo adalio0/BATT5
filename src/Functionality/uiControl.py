@@ -4,7 +4,8 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, Path(__file__).parents[2].as_posix())
+
+# sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -358,7 +359,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
         self.window.POI_tableWidget.setColumnCount(6)
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(
+            ['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'offset' in content[i]:
@@ -434,7 +436,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['vaddr']))
 
             item = QListWidgetItem(content[i]['name'])
-            #item.setCheckState(QtCore.Qt.Checked)
+            # item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
     # Displays all extracted pois from Static Analysis in Analysis box and POI box
@@ -456,6 +458,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'name' in functions[i]:
                 self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(functions[i]['name']))
             item = QListWidgetItem(functions[i]['name'])
+            # set icon
+            if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                addIcon(item)
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
@@ -464,14 +469,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'string' in strings[i]:
                 self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
             item = QListWidgetItem(strings[i]['string'])
+            # set icon
+            if getComment(strings[i]['string'], "String", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
-
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
             if 'name' in variables[i]:
                 self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]['name']))
             item = QListWidgetItem(variables[i]['name'])
+            # set icon
+            if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
 
         self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
@@ -479,7 +489,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'name' in dlls[i]:
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
             item = QListWidgetItem(dlls[i]['name'])
-            #item.setCheckState(QtCore.Qt.Checked)
+            if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                addIcon(item)
             self.window.poi_list.addItem(item)
 
     # ---- Following methods provide all the search functionality ----------------------------------------
@@ -774,6 +785,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSaveComment(self):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
+        addIcon(self.window.poi_list.currentItem())
 
     def callHighlightList(self):
         try:
@@ -801,6 +813,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutName_lineEdit.setText("")
         self.window.dpmOutFuncName_lineEdit.setText("")
         self.window.dpmOutFuncSource_lineEdit.setText("")
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
