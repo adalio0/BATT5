@@ -20,7 +20,6 @@ current_db = db_1['current']
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
-
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
     flag = ''
@@ -29,7 +28,6 @@ def checkStatic():
             if p['_id'] == c.get('id'):
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
-
 
 def setWindowTitle():
     for c in current_db.find():
@@ -40,7 +38,6 @@ def setWindowTitle():
 
             else:
                 return "BATT5"
-
 
 def getFilterPoi(plugin):
     for p in plugin_db.find():
@@ -90,9 +87,7 @@ def setCurrentProject(selected):
 
     return text, binaryPath
 
-
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
-
 
 # Gets all of the projects that were created from the database
 def getProjects():
@@ -134,25 +129,6 @@ def getCurrentPluginInfo(selected):
 
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
-
-
-# Gets all of the projects that were created from the database
-def getProjects():
-    # deleteDatabase()
-    projects = []
-    for p in project_db.find():
-        projects.append(p.get('name'))
-    return projects
-
-
-# Gets all the current plugins for the project
-def getPlugins():
-    # deletePluginDatabase()
-    plugins = []
-    for p in plugin_db.find():
-        plugins.append(p.get('name'))
-    return plugins
-
 
 # Gets the path of the current project's file
 def getCurrentFilePath():
@@ -446,13 +422,11 @@ def deleteAProject(project):
         {'name': project}
     )
 
-
 # Deletes a project from the database
 def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
-
 
 # Deletes a poi from the plugin database
 def deleteAPoiFromPlugin(name, plugin):
@@ -460,7 +434,6 @@ def deleteAPoiFromPlugin(name, plugin):
         {'name': name}
     )
     plugin_db.insert_one(plugin)
-
 
 # Delete EVERYTHING from project
 def deleteDatabase():
@@ -472,7 +445,6 @@ def deleteDatabase():
     db.string.drop()
     db.variable.drop()
     db.dll.drop()
-
 
 # Delete EVERYTHING from plugins
 def deletePluginDatabase():
