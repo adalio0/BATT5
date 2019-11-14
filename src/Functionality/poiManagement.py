@@ -32,12 +32,12 @@ def convertFuncManual(name):
 
 def convertStringManual(name, type='', size='', callFromAdd='', destAdd='', section=''):
     strDict = {
-        'name': name,
-        'type': type,
-        'size': size,
-        'callFromAddress': callFromAdd,
-        'destinationAddress': destAdd,
-        'section': section
+        'name': name
+        # 'type': type,
+        # 'size': size,
+        # 'callFromAddress': callFromAdd,
+        # 'destinationAddress': destAdd,
+        # 'section': section
     }
     return strDict
 
@@ -49,21 +49,20 @@ def convertDllManual(name):
 
 def convertVarManual(name, type='', val='', size=''):
     varDict = {
-        'name': name,
-        'type': type,
-        'value': val,
-        'size': size
+        'name': name
+        # 'type': type,
+        # 'value': val,
+        # 'size': size
     }
     return varDict
 
 def convertPacketProtocolManual(name, fieldName='', fieldType=''):
     ppDict = {
-        'name': name,
-        'fieldName': fieldName,
-        'fieldType': fieldType
+        'name': name
+        # 'fieldName': fieldName,
+        # 'fieldType': fieldType
     }
     return ppDict
-
 
 def convertStructManual():
     # TODO

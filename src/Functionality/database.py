@@ -233,7 +233,6 @@ def getAllPoi(poi):
 
     return functions[0], strings[0], variables[0], dlls[0], structs[0]
 
-
 def getComment(poiName, dropText, commentBox):
     database = getAppropriatePoi(dropText)
     if dropText == 'Extract All':
@@ -250,7 +249,6 @@ def getComment(poiName, dropText, commentBox):
                 commentBox.setText(d.get('comment'))
                 if d.get('comment'):
                     return 1
-
 
 def getPoisFromPlugin(plugin):
     pois = []
