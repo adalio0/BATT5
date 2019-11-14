@@ -28,6 +28,7 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
+
 # ---- Setters for the database (sets the current project/plugin) --------------------------------------------
 
 
@@ -86,6 +87,7 @@ def getCurrentPlugin(selected):
                 output = p['output']
     return name, description, pointOfInterest, output
 
+
 def getCurrentPluginInfo(selected):
     if selected:
         for p in plugin_db.find():
@@ -98,7 +100,7 @@ def getCurrentPluginInfo(selected):
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    # deleteDatabase()
+    #deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(p.get('name'))
@@ -193,6 +195,7 @@ def getAllPoi(poi):
                                     data = []
     return functions[0], strings[0], variables[0], dlls[0]
 
+
 def getComment(poiName, dropText, commentBox):
     database = getAppropriatePoi(dropText)
     if dropText == 'Extract All':
@@ -200,10 +203,16 @@ def getComment(poiName, dropText, commentBox):
             for d in database[i].find():
                 if poiName == d.get('name'):
                     commentBox.setText(d.get('comment'))
+                    if d.get('comment'):
+                        return 1
+
     else:
         for d in database.find():
             if poiName == d.get('name'):
                 commentBox.setText(d.get('comment'))
+                if d.get('comment'):
+                    return 1
+
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
@@ -231,6 +240,7 @@ def saveComment(comment, poiName, dropText):
             {'name': poiName},
             {'$set': {'comment': comment}},
             upsert=False)
+
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
@@ -317,11 +327,13 @@ def deleteAProject(project):
         {'name': project}
     )
 
+
 # Deletes a project from the database
 def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
+
 
 # Delete EVERYTHING from project
 def deleteDatabase():
