@@ -1,9 +1,3 @@
-from xmljson import parker as pk
-import xml.etree.ElementTree as ET
-import json
-import xmlschema
-from pathlib import Path
-from src.Functionality.database import *
 from src.Functionality.poiManagement import *
 
 # ---------------- XML VALIDATION ----------------

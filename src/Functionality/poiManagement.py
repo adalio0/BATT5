@@ -30,14 +30,9 @@ def convertFuncManual(name):
     }
     return funcDict
 
-def convertStringManual(name, type='', size='', callFromAdd='', destAdd='', section=''):
+def convertStringManual(name):
     strDict = {
         'name': name
-        # 'type': type,
-        # 'size': size,
-        # 'callFromAddress': callFromAdd,
-        # 'destinationAddress': destAdd,
-        # 'section': section
     }
     return strDict
 
@@ -47,26 +42,23 @@ def convertDllManual(name):
     }
     return dllDict
 
-def convertVarManual(name, type='', val='', size=''):
+def convertVarManual(name):
     varDict = {
         'name': name
-        # 'type': type,
-        # 'value': val,
-        # 'size': size
     }
     return varDict
 
-def convertPacketProtocolManual(name, fieldName='', fieldType=''):
+def convertPacketProtocolManual(name):
     ppDict = {
         'name': name
-        # 'fieldName': fieldName,
-        # 'fieldType': fieldType
     }
     return ppDict
 
-def convertStructManual():
-    # TODO
-    return 0
+def convertStructManual(name):
+    structDict = {
+        'name': name
+    }
+    return structDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
 def addFuncToPlugin(pluginDict, funcDict):
@@ -135,37 +127,33 @@ def switchPOITypeView(poiType, addPOI_stack):
     elif poiType == 'Struct':
         addPOI_stack.setCurrentIndex(6)
 
-def processPOIDataFun(dpoimPlugin_dropdown,funcName_lineEdit,funcRetType_lineEdit,funcRetCal_lineEdit,
-    funcCallFrom_lineEdit,funcDestAddress_lineEdit,funcNumParam_lineEdit):
+def processPOIDataFun(dpoimPlugin_dropdown, funcName_lineEdit):
     funDict = convertFuncManual(funcName_lineEdit.text())
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addFuncToPlugin(finalPD, funDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
     
 
-def processPOIDataStr(dpoimPlugin_dropdown,strName_lineEdit,strType_lineEdit,strSize_lineEdit, 
-                strCallFrom_lineEdit,strDest_lineEdit,trSection_linEdit):
-    strDict = convertStringManual(strName_lineEdit.text(),strType_lineEdit.text(),strSize_lineEdit.text(), 
-                strCallFrom_lineEdit.text(),strDest_lineEdit.text(),trSection_linEdit.text())
+def processPOIDataStr(dpoimPlugin_dropdown, strName_lineEdit):
+    strDict = convertStringManual(strName_lineEdit.text())
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addStringToPlugin(finalPD, strDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
 
-def processPOIDataVar(dpoimPlugin_dropdown,varName_lineEdit,varType_lineEdit,varValue_lineEdit,varSize_lineEdit):
-    varDict = convertVarManual(varName_lineEdit.text(),varType_lineEdit.text(),varValue_lineEdit.text(),varSize_lineEdit.text())
+def processPOIDataVar(dpoimPlugin_dropdown, varName_lineEdit):
+    varDict = convertVarManual(varName_lineEdit.text())
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addVarToPlugin(finalPD, varDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
 
-def processPOIDataDLL(dpoimPlugin_dropdown,dllName_lineEdit):
+def processPOIDataDLL(dpoimPlugin_dropdown, dllName_lineEdit):
     dllDict = convertDllManual(dllName_lineEdit.text())
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addDllToPlugin(finalPD, dllDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
 
-def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself,
-                protoFieldName_lineEdit,protoFieldType_lineEdit):
-    ppDict = convertPacketProtocolManual(protoName_lineEditself.text(),protoFieldName_lineEdit.text(),protoFieldType_lineEdit.text())
+def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself):
+    ppDict = convertPacketProtocolManual(protoName_lineEditself.text())
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())

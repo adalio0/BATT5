@@ -454,7 +454,6 @@ def deleteDatabase():
     db.dll.drop()
     db.struct.drop()
 
-
 # Delete EVERYTHING from plugins
 def deletePluginDatabase():
     db_2.plugins.drop()

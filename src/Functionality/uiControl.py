@@ -1096,34 +1096,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # save data from poi view in management tab
     def callProcessPOIData(self):
         if self.window.dpoimPoiType_dropdown.currentText() == "Function":
-            processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit, self.window.funcRetType_lineEdit, self.window.funcRetCal_lineEdit,
-                self.window.funcCallFrom_lineEdit,self.window.funcDestAddress_lineEdit, self.window.funcNumParam_lineEdit)
+            processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit)
 
             self.window.poiManagement_list.clear()
             self.populatePoiFromPlugin()
 
         if self.window.dpoimPoiType_dropdown.currentText() == "String":
-            processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit,self.window.strType_lineEdit,self.window.strSize_lineEdit, 
-                self.window.strCallFrom_lineEdit,self.window.strDest_lineEdit,self.window.strSection_linEdit)
+            processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit)
 
             self.window.poiManagement_list.clear()
             self.populatePoiFromPlugin()
 
         if self.window.dpoimPoiType_dropdown.currentText() == "Variable":
-            processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit,self.window.varType_lineEdit,self.window.varValue_lineEdit,self.window.varSize_lineEdit)
+            processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit)
 
             self.window.poiManagement_list.clear()
             self.populatePoiFromPlugin()
 
         if self.window.dpoimPoiType_dropdown.currentText() == "DLL":
-            processPOIDataDLL(self.window.dpoimPlugin_dropdown,self.window.dllName_lineEdit)
+            processPOIDataDLL(self.window.dpoimPlugin_dropdown, self.window.dllName_lineEdit)
 
             self.window.poiManagement_list.clear()
             self.populatePoiFromPlugin()
 
         if self.window.dpoimPoiType_dropdown.currentText() == "Packet Protocol":
-            processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit,
-                self.window.protoFieldName_lineEdit,self.window.protoFieldType_lineEdit)
+            processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit)
 
             self.window.poiManagement_list.clear()
             self.populatePoiFromPlugin()
