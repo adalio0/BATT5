@@ -22,13 +22,14 @@ class ProjectWindow(QtWidgets.QDialog):
         # cancel button pressed
         self.window.cancel_button.clicked.connect(self.close)
 
-    # ---- Extracts File Location -----------------------------------------------------------------------
+    # ---- Extracts file location -----------------------------------------------------------------------
     def showFileExplorer(self):
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.path_lineEdit.setText(name)
-        self.setProperties()
+        if name:
+            self.setProperties()
 
-    # ---- Extracts Text From Fields and Assigns Them To Project Object and creates xml file -------
+    # ---- Extracts text from fields and inserts them into the project database -----------------
     def createProject(self):
         if self.window.projectName_lineEdit.text() == "":
             self.showErr()
@@ -113,6 +114,8 @@ class ProjectWindow(QtWidgets.QDialog):
             'binary': binary['_id'],
 
             'static_analysis': {
+                'performed': False,
+
                 '01': static_analysis['_id']
             },
 
@@ -135,12 +138,12 @@ class ProjectWindow(QtWidgets.QDialog):
     def accept(self):
         super(ProjectWindow, self).accept()
 
-    # ---- Show Error Message ---------------------------------
+    # ---- Show Error Message ------------------------------------------
     def showErr(self):
         self.windowEF = ErrEmptyFields()
         self.windowEF.show()
 
-    # ---- Sets Data To Project Object and Displays it in Tree Widget -------------------------------------
+    # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
         infile = r2pipe.open(self.window.path_lineEdit.text())
         fileProperties = infile.cmdj("ij")

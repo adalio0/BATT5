@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
@@ -110,9 +108,18 @@ class Ui_BATT5(object):
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
         self.POI_tableWidget = QtWidgets.QTableWidget(self.analysis_box)
+        self.POI_tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.AnyKeyPressed)
+        self.POI_tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.POI_tableWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.POI_tableWidget.setShowGrid(True)
+        self.POI_tableWidget.setGridStyle(QtCore.Qt.SolidLine)
         self.POI_tableWidget.setObjectName("POI_tableWidget")
         self.POI_tableWidget.setColumnCount(0)
         self.POI_tableWidget.setRowCount(0)
+        self.POI_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
+        self.POI_tableWidget.horizontalHeader().setDefaultSectionSize(190)
+        self.POI_tableWidget.horizontalHeader().setMinimumSectionSize(50)
+        self.POI_tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_16.addWidget(self.POI_tableWidget)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.verticalLayout_27.addLayout(self.detailedAnalysis_sublayout)
@@ -141,9 +148,6 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
@@ -153,9 +157,6 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -165,9 +166,6 @@ class Ui_BATT5(object):
         brush = QtGui.QBrush(QtGui.QColor(136, 138, 133))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(136, 138, 133, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.radareConsoleIn_lineEdit.setPalette(palette)
         self.radareConsoleIn_lineEdit.setStyleSheet("color: rgb(136, 138, 133);")
         self.radareConsoleIn_lineEdit.setObjectName("radareConsoleIn_lineEdit")
@@ -191,10 +189,10 @@ class Ui_BATT5(object):
         self.commentButton_layout.setObjectName("commentButton_layout")
         self.commentSave_button = QtWidgets.QPushButton(self.comment_box)
         self.commentSave_button.setObjectName("commentSave_button")
-        self.commentButton_layout.addWidget(self.commentSave_button, 0, 0, 1, 1)
+        self.commentButton_layout.addWidget(self.commentSave_button, 0, 1, 1, 1)
         self.commentClear_button = QtWidgets.QPushButton(self.comment_box)
         self.commentClear_button.setObjectName("commentClear_button")
-        self.commentButton_layout.addWidget(self.commentClear_button, 0, 1, 1, 1)
+        self.commentButton_layout.addWidget(self.commentClear_button, 0, 0, 1, 1)
         self.verticalLayout_2.addLayout(self.commentButton_layout)
         self.commentAndPoi_sublayout.addWidget(self.comment_box)
         self.poi_box = QtWidgets.QGroupBox(self.current_view)
@@ -942,12 +940,3 @@ class Ui_BATT5(object):
         self.actionOpen_Project.setText(_translate("BATT5", "Open Project"))
         self.actionExport_Project.setText(_translate("BATT5", "Export Project"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    BATT5 = QtWidgets.QMainWindow()
-    ui = Ui_BATT5()
-    ui.setupUi(BATT5)
-    BATT5.show()
-    sys.exit(app.exec_())

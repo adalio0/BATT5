@@ -2,8 +2,6 @@ import sys
 import pymongo
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import QTreeWidgetItem
-from numpy import unicode
 from jinja2 import Environment, FileSystemLoader
 import xml.etree.ElementTree as ET
 import os
