@@ -38,6 +38,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
+        self.setWindowTitle("BATT5")
 
         # ---- Main Window ---------------------------------
 
@@ -799,12 +800,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         items = []
         for i in range(self.window.poi_list.count()):
             items.append(self.window.poi_list.item(i).text())
+        #test by hardcoding two known functions
+        items.append("sym.secret_stuff")
+        items.append("sym.even_more_secret")
 
-        path = getCurrentFilePath()
-        # dynamic = dynamicAnalysis(path, items)
+        path = getCurrentFilePath().strip()
+        print(path)
+        dynamic = dynamicAnalysis(path, items)
+        #print(dynamic)
+        #print(self.window.poi_list.item(i).text())
+        for j in range(len(dynamic)):
+            self.window.radareConsoleOut_text.append(dynamic[j])
 
-        # for i in range(len(dynamic)):
-        #     self.promptOut.insertPlainText(dynamic[i])
 
     # ---- Following methods are for deleting a project or plugin from the database -------------------
 
