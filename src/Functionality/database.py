@@ -1,4 +1,5 @@
 import pymongo
+import base64
 
 # Initializes the connection with our local database
 client = pymongo.MongoClient("mongodb://localhost:27017")

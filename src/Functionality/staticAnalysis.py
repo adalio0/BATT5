@@ -1,4 +1,5 @@
 import r2pipe
+import base64
 
 def staticAnalysis(filePath):
     global infile
@@ -12,6 +13,9 @@ def functions_analysis():
 
 def string_analysis():
     strings = infile.cmdj('izzj')
+    # decode from base 64
+    for i in range(len(strings)):
+        strings[i]['string'] = base64.b64decode(strings[i]['string']).decode("utf-8")
     return strings
 
 def variables_analysis():
@@ -38,4 +42,3 @@ def extract_all():
     dll = dll_analysis()
     #print(type(function)) for testing
     return [function, string, variable, dll]
-

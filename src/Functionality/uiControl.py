@@ -549,10 +549,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             items.append(self.window.poi_list.item(i).text())
 
         path = getCurrentFilePath()
-        dynamic = dynamicAnalysis(path, items)
+        # dynamic = dynamicAnalysis(path, items)
 
-        for i in range(len(dynamic)):
-            self.promptOut.insertPlainText(dynamic[i])
+        # for i in range(len(dynamic)):
+        #     self.promptOut.insertPlainText(dynamic[i])
 
     # ---- Following methods are for deleting a project or plugin from the database -------------------
 
