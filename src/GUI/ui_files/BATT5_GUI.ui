@@ -251,7 +251,14 @@ background-color: rgb(186, 189, 182);</string>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_16">
                      <item>
-                      <widget class="QTableWidget" name="POI_tableWidget"/>
+                      <widget class="QTableWidget" name="POI_tableWidget">
+                       <property name="selectionBehavior">
+                        <enum>QAbstractItemView::SelectRows</enum>
+                       </property>
+                       <property name="verticalScrollMode">
+                        <enum>QAbstractItemView::ScrollPerPixel</enum>
+                       </property>
+                      </widget>
                      </item>
                     </layout>
                    </widget>
