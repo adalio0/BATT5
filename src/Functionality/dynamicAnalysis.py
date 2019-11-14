@@ -7,7 +7,7 @@ import json
 # the arguments and their values at the breakpoint then after the return call
 
 
-def dynamicAnalysis(filePath,funcList):
+def dynamicAnalysis(filePath, funcList):
     # infile = r2pipe.open(filePath, ['-d', '-e', 'dbg.profile=profile.rr2']) #open file, will do only once
     infile = r2pipe.open(filePath)
     # infile.cmd('e dbg.profile=robot.rr2')  # this line should configure things properly should input be required
@@ -17,10 +17,10 @@ def dynamicAnalysis(filePath,funcList):
         curntFunc = funcList[i]
         progress.append("Function Name:")
         progress.append(curntFunc)
-        infile.cmd("ood") # open in debug mode
+        infile.cmd("ood")   # open in debug mode
         breakpointString = "db " + str(curntFunc)
         infile.cmd(breakpointString) # first set the breakpoint
-        infile.cmd("dc") # continue to run until breakpoint is hit, there may be some input required which still not sure where to pass it
+        infile.cmd("dc")    # continue to run until breakpoint is hit, there may be some input required which still not sure where to pass it
         progress.append("Hit breakpoint @ " + curntFunc)
         argsnvar = infile.cmd("afvd")   # get args and local vars at this point
         progress.append("----------Initial Values of Args and Variables----------")

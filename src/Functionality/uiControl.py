@@ -3,8 +3,9 @@
 import os
 import sys
 from pathlib import Path
-
-# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, Path(__file__).parents[2].as_posix())
+#sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
+#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -23,11 +24,9 @@ from src.Functionality.poiManagement import *
 from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
+from src.Functionality.dynamicAnalysis import dynamicAnalysis
 
-static = False
 dynamic = False
-
-projectList = []
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -41,7 +40,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the projects box with current projects
         self.populateProjectBox()
 
-        # Populate the plugin box with the current plugins
+        # Populate the management plugin box with the current plugins
         self.populatePluginBox()
 
         # Populate the dropdown list of plugins
@@ -130,7 +129,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
-        # Clicking on Run Static Analysis button calls runDynamic method
+        # Clicking on Run Dynamic Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # ---- Management Tab -------------------------------
@@ -149,6 +148,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on a plugin inside the list will show a detailed view of it
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
+
+        # Clicking on the new button below the management plugin box
+        self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -270,8 +272,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Static Analysis w/ database stuff
     def runStatic(self):
-        global static
-        static = True
         if self.window.runStaticAnalysis_button.text() == 'Run Static Analysis':
             # print('PERFORMING SA')
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -440,18 +440,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
 
-    # Displays a detailed view of the plugin
-    def displayPlugin(self):
-        item = self.window.pluginManagement_list.currentItem().text()
-        name, description, poi, output = setCurrentPlugin(item)
-
-        self.window.dpmCreate_dropdown.setCurrentIndex(1)
-        self.window.dpmPluginName_lineEdit.setText(name)
-        self.window. dpmPluginDesc_lineEdit.setText(description)
-        self.window.dpmOutName_lineEdit.setText(output['name'])
-        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
-        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
-
     # ---- Following methods provide all the search functionality ----------------------------------------
 
     # Search functionality for the project box
@@ -496,21 +484,49 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Dynamic Analysis
     def runDynamic(self):
-        # switch views
-        self.window.analysisType_stack.setCurrentIndex(1)
-        self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
-
-        global static
         global dynamic
-        if static is False:
-            pass
-        elif dynamic is False:
-            dynamic = True
-            # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
-        else:
-            dynamic = False
-            self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+        if checkStatic():
+            # switch views
+            self.window.analysisType_stack.setCurrentIndex(1)
+            self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
 
+            if dynamic is False:
+                dynamic = True
+                # self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
+            else:
+                dynamic = False
+                self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+
+        items = []
+        for i in range(self.window.poi_list.count()):
+            items.append(self.window.poi_list.item(i).text())
+
+        path = getCurrentFilePath()
+        dynamic = dynamicAnalysis(path, items)
+
+        for i in range(len(dynamic)):
+            self.promptOut.insertPlainText(dynamic[i])
+
+        # ---- Following methods are for deleting a project or plugin from the database -------------------
+
+        # Deletes a project
+
+    def deleteProject(self):
+        print('delete')
+
+        # Deletes a plugin
+
+    def deletePlugin(self):
+        plugin = self.window.pluginManagement_list.currentItem().text()
+        deleteAPlugin(plugin)
+
+        self.window.pluginManagement_list.clear()
+        self.window.pluginSelection_dropdown.clear()
+        self.window.dpoimPlugin_dropdown.clear()
+
+        self.populatePluginBox()
+        self.populatePluginDD()
+        self.populateManagePluginDD()
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
     # Shows NewProject window
@@ -658,6 +674,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSaveComment(self):
         print('nut')
         return
+
+    # Displays a detailed view of the plugin
+    def displayPlugin(self):
+        item = self.window.pluginManagement_list.currentItem().text()
+        name, description, poi, output = setCurrentPlugin(item)
+
+        self.window.dpmCreate_dropdown.setCurrentIndex(1)
+        self.window.dpmPluginName_lineEdit.setText(name)
+        self.window. dpmPluginDesc_lineEdit.setText(description)
+        self.window.dpmOutName_lineEdit.setText(output['name'])
+        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
+        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
+
+    # Clears the labels that are used for creating a new plugin to create a new plugin
+    def newPluginTemplate(self):
+        self.window.dpmCreate_dropdown.setCurrentIndex(1)
+        self.window.dpmPluginName_lineEdit.setText("")
+        self.window.dpmPluginDesc_lineEdit.setText("")
+        self.window.dpmOutName_lineEdit.setText("")
+        self.window.dpmOutFuncName_lineEdit.setText("")
+        self.window.dpmOutFuncSource_lineEdit.setText("")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
