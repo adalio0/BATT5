@@ -75,9 +75,15 @@ class Ui_BATT5(object):
         self.analyisisControls_box.setObjectName("analyisisControls_box")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.analyisisControls_box)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.runStaticAnalysis_button = QtWidgets.QPushButton(self.analyisisControls_box)
         self.runStaticAnalysis_button.setObjectName("runStaticAnalysis_button")
-        self.verticalLayout_9.addWidget(self.runStaticAnalysis_button)
+        self.horizontalLayout_6.addWidget(self.runStaticAnalysis_button)
+        self.refresh_button = QtWidgets.QPushButton(self.analyisisControls_box)
+        self.refresh_button.setObjectName("refresh_button")
+        self.horizontalLayout_6.addWidget(self.refresh_button)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_6)
         self.runDynamicAnalysis_button = QtWidgets.QPushButton(self.analyisisControls_box)
         self.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);\n"
 "background-color: rgb(186, 189, 182);")
@@ -801,7 +807,7 @@ class Ui_BATT5(object):
 
     def retranslateUi(self, BATT5):
         _translate = QtCore.QCoreApplication.translate
-        BATT5.setWindowTitle(_translate("BATT5", "BATT5"))
+        BATT5.setWindowTitle(_translate("BATT5", "MainWindow"))
         self.project_box.setTitle(_translate("BATT5", "Projects"))
         self.projectSearch_lineEdit.setText(_translate("BATT5", "Search.."))
         self.projectNavigator_tree.headerItem().setText(0, _translate("BATT5", "Projects"))
@@ -814,6 +820,7 @@ class Ui_BATT5(object):
         self.pluginSelection_dropdown.setItemText(0, _translate("BATT5", "None"))
         self.analyisisControls_box.setTitle(_translate("BATT5", "Analysis Controls"))
         self.runStaticAnalysis_button.setText(_translate("BATT5", "Run Static Analysis"))
+        self.refresh_button.setText(_translate("BATT5", "Refresh"))
         self.runDynamicAnalysis_button.setText(_translate("BATT5", "Run Dynamic Analysis"))
         self.pluginControls_box.setTitle(_translate("BATT5", "Plugin Controls"))
         self.generateScript_button.setText(_translate("BATT5", "Generate Output Field"))
