@@ -27,7 +27,7 @@ def dll_analysis():
     return dlls
 
 def struct_analysis():
-    structs = infile.cmdj('tscj')
+    structs = infile.cmdj('tsj')
     return structs
 
 def packet_protocol_analysis():
@@ -40,5 +40,5 @@ def extract_all():
     string = string_analysis()
     variable = variables_analysis()
     dll = dll_analysis()
-    #print(type(function)) for testing
-    return [function, string, variable, dll]
+    struct = struct_analysis()
+    return [function, string, variable, dll, struct]

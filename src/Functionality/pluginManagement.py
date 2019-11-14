@@ -17,6 +17,7 @@ def convertPluginXML(filepath):
         pluginTree = ET.parse(filepath)
         pluginRoot = pluginTree.getroot()
         pluginDict = json.loads(json.dumps(pk.data(pluginRoot)))
+        pluginDict = formatPluginXml(pluginDict)
         return pluginDict
     else:
         print('invalid plugin XML (does not conform to  schema)')
@@ -44,8 +45,51 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     return plugDict
 
 # ---------------- FORMAT XML ----------------
-def formatPluginXml():
-    return 0
+def formatPluginXml(pluginDict):
+    emptyPluginDict = {
+        'name': pluginDict['name'],
+        'description': pluginDict['description'],
+        'pointOfInterest': {
+            'function': [],
+            'string': [],
+            'variable': [],
+            'dll': [],
+            'packetProtocol': []
+        },
+        'output': {
+            'name': '',
+            'functionName': '',
+            'functionSource': ''
+        }
+    }
+
+    if 'pointOfInterest' in pluginDict:
+        if 'function' in pluginDict['pointOfInterest']:
+            emptyPluginDict['pointOfInterest']['function'] = pluginDict['pointOfInterest']['function']
+
+        if 'string' in pluginDict['pointOfInterest']:
+            emptyPluginDict['pointOfInterest']['string'] = pluginDict['pointOfInterest']['string']
+
+        if 'variable' in pluginDict['pointOfInterest']:
+            emptyPluginDict['pointOfInterest']['variable'] = pluginDict['pointOfInterest']['variable']
+
+        if 'dll' in pluginDict['pointOfInterest']:
+            emptyPluginDict['pointOfInterest']['dll'] = pluginDict['pointOfInterest']['dll']
+
+        if 'packetProtocol' in pluginDict['pointOfInterest']:
+            emptyPluginDict['pointOfInterest']['packetProtocol'] = pluginDict['pointOfInterest']['packetProtocol']
+
+    if 'output' in pluginDict:
+        if 'name' in pluginDict['output']:
+            emptyPluginDict['output']['name'] = pluginDict['output']['name']
+
+        if 'functionName' in pluginDict['output']:
+            emptyPluginDict['output']['functionName'] = pluginDict['output']['functionName']
+
+        if 'functionSource' in pluginDict['output']:
+            emptyPluginDict['output']['functionSource'] = pluginDict['output']['functionSource']
+
+    return emptyPluginDict
 
 # ---------------- GUI ----------------
 
@@ -72,3 +116,7 @@ def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lin
 # ---------------- DATABASE ----------------
 def saveToDatabase(plugin):
     savePlugin(plugin)
+
+# ---------------- TEST ----------------
+# testPlugin = convertPluginXML('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')
+# print(testPlugin)

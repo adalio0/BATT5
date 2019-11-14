@@ -354,6 +354,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             elif poi == 'DLL':
                 self.disableCheck()
                 self.displayDll(content)
+            elif poi == 'Struct':
+                self.disableCheck()
+                self.displayStruct(content)
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
@@ -434,7 +437,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(content[i]['vaddr']))
 
             item = QListWidgetItem(content[i]['name'])
-            #item.setCheckState(QtCore.Qt.Checked)
+            self.window.poi_list.addItem(item)
+
+    def displayStruct(self, content):
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'size'])
+        self.window.POI_tableWidget.setColumnCount(2)
+        self.window.POI_tableWidget.setRowCount(len(content))
+        for i in range(len(content)):
+            if 'type' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(content[i]['type']))
+            if 'size' in content[i]:
+                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(content[i]['size']))
+
+            item = QListWidgetItem(content[i]['type'])
             self.window.poi_list.addItem(item)
 
     # Displays all extracted pois from Static Analysis in Analysis box and POI box

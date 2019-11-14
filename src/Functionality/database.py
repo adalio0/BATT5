@@ -12,6 +12,8 @@ function_db = db['function']
 string_db = db['string']
 variable_db = db['variable']
 dll_db = db['dll']
+# packet_protocols_db = db['packet_protocols']
+struct_db = db['struct']
 db_1 = client['current_project']
 current_db = db_1['current']
 current_plugin_db = db_1['current_plugin']
@@ -127,7 +129,7 @@ def getCurrentFilePath():
 # Gets the appropriate database
 def getAppropriatePoi(poi):
     if poi == "Extract All":
-        return [function_db, string_db, variable_db, dll_db]
+        return [function_db, string_db, variable_db, dll_db, struct_db]
     elif poi == "Function":
         return function_db
     elif poi == "String":
@@ -136,6 +138,8 @@ def getAppropriatePoi(poi):
         return variable_db
     elif poi == "DLL":
         return dll_db
+    elif poi == "Struct":
+        return struct_db
 
 
 # Displays specific POI in the Analysis box
@@ -237,6 +241,7 @@ def saveStatic(poi):
                             {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
                         for r in results_db.find():
                             if r['_id'] == s.get('results').get('01'):
+                                # SAVE FUNCTIONS
                                 for i in range(len(poi[0])):
                                     function = {
                                         'results_id': r['_id'],
@@ -253,6 +258,7 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
 
+                                # SAVE STRINGS
                                 for i in range(len(poi[1])):
                                     string = {
                                         'results_id': r['_id'],
@@ -269,6 +275,7 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
 
+                                # SAVE VARIABLES
                                 for i in range(len(poi[2]['sp'])):
                                     variable = {
                                         'results_id': r['_id'],
@@ -285,6 +292,7 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
 
+                                # SAVE DLLs
                                 for i in range(len(poi[3])):
                                     dll = {
                                         'results_id': r['_id'],
@@ -300,6 +308,26 @@ def saveStatic(poi):
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+
+                                # SAVE PACKET PROTOCOLS
+                                # TODO
+
+                                # SAVE STRUCTS
+                                for i in range(len(poi[4])):
+                                    struct = {
+                                        'results_id': r['_id'],
+                                        'name:': poi[4][i]['type'],
+                                        'comment': '',
+                                        'data': poi[4][i]
+                                    }
+                                    try:
+                                        struct_outcome = struct_db.insert_one(struct)
+                                    except OverflowError:
+                                        pass
+
+                                    results_db.find_one_and_update(
+                                        {'_id': s['_id']},
+                                        {'$push': {'dll': {str(i): struct['_id']}}}, upsert=True)
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
@@ -326,7 +354,6 @@ def deleteDatabase():
     db.string.drop()
     db.variable.drop()
     db.dll.drop()
-
 
 # Delete EVERYTHING from plugins
 def deletePluginDatabase():
