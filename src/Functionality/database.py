@@ -29,6 +29,11 @@ def checkStatic():
     return flag
 
 
+def getFilterPoi(plugin):
+    for p in plugin_db.find():
+        if p['name'] == plugin:
+            return p.get('pointOfInterest', {})
+
 # ---- Setters for the database (sets the current project/plugin) --------------------------------------------
 
 
@@ -100,7 +105,7 @@ def getCurrentPluginInfo(selected):
 
 # Gets all of the projects that were created from the database
 def getProjects():
-    #deleteDatabase()
+    # deleteDatabase()
     projects = []
     for p in project_db.find():
         projects.append(p.get('name'))
@@ -220,15 +225,16 @@ def getComment(poiName, dropText, commentBox):
 def savePlugin(plugin):
     plugin_db.insert_one(plugin)
 
+
 def updatePlugin(plugin, name):
     plugin_db.find_one_and_delete(
         {'name': name}
     )
     plugin_db.insert_one(plugin)
 
+
 def saveComment(comment, poiName, dropText):
     database = getAppropriatePoi(dropText)
-
     if dropText == 'Extract All':
         for i in range(len(database)):
             database[i].find_one_and_update(
