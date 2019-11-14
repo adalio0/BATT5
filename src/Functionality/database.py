@@ -79,6 +79,27 @@ def setCurrentProject(selected):
     return text, binaryPath
 
 
+# ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
+
+
+# Gets all of the projects that were created from the database
+def getProjects():
+    # deleteDatabase()
+    projects = []
+    for p in project_db.find():
+        projects.append(p.get('name'))
+    return projects
+
+
+# Gets all the current plugins for the project
+def getPlugins():
+    # deletePluginDatabase()
+    plugins = []
+    for p in plugin_db.find():
+        plugins.append(p.get('name'))
+    return plugins
+
+
 # Get the current selected plugin and sets the current plugin in the database
 def getCurrentPlugin(selected):
     name = ''
@@ -100,27 +121,6 @@ def getCurrentPluginInfo(selected):
         for p in plugin_db.find():
             if p['name'] == selected:
                 return p
-
-
-# ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
-
-
-# Gets all of the projects that were created from the database
-def getProjects():
-    # deleteDatabase()
-    projects = []
-    for p in project_db.find():
-        projects.append(p.get('name'))
-    return projects
-
-
-# Gets all the current plugins for the project
-def getPlugins():
-    # deletePluginDatabase()
-    plugins = []
-    for p in plugin_db.find():
-        plugins.append(p.get('name'))
-    return plugins
 
 
 # Gets the path of the current project's file
@@ -221,6 +221,24 @@ def getComment(poiName, dropText, commentBox):
                 commentBox.setText(d.get('comment'))
                 if d.get('comment'):
                     return 1
+
+
+def getPoisFromPlugin(plugin):
+    pois = []
+    for p in plugin_db.find():
+        if plugin == p.get('name'):
+            for i in range(len(p['pointOfInterest']['function'])):
+                pois.append(p['pointOfInterest']['function'][i]['name'])
+
+            for i in range(len(p['pointOfInterest']['string'])):
+                pois.append(p['pointOfInterest']['string'][i]['name'])
+
+            for i in range(len(p['pointOfInterest']['variable'])):
+                pois.append(p['pointOfInterest']['variable'][i]['name'])
+
+            for i in range(len(p['pointOfInterest']['dll'])):
+                pois.append(p['pointOfInterest']['dll'][i]['name'])
+    return pois
 
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
@@ -401,6 +419,14 @@ def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
+
+
+# Deletes a poi from the plugin database
+def deleteAPoiFromPlugin(name, plugin):
+    plugin_db.find_one_and_delete(
+        {'name': name}
+    )
+    plugin_db.insert_one(plugin)
 
 
 # Delete EVERYTHING from project
