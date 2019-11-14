@@ -33,13 +33,6 @@ dynamic = False
 allpoiTypeCheck = False
 
 
-# big
-# useless
-# comment
-# must
-# delete
-# later
-
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
@@ -279,7 +272,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
 
-        # Checks if static has already been performed, if so unlock dynamic
+        # Checks if static has already been performed, if so unlock dynamic and display poi
+        if checkStatic():
+            self.displayPoi()
+        else:
+            self.window.POI_tableWidget.clear()
+            self.window.poi_list.clear()
         self.unlockDynamic()
 
         # Set up command prompt
@@ -328,7 +326,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.analysisType_stack.setCurrentIndex(0)
             self.window.runStaticAnalysis_button.setText('Run Static Analysis')
 
-    # Dispalys POIs in the Analysis box
+    # Displays POIs in the Analysis box
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
         self.window.poi_list.clear()
@@ -703,7 +701,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = self.window.poi_list.item(i)
                 if item.text() == "-----FUNCTIONS-----":
                     continue
-                if item.text() == "-----STRINGS-----":
+                elif item.text() == "-----STRINGS-----":
                     break
                 else:
                     if self.window.check_allpoi.isChecked():
