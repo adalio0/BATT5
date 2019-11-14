@@ -315,6 +315,15 @@ background-color: rgb(186, 189, 182);</string>
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </active>
                        <inactive>
                         <colorrole role="WindowText">
@@ -344,6 +353,15 @@ background-color: rgb(186, 189, 182);</string>
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </inactive>
                        <disabled>
                         <colorrole role="WindowText">
@@ -367,6 +385,15 @@ background-color: rgb(186, 189, 182);</string>
                         <colorrole role="ButtonText">
                          <brush brushstyle="SolidPattern">
                           <color alpha="255">
+                           <red>136</red>
+                           <green>138</green>
+                           <blue>133</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
                            <red>136</red>
                            <green>138</green>
                            <blue>133</blue>
@@ -540,13 +567,6 @@ background-color: rgb(186, 189, 182);</string>
                      <width>16777215</width>
                      <height>16777215</height>
                     </size>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton">
-                   <property name="text">
-                    <string>Check/Uncheck All</string>
                    </property>
                   </widget>
                  </item>
@@ -1721,7 +1741,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1011</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">
