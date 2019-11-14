@@ -64,6 +64,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Unlocks dynamic if static has already been performed on the project
         self.unlockDynamic()
 
+        # Locks static if it has already been performed
+        self.lockStatic()
+
         # ---- Menu Bar ------------------------------------
 
         # Clicking on New.. menu bar calls showNewProject method
@@ -116,6 +119,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
+
+        # When clicking refresh it does things
+        self.window.refresh_button.clicked.connect(self.refresh)
 
         # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
@@ -333,13 +339,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
                 # Save the results of static into the database
                 saveStatic(poi)
-
                 self.displayPoi()
 
         elif self.window.runStaticAnalysis_button.text() == 'Return to Static Analysis':
             # print('RETURNING TO SA')
             self.window.analysisType_stack.setCurrentIndex(0)
             self.window.runStaticAnalysis_button.setText('Run Static Analysis')
+            self.lockStatic()
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
@@ -845,6 +851,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             # switch views
             self.window.analysisType_stack.setCurrentIndex(1)
             self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
+            self.unlockStatic()
 
             if dynamic is False:
                 dynamic = True
@@ -1015,8 +1022,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def enableCheck(self):
         self.window.check_allpoi.setCheckable(True)
 
-        # Checks if static has been performed, if it has unlock dynamic
-
+    # Checks if static has been performed, if it has unlock dynamic
     def unlockDynamic(self):
         if checkStatic():
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -1024,6 +1030,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+
+    def unlockStatic(self):
+        self.window.runStaticAnalysis_button.setStyleSheet("background-color:;")
+        self.window.runStaticAnalysis_button.setStyleSheet("color:;")
+
+    def lockStatic(self):
+        if checkStatic():
+            self.window.runStaticAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
+            self.window.runStaticAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
 
     # Check or Uncheck poi List
     def checkstate_poi(self):
@@ -1200,6 +1215,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         elif poiType == 'Struct':
             pass
+
+    def refresh(self):
+        self.displayPoi()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
