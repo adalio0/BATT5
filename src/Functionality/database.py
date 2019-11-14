@@ -1,4 +1,5 @@
 import pymongo
+import base64
 
 # Initializes the connection with our local database
 client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -192,8 +193,17 @@ def getAllPoi(poi):
                                     data = []
     return functions[0], strings[0], variables[0], dlls[0]
 
-def getCurrComment(selectedCell):
-    return
+def getComment(poiName, dropText, commentBox):
+    database = getAppropriatePoi(dropText)
+    if dropText == 'Extract All':
+        for i in range(len(database)):
+            for d in database[i].find():
+                if poiName == d.get('name'):
+                    commentBox.setText(d.get('comment'))
+    else:
+        for d in database.find():
+            if poiName == d.get('name'):
+                commentBox.setText(d.get('comment'))
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
@@ -207,22 +217,20 @@ def updatePlugin(plugin, name):
     )
     plugin_db.insert_one(plugin)
 
-def saveComment(comment, poi, dropText, table, ):
+def saveComment(comment, poiName, dropText):
+    database = getAppropriatePoi(dropText)
+
     if dropText == 'Extract All':
-        print(0)
-    elif dropText == 'Function':
-        print(1)
-    elif dropText == 'String':
-        print(1)
-    elif dropText == 'Variable':
-        print(1)
-    elif dropText == 'DLL':
-        print(1)
-    elif dropText == 'Packet Protocol':
-        print(1)
-    elif dropText == 'Struct':
-        print(1)
-    return
+        for i in range(len(database)):
+            database[i].find_one_and_update(
+                {'name': poiName},
+                {'$set': {'comment': comment}},
+                upsert=False)
+    else:
+        database.find_one_and_update(
+            {'name': poiName},
+            {'$set': {'comment': comment}},
+            upsert=False)
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
@@ -239,6 +247,7 @@ def saveStatic(poi):
                                 for i in range(len(poi[0])):
                                     function = {
                                         'results_id': r['_id'],
+                                        'name': poi[0][i]['name'],
                                         'comment': '',
                                         'data': poi[0][i]
                                     }
@@ -254,6 +263,7 @@ def saveStatic(poi):
                                 for i in range(len(poi[1])):
                                     string = {
                                         'results_id': r['_id'],
+                                        'name': poi[1][i]['string'],
                                         'comment': '',
                                         'data': poi[1][i]
                                     }
@@ -269,6 +279,7 @@ def saveStatic(poi):
                                 for i in range(len(poi[2]['sp'])):
                                     variable = {
                                         'results_id': r['_id'],
+                                        'name': poi[2]['sp'][i]['name'],
                                         'comment': '',
                                         'data': poi[2]['sp'][i]
                                     }
@@ -284,6 +295,7 @@ def saveStatic(poi):
                                 for i in range(len(poi[3])):
                                     dll = {
                                         'results_id': r['_id'],
+                                        'name': poi[3][i]['name'],
                                         'comment': '',
                                         'data': poi[3][i]
                                     }
@@ -304,16 +316,6 @@ def deleteAProject(project):
     project_db.find_one_and_delete(
         {'name': project}
     )
-
-    # for i in len(database):
-    #     database.find_one_and_update(
-    #         {'data': {'name': function}},
-    #
-    #
-    #
-    #         {'$push': {'comment': actualcomment}},
-    #         upsert=False)
-
 
 # Deletes a project from the database
 def deleteAPlugin(plugin):

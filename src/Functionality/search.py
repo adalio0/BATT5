@@ -3,10 +3,10 @@ from PyQt5.QtWidgets import *
 from src.Functionality.database import getProjects
 from src.Functionality.database import getPlugins
 
+
 # Search functionality for the project box
 def searchProject(search, projectNavigator_tree):
     result = projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
-
     projects = []
     item = ''
     j = 0
@@ -18,9 +18,6 @@ def searchProject(search, projectNavigator_tree):
                 pass
             if item.text(0) in projectNavigator_tree.topLevelItem(i).text(0):
                 projects.append(QTreeWidgetItem([item.text(0)]))
-                child_text = item.child(0).text(0)
-                child = QTreeWidgetItem(projects[len(projects) - 1])
-                child.setText(0, child_text)
                 j += 1
         tree = projectNavigator_tree
         tree.clear()
@@ -28,8 +25,7 @@ def searchProject(search, projectNavigator_tree):
     else:
         tree = projectNavigator_tree
         tree.clear()
-        projects = getProjects()
-        projectNavigator_tree.addTopLevelItems(projects)
+
 
 # Search functionality for the poi box
 def searchPoi(search, poi_list):
@@ -54,7 +50,7 @@ def searchPoi(search, poi_list):
     else:
         list = poi_list
         list.clear()
-        # displayAll()
+
 
 def searchPluginM(search, pluginManagement_list):
     result = pluginManagement_list.findItems(search, QtCore.Qt.MatchContains)
@@ -81,6 +77,7 @@ def searchPluginM(search, pluginManagement_list):
         plugins = getPlugins()
         pluginManagement_list.addItems(plugins)
 
+
 def searchPoiM(search, poiManagement_list):
     result = poiManagement_list.findItems(search, QtCore.Qt.MatchContains)
 
@@ -105,10 +102,26 @@ def searchPoiM(search, poiManagement_list):
         list.clear()
         # method to call all pois
 
+
 # highlight table widget when poi is selected from poi list
 def highlightTable(poi, POI_tableWidget):
     POI_tableWidget.clearSelection()
     tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
 
     for item in tablePoi:
-        item.setSelected(True)
+        if item.text() == poi:
+            item.setSelected(True)
+            POI_tableWidget.setCurrentItem(item)
+            return
+
+
+def HighlightList(poi, poi_list):
+    poi_list.clearSelection()
+    list_of_pois = poi_list.findItems(poi, QtCore.Qt.MatchContains)
+
+    for item in list_of_pois:
+        if item.text() == poi:
+            item.setSelected(True)
+            poi_list.setCurrentItem(item)
+            return
+
