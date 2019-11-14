@@ -88,7 +88,6 @@ def setCurrentProject(selected):
 
     return text, binaryPath
 
-
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
 
 

@@ -172,7 +172,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementNew_button.clicked.connect(self.newPoiTemplate)
 
         # Clicking on the delete button while a poi is selected on the management poi list will delete it
-        self.window.dpoimDelete_button.clicked.connect(self.deletePoiFromPlugin)
+        self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -837,15 +837,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populateManagePluginDD()
 
     # Deletes a poi from plugin
-    def deletePoiFromPlugin(self):
+    def callDeletePoiFromPlugin(self):
         if self.window.poiManagement_list.currentItem():
-            pluginDict = ''
+            pluginDict = getCurrentPluginInfo(self.window.dpoimPlugin_dropdown.currentText())
             name = self.window.dpoimPlugin_dropdown.currentText()
-
-            # Used for deleting poi from the plugin
-            poi = self.window.poiManagement_list.currentItem().text()
-
-            deleteAPoiFromPlugin(name, pluginDict)
+            modifiedPlugin = removePoiFromPlugin(pluginDict, self.window.poiManagement_list.currentItem().text())
+            deleteAPoiFromPlugin(name, modifiedPlugin)
+            self.window.poiManagement_list.clear()
+            self.populatePoiFromPlugin()
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
