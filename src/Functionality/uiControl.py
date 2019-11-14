@@ -171,6 +171,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on the new button below the management poi box will allow user to create new poi
         self.window.poiManagementNew_button.clicked.connect(self.newPoiTemplate)
 
+        # Clicking on the delete button while a poi is selected on the management poi list will delete it
+        self.window.dpoimDelete_button.clicked.connect(self.deletePoiFromPlugin)
+
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
@@ -740,6 +743,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.poiManagement_list.currentItem():
             pluginDict = ''
             name = self.window.dpoimPlugin_dropdown.currentText()
+
+            # Used for deleting poi from the plugin
             poi = self.window.poiManagement_list.currentItem().text()
 
             deleteAPoiFromPlugin(name, pluginDict)
