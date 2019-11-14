@@ -274,7 +274,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
-        text, binaryPath = setCurrentProject(selected)
+        item, text, binaryPath = setCurrentProject(selected)
+        if selected:
+            self.setWindowTitle(item)
+        else:
+            self.setWindowTitle("BATT5")
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
@@ -585,7 +589,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
         for i in range(len(functions)):
             if 'name' in functions[i]:
-                self.window.POI_tableWidget.setItem(i, 0, QTableWidgetItem(functions[i]['name']))
+                tableItem = QTableWidgetItem(functions[i]['name'])
+                if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 0, tableItem)
             item = QListWidgetItem(functions[i]['name'])
             # set icon
             if getComment(functions[i]['name'], "Function", self.window.comment_text):
@@ -596,7 +603,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
         for i in range(len(strings)):
             if 'string' in strings[i]:
-                self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
+                tableItem = QTableWidgetItem(strings[i]['string'])
+                if getComment(strings[i]['string'], "String", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 1, tableItem)
             item = QListWidgetItem(strings[i]['string'])
             # set icon
             if getComment(strings[i]['string'], "String", self.window.comment_text):
@@ -606,7 +616,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
             if 'name' in variables[i]:
-                self.window.POI_tableWidget.setItem(i, 2, QTableWidgetItem(variables[i]['name']))
+                tableItem = QTableWidgetItem(variables[i]['name'])
+                if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 2, tableItem)
             item = QListWidgetItem(variables[i]['name'])
             # set icon
             if getComment(variables[i]['name'], "Variable", self.window.comment_text):
@@ -616,7 +629,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
         for i in range(len(dlls)):
             if 'name' in dlls[i]:
-                self.window.POI_tableWidget.setItem(i, 3, QTableWidgetItem(dlls[i]['name']))
+                tableItem = QTableWidgetItem(dlls[i]['name'])
+                if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 3, tableItem)
             item = QListWidgetItem(dlls[i]['name'])
             if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
                 addIcon(item)
@@ -940,6 +956,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
         addIcon(self.window.poi_list.currentItem())
+        highlightCell(self.window.POI_tableWidget.currentItem())
 
     def callHighlightList(self):
         try:
