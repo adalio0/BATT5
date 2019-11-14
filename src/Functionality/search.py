@@ -128,4 +128,4 @@ def HighlightList(poi, poi_list):
 
 
 def addIcon(poi):
-    poi.setIcon(QIcon(r"comment-24px.svg"));
+    poi.setIcon(QIcon(r"comment-24px.svg"))
