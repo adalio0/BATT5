@@ -72,34 +72,47 @@ def convertStructManual():
 # ---------------- ADDING POIS TO PLUGINS ----------------
 
 def addFuncToPlugin(pluginDict, funcDict):
-    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
-    pluginList[3][1]['function'].append(funcDict)  # append new poi
-    pluginDict['pointOfInterest']['function'] = pluginList[3][1]['function']  # add to dict
+    # if there is only 1 value (it is not a list)
+    if len(pluginDict['pointOfInterest']['function']) == 1:
+        pluginDict['pointOfInterest']['function'] = [pluginDict['pointOfInterest']['function'], funcDict]
+    # if there is 0 or 2 or more of this type (it is a list)
+    else:
+        pluginDict['pointOfInterest']['function'].append(funcDict)
     return pluginDict
 
 def addStringToPlugin(pluginDict, strDict):
-    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
-    pluginList[3][1]['string'].append(strDict)  # append new poi
-    pluginDict['pointOfInterest']['string'] = pluginList[3][1]['string']  # add to dict
+    # if there is only 1 value (it is not a list)
+    if len(pluginDict['pointOfInterest']['string']) == 1:
+        pluginDict['pointOfInterest']['string'] = [pluginDict['pointOfInterest']['string'], strDict]
+    # if there is 0 or 2 or more of this type (it is a list)
+    else:
+        pluginDict['pointOfInterest']['string'].append(strDict)
     return pluginDict
 
 def addVarToPlugin(pluginDict, varDict):
-    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
-    pluginList[3][1]['variable'].append(varDict)  # append new poi
-    pluginDict['pointOfInterest']['variable'] = pluginList[3][1]['variable']  # add to dict
-    print(pluginDict)
+    # if there is only 1 value (it is not a list)
+    if len(pluginDict['pointOfInterest']['variable']) == 1:
+        pluginDict['pointOfInterest']['variable'] = [pluginDict['pointOfInterest']['variable'], varDict]
+    # if there is 0 or 2 or more of this type (it is a list)
+    else:
+        pluginDict['pointOfInterest']['variable'].append(varDict)
     return pluginDict
 
 def addDllToPlugin(pluginDict, dllDict):
-    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
-    pluginList[3][1]['dll'].append(dllDict)  # append new poi
-    pluginDict['pointOfInterest']['dll'] = pluginList[3][1]['dll']  # add to dict
+    # if there is only 1 value (it is not a list)
+    if len(pluginDict['pointOfInterest']['dll']) == 1:
+        pluginDict['pointOfInterest']['dll'] = [pluginDict['pointOfInterest']['dll'], dllDict]
+    # if there is 0 or 2 or more of this type (it is a list)
+    else:
+        pluginDict['pointOfInterest']['dll'].append(dllDict)
     return pluginDict
 
 def addPacketProtocolToPlugin(pluginDict, ppDict):
-    pluginList = [[k, v] for k, v in pluginDict.items()]  # convert dict to list for appending
-    pluginList[3][1]['packetProtocol'].append(ppDict)  # append new poi
-    pluginDict['pointOfInterest']['packetProtocol'] = pluginList[3][1]['packetProtocol']  # add to dict
+    if len(pluginDict['pointOfInterest']['packetProtocol']) == 1:
+        pluginDict['pointOfInterest']['packetProtocol'] = [pluginDict['pointOfInterest']['packetProtocol'], ppDict]
+    # if there is 0 or 2 or more of this type (it is a list)
+    else:
+        pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
     return pluginDict
 
 # ---------------- FORMAT XML ----------------
