@@ -146,8 +146,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on a plugin inside the list will show a detailed view of it
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
-        # Clicking on the new button below the management plugin box
+        # Clicking on the new button below the management plugin box will allow user to create new plugin
         self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
+
+        # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
+        self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -498,20 +501,26 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Deletes a project
     def deleteProject(self):
-        print('delete')
+        if self.window.projectNavigator_tree.currentItem():
+            project = self.window.projectNavigator_tree.currentItem().text()
+            deleteAProject(project)
+
+            self.window.projectNavigator_tree.clear()
+            self.populateProjectBox()
 
     # Deletes a plugin
     def deletePlugin(self):
-        plugin = self.window.pluginManagement_list.currentItem().text()
-        deleteAPlugin(plugin)
+        if self.window.pluginManagement_list.currentItem():
+            plugin = self.window.pluginManagement_list.currentItem().text()
+            deleteAPlugin(plugin)
 
-        self.window.pluginManagement_list.clear()
-        self.window.pluginSelection_dropdown.clear()
-        self.window.dpoimPlugin_dropdown.clear()
+            self.window.pluginManagement_list.clear()
+            self.window.pluginSelection_dropdown.clear()
+            self.window.dpoimPlugin_dropdown.clear()
 
-        self.populatePluginBox()
-        self.populatePluginDD()
-        self.populateManagePluginDD()
+            self.populatePluginBox()
+            self.populatePluginDD()
+            self.populateManagePluginDD()
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 

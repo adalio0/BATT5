@@ -278,7 +278,18 @@ def saveStatic(poi):
 
 # Deletes a project from the database
 def deleteAProject(project):
-    print('delete')
+    project_db.find_one_and_delete(
+        {'name': project}
+    )
+
+    # for i in len(database):
+    #     database.find_one_and_update(
+    #         {'data': {'name': function}},
+    #
+    #
+    #
+    #         {'$push': {'comment': actualcomment}},
+    #         upsert=False)
 
 
 # Deletes a project from the database
