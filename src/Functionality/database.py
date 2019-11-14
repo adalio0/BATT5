@@ -199,6 +199,12 @@ def getAllPoi(poi):
 def savePlugin(plugin):
     plugin_db.insert_one(plugin)
 
+def saveComment(comment, poi, dropText, table):
+    if dropText == 'Extract All':
+        print(0)
+    else:
+        print(1)
+    return
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
@@ -285,10 +291,6 @@ def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
-
-
-def saveComment(comment, poi):
-    return
 
 # Delete EVERYTHING from project
 def deleteDatabase():
