@@ -33,6 +33,13 @@ dynamic = False
 allpoiTypeCheck = False
 
 
+# big
+# useless
+# comment
+# must
+# delete
+# later
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
@@ -460,7 +467,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.POI_tableWidget.setItem(i, 1, QTableWidgetItem(strings[i]['string']))
             item = QListWidgetItem(strings[i]['string'])
             self.window.poi_list.addItem(item)
-            
+
 
         self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
         for i in range(len(variables)):
@@ -483,6 +490,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSearchProject(self):
         try:
             searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
+            if not self.window.projectSearch_lineEdit.text():
+                self.populateProjectBox()
         except AttributeError:
             pass
 
@@ -490,6 +499,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSearchPoi(self):
         try:
             searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+            if not self.window.poiSearch_lineEdit.text():
+                self.displayPoi()
         except AttributeError:
             pass
 
@@ -665,15 +676,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def clearComment(self):
         self.window.comment_text.clear()
 
-    #disable checkbox 
+    # disable checkbox
     def disableCheck(self):
         self.window.check_allpoi.setCheckable(False)
-    #enable checkbox
-    
-    def enableCheck(self):
-        self.window.check_allpoi.setCheckable(True)    
 
-    # Checks if static has been performed, if it has unlock dynamic
+    # enable checkbox
+
+    def enableCheck(self):
+        self.window.check_allpoi.setCheckable(True)
+
+        # Checks if static has been performed, if it has unlock dynamic
+
     def unlockDynamic(self):
         if checkStatic():
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
@@ -703,12 +716,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 for i in range(self.window.poi_list.count()):
                     item = self.window.poi_list.item(i)
                     item.setCheckState(QtCore.Qt.Checked)
-       
+
             elif self.window.check_allpoi.checkState() == 0:
                 for i in range(self.window.poi_list.count()):
                     item = self.window.poi_list.item(i)
                     item.setCheckState(QtCore.Qt.Unchecked)
-
 
     # From current to history
     def switchToHistory(self):
@@ -754,7 +766,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.window.dpmCreate_dropdown.setCurrentIndex(1)
         self.window.dpmPluginName_lineEdit.setText(name)
-        self.window. dpmPluginDesc_lineEdit.setText(description)
+        self.window.dpmPluginDesc_lineEdit.setText(description)
         self.window.dpmOutName_lineEdit.setText(output['name'])
         self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
         self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
