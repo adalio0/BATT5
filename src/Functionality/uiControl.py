@@ -120,9 +120,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
-        # When clicking refresh it does things
-        self.window.refresh_button.clicked.connect(self.refresh)
-
         # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
         # ---- Comment Functionality ---------------------------------
@@ -343,7 +340,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         elif self.window.runStaticAnalysis_button.text() == 'Return to Static Analysis':
             # print('RETURNING TO SA')
-            self.window.analysisType_stack.setCurrentIndex(0)
             self.window.runStaticAnalysis_button.setText('Run Static Analysis')
             self.lockStatic()
 
@@ -849,7 +845,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         global dynamic
         if checkStatic():
             # switch views
-            self.window.analysisType_stack.setCurrentIndex(1)
             self.window.runStaticAnalysis_button.setText('Return to Static Analysis')
             self.unlockStatic()
 
@@ -1039,6 +1034,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if checkStatic():
             self.window.runStaticAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runStaticAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+        else:
+            self.window.runStaticAnalysis_button.setStyleSheet("background-color:;")
+            self.window.runStaticAnalysis_button.setStyleSheet("color:;")
 
     # Check or Uncheck poi List
     def checkstate_poi(self):
@@ -1215,9 +1213,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         elif poiType == 'Struct':
             pass
-
-    def refresh(self):
-        self.displayPoi()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
