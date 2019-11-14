@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 #sys.path.insert(0, Path(__file__).parents[2].as_posix())
 #sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -498,7 +498,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         items = []
         for i in range(self.window.poi_list.count()):
-            items.append(self.window.poi_list.item(i))
+            items.append(self.window.poi_list.item(i).text())
 
         path = getCurrentFilePath()
         dynamic = dynamicAnalysis(path, items)
