@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 
-# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -716,11 +716,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(self.window.poi_list.count()):
             items.append(self.window.poi_list.item(i).text())
         #test by hardcoding two known functions
-        items.append("sym.secret_stuff")
-        items.append("sym.even_more_secret")
+        #items.append("sym.secret_stuff")
+        #items.append("sym.even_more_secret")
 
-        path = getCurrentFilePath().strip()
-        print(path)
+        path = getCurrentFilePath()
+        #print(path)
         dynamic = dynamicAnalysis(path, items)
         #print(dynamic)
         #print(self.window.poi_list.item(i).text())
