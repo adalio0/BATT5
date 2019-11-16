@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>969</width>
-    <height>944</height>
+    <height>898</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="central_tabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="analysis_tab">
        <attribute name="title">
@@ -91,9 +91,12 @@
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(136, 138, 133);</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
                     <string>Search..</string>
                    </property>
                   </widget>
@@ -324,101 +327,13 @@ background-color: rgb(186, 189, 182);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="radareConsoleIn_lineEdit">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="WindowText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                      <colorrole role="ButtonText">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>136</red>
-                         <green>138</green>
-                         <blue>133</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(136, 138, 133);</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
                     <string>BATT5$</string>
                    </property>
                   </widget>
@@ -547,9 +462,12 @@ background-color: rgb(186, 189, 182);</string>
                  <item>
                   <widget class="QLineEdit" name="poiSearch_lineEdit">
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(136, 138, 133);</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
+                    <string/>
+                   </property>
+                   <property name="placeholderText">
                     <string>Search..</string>
                    </property>
                   </widget>
@@ -919,9 +837,12 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLineEdit" name="pluginManagementSearch_lineEdit">
                <property name="styleSheet">
-                <string notr="true">color: rgb(136, 138, 133);</string>
+                <string notr="true"/>
                </property>
                <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
                 <string>Search..</string>
                </property>
               </widget>
@@ -1260,7 +1181,22 @@ p, li { white-space: pre-wrap; }
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="dpmOutFuncSource_lineEdit"/>
+                   <widget class="QLineEdit" name="dpmOutFuncSource_lineEdit">
+                    <property name="font">
+                     <font>
+                      <italic>true</italic>
+                     </font>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                    <property name="placeholderText">
+                     <string/>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
                   </item>
                   <item row="1" column="1">
                    <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
@@ -1399,9 +1335,12 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QLineEdit" name="poiManagementSeach_lineEdit">
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
                   <string>Search..</string>
                  </property>
                 </widget>
@@ -1444,7 +1383,7 @@ p, li { white-space: pre-wrap; }
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_28">
                <item>
-                <widget class="QCheckBox" name="checkBox">
+                <widget class="QCheckBox" name="checkAllPlugins_checkBox">
                  <property name="text">
                   <string>Check/Uncheck All</string>
                  </property>
@@ -1453,15 +1392,18 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QLineEdit" name="addToPluginSearch_lineEdit">
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(136, 138, 133);</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
                   <string>Search..</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QListView" name="listView"/>
+                <widget class="QListWidget" name="addToPlugin_list"/>
                </item>
               </layout>
              </widget>
@@ -1553,6 +1495,9 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <property name="readOnly">
                      <bool>true</bool>
+                    </property>
+                    <property name="placeholderText">
+                     <string/>
                     </property>
                    </widget>
                   </item>
@@ -1707,7 +1652,7 @@ p, li { white-space: pre-wrap; }
                    <widget class="QLineEdit" name="varName_lineEdit"/>
                   </item>
                   <item row="5" column="2">
-                   <widget class="QLineEdit" name="lineEdit"/>
+                   <widget class="QLineEdit" name="structName_lineEdit"/>
                   </item>
                   <item row="5" column="3">
                    <widget class="QPushButton" name="saveStruct_button">
@@ -1779,7 +1724,7 @@ p, li { white-space: pre-wrap; }
                   <item row="6" column="2">
                    <layout class="QHBoxLayout" name="horizontalLayout_11">
                     <item>
-                     <widget class="QPushButton" name="pushButton">
+                     <widget class="QPushButton" name="clearPoiAll_button">
                       <property name="text">
                        <string>Clear All</string>
                       </property>
@@ -1846,7 +1791,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>969</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">
