@@ -120,6 +120,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
+
         # ---- Comment Functionality ---------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
@@ -167,11 +168,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on the clear button in Add Plugin Through Manual Input will clear the text
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
 
-        # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
-        # self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
-
-        # Clicking on a poi inside the list will show a detailed view of it
-        # self.window.poiManagement_list.itemClicked.connect(self.displayPoiFromPlugin)
+        # check or uncheck all elements in poi list
+        self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
 
         # Clicking on the new button below the management poi box will allow user to create new poi
         self.window.clearPoiAll_button.clicked.connect(self.newManualPoiTemplate)
@@ -1053,6 +1051,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if info['pointOfInterest']['dll'][i]['name'] == item:
                     self.window.dpoimPoiType_dropdown.setCurrentIndex(4)
                     self.window.dllName_lineEdit.setText(item)
+
+    def checkUncheckAllPlugins(self):
+        if self.window.checkAllPlugins_checkBox.isChecked():
+            for i in range(self.window.addToPlugin_list.count()):
+                item = self.window.addToPlugin_list.item(i)
+                item.setCheckState(QtCore.Qt.Checked)
+
+        elif self.window.checkAllPlugins_checkBox.checkState() == 0:
+            for i in range(self.window.addToPlugin_list.count()):
+                item = self.window.addToPlugin_list.item(i)
+                item.setCheckState(QtCore.Qt.Unchecked)
 
     # Clears the labels that are used for creating a new plugin to create a new plugin
     def newManualPluginTemplate(self):
