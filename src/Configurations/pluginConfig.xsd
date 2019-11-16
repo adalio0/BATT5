@@ -18,23 +18,6 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
-										<xs:element name="numOfParams" type="xs:int" minOccurs="0" maxOccurs="1"/>
-
-										<!--PARAMETERS-->
-										<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
-											<xs:complexType>
-													<xs:sequence>
-														<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
-														<xs:element name="type"		type="xs:string" minOccurs="0" maxOccurs="1"/>
-														<xs:element name="value"	type="xs:string" minOccurs="0" maxOccurs="1"/>
-													</xs:sequence>
-											</xs:complexType>
-										</xs:element> <!--END OF PARAMETERS-->
-
-										<xs:element name="returnType" 		type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="returnValue"		type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="callFromAddress"	type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-										<xs:element name="destinationAddress"	type="xs:string" minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element> <!--END OF FUNCTIONS-->
@@ -44,11 +27,6 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
-										<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="size" type="xs:int"	 minOccurs="0" maxOccurs="1"/>
-										<xs:element name="callFromAddress" 		type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-										<xs:element name="destinationAddress" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="section" 				type="xs:string" minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>	<!--END OF STRINGS-->
@@ -58,9 +36,6 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
-										<xs:element name="value" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="type"		type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="size"		type="xs:int"	 minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element> <!--END OF VARIABLES-->
@@ -79,11 +54,18 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
-										<xs:element name="fieldName" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="fieldType" 	type="xs:string" minOccurs="0" maxOccurs="1"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element> <!--END OF PACKET PROTOCOLS-->
+
+							<!--STRUCTS-->
+							<xs:element name="struct" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" 	type="xs:string" minOccurs="1" maxOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element> <!--END OF STRUCTS-->
 
 						</xs:sequence>
 					</xs:complexType>
@@ -104,4 +86,4 @@
 		</xs:complexType>
 	</xs:element> <!--END OF PLUGIN-->
 
-</xs:schema> <!--END OF PLUGIN-->
+</xs:schema> <!--END OF SCHEMA-->

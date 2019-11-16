@@ -1,9 +1,4 @@
-from xmljson import parker as pk
-import xml.etree.ElementTree as ET
-import json
-import xmlschema
-from pathlib import Path
-from src.Functionality.database import *
+from src.Functionality.poiManagement import *
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
@@ -106,7 +101,6 @@ def formatPluginXml(pluginDict):
         if 'functionSource' in pluginDict['output']:
             newPluginDict['output']['functionSource'] = pluginDict['output']['functionSource']
 
-    print(newPluginDict)
     return newPluginDict
 
 # ---------------- GUI ----------------
@@ -137,4 +131,6 @@ def saveToDatabase(plugin):
 
 # ---------------- TEST ----------------
 # testPlugin = convertPluginXML('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')
+# print(testPlugin)
+# testPlugin = removePoiFromPlugin(testPlugin, 'Sleep')
 # print(testPlugin)
