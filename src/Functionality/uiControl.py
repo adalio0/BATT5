@@ -20,8 +20,6 @@ from src.Functionality.newOutput import NOutputWindow
 from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
-from src.GUI.python_files.popups.outputFieldView import OutputWindow
-from src.GUI.python_files.popups.areyousure import Ui_Form
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
 from src.Functionality.poiManagement import *
@@ -167,7 +165,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
 
         # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
-        self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
+        self.window.dpmDelete_button.clicked.connect(self.callDeletePlugin)
 
         # Clicking on a poi inside the list will show a detailed view of it
         self.window.poiManagement_list.itemClicked.connect(self.displayPoiFromPlugin)
@@ -264,8 +262,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # We build the menu.
         menu = QtWidgets.QMenu()
-        menu.addAction("Delete", self.deleteProject)
-        # menu.addAction("Delete", self.showConfirmationDeleteProject)
+        # menu.addAction("Delete", self.deleteProject)
+        menu.addAction("Delete", self.showConfirmationDeleteProject)
 
         menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
@@ -872,7 +870,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # ---- Following methods are for deleting a project or plugin from the database -------------------
 
     # Deletes a project
-    def deleteProject(self):
+    def callDeleteProject(self):
         if self.window.projectNavigator_tree.currentItem():
             project = self.window.projectNavigator_tree.currentItem().text(0)
             deleteAProject(project)
@@ -881,7 +879,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populateProjectBox()
 
     # Deletes a plugin
-    def deletePlugin(self):
+    def callDeletePlugin(self):
         if self.window.pluginManagement_list.currentItem():
             plugin = self.window.pluginManagement_list.currentItem().text()
             deleteAPlugin(plugin)
@@ -935,10 +933,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
-        self.windowAUS = QtWidgets.QDialog()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self.windowAUS)
-        self.ui.windowAUS.show()
+        self.callDeleteProject()
 
     # Shows ErrFile window
     def showErrFile(self):
