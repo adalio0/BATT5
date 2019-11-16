@@ -55,7 +55,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populateManagePluginDD()
 
         # Populate the management poi list with poi from plugin
-        self.populatePoiFromPlugin()
+        # self.populatePoiFromPlugin()
 
         # Initialize the project properties
         # Terminal also initialized here
@@ -155,7 +155,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_button.clicked.connect(self.showFileExplorer_outFuncSource)
 
         # Creating new plugin from xml
-        self.window.dpmSave_button.clicked.connect(self.callProcessPluginData)
+        # self.window.dpmSave_button.clicked.connect(self.callProcessPluginData)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
@@ -164,30 +164,30 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
         # Clicking on the new button below the management plugin box will allow user to create new plugin
-        self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
+        # self.window.pluginManagementNew_button.clicked.connect(self.newPluginTemplate)
 
         # Clicking on the delete button while a plugin is selected on the management plugin box will delete it
-        self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
+        # self.window.dpmDelete_button.clicked.connect(self.deletePlugin)
 
         # Clicking on a poi inside the list will show a detailed view of it
         self.window.poiManagement_list.itemClicked.connect(self.displayPoiFromPlugin)
 
         # Clicking on the new button below the management poi box will allow user to create new poi
-        self.window.poiManagementNew_button.clicked.connect(self.newPoiTemplate)
+        # self.window.poiManagementNew_button.clicked.connect(self.newPoiTemplate)
 
         # Clicking on the delete button while a poi is selected on the management poi list will delete it
-        self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
+        # self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
 
         # ---- View Box ------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
         # ---- Create POI Selection ----------------------
-        self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.callSwitchPOITypeView)
-        self.window.dpoimSave_button.clicked.connect(self.callProcessPOIData)
+        # self.window.dpoimPoiType_dropdown.currentIndexChanged.connect(self.callSwitchPOITypeView)
+        # self.window.dpoimSave_button.clicked.connect(self.callProcessPOIData)
 
         # ---- Create Plugin Selection ----------------------
-        self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.callSwitchPluginCreateView)
+        # self.window.dpmCreate_dropdown.currentIndexChanged.connect(self.callSwitchPluginCreateView)
 
         # ---- Select listener ------------------------------
         self.window.projectSearch_lineEdit.installEventFilter(self)
@@ -312,13 +312,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Initialize the management plugin dropdown list with all the current plugins from database
     def populateManagePluginDD(self):
         plugins = getPlugins()
-        self.window.dpoimPlugin_dropdown.addItems(plugins)
+        # self.window.dpoimPlugin_dropdown.addItems(plugins)
 
     # Initialize the poi list with all the current poi from plugin from database
-    def populatePoiFromPlugin(self):
-        if self.window.dpoimPlugin_dropdown.currentText():
-            pois = getPoisFromPlugin(self.window.dpoimPlugin_dropdown.currentText())
-            self.window.poiManagement_list.addItems(pois)
+    # def populatePoiFromPlugin(self):
+    #     if self.window.dpoimPlugin_dropdown.currentText():
+    #         pois = getPoisFromPlugin(self.window.dpoimPlugin_dropdown.currentText())
+    #         self.window.poiManagement_list.addItems(pois)
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
@@ -895,14 +895,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populateManagePluginDD()
 
     # Deletes a poi from plugin
-    def callDeletePoiFromPlugin(self):
-        if self.window.poiManagement_list.currentItem():
-            pluginDict = getCurrentPluginInfo(self.window.dpoimPlugin_dropdown.currentText())
-            name = self.window.dpoimPlugin_dropdown.currentText()
-            modifiedPlugin = removePoiFromPlugin(pluginDict, self.window.poiManagement_list.currentItem().text())
-            deleteAPoiFromPlugin(name, modifiedPlugin)
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
+    # def callDeletePoiFromPlugin(self):
+    #     if self.window.poiManagement_list.currentItem():
+    #         pluginDict = getCurrentPluginInfo(self.window.dpoimPlugin_dropdown.currentText())
+    #         name = self.window.dpoimPlugin_dropdown.currentText()
+    #         modifiedPlugin = removePoiFromPlugin(pluginDict, self.window.poiManagement_list.currentItem().text())
+    #         deleteAPoiFromPlugin(name, modifiedPlugin)
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
 
     # ---- Following methods are for calling and showing the different windows ---------------------------
 
@@ -1072,58 +1072,56 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def switchToCurrent(self):
         self.window.changeViews_stack.setCurrentIndex(0)
 
-    def callSwitchPOITypeView(self):
-        switchPOITypeView(self.window.dpoimPoiType_dropdown.currentText(), self.window.addPOI_stack)
 
-    def callSwitchPluginCreateView(self):
-        switchPluginCreateView(self.window.dpmCreate_dropdown.currentText(), self.window.createPlugin_stack)
-
-    def callProcessPluginData(self):
-        processPluginData(self.window.dpmCreate_dropdown.currentText(), self.window.dpmPluginStructure_lineEdit,
-                          self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                          self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                          self.window.dpmOutFuncSource_lineEdit)
-
-        self.window.pluginManagement_list.clear()
-        self.window.pluginSelection_dropdown.clear()
-        self.window.dpoimPlugin_dropdown.clear()
-
-        self.populatePluginBox()
-        self.populatePluginDD()
-        self.populateManagePluginDD()
-        self.populatePoiFromPlugin()
+    # def callSwitchPluginCreateView(self):
+    #     switchPluginCreateView(self.window.dpmCreate_dropdown.currentText(), self.window.createPlugin_stack)
+    #
+    # def callProcessPluginData(self):
+    #     processPluginData(self.window.dpmCreate_dropdown.currentText(), self.window.dpmPluginStructure_lineEdit,
+    #                       self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+    #                       self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+    #                       self.window.dpmOutFuncSource_lineEdit)
+    #
+    #     self.window.pluginManagement_list.clear()
+    #     self.window.pluginSelection_dropdown.clear()
+    #     self.window.dpoimPlugin_dropdown.clear()
+    #
+    #     self.populatePluginBox()
+    #     self.populatePluginDD()
+    #     self.populateManagePluginDD()
+        # self.populatePoiFromPlugin()
 
     # save data from poi view in management tab
-    def callProcessPOIData(self):
-        if self.window.dpoimPoiType_dropdown.currentText() == "Function":
-            processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit)
-
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
-
-        if self.window.dpoimPoiType_dropdown.currentText() == "String":
-            processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit)
-
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
-
-        if self.window.dpoimPoiType_dropdown.currentText() == "Variable":
-            processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit)
-
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
-
-        if self.window.dpoimPoiType_dropdown.currentText() == "DLL":
-            processPOIDataDLL(self.window.dpoimPlugin_dropdown, self.window.dllName_lineEdit)
-
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
-
-        if self.window.dpoimPoiType_dropdown.currentText() == "Packet Protocol":
-            processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit)
-
-            self.window.poiManagement_list.clear()
-            self.populatePoiFromPlugin()
+    # def callProcessPOIData(self):
+    #     if self.window.dpoimPoiType_dropdown.currentText() == "Function":
+    #         processPOIDataFun(self.window.dpoimPlugin_dropdown,self.window.funcName_lineEdit)
+    #
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
+    #
+    #     if self.window.dpoimPoiType_dropdown.currentText() == "String":
+    #         processPOIDataStr(self.window.dpoimPlugin_dropdown,self.window.strName_lineEdit)
+    #
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
+    #
+    #     if self.window.dpoimPoiType_dropdown.currentText() == "Variable":
+    #         processPOIDataVar(self.window.dpoimPlugin_dropdown,self.window.varName_lineEdit)
+    #
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
+    #
+    #     if self.window.dpoimPoiType_dropdown.currentText() == "DLL":
+    #         processPOIDataDLL(self.window.dpoimPlugin_dropdown, self.window.dllName_lineEdit)
+    #
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
+    #
+    #     if self.window.dpoimPoiType_dropdown.currentText() == "Packet Protocol":
+    #         processPOIDataPP(self.window.dpoimPlugin_dropdown,self.window.protoName_lineEdit)
+    #
+    #         self.window.poiManagement_list.clear()
+    #         self.populatePoiFromPlugin()
 
         # if self.window.dpoimPoiType_dropdown.currentText() == "Struct":
         #     processPOIDataS(self.window.dpoimPlugin_dropdown,self.window.StructTBD_text)
