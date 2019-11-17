@@ -2,9 +2,13 @@ from src.Functionality.poiManagement import *
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
-    pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/pluginConfig.xsd')
-    result = pluginSchema.is_valid(filepath)
-    return result
+    try:
+        pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/pluginConfig.xsd')
+        return pluginSchema.is_valid(filepath)
+    except:
+        # TODO dipsplay error window
+        print('not a proper xml file at all')
+        return 0
 
 # ---------------- XML CONVERSION ----------------
 def convertPluginXML(filepath):
@@ -22,7 +26,6 @@ def convertPluginXML(filepath):
 # ---------------- MANUAL PLUGIN CONVERSION ----------------
 def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
     plugDict = {
-        '_id': '',
         'name': name,
         'description': desc,
         'pointOfInterest': {
@@ -105,25 +108,17 @@ def formatPluginXml(pluginDict):
 
 # ---------------- GUI ----------------
 
-def switchPluginCreateView(createType, createPlugin_stack):
-    if createType == 'Pull From XML File':
-        createPlugin_stack.setCurrentIndex(0)
-    if createType == 'Manual Input':
-        createPlugin_stack.setCurrentIndex(1)
-
-def processPluginData(createType, dpmPluginStructure_lineEdit, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit,
-                      dpmOutName_lineEdit, dpmOutFuncName_lineEdit, dpmOutFuncSource_lineEdit):
-
-    if createType == 'Pull From XML File':
-        pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
-
-    elif createType == 'Manual Input':
-        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
-                                         dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
-                                         dpmOutFuncSource_lineEdit.text())
-    # save plugin to database
+def savePluginXML(dpmPluginStructure_lineEdit):
+    pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
     savePlugin(pluginDict)
-    return pluginDict
+
+def savePluginManual(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
+                     dpmOutFuncSource_lineEdit):
+    pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
+                                     dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
+                                     dpmOutFuncSource_lineEdit.text())
+    savePlugin(pluginDict)
+
 
 # ---------------- DATABASE ----------------
 def saveToDatabase(plugin):

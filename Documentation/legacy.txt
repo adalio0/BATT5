@@ -1,0 +1,331 @@
+import os
+import sys
+import glob
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+# Initialize the project box with all the current projects
+def populateProjectBox_xml(self):
+    cur_path = os.getcwd()
+    new_path = os.path.join(cur_path, '..', 'Configurations')
+
+    projects = []
+    for file in glob.glob(new_path + "/**/" + '*.xml', recursive=True):
+        tree = ET.parse(file)
+        root = tree.getroot()
+
+        for p in root.iter('Project'):
+            if p.get('name') is not "":
+                projects.append(QTreeWidgetItem([p.get('name')]))
+                child = QTreeWidgetItem(projects[len(projects) - 1])
+                child.setText(0, p.get('file'))
+
+    tree = self.window.projectNavigator_tree
+    tree.addTopLevelItems(projects)
+
+
+# Changes the project description according to the current project
+def setProject_xml(self):
+    selected = self.window.projectNavigator_tree.selectedItems()
+    cur_path = os.getcwd()
+
+    file = ''
+    if selected:
+        item = selected[0].text(0)
+        item = item.replace(" ", "")
+        try:
+            file = os.path.join(cur_path, '..', 'Configurations', item + '.xml')
+
+            currentXml = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
+            tree = ET.parse(currentXml)
+            root = tree.getroot()
+
+            for current in root.iter('Current'):
+                current.set('name', (item + '.xml'))
+            tree.write(currentXml)
+        except IndexError or FileNotFoundError:
+            pass
+    else:
+        file = os.path.join(cur_path, '..', 'Configurations', 'current.xml')
+
+    try:
+        tree = ET.parse(file)
+        root = tree.getroot()
+
+        if file.endswith('current.xml'):
+            for current in root.iter('Current'):
+                tree = ET.parse(os.path.join(cur_path, '..', 'Configurations', current.get('name')))
+                root = tree.getroot()
+
+        text = ""
+        binaryPath = ""
+        for p in root.iter('Project'):
+            text = "<font size=2> <b>Project Description</b>: " + p.get('description') + "<br><br>"
+            text += "<b>Project Properties</b>: <br> </font> "
+            binaryPath = p.get('file')
+
+        for child in root.iter():
+            if child.tag != "Project" and child.get('name') is not None:
+                text += "<font size=2> <b>" + child.tag + "</b>" + ": " + child.get('name') + "<br> </font>"
+
+        self.window.projectProperties_text.setHtml(text)
+
+        # Set up command prompt
+        self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+
+    except FileNotFoundError:
+        pass
+
+# runs Static Analysis
+def runStatic_xml(self):
+    global static
+    static = True
+    self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+    self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
+    tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', 'current.xml'))
+    root = tree.getroot()
+
+    currentProject = ""
+    for current in root.iter('Current'):
+        currentProject = current.get('name')
+
+    tree = ET.parse(os.path.join(os.getcwd(), '..', 'Configurations', currentProject))
+    root = tree.getroot()
+
+    path = ''
+    for p in root.iter('Project'):
+        path = p.get('file')
+
+    # try:
+    #     staticAnalysis(path)
+    # except:
+    #     print("Radare2 not installed cannot start static analysis.")
+
+    self.displayPoi()
+
+    # ---- Creates the xml file associated with the new project --------------------------
+    def createXML(self, file, cur_path):
+        global project
+        try:
+            with open(file, "w") as f:
+                newProject = open(os.path.join(cur_path, '..', 'Configurations', 'newProject.xml'), 'r')
+                f.write(newProject.read())
+                newProject.close()
+                f.close()
+            tree = ET.parse(file)
+            root = tree.getroot()
+            for child in root.iter():
+                if child.tag == "Project":
+                    child.set('name', project.get_name(self))
+                    child.set('file', project.get_file(self))
+                    child.set('description', project.get_description(self))
+                elif child.tag == "OS":
+                    child.set('name', project.get_os(self))
+                elif child.tag == "BinaryType":
+                    child.set('name', project.get_binary_type(self))
+                elif child.tag == "Machine":
+                    child.set('name', project.get_machine(self))
+                elif child.tag == "Class":
+                    child.set('name', project.get_class(self))
+                elif child.tag == "Bits":
+                    child.set('name', project.get_bits(self))
+                elif child.tag == "Language":
+                    child.set('name', project.get_language(self))
+                elif child.tag == "Canery":
+                    child.set('name', project.get_canary(self))
+                elif child.tag == "Crypto":
+                    child.set('name', project.get_crypto(self))
+                elif child.tag == "Nx":
+                    child.set('name', project.get_nx(self))
+                elif child.tag == "Relocs":
+                    child.set('name', project.get_relocs(self))
+                elif child.tag == "Stripped":
+                    child.set('name', project.get_stripped(self))
+                elif child.tag == "Relro":
+                    child.set('name', project.get_relro(self))
+            tree.write(file)
+        except FileNotFoundError:
+            pass
+
+    # Displays all extracted pois from Static Analysis in Analysis box and POI box
+    def displayAll(self, functions, strings, variables, dlls, structs):
+        global allpoiTypeCheck
+        allpoiTypeCheck = True
+        # Get the longest number of keys between functions, strings, variables, dlls
+        length = len(functions)
+        if len(strings) > length:
+            length = len(strings)
+        elif len(variables) > length:
+            length = len(variables)
+        elif len(dlls) > length:
+            length = len(dlls)
+        elif len(structs) > length:
+            length = len(structs)
+
+        self.window.POI_tableWidget.setRowCount(length)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+        for i in range(len(functions)):
+            if 'name' in functions[i]:
+                tableItem = QTableWidgetItem(functions[i]['name'])
+                if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 0, tableItem)
+            item = QListWidgetItem(functions[i]['name'])
+            # set icon
+            if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                addIcon(item)
+            item.setCheckState(QtCore.Qt.Checked)
+            self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
+        for i in range(len(strings)):
+            if 'string' in strings[i]:
+                tableItem = QTableWidgetItem(strings[i]['string'])
+                if getComment(strings[i]['string'], "String", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 1, tableItem)
+            item = QListWidgetItem(strings[i]['string'])
+            # set icon
+            if getComment(strings[i]['string'], "String", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+        for i in range(len(variables)):
+            if 'name' in variables[i]:
+                tableItem = QTableWidgetItem(variables[i]['name'])
+                if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 2, tableItem)
+            item = QListWidgetItem(variables[i]['name'])
+            # set icon
+            if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
+        for i in range(len(dlls)):
+            if 'name' in dlls[i]:
+                tableItem = QTableWidgetItem(dlls[i]['name'])
+                if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 3, tableItem)
+            item = QListWidgetItem(dlls[i]['name'])
+            if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----STRUCTS-----"))
+        for i in range(len(structs)):
+            if 'type' in structs[i]:
+                tableItem = QTableWidgetItem(structs[i]['type'])
+                if getComment(structs[i]['type'], "Struct", self.window.comment_text):
+                    highlightCell(tableItem)
+                self.window.POI_tableWidget.setItem(i, 4, tableItem)
+            item = QListWidgetItem(structs[i]['type'])
+            if getComment(structs[i]['type'], "Struct", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
+
+    # Displays all extracted pois from Static Analysis in Analysis box and POI box
+    def displayAllFiltered(self, filterContent, functions, strings, variables, dlls, structs):
+        global allpoiTypeCheck
+        allpoiTypeCheck = True
+        # Get the longest number of keys between functions, strings, variables, dlls in filterContent
+        length = len(filterContent['function'])
+        if len(strings) > length:
+            length = len(filterContent['string'])
+        elif len(variables) > length:
+            length = len(filterContent['variable'])
+        elif len(dlls) > length:
+            length = len(filterContent['dll'])
+        # elif len(structs) > length:
+        #     length = len(structs)
+
+        self.window.POI_tableWidget.setRowCount(length)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----FUNCTIONS-----"))
+        for j in range(len(filterContent['function'])):
+            for i in range(len(functions)):
+                if functions[i]['name'] in filterContent['function'][j]['name']:
+                    tableItem = QTableWidgetItem(functions[i]['name'])
+                    if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                        highlightCell(tableItem)
+                    self.window.POI_tableWidget.setItem(j, 0, tableItem)
+                    item = QListWidgetItem(functions[i]['name'])
+                    # set icon
+                    if getComment(functions[i]['name'], "Function", self.window.comment_text):
+                        addIcon(item)
+                    item.setCheckState(QtCore.Qt.Checked)
+                    self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----STRINGS-----"))
+        for j in range(len(filterContent['string'])):
+            for i in range(len(strings)):
+                if strings[i]['string'] in filterContent['string'][j]['name']:
+                    tableItem = QTableWidgetItem(strings[i]['string'])
+                    if getComment(strings[i]['string'], "String", self.window.comment_text):
+                        highlightCell(tableItem)
+                    self.window.POI_tableWidget.setItem(j, 1, tableItem)
+                    item = QListWidgetItem(strings[i]['string'])
+                    # set icon
+                    if getComment(strings[i]['string'], "String", self.window.comment_text):
+                        addIcon(item)
+                    self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----VARIABLES-----"))
+        for j in range(len(filterContent['variable'])):
+            for i in range(len(variables)):
+                if variables[i]['name'] in filterContent['variable'][j]['name']:
+                    tableItem = QTableWidgetItem(variables[i]['name'])
+                    if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                        highlightCell(tableItem)
+                    self.window.POI_tableWidget.setItem(j, 2, tableItem)
+                    item = QListWidgetItem(variables[i]['name'])
+                    # set icon
+                    if getComment(variables[i]['name'], "Variable", self.window.comment_text):
+                        addIcon(item)
+                    self.window.poi_list.addItem(item)
+
+        self.window.poi_list.addItem(QListWidgetItem("-----DLL'S-----"))
+        for j in range(len(filterContent['dll'])):
+            for i in range(len(dlls)):
+                if dlls[i]['name'] in filterContent['dll'][j]['name']:
+                    tableItem = QTableWidgetItem(dlls[i]['name'])
+                    if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                        highlightCell(tableItem)
+                    self.window.POI_tableWidget.setItem(j, 3, tableItem)
+                    item = QListWidgetItem(dlls[i]['name'])
+                    if getComment(dlls[i]['name'], "DLL", self.window.comment_text):
+                        addIcon(item)
+                    self.window.poi_list.addItem(item)
+
+        # self.window.poi_list.addItem(QListWidgetItem("-----STRUCTS-----"))
+        # for i in range(len(structs)):
+        #     if 'type' in structs[i]:
+        #         self.window.POI_tableWidget.setItem(i, 4, QTableWidgetItem(structs[i]['type']))
+        #     item = QListWidgetItem(structs[i]['type'])
+        #     if getComment(structs[i]['type'], "Struct", self.window.comment_text):
+        #         addIcon(item)
+        #     self.window.poi_list.addItem(item)
+
+
+# Displays POIs in the Analysis box
+def displayPoi(self):
+    self.window.POI_tableWidget.clear()
+    self.window.poi_list.clear()
+    poi = str(self.window.poiType_dropdown.currentText())
+    if poi == 'Extract All':
+        self.enableCheck()
+        functions, strings, variables, dlls, structs = getAllPoi(poi)
+        self.window.POI_tableWidget.setColumnCount(5)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(["Functions", "Strings", "Variables", "DLL's", "Structs"])
+
+        if self.window.pluginSelection_dropdown.currentText() == 'None':
+            # Call method to display every poi
+            self.displayAll(functions, strings, variables, dlls, structs)
+        else:
+            filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
+            self.displayAllFiltered(filterContent, functions, strings, variables, dlls, structs)

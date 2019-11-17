@@ -1,0 +1,64 @@
+# Display all POI in the Analysis box
+def getAllPoi(poi):
+    data = []
+    functions = []
+    strings = []
+    variables = []
+    dlls = []
+    structs = []
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for s in static_db.find():
+                    if s['_id'] == p.get('static_analysis', {}).get('01'):
+                        for r in results_db.find():
+                            if r['_id'] == s.get('results').get('01'):
+                                database = getAppropriatePoi(poi)
+                                for i in range(len(database)):
+                                    for d in database[i].find():
+                                        if r['_id'] == d.get('results_id'):
+                                            content = d.get('data')
+                                            try:
+                                                data.append(content)
+                                            except TypeError:
+                                                pass
+                                    if i == 0:
+                                        functions.append(data)
+                                    elif i == 1:
+                                        strings.append(data)
+                                    elif i == 2:
+                                        variables.append(data)
+                                    elif i == 3:
+                                        dlls.append(data)
+                                    elif i == 4:
+                                        structs.append(data)
+                                    data = []
+
+    return functions[0], strings[0], variables[0], dlls[0], structs[0]
+
+# Gets the appropriate database
+def getAppropriatePoi(poi):
+    if poi == "Extract All":
+        return [function_db, string_db, variable_db, dll_db, struct_db]
+
+# Saves a comment to a specific poi
+def saveComment(comment, poiName, dropText):
+    if dropText == 'Extract All':
+        for i in range(len(database)):
+            database[i].find_one_and_update(
+                {'name': poiName},
+                {'$set': {'comment': comment}},
+                upsert=False)
+    else:
+
+# Gets the comment associated with the given poi
+def getComment(poiName, dropText, commentBox):
+    database = getAppropriatePoi(dropText)
+    if dropText == 'Extract All':
+        for i in range(len(database)):
+            for d in database[i].find():
+                if poiName == d.get('name'):
+                    commentBox.setText(d.get('comment'))
+                    if d.get('comment'):
+                        return 1
+    else:
