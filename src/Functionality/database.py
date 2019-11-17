@@ -20,7 +20,6 @@ current_db = db_1['current']
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
-
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
     flag = ''
@@ -30,7 +29,6 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
-
 def setWindowTitle():
     for c in current_db.find():
         for p in project_db.find():
@@ -38,7 +36,6 @@ def setWindowTitle():
                 return p['name']
             else:
                 return "BATT5"
-
 
 def getFilterPoi(plugin):
     for p in plugin_db.find():
@@ -90,7 +87,6 @@ def setCurrentProject(selected):
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
 
-
 # Gets all of the projects that were created from the database
 def getProjects():
     # deleteDatabase()
@@ -99,7 +95,6 @@ def getProjects():
         projects.append(p.get('name'))
     return projects
 
-
 # Gets all the current plugins for the project
 def getPlugins():
     # deletePluginDatabase()
@@ -107,7 +102,6 @@ def getPlugins():
     for p in plugin_db.find():
         plugins.append(p.get('name'))
     return plugins
-
 
 # Get the current selected plugin and sets the current plugin in the database
 def getCurrentPlugin(selected):
@@ -124,13 +118,11 @@ def getCurrentPlugin(selected):
                 output = p['output']
     return name, description, pointOfInterest, output
 
-
 def getCurrentPluginInfo(selected):
     if selected:
         for p in plugin_db.find():
             if p['name'] == selected:
                 return p
-
 
 # Gets the path of the current project's file
 def getCurrentFilePath():
@@ -140,7 +132,6 @@ def getCurrentFilePath():
                 for b in binary_db.find():
                     if b['_id'] == p.get('binary'):
                         return b.get('file')
-
 
 # Gets the appropriate database
 def getAppropriatePoi(poi):
@@ -156,7 +147,6 @@ def getAppropriatePoi(poi):
         return dll_db
     elif poi == "Struct":
         return struct_db
-
 
 # Displays specific POI in the Analysis box
 def getPoi(poi):
@@ -253,20 +243,17 @@ def getPoisFromPlugin(plugin):
                 pois.append(p['pointOfInterest']['dll'][i]['name'])
     return pois
 
-
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
 # Gets and saves the created plugin into the database
 def savePlugin(plugin):
     plugin_db.insert_one(plugin)
 
-
 def updatePlugin(plugin, name):
     plugin_db.find_one_and_delete(
         {'name': name}
     )
     plugin_db.insert_one(plugin)
-
 
 def saveComment(comment, poiName, dropText):
     database = getAppropriatePoi(dropText)
@@ -281,7 +268,6 @@ def saveComment(comment, poiName, dropText):
             {'name': poiName},
             {'$set': {'comment': comment}},
             upsert=False)
-
 
 # Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
 def saveStatic(poi):
@@ -417,7 +403,6 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'struct': {str(i): struct['_id']}}}, upsert=True)
 
-
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 
 # Deletes a project from the database
@@ -426,13 +411,11 @@ def deleteAProject(project):
         {'name': project}
     )
 
-
 # Deletes a project from the database
 def deleteAPlugin(plugin):
     plugin_db.find_one_and_delete(
         {'name': plugin}
     )
-
 
 # Deletes a poi from the plugin database
 def deleteAPoiFromPlugin(name, plugin):
@@ -440,7 +423,6 @@ def deleteAPoiFromPlugin(name, plugin):
         {'name': name}
     )
     plugin_db.insert_one(plugin)
-
 
 # Delete EVERYTHING from project
 def deleteDatabase():

@@ -248,11 +248,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
+        self.window.pluginSelection_dropdown.addItem('None')  # TEMP LINE
         self.window.pluginSelection_dropdown.addItems(plugins)
-        # TEMP
-        self.window.pluginSelection_dropdown.addItem('None')
-
-
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
