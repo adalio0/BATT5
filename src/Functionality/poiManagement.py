@@ -111,21 +111,6 @@ def removePoiFromPlugin(pluginDict, poiName):
 # ---------------- FORMAT XML ----------------
 
 # ---------------- GUI ----------------
-def switchPOITypeView(poiType, addPOI_stack):
-    if poiType == 'Pull From Predefined Dataset':
-        addPOI_stack.setCurrentIndex(0)
-    elif poiType == 'Function':
-        addPOI_stack.setCurrentIndex(1)
-    elif poiType == 'String':
-        addPOI_stack.setCurrentIndex(2)
-    elif poiType == 'Variable':
-        addPOI_stack.setCurrentIndex(3)
-    elif poiType == 'DLL':
-        addPOI_stack.setCurrentIndex(4)
-    elif poiType == 'Packet Protocol':
-        addPOI_stack.setCurrentIndex(5)
-    elif poiType == 'Struct':
-        addPOI_stack.setCurrentIndex(6)
 
 def processPOIDataFun(dpoimPlugin_dropdown, funcName_lineEdit):
     funDict = convertFuncManual(funcName_lineEdit.text())

@@ -46,12 +46,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the management plugin boxes with the current plugins
         self.populatePluginBox()
 
-        # Populate the dropdown list of plugins
-        self.populatePluginDD()
-
-        # Populate the management plugin dropdown
-        self.populateManagePluginDD()
-
         # Populate the management poi list with poi from plugin
         # self.populatePoiFromPlugin()
 
@@ -64,6 +58,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Locks static if it has already been performed
         self.lockStatic()
+
+        self.checkUncheckAllPlugins()
 
         # ---- Menu Bar ------------------------------------
 
@@ -96,6 +92,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking will clear the comment box text
         self.window.commentClear_button.clicked.connect(self.clearComment)
+
         self.window.commentSave_button.clicked.connect(self.callSaveComment)
 
         # When clicking a Project in the project box, the project properties will update to the selected project
@@ -154,7 +151,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_button.clicked.connect(self.showFileExplorer_outFuncSource)
 
         # Creating new plugin from xml
-        # self.window.dpmSave_button.clicked.connect(self.callProcessPluginData)
+        self.window.saveXMLPlugin_button.clicked.connect(self.callSavePluginXML)
+
+        # Creating a new plugin from manual
+        self.window.saveManualPlugin_button.clicked.connect(self.callSavePluginManual)
 
         # Clicking on Plugin Predefined browse button calls showFileExplorer method (xmlEditor for now)
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
@@ -236,24 +236,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Initialize the plugin box with all the current plugins from database
     def populatePluginBox(self):
         plugins = getPlugins()
+        self.window.pluginManagement_list.clear()
+        self.window.addToPlugin_list.clear()
         self.window.pluginManagement_list.addItems(plugins)
         self.window.addToPlugin_list.addItems(plugins)
-
-    # Initialize the plugin dropdown list with all the current plugins from database
-    def populatePluginDD(self):
-        plugins = getPlugins()
-        self.window.pluginSelection_dropdown.addItems(plugins)
-
-    # Initialize the management plugin dropdown list with all the current plugins from database
-    def populateManagePluginDD(self):
-        plugins = getPlugins()
-        # self.window.dpoimPlugin_dropdown.addItems(plugins)
-
-    # Initialize the poi list with all the current poi from plugin from database
-    # def populatePoiFromPlugin(self):
-    #     if self.window.dpoimPlugin_dropdown.currentText():
-    #         pois = getPoisFromPlugin(self.window.dpoimPlugin_dropdown.currentText())
-    #         self.window.poiManagement_list.addItems(pois)
+        self.checkUncheckAllPlugins()
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
@@ -827,7 +814,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.populatePluginBox()
             self.populatePluginDD()
-            self.populateManagePluginDD()
 
     # Deletes a poi from plugin
     # def callDeletePoiFromPlugin(self):
@@ -1084,6 +1070,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def newXMLPoiTemplate(self):
         self.window.dpoimPredefined_lineEdit.clear()
+
+    def callSavePluginXML(self):
+        savePluginXML(self.window.dpmPluginStructure_lineEdit)
+        self.populatePluginBox()
+        self.newXMLPluginTemplate()
+
+    def callSavePluginManual(self):
+        savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                         self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                         self.window.dpmOutFuncSource_lineEdit)
+        self.populatePluginBox()
+        self.newManualPluginTemplate()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
