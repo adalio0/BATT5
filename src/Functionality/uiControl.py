@@ -44,7 +44,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populateProjectBox()
 
         # Populate the management plugin boxes with the current plugins
-        self.populatePluginBox()
+        self.populatePluginFields()
 
         # Populate the management poi list with poi from plugin
         # self.populatePoiFromPlugin()
@@ -234,13 +234,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
 
     # Initialize the plugin box with all the current plugins from database
-    def populatePluginBox(self):
+    def populatePluginFields(self):
         plugins = getPlugins()
+
+        # plugin management list
         self.window.pluginManagement_list.clear()
-        self.window.addToPlugin_list.clear()
         self.window.pluginManagement_list.addItems(plugins)
+
+        # add to plugin list
+        self.window.addToPlugin_list.clear()
         self.window.addToPlugin_list.addItems(plugins)
         self.checkUncheckAllPlugins()
+
+        # plugin dropdown menu
+        self.window.pluginSelection_dropdown.clear()
+        self.window.pluginSelection_dropdown.addItems(plugins)
+        # TEMP
+        self.window.pluginSelection_dropdown.addItem('None')
+
+
 
     # ---- Following methods provide vital (word) for performing static analysis ---------------------------
 
@@ -810,10 +822,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.window.pluginManagement_list.clear()
             self.window.pluginSelection_dropdown.clear()
-            self.window.dpoimPlugin_dropdown.clear()
 
-            self.populatePluginBox()
-            self.populatePluginDD()
+            self.populatePluginFields()
 
     # Deletes a poi from plugin
     # def callDeletePoiFromPlugin(self):
@@ -1056,9 +1066,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutName_lineEdit.clear()
         self.window.dpmOutFuncName_lineEdit.clear()
         self.window.dpmOutFuncSource_lineEdit.clear()
+        self.window.pluginManagement_list.clearSelection()
 
     def newXMLPluginTemplate(self):
         self.window.dpmPluginStructure_lineEdit.clear()
+        self.window.pluginManagement_list.clearSelection()
 
     def newManualPoiTemplate(self):
         self.window.funcName_lineEdit.clear()
@@ -1073,14 +1085,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def callSavePluginXML(self):
         savePluginXML(self.window.dpmPluginStructure_lineEdit)
-        self.populatePluginBox()
+        self.populatePluginFields()
         self.newXMLPluginTemplate()
 
     def callSavePluginManual(self):
         savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                          self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                          self.window.dpmOutFuncSource_lineEdit)
-        self.populatePluginBox()
+        self.populatePluginFields()
         self.newManualPluginTemplate()
 
 def main():
