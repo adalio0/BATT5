@@ -24,7 +24,10 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Extracts file location -----------------------------------------------------------------------
     def showFileExplorer(self):
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
+                                                        "All Files (*);;Python Files (*.py)", options=options)
         self.window.path_lineEdit.setText(name)
         if name:
             self.setProperties()
