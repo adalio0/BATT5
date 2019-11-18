@@ -2,6 +2,7 @@
 
 import os
 import sys
+import time
 from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -9,7 +10,7 @@ from pathlib import Path
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QEvent
+from PyQt5.QtCore import QEvent, QTimer
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -34,7 +35,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window = Ui_BATT5()
         self.window.setupUi(self)
 
-    # ---- Main Window --------------------------------------------------------------------------------------------
+        # ---- Main Window --------------------------------------------------------------------------------------------
         # Populate the projects box with current projects
         self.populateProjectBox()
 
@@ -49,7 +50,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.checkUncheckAllPlugins()
 
-    # ---- Menu Bar -----------------------------------------------------------------------------------------------
+        # ---- Menu Bar -----------------------------------------------------------------------------------------------
         # Clicking on New.. menu bar calls showNewProject method
         self.window.actionNew_Project.setShortcut("Ctrl+N")
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
@@ -75,7 +76,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Help menu bar calls showDocumentWindow method
         self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
 
-    # ---- Analysis Tab --------------------------------------------------------------------------------------------
+        # ---- Analysis Tab --------------------------------------------------------------------------------------------
         # Clicking on the save button near the comment box will save the comment in the selected poi
         self.window.commentSave_button.clicked.connect(self.callSaveComment)
 
@@ -93,9 +94,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
         # Clicking on Run Dynamic Analysis button calls runDynamic method
-        self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
+        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
 
-    # ---- Search Functions ----------------------------------------------------------------------------------------
+        # ---- Search Functions ----------------------------------------------------------------------------------------
         # returns the searched elements in the project list
         self.window.projectSearch_lineEdit.returnPressed.connect(self.callSearchProject)
 
@@ -108,24 +109,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # returns the searched elements in the poi list
         self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
 
-    # ---- Comment Functionality ----------------------------------------------------------------------------------
+        # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
         self.window.POI_tableWidget.currentItemChanged.connect(self.callHighlightList)
 
-    # ---- Filters ------------------------------------------------------------------------------------------------
+        # ---- Filters ------------------------------------------------------------------------------------------------
         # When changing POI type in the drop down will update whats displayed
         self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)
 
-    # ---- Console ------------------------------------------------------------------------------------------------
+        # ---- Console ------------------------------------------------------------------------------------------------
         # Executes the input command in the radare prompt
         self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)
 
-    # ---- Plugin Controls ----------------------------------------------------------------------------------------
+        # ---- Plugin Controls ----------------------------------------------------------------------------------------
         # Clicking on Generate Script button calls showOutputWindow method
         self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
-    # ---- Management Tab -----------------------------------------------------------------------------------------
+        # ---- Management Tab -----------------------------------------------------------------------------------------
         # Clicking on Plugin Structure browse button calls showFileExplorer method
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
 
@@ -168,15 +169,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on the delete button while a poi is selected on the management poi list will delete it
         # self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
 
-    # ---- View Box -----------------------------------------------------------------------------------------------
+        # ---- View Box -----------------------------------------------------------------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
         self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
 
-    # ---- Other? -------------------------------------------------------------------------------------------------
+        # ---- Other? -------------------------------------------------------------------------------------------------
         # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
 
-# TODO---- Following methods initialize the main window with all the project, plugin and poi data -------------------
+    # TODO---- Following methods initialize the main window with all the project, plugin and poi data -------------------
 
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
@@ -233,7 +234,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginSelection_dropdown.addItem('None')  # TEMP LINE
         self.window.pluginSelection_dropdown.addItems(plugins)
 
-# TODO---- The following methods are performed in the analysis tab of the BATT5 system ------------------------------
+    # TODO---- The following methods are performed in the analysis tab of the BATT5 system ------------------------------
 
     # ---- Following methods provide all the search functionality in the analysis tab --------------------------
 
@@ -313,7 +314,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
         self.window.POI_tableWidget.setColumnCount(6)
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(
+            ['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'offset' in content[i]:
@@ -342,7 +344,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays the filtered functions based on the selected plugin in Analysis box and POI box
     def displayFilteredFunctions(self, filterContent, content):
         self.window.POI_tableWidget.setColumnCount(6)
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(
+            ['offset', 'name', 'size', 'Ncallrefs', 'Nspvars', 'Nregvars'])
         self.window.POI_tableWidget.setRowCount(len(filterContent['function']))
         for j in range(len(filterContent['function'])):
             for i in range(len(content)):
@@ -573,6 +576,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         elif self.window.runDynamicAnalysis_button.text() == "Stop Dynamic Analysis":
             self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+        self.enable()
+
 
     # ---- Following methods are for deleting a project from the database -------------------
 
@@ -733,7 +738,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
-# TODO---- Following methods are performed in the management tab of the BATT5 system -------------------------------
+    # TODO---- Following methods are performed in the management tab of the BATT5 system -------------------------------
 
     # ---- Following methods provide all the search functionality in the management tab --------------------------
 
@@ -901,6 +906,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for i in range(self.window.addToPlugin_list.count()):
                 item = self.window.addToPlugin_list.item(i)
                 item.setCheckState(QtCore.Qt.Unchecked)
+
+    def disable(self):
+        self.window.central_tabs.setEnabled(False)
+        self.window.menubar.setDisabled(False)
+        QTimer.singleShot(1000, lambda: self.runDynamic())
+
+
+    def enable(self):
+        self.window.central_tabs.setDisabled(False)
+        self.window.menubar.setDisabled(False)
 
 
 def main():
