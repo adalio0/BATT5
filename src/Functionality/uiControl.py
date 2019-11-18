@@ -561,11 +561,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             items = []
             for i in range(self.window.poi_list.count()):
-                items.append(self.window.poi_list.item(i).text())
-            # test by hardcoding two known functions
-            items.append("sym.secret_stuff")
-            items.append("sym.even_more_secret")
-
+                items.append(self.window.poi_list.item(i).text(
             path = getCurrentFilePath().strip()
             print(path)
             dynamic = dynamicAnalysis(path, items)
