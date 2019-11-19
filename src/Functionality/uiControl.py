@@ -4,11 +4,9 @@ import os
 import sys
 from pathlib import Path
 
-
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
@@ -49,8 +47,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the management poi list with poi from plugin
         # self.populatePoiFromPlugin()
 
-        # Initialize the project properties
-        # Terminal also initialized here
+        # Initialize the project properties, terminal also initialized here
         self.setProject()
 
         # Unlocks dynamic if static has already been performed on the project
@@ -1096,9 +1093,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.newXMLPluginTemplate()
 
     def callSavePluginManual(self):
-        savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                         self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                         self.window.dpmOutFuncSource_lineEdit)
+        if self.window.saveManualPlugin_button.text() == 'Save':
+            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                             self.window.dpmOutFuncSource_lineEdit)
+        else:
+            # TODO
+            print('TODO: APPLY CHANGES TO PLUGIN')
+
         self.populatePluginFields()
         self.newManualPluginTemplate()
 

@@ -17,6 +17,7 @@ def convertPluginXML(filepath):
         pluginDict = formatPluginXml(pluginDict)
         return pluginDict
     else:
+        print('TODO: display error window')
         print('XML is invalid. (not xml or does not conform to schema)')
         # TODO display error window
         return 0
