@@ -563,12 +563,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             items = []
             for i in range(self.window.poi_list.count()):
-                items.append(self.window.poi_list.item(i).text(
+                items.append(self.window.poi_list.item(i).text())
             path = getCurrentFilePath()
-            print(path)
             dynamic = dynamicAnalysis(path, items)
-            # print(dynamic)
-            # print(self.window.poi_list.item(i).text())
             for j in range(len(dynamic)):
                 self.window.radareConsoleOut_text.append(dynamic[j])
 
