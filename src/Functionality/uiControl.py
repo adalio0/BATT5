@@ -45,7 +45,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Populate the management poi list with poi from plugin
         # self.populatePoiFromPlugin()
 
-        # Initialize the project properties and Terminal
+        # Initialize the project properties, terminal also initialized here
         self.setProject()
 
     # ---- Menu Bar -----------------------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
-        self.window.pluginSelection_dropdown.addItem('None')  # TEMP LINE
+        self.window.pluginSelection_dropdown.addItem('None')  # TEMP COMMAND?
         self.window.pluginSelection_dropdown.addItems(plugins)
 
 # TODO---- The following methods are performed in the analysis tab of the BATT5 system ------------------------------
@@ -807,14 +807,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays a detailed view of a plugin when it is clicked
     def displayPlugin(self):
-        plugin = self.window.pluginManagement_list.currentItem().text()
-        name, description, poi, output = getCurrentPlugin(plugin)
 
+        # get name of current plugin
+        item = self.window.pluginManagement_list.currentItem().text()
+        # set label to display name of plugin being edited
+        self.window.label_3.setText('Currently Editing: ' + item)
+        name, description, poi, output = getCurrentPlugin(item)
+        # display poi information
         self.window.dpmPluginName_lineEdit.setText(name)
         self.window.dpmPluginDesc_lineEdit.setText(description)
         self.window.dpmOutName_lineEdit.setText(output['name'])
         self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
         self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
+        # change save button text
+        self.window.saveManualPlugin_button.setText('Update Plugin')
+        # change clear button text
+        self.window.clearManualPlugin_button.setText('De-Select Plugin')
 
     # Displays all pois associated with the clicked plugin
     def displayPoiFromPlugin(self):
@@ -851,6 +859,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 item = self.window.addToPlugin_list.item(i)
                 item.setCheckState(QtCore.Qt.Unchecked)
 
+    # Clears the labels that are used for creating a new plugin to create a new plugin
+    def newManualPluginTemplate(self):
+        self.window.dpmPluginName_lineEdit.clear()
+        self.window.dpmPluginDesc_lineEdit.clear()
+        self.window.dpmOutName_lineEdit.clear()
+        self.window.dpmOutFuncName_lineEdit.clear()
+        self.window.dpmOutFuncSource_lineEdit.clear()
+        self.window.pluginManagement_list.clearSelection()
+        self.window.label_3.setText('Add Plugin Through Manual Input')
+        self.window.saveManualPlugin_button.setText('Save')
+        self.window.clearManualPlugin_button.setText('Clear')
         self.displayPoiFromPlugin()
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
@@ -920,6 +939,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def enable(self):
         self.window.central_tabs.setDisabled(False)
         self.window.menubar.setDisabled(False)
+
+    def callSavePluginManual(self):
+        if self.window.saveManualPlugin_button.text() == 'Save':
+            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                             self.window.dpmOutFuncSource_lineEdit)
+        else:
+            # TODO
+            print('TODO: APPLY CHANGES TO PLUGIN')
+
+        self.populatePluginFields()
+        self.newManualPluginTemplate()
 
 
 def main():
