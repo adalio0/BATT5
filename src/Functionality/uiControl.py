@@ -749,6 +749,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
+    def disable(self):
+        self.window.central_tabs.setEnabled(False)
+        self.window.menubar.setDisabled(False)
+        QTimer.singleShot(1000, lambda: self.runDynamic())
+
+    def enable(self):
+        self.window.central_tabs.setDisabled(False)
+        self.window.menubar.setDisabled(False)
+
     # TODO---- Following methods are performed in the management tab of the BATT5 system -------------------------------
 
     # ---- Following methods provide all the search functionality in the management tab --------------------------
@@ -775,9 +784,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
-        savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                         self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                         self.window.dpmOutFuncSource_lineEdit)
+        if self.window.saveManualPlugin_button.text() == 'Save':
+            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                             self.window.dpmOutFuncSource_lineEdit)
+        else:
+            # TODO
+            print('TODO: APPLY CHANGES TO PLUGIN')
+
         self.populatePluginFields()
         self.newManualPluginTemplate()
 
@@ -807,6 +821,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
 
+        self.window.label_3.setText('Add Plugin Through Manual Input')
+        self.window.saveManualPlugin_button.setText('Save')
+        self.window.clearManualPlugin_button.setText('Clear')
+        self.displayPoiFromPlugin()
+
     # Clears the labels that are used for creating a new predefined poi set to create a new poi set
     def newXMLPoiTemplate(self):
         self.window.dpoimPredefined_lineEdit.clear()
@@ -824,7 +843,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays a detailed view of a plugin when it is clicked
     def displayPlugin(self):
-
         # get name of current plugin
         item = self.window.pluginManagement_list.currentItem().text()
         # set label to display name of plugin being edited
@@ -875,19 +893,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for i in range(self.window.addToPlugin_list.count()):
                 item = self.window.addToPlugin_list.item(i)
                 item.setCheckState(QtCore.Qt.Unchecked)
-
-    # Clears the labels that are used for creating a new plugin to create a new plugin
-    def newManualPluginTemplate(self):
-        self.window.dpmPluginName_lineEdit.clear()
-        self.window.dpmPluginDesc_lineEdit.clear()
-        self.window.dpmOutName_lineEdit.clear()
-        self.window.dpmOutFuncName_lineEdit.clear()
-        self.window.dpmOutFuncSource_lineEdit.clear()
-        self.window.pluginManagement_list.clearSelection()
-        self.window.label_3.setText('Add Plugin Through Manual Input')
-        self.window.saveManualPlugin_button.setText('Save')
-        self.window.clearManualPlugin_button.setText('Clear')
-        self.displayPoiFromPlugin()
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
 
@@ -953,27 +958,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpoimPredefined_lineEdit.setText(name)
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
-
-    def disable(self):
-        self.window.central_tabs.setEnabled(False)
-        self.window.menubar.setDisabled(False)
-        QTimer.singleShot(1000, lambda: self.runDynamic())
-
-    def enable(self):
-        self.window.central_tabs.setDisabled(False)
-        self.window.menubar.setDisabled(False)
-
-    def callSavePluginManual(self):
-        if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                             self.window.dpmOutFuncSource_lineEdit)
-        else:
-            # TODO
-            print('TODO: APPLY CHANGES TO PLUGIN')
-
-        self.populatePluginFields()
-        self.newManualPluginTemplate()
 
 
 def main():
