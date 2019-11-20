@@ -35,6 +35,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window = Ui_BATT5()
         self.window.setupUi(self)
         self.window.generateScript_button.setDisabled(True)
+        self.window.dpmPluginStructure_lineEdit.setDisabled(True)
+        self.window.dpmOutFuncSource_lineEdit.setDisabled(True)
+        self.window.dpoimPredefined_lineEdit.setDisabled(True)
 
         # ---- Main Window --------------------------------------------------------------------------------------------
         # Populate the projects box with current projects
