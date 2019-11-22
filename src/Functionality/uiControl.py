@@ -161,7 +161,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.saveFunc_button.clicked.connect(self.callAddFuncToPlugin)
 
         # When changing POI type in the drop down will update which types are displayed
-        self.window.comboBox.currentIndexChanged.connect(self.displayPoiFromPlugin)
+        self.window.addPoiType_dropdown.currentIndexChanged.connect(self.displayPoiFromPlugin)
 
         # Clicking on the new button below the management poi box will allow user to create new poi
         self.window.clearPoiAll_button.clicked.connect(self.newManualPoiTemplate)
@@ -816,12 +816,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
 
-        self.window.label_3.setText('Add Plugin Through Manual Input')
-        self.window.label_4.setText('Add POI Through XML Input')
-        self.window.label_5.setText('Add POI Through Manual Input')
+        self.window.pluginEditingStatus_label.setText('Add Plugin Through Manual Input')
+        self.window.addPoiXML_label.setText('Add POI Through XML Input')
+        self.window.addPoiManual_label.setText('Add POI Through Manual Input')
         self.window.saveManualPlugin_button.setText('Save')
         self.window.clearManualPlugin_button.setText('Clear')
-        self.displayPoiFromPlugin()
+        self.window.pluginManagement_list.clearSelection()
+        self.window.poiManagement_list.clear()
 
     # Clears the labels that are used for creating a new predefined poi set to create a new poi set
     def newXMLPoiTemplate(self):
@@ -842,11 +843,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def displayPlugin(self):
         # get name of current plugin
         item = self.window.pluginManagement_list.currentItem().text()
-        poi = self.window.comboBox.currentText()
+        poi = self.window.addPoiType_dropdown.currentText()
         # set label to display name of plugin being edited
-        self.window.label_3.setText('Currently Editing: {}'.format(item))
-        self.window.label_4.setText('Add POI to {}'.format(item) + ' Through XML Input')
-        self.window.label_5.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
+        self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
+        self.window.addPoiXML_label.setText('Add POI to {}'.format(item) + ' Through XML Input')
+        self.window.addPoiManual_label.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
         # display poi information
         name, description, poi, output = getCurrentPlugin(item)
         self.window.dpmPluginName_lineEdit.setText(name)
@@ -867,8 +868,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.pluginManagement_list.currentItem():
             plugin = self.window.pluginManagement_list.currentItem().text()
             poiFromPlugin = getFilterPoi(plugin)
-            poiType = self.window.comboBox.currentText()
-            self.window.label_5.setText('Add {}'.format(poiType) + ' to {}'.format(plugin) + ' Through Manual Input')
+            poiType = self.window.addPoiType_dropdown.currentText()
+            self.window.addPoiManual_label.setText('Add {}'.format(poiType) + ' to {}'.format(plugin) + ' Through Manual Input')
 
             pois = []
             poiType = poiType.lower()
