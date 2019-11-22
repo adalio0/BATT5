@@ -1,8 +1,6 @@
 #! /usr/bin/env python3.
 
-import os
 import sys
-import time
 from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
