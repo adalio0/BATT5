@@ -1,9 +1,7 @@
 #! /usr/bin/env python3.
 
-import os
 import sys
-import time
-from pathlib import Path
+# from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
@@ -97,16 +95,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Search Functions ----------------------------------------------------------------------------------------
         # returns the searched elements in the project list
-        self.window.projectSearch_lineEdit.returnPressed.connect(self.callSearchProject)
+        self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)
 
         # returns the searched elements in the poi list
-        self.window.poiSearch_lineEdit.returnPressed.connect(self.callSearchPoi)
+        self.window.poiSearch_lineEdit.textChanged.connect(self.callSearchPoi)
 
         # returns the searched elements in the plugin list
-        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.callSearchPluginM)
+        self.window.pluginManagementSearch_lineEdit.textChanged.connect(self.callSearchPluginM)
 
         # returns the searched elements in the poi list
-        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
+        self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
@@ -149,7 +147,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on the clear button in Add Plugin Through Manual Input will clear the text
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
-
 
         # Right clicking on a plugin in the management plugin box will bring up confirmation for deleting
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -246,9 +243,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Search functionality for the poi box
     def callSearchPoi(self):
         try:
-            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
-            if not self.window.poiSearch_lineEdit.text():
-                self.displayPoi()
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list,
+                      self.window.poiType_dropdown.currentText())
         except AttributeError:
             pass
 
@@ -627,18 +623,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows ErrFile window
     def showErrFile(self):
-        self.windowEF = ErrFile()
-        self.windowEF.show()
+        # self.windowEF = ErrFile()
+        # self.windowEF.show()
+        QMessageBox.question(self, "Error Message: File Specified",
+                             "A project is associated with one binary file and cannot be saved \n"
+                             "without a binary file. Please provide a binary file.",
+                             QMessageBox.Ok)
+
 
     # Shows Errx86 window
     def showErrx86(self):
-        self.windowE86 = Errx86()
-        self.windowE86.show()
+        # self.windowE86 = Errx86()
+        # self.windowE86.show()
+        QMessageBox.question(self, "Error Message: x86 architecture binary file",
+                             "The system only supports files that are of x86 architecture",
+                             QMessageBox.Ok)
+
 
     # Shows ErrRadare window
     def showErrRadare(self):
-        self.windowER = ErrRadare()
-        self.windowER.show()
+        # self.windowER = ErrRadare()
+        # self.windowER.show()
+        QMessageBox.question(self, "Error Message: Binary File Property Extraction",
+                                    "(Returning any Radare2's error message if there are issues extracting\n"
+                                    "properties from the binary file.)",
+                                    QMessageBox.Ok)
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
@@ -696,30 +705,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Check or Uncheck poi List
     def checkstate_poi(self):
-        global allpoiTypeCheck
-        if allpoiTypeCheck is True:
-            for i in range(self.window.poi_list.count()):
-                item = self.window.poi_list.item(i)
-                if item.text() == "-----FUNCTIONS-----":
-                    continue
-                elif item.text() == "-----STRINGS-----":
-                    break
-                else:
-                    if self.window.check_allpoi.isChecked():
+        for i in range(self.window.poi_list.count()):
+            item = self.window.poi_list.item(i)
+            if not item.isHidden():
+                if self.window.check_allpoi.isChecked():
+                    for i in range(self.window.poi_list.count()):
                         item.setCheckState(QtCore.Qt.Checked)
-                    elif self.window.check_allpoi.checkState() == 0:
+                elif self.window.check_allpoi.checkState() == 0:
+                    for i in range(self.window.poi_list.count()):
                         item.setCheckState(QtCore.Qt.Unchecked)
-
-        elif allpoiTypeCheck is False:
-            if self.window.check_allpoi.isChecked():
-                for i in range(self.window.poi_list.count()):
-                    item = self.window.poi_list.item(i)
-                    item.setCheckState(QtCore.Qt.Checked)
-
-            elif self.window.check_allpoi.checkState() == 0:
-                for i in range(self.window.poi_list.count()):
-                    item = self.window.poi_list.item(i)
-                    item.setCheckState(QtCore.Qt.Unchecked)
 
     # From current to history
     def switchToHistory(self):
@@ -763,7 +757,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def callSearchPoiM(self):
         try:
-            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list,
+                       self.window.addPoiType_dropdown.currentText(), self.window.pluginManagement_list.currentItem().text())
         except AttributeError:
             pass
 
