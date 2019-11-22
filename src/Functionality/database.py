@@ -30,6 +30,7 @@ def checkStatic():
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
 
+
 # ---- Setters for the database (sets the current project and window title) --------------------------------------
 
 def setWindowTitle():
@@ -78,6 +79,7 @@ def setCurrentProject(selected):
                         binaryPath = b.get('file')
 
     return text, binaryPath
+
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
 
@@ -202,6 +204,7 @@ def getComment(poiName, dropText, commentBox):
             commentBox.setText(d.get('comment'))
             if d.get('comment'):
                 return 1
+
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
@@ -360,6 +363,7 @@ def saveStatic(poi):
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'struct': {str(i): struct['_id']}}}, upsert=True)
+
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 

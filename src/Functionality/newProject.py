@@ -3,6 +3,8 @@ import pymongo
 import r2pipe
 
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+
 from src.GUI.python_files.popups.newProjectWind import NewProject
 from src.GUI.python_files.popups.errors import ErrEmptyFields
 
@@ -144,8 +146,11 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Show Error Message ------------------------------------------
     def showErr(self):
-        self.windowEF = ErrEmptyFields()
-        self.windowEF.show()
+        # self.windowEF = ErrEmptyFields()
+        # self.windowEF.show()
+        QMessageBox.question(self, "Error Message: Missing Fields",
+                             "All fields must be filled to in order to create a Project",
+                             QMessageBox.Ok)
 
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):

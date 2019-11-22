@@ -630,18 +630,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows ErrFile window
     def showErrFile(self):
-        self.windowEF = ErrFile()
-        self.windowEF.show()
+        # self.windowEF = ErrFile()
+        # self.windowEF.show()
+        QMessageBox.question(self, "Error Message: File Specified",
+                             "A project is associated with one binary file and cannot be saved \n"
+                             "without a binary file. Please provide a binary file.",
+                             QMessageBox.Ok)
+
 
     # Shows Errx86 window
     def showErrx86(self):
-        self.windowE86 = Errx86()
-        self.windowE86.show()
+        # self.windowE86 = Errx86()
+        # self.windowE86.show()
+        QMessageBox.question(self, "Error Message: x86 architecture binary file",
+                             "The system only supports files that are of x86 architecture",
+                             QMessageBox.Ok)
+
 
     # Shows ErrRadare window
     def showErrRadare(self):
-        self.windowER = ErrRadare()
-        self.windowER.show()
+        # self.windowER = ErrRadare()
+        # self.windowER.show()
+        QMessageBox.question(self, "Error Message: Binary File Property Extraction",
+                                    "(Returning any Radare2's error message if there are issues extracting\n"
+                                    "properties from the binary file.)",
+                                    QMessageBox.Ok)
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
