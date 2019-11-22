@@ -95,16 +95,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Search Functions ----------------------------------------------------------------------------------------
         # returns the searched elements in the project list
-        self.window.projectSearch_lineEdit.returnPressed.connect(self.callSearchProject)
+        self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)
 
         # returns the searched elements in the poi list
-        self.window.poiSearch_lineEdit.returnPressed.connect(self.callSearchPoi)
+        self.window.poiSearch_lineEdit.textChanged.connect(self.callSearchPoi)
 
         # returns the searched elements in the plugin list
-        self.window.pluginManagementSearch_lineEdit.returnPressed.connect(self.callSearchPluginM)
+        self.window.pluginManagementSearch_lineEdit.textChanged.connect(self.callSearchPluginM)
 
         # returns the searched elements in the poi list
-        self.window.poiManagementSeach_lineEdit.returnPressed.connect(self.callSearchPoiM)
+        self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
@@ -243,9 +243,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Search functionality for the poi box
     def callSearchPoi(self):
         try:
-            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list, self.window.poiType_dropdown.currentText())
-            if not self.window.poiSearch_lineEdit.text():
-                self.displayPoi()
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list,
+                      self.window.poiType_dropdown.currentText())
         except AttributeError:
             pass
 
@@ -706,30 +705,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Check or Uncheck poi List
     def checkstate_poi(self):
-        global allpoiTypeCheck
-        if allpoiTypeCheck is True:
-            for i in range(self.window.poi_list.count()):
-                item = self.window.poi_list.item(i)
-                if item.text() == "-----FUNCTIONS-----":
-                    continue
-                elif item.text() == "-----STRINGS-----":
-                    break
-                else:
-                    if self.window.check_allpoi.isChecked():
+        for i in range(self.window.poi_list.count()):
+            item = self.window.poi_list.item(i)
+            if not item.isHidden():
+                if self.window.check_allpoi.isChecked():
+                    for i in range(self.window.poi_list.count()):
                         item.setCheckState(QtCore.Qt.Checked)
-                    elif self.window.check_allpoi.checkState() == 0:
+                elif self.window.check_allpoi.checkState() == 0:
+                    for i in range(self.window.poi_list.count()):
                         item.setCheckState(QtCore.Qt.Unchecked)
-
-        elif allpoiTypeCheck is False:
-            if self.window.check_allpoi.isChecked():
-                for i in range(self.window.poi_list.count()):
-                    item = self.window.poi_list.item(i)
-                    item.setCheckState(QtCore.Qt.Checked)
-
-            elif self.window.check_allpoi.checkState() == 0:
-                for i in range(self.window.poi_list.count()):
-                    item = self.window.poi_list.item(i)
-                    item.setCheckState(QtCore.Qt.Unchecked)
 
     # From current to history
     def switchToHistory(self):
@@ -773,7 +757,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def callSearchPoiM(self):
         try:
-            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list)
+            searchPoiM(str(self.window.poiManagementSeach_lineEdit.text()), self.window.poiManagement_list,
+                       self.window.addPoiType_dropdown.currentText(), self.window.pluginManagement_list.currentItem().text())
         except AttributeError:
             pass
 
