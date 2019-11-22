@@ -11,11 +11,12 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
+from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
 from src.Functionality.newProject import ProjectWindow
+from src.Functionality.documentation import DocumentationWindow
 from src.Functionality.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
-from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
 from src.Functionality.poiManagement import *
@@ -23,8 +24,6 @@ from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import dynamicAnalysis
-
-allpoiTypeCheck = False
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -54,7 +53,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on Open.. menu bar calls showFileExplorer method
         self.window.actionOpen.setShortcut("Ctrl+O")
-        # self.window.actionOpen.triggered.connect(self.showFileExplorerSimple)
+        # self.window.actionOpen.triggered.connect(self.showXML)
 
         # Clicking on Save.. menu bar call Save method
         self.window.actionSave.setShortcut("Ctrl+S")
@@ -71,6 +70,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Windows menu bar calls..
 
         # Clicking on Help menu bar calls showDocumentWindow method
+        self.window.actionDocumentation.setShortcut("Ctrl+D")
         self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
 
         # ---- Analysis Tab --------------------------------------------------------------------------------------------
@@ -630,7 +630,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                              "without a binary file. Please provide a binary file.",
                              QMessageBox.Ok)
 
-
     # Shows Errx86 window
     def showErrx86(self):
         # self.windowE86 = Errx86()
@@ -638,7 +637,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         QMessageBox.question(self, "Error Message: x86 architecture binary file",
                              "The system only supports files that are of x86 architecture",
                              QMessageBox.Ok)
-
 
     # Shows ErrRadare window
     def showErrRadare(self):
@@ -658,16 +656,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows Documentation window
     def showDocumentationWindow(self):
-        self.windowDC = QtWidgets.QDialog()
-        self.ui = Documentation_Window()
-        self.ui.setupUi(self.windowDC)
-        self.windowDC.show()
+        self.ui = DocumentationWindow()
+        self.ui.exec_()
 
     # Shows Output window
     def showOutputWindow(self):
         self.windowOUT = QtWidgets.QWidget()
         self.ui = NOutputWindow()
         self.ui.show()
+
+    def showXML(self):
+        self.windxml = XMLEditor()
+        self.windxml.show()
 
     # Open the file explorer to select a file for the output window
     def showFileExplorer_outFuncSource(self):
@@ -965,11 +965,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.displayPoiFromPlugin()
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()
