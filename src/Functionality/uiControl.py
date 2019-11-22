@@ -1,9 +1,7 @@
 #! /usr/bin/env python3.
 
-import os
 import sys
-import time
-from pathlib import Path
+# from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
@@ -150,7 +148,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on the clear button in Add Plugin Through Manual Input will clear the text
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
 
-
         # Right clicking on a plugin in the management plugin box will bring up confirmation for deleting
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.window.pluginManagement_list.customContextMenuRequested.connect(self.rightClickOnPlugin)
@@ -246,7 +243,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Search functionality for the poi box
     def callSearchPoi(self):
         try:
-            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list, self.window.poiType_dropdown.currentText())
             if not self.window.poiSearch_lineEdit.text():
                 self.displayPoi()
         except AttributeError:
@@ -627,18 +624,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows ErrFile window
     def showErrFile(self):
-        self.windowEF = ErrFile()
-        self.windowEF.show()
+        # self.windowEF = ErrFile()
+        # self.windowEF.show()
+        QMessageBox.question(self, "Error Message: File Specified",
+                             "A project is associated with one binary file and cannot be saved \n"
+                             "without a binary file. Please provide a binary file.",
+                             QMessageBox.Ok)
+
 
     # Shows Errx86 window
     def showErrx86(self):
-        self.windowE86 = Errx86()
-        self.windowE86.show()
+        # self.windowE86 = Errx86()
+        # self.windowE86.show()
+        QMessageBox.question(self, "Error Message: x86 architecture binary file",
+                             "The system only supports files that are of x86 architecture",
+                             QMessageBox.Ok)
+
 
     # Shows ErrRadare window
     def showErrRadare(self):
-        self.windowER = ErrRadare()
-        self.windowER.show()
+        # self.windowER = ErrRadare()
+        # self.windowER.show()
+        QMessageBox.question(self, "Error Message: Binary File Property Extraction",
+                                    "(Returning any Radare2's error message if there are issues extracting\n"
+                                    "properties from the binary file.)",
+                                    QMessageBox.Ok)
 
     # Shows Analysis Result window
     def showAnalysisWindow(self):
