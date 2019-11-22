@@ -2,18 +2,16 @@
 
 # Form implementation generated from reading ui file 'newProjectWind.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class NewProject(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(785, 443)
+        Form.resize(533, 503)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
@@ -27,6 +25,7 @@ class NewProject(object):
         self.label = QtWidgets.QLabel(Form)
         self.label.setMinimumSize(QtCore.QSize(0, 30))
         self.label.setStyleSheet("background-color: rgb(182, 206, 227);")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 4)
         self.label_5 = QtWidgets.QLabel(Form)
@@ -41,13 +40,11 @@ class NewProject(object):
         self.label_3 = QtWidgets.QLabel(Form)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
-        self.path_lineEdit = QtWidgets.QLineEdit(Form)
-        self.path_lineEdit.setObjectName("path_lineEdit")
-        self.gridLayout.addWidget(self.path_lineEdit, 3, 1, 1, 1)
         self.browse_button = QtWidgets.QPushButton(Form)
         self.browse_button.setObjectName("browse_button")
         self.gridLayout.addWidget(self.browse_button, 3, 3, 1, 1)
         self.projectDescription_textEdit = QtWidgets.QTextEdit(Form)
+        self.projectDescription_textEdit.setMaximumSize(QtCore.QSize(16777215, 100))
         self.projectDescription_textEdit.setObjectName("projectDescription_textEdit")
         self.gridLayout.addWidget(self.projectDescription_textEdit, 2, 1, 1, 1)
         self.projectName_lineEdit = QtWidgets.QLineEdit(Form)
@@ -69,6 +66,11 @@ class NewProject(object):
         item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
         item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
         self.gridLayout.addWidget(self.properties_treeWidget, 5, 1, 1, 1)
+        self.path_lineEdit = QtWidgets.QLineEdit(Form)
+        self.path_lineEdit.setReadOnly(True)
+        self.path_lineEdit.setClearButtonEnabled(False)
+        self.path_lineEdit.setObjectName("path_lineEdit")
+        self.gridLayout.addWidget(self.path_lineEdit, 3, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
         self.retranslateUi(Form)
@@ -79,7 +81,7 @@ class NewProject(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label_2.setText(_translate("Form", "Project Name"))
         self.create_button.setText(_translate("Form", "Create"))
-        self.label.setText(_translate("Form", "                                                                                                    Create A New Project"))
+        self.label.setText(_translate("Form", "Create A New Project"))
         self.label_5.setText(_translate("Form", "Binary File Properties"))
         self.cancel_button.setText(_translate("Form", "Cancel"))
         self.label_4.setText(_translate("Form", "Binary File Path"))
@@ -104,12 +106,3 @@ class NewProject(object):
         self.properties_treeWidget.topLevelItem(12).setText(0, _translate("Form", "Stripped"))
         self.properties_treeWidget.setSortingEnabled(__sortingEnabled)
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = NewProject()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())

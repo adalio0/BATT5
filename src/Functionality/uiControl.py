@@ -776,7 +776,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                              self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                              self.window.dpmOutFuncSource_lineEdit)
-        else:
+        elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
             # TODO
             print('TODO: APPLY CHANGES TO PLUGIN')
 

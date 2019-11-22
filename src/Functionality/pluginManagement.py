@@ -123,7 +123,7 @@ def savePluginXML(dpmPluginStructure_lineEdit):
 
 def savePluginManual(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
                      dpmOutFuncSource_lineEdit):
-    if dpmOutName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
+    if dpmPluginName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
         print('REQUIRED FIELDS NOT FILLED')
         # TODO display error window
         return
