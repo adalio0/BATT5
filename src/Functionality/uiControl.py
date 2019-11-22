@@ -158,7 +158,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.customContextMenuRequested.connect(self.rightClickOnPlugin)
 
         # Clicking on the save func button will save the given func name to the checked plugins
-        self.window.saveFunc_button.clicked.connect(self.callAddFuncToPlugin)
+        # self.window.saveFunc_button.clicked.connect(self.callAddFuncToPlugin)
 
         # When changing POI type in the drop down will update which types are displayed
         self.window.addPoiType_dropdown.currentIndexChanged.connect(self.displayPoiFromPlugin)
