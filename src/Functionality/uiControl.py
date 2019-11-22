@@ -150,15 +150,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on the clear button in Add Plugin Through Manual Input will clear the text
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
 
-        # check or uncheck all elements in poi list
-        # self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
 
         # Right clicking on a plugin in the management plugin box will bring up confirmation for deleting
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.window.pluginManagement_list.customContextMenuRequested.connect(self.rightClickOnPlugin)
 
         # Clicking on the save func button will save the given func name to the checked plugins
-        # self.window.saveFunc_button.clicked.connect(self.callAddFuncToPlugin)
+        self.window.savePoi_button.clicked.connect(self.callAddPoiToPlugin)
 
         # When changing POI type in the drop down will update which types are displayed
         self.window.addPoiType_dropdown.currentIndexChanged.connect(self.displayPoiFromPlugin)
@@ -818,12 +816,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Clears the labels that are used for creating a new predefined poi to create a new poi
     def newManualPoiTemplate(self):
-        self.window.funcName_lineEdit.clear()
-        self.window.strName_lineEdit.clear()
-        self.window.varName_lineEdit.clear()
-        self.window.dllName_lineEdit.clear()
-        # self.window.protoName_lineEdit.clear()
-        self.window.structName_lineEdit.clear()
+        self.window.addPoiName_lineEdit.clear()
 
     # ---- Following methods are for displaying a plugin and a plugin's poi in the management tab ----------------
 
@@ -958,13 +951,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
 
+    def callAddPoiToPlugin(self):
+        addPoiToPlugin(self.window.addPoiName_lineEdit.text(), self.window.addPoiType_dropdown.currentText(),
+                       self.window.pluginManagement_list.currentItem().text())
+        self.window.addPoiName_lineEdit.clear()
+        self.displayPoiFromPlugin()
 
+# ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     main()

@@ -24,66 +24,15 @@ def convertPoiXML(filepath):
         return
 
 # ---------------- MANUAL POI CONVERSION ----------------
-def convertFuncManual(name):
-    funcDict = {
+def convertPoiManual(name):
+    PoiDict = {
         'name': name
     }
-    return funcDict
-
-def convertStringManual(name):
-    strDict = {
-        'name': name
-    }
-    return strDict
-
-def convertDllManual(name):
-    dllDict = {
-        'name': name
-    }
-    return dllDict
-
-def convertVarManual(name):
-    varDict = {
-        'name': name
-    }
-    return varDict
-
-def convertPacketProtocolManual(name):
-    ppDict = {
-        'name': name
-    }
-    return ppDict
-
-def convertStructManual(name):
-    structDict = {
-        'name': name
-    }
-    return structDict
+    return PoiDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
-def addFuncToPlugin(pluginDict, funcDict):
-    pluginDict['pointOfInterest']['function'].append(funcDict)
-    print(pluginDict)
-    return pluginDict
-
-def addStringToPlugin(pluginDict, strDict):
-    pluginDict['pointOfInterest']['string'].append(strDict)
-    print(pluginDict)
-    return pluginDict
-
-def addVarToPlugin(pluginDict, varDict):
-    pluginDict['pointOfInterest']['variable'].append(varDict)
-    print(pluginDict)
-    return pluginDict
-
-def addDllToPlugin(pluginDict, dllDict):
-    pluginDict['pointOfInterest']['dll'].append(dllDict)
-    print(pluginDict)
-    return pluginDict
-
-def addPacketProtocolToPlugin(pluginDict, ppDict):
-    pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
-    print(pluginDict)
+def appendPoiPlugin(pluginDict, poiDict, poiType):
+    pluginDict['pointOfInterest'][poiType].append(poiDict)
     return pluginDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
@@ -116,44 +65,12 @@ def removePoiFromPlugin(pluginDict, poiName):
 # ---------------- FORMAT XML ----------------
 
 # ---------------- GUI ----------------
+def addPoiToPlugin(poiName, poiType, pluginName):
+    poiDict = convertPoiManual(poiName)
+    pluginDict = getCurrentPluginInfo(pluginName)
 
-def processPOIDataFun(dpoimPlugin_dropdown, funcName_lineEdit):
-    funDict = convertFuncManual(funcName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addFuncToPlugin(finalPD, funDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-    
-
-def processPOIDataStr(dpoimPlugin_dropdown, strName_lineEdit):
-    strDict = convertStringManual(strName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addStringToPlugin(finalPD, strDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataVar(dpoimPlugin_dropdown, varName_lineEdit):
-    varDict = convertVarManual(varName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addVarToPlugin(finalPD, varDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataDLL(dpoimPlugin_dropdown, dllName_lineEdit):
-    dllDict = convertDllManual(dllName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addDllToPlugin(finalPD, dllDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself):
-    ppDict = convertPacketProtocolManual(protoName_lineEditself.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataStruct(dpoimPlugin_dropdown,protoName_lineEditself):
-    structDict = convertPacketProtocolManual(protoName_lineEditself.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addPacketProtocolToPlugin(finalPD, structDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
+    updatedPlugin = appendPoiPlugin(pluginDict, poiDict, poiType.lower())
+    updatePlugin(updatedPlugin, pluginName)
 
 # ---------------- TESTING ----------------
 
