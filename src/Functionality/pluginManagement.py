@@ -1,3 +1,4 @@
+from PyQt5.QtWidgets import QMessageBox
 from src.Functionality.poiManagement import *
 
 # ---------------- XML VALIDATION ----------------
@@ -121,11 +122,12 @@ def savePluginXML(dpmPluginStructure_lineEdit):
     else:
         savePlugin(pluginDict)
 
-def savePluginManual(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
+def savePluginManual(self, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
                      dpmOutFuncSource_lineEdit):
     if dpmPluginName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
-        print('REQUIRED FIELDS NOT FILLED')
-        # TODO display error window
+        QMessageBox.question(self, "Error Message: Missing Fields",
+                             "All fields must be filled to in order to create or update a plugin",
+                             QMessageBox.Ok)
         return
     else:
         pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
