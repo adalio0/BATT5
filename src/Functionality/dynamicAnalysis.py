@@ -1,24 +1,6 @@
 import r2pipe
 import json
-from src.Functionality.database import getCurrentFilePath
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QEvent
 
-from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
-from src.Functionality.newProject import ProjectWindow
-from src.Functionality.newOutput import NOutputWindow
-from src.GUI.python_files.popups.xmlEditor import XMLEditor
-from src.GUI.python_files.popups.analysisResultView import Analysis_Window
-from src.GUI.python_files.popups.documentationView import Documentation_Window
-from src.GUI.python_files.popups.outputFieldView import OutputWindow
-from src.Functionality.staticAnalysis import staticAnalysis
-from src.Functionality.radareTerminal import Terminal
-from src.Functionality.poiManagement import *
-from src.Functionality.pluginManagement import *
-from src.Functionality.database import *
-from src.Functionality.search import *
-#from src.Functionality.dynamicAnalysis import dynamicAnalysis
 
 # The dynamic analysis function will receive the filepath to be analyzed
 # As well a list of points of interest(at this point this is a list of functions)
@@ -60,6 +42,11 @@ def dynamicAnalysis(filePath, funcList):
         infile.cmd("db-*")  # remove all breakpoints
     return progress
 
+def new_dynamic(filePath,funcList):
+
+    keys = ['fName','args','argType','argVal','retName','retType','retValue']
+    #create a dictionary with keys that correspond to fields needed for the functions
+    funD = dict.fromkeys(keys,[])
 
 
 
