@@ -790,18 +790,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginFields()
         self.newManualPluginTemplate()
 
-    # Save a manually inputted func name into the database
-    def callAddFuncToPlugin(self):
-        checkedPlugins = []
-        for i in range(self.window.addToPlugin_list.count()):
-            item = self.window.addToPlugin_list.item(i)
-            if item.checkState() == Qt.Checked:
-                checkedPlugins.append(item.text())
-
-        if checkedPlugins:
-            pythonCool = ", ".join([plugin for plugin in checkedPlugins])
-            print("adding " + self.window.funcName_lineEdit.text() + " to " + pythonCool)
-
     # Clears the labels that are used for creating a new predefined plugin to create a new plugin
     def newXMLPluginTemplate(self):
         self.window.dpmPluginStructure_lineEdit.clear()
@@ -876,17 +864,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for i in range(len(poiFromPlugin[poiType])):
                 pois.append(poiFromPlugin[poiType][i]['name'])
             self.window.poiManagement_list.addItems(pois)
-
-    # def checkUncheckAllPlugins(self):
-    #     if self.window.checkAllPlugins_checkBox.isChecked():
-    #         for i in range(self.window.addToPlugin_list.count()):
-    #             item = self.window.addToPlugin_list.item(i)
-    #             item.setCheckState(QtCore.Qt.Checked)
-    #
-    #     elif self.window.checkAllPlugins_checkBox.checkState() == 0:
-    #         for i in range(self.window.addToPlugin_list.count()):
-    #             item = self.window.addToPlugin_list.item(i)
-    #             item.setCheckState(QtCore.Qt.Unchecked)
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
 
