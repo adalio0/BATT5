@@ -773,7 +773,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
         if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                              self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                              self.window.dpmOutFuncSource_lineEdit)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
