@@ -145,7 +145,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
 
         # Clicking on the clear button below the management plugin box will allow user to create new plugin
-        self.window.clearManualPlugin_button.clicked.connect(self.newManualPluginTemplate)
+        self.window.clearManualPlugin_button.clicked.connect(self.deselectPlugin)
 
         # Clicking on the clear button in Add Plugin Through Manual Input will clear the text
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
@@ -786,7 +786,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             print('TODO: APPLY CHANGES TO PLUGIN')
 
         self.populatePluginFields()
-        self.newManualPluginTemplate()
+        self.deselectPlugin()
 
     # Clears the labels that are used for creating a new predefined plugin to create a new plugin
     def newXMLPluginTemplate(self):
@@ -794,7 +794,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.clearSelection()
 
     # Clears the labels that are used for creating a new plugin to create a new plugin
-    def newManualPluginTemplate(self):
+    def deselectPlugin(self):
         self.window.dpmPluginName_lineEdit.clear()
         self.window.dpmPluginDesc_lineEdit.clear()
         self.window.dpmOutName_lineEdit.clear()
@@ -802,8 +802,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncSource_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
 
+        self.window.pluginEditingStatus_label.setStyleSheet("")
         self.window.pluginEditingStatus_label.setText('Add Plugin Through Manual Input')
-        self.window.addPoiXML_label.setText('Add POI Through XML Input')
+
+        self.window.addPoiXML_label.setStyleSheet("")
+        self.window.addPoiXML_label.setText('Add POIs Through XML Input')
+
+        self.window.addPoiManual_label.setStyleSheet("")
         self.window.addPoiManual_label.setText('Add POI Through Manual Input')
         self.window.saveManualPlugin_button.setText('Save')
         self.window.clearManualPlugin_button.setText('Clear')
@@ -826,8 +831,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         item = self.window.pluginManagement_list.currentItem().text()
         poi = self.window.addPoiType_dropdown.currentText()
         # set label to display name of plugin being edited
+        self.window.pluginEditingStatus_label.setStyleSheet("font-weight: bold")
         self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
-        self.window.addPoiXML_label.setText('Add POI to {}'.format(item) + ' Through XML Input')
+
+        self.window.addPoiXML_label.setStyleSheet("font-weight: bold")
+        self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
+        self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
+
+        self.window.addPoiManual_label.setStyleSheet("font-weight: bold")
         self.window.addPoiManual_label.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
         # display poi information
         name, description, poi, output = getCurrentPlugin(item)
@@ -887,6 +898,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.pluginSelection_dropdown.clear()
 
             self.populatePluginFields()
+            self.deselectPlugin()
 
     # Provides functionality to delete a poi from a plugin by right clicking on it
     def rightClickOnPoi(self, point):

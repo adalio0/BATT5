@@ -132,7 +132,6 @@ def getCurrentPluginInfo(selected):
             if p['name'] == selected:
                 return p
 
-
 # Gets the appropriate database
 def getAppropriatePoi(poi):
     if poi == "Function":
@@ -145,7 +144,6 @@ def getAppropriatePoi(poi):
         return dll_db
     elif poi == "Struct":
         return struct_db
-
 
 # Displays specific POI in the Analysis box
 def getPoi(poi):
