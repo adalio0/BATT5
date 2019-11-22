@@ -29,25 +29,30 @@ def searchProject(search, projectNavigator_tree):
 
 
 # Search functionality for the poi box
-def searchPoi(search, poi_list):
+def searchPoi(search, poi_list,poi_type):
     result = poi_list.findItems(search, QtCore.Qt.MatchContains)
 
+    list = poi_list
     poi = []
     item = ''
 
     j = 0
+
     if search:
         for i in range(poi_list.count()):
             try:
-                item = result[j]
+                item = QListWidgetItem(result[j])
+                if poi_type == "Function":
+                    item.setCheckState(QtCore.Qt.Checked)
+
             except IndexError:
                 pass
             if item.text() in poi_list.item(i).text():
-                poi.append(item.text())
+                poi.append(item)
                 j += 1
-        list = poi_list
         list.clear()
-        list.addItems(poi)
+        for i in poi:
+            list.addItem(i)
     else:
         list = poi_list
         list.clear()

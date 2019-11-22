@@ -258,7 +258,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Search functionality for the poi box
     def callSearchPoi(self):
         try:
-            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list)
+            searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list, self.window.poiType_dropdown.currentText())
             if not self.window.poiSearch_lineEdit.text():
                 self.displayPoi()
         except AttributeError:
