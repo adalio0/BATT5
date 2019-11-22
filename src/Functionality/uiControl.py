@@ -154,7 +154,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
 
         # check or uncheck all elements in poi list
-        self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
+        # self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
 
         # Right clicking on a plugin in the management plugin box will bring up confirmation for deleting
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -164,10 +164,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.saveFunc_button.clicked.connect(self.callAddFuncToPlugin)
 
         # When changing POI type in the drop down will update which types are displayed
-        self.window.comboBox.currentIndexChanged.connect(self.displayPoiFromPlugin)
-
-        # Clicking on a checkbox next to a plugin will show a detailed view of it's pois
-        # self.window.addToPlugin_list.itemSelectionChanged.connect(self.displayPoiFromPlugin)
+        self.window.addPoiType_dropdown.currentIndexChanged.connect(self.displayPoiFromPlugin)
 
         # Clicking on the new button below the management poi box will allow user to create new poi
         self.window.clearPoiAll_button.clicked.connect(self.newManualPoiTemplate)
@@ -175,7 +172,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.clearPredefPoi_button.clicked.connect(self.newXMLPoiTemplate)
 
         # Clicking on the delete button while a poi is selected on the management poi list will delete it
-        # self.window.dpoimDelete_button.clicked.connect(self.callDeletePoiFromPlugin)
+        self.window.poiManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.window.poiManagement_list.customContextMenuRequested.connect(self.rightClickOnPoi)
 
         # ---- View Box -----------------------------------------------------------------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
@@ -185,7 +183,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # check or uncheck all elements in poi list
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
 
-    # TODO---- Following methods initialize the main window with all the project, plugin and poi data -------------------
+    # TODO---- Following methods initialize the main window with all the project, plugin and poi data ------------------
 
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
@@ -216,10 +214,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.runDynamicAnalysis_button.setEnabled(False)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
-            self.window.POI_tableWidget.clear()
-            self.window.POI_tableWidget.setRowCount(0)
-            self.window.POI_tableWidget.setColumnCount(0)
-            self.window.poi_list.clear()
+            self.displayPoi()
 
         # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
@@ -233,16 +228,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.addItems(plugins)
 
         # add to plugin list
-        self.window.addToPlugin_list.clear()
-        self.window.addToPlugin_list.addItems(plugins)
-        self.checkUncheckAllPlugins()
+        # self.checkUncheckAllPlugins()
 
         # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
         self.window.pluginSelection_dropdown.addItem('None')  # TEMP COMMAND?
         self.window.pluginSelection_dropdown.addItems(plugins)
 
-    # TODO---- The following methods are performed in the analysis tab of the BATT5 system ------------------------------
+    # TODO---- The following methods are performed in the analysis tab of the BATT5 system -----------------------------
 
     # ---- Following methods provide all the search functionality in the analysis tab --------------------------
 
@@ -286,6 +279,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays POIs in the Analysis box
     def displayPoi(self):
         self.window.POI_tableWidget.clear()
+        self.window.POI_tableWidget.setRowCount(0)
+        self.window.POI_tableWidget.setColumnCount(0)
         self.window.poi_list.clear()
         poi = self.window.poiType_dropdown.currentText()
         content = getPoi(poi)
@@ -539,8 +534,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     self.window.poi_list.addItem(item)
 
     def displayStruct(self, content):
-        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'size'])
         self.window.POI_tableWidget.setColumnCount(2)
+        self.window.POI_tableWidget.setHorizontalHeaderLabels(['name', 'size'])
         self.window.POI_tableWidget.setRowCount(len(content))
         for i in range(len(content)):
             if 'type' in content[i]:
@@ -752,6 +747,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
+    def disable(self):
+        self.window.central_tabs.setEnabled(False)
+        self.window.menubar.setDisabled(False)
+        QTimer.singleShot(1000, lambda: self.runDynamic())
+
+    def enable(self):
+        self.window.central_tabs.setDisabled(False)
+        self.window.menubar.setDisabled(False)
+
     # TODO---- Following methods are performed in the management tab of the BATT5 system -------------------------------
 
     # ---- Following methods provide all the search functionality in the management tab --------------------------
@@ -778,23 +782,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
-        savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                         self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                         self.window.dpmOutFuncSource_lineEdit)
+        if self.window.saveManualPlugin_button.text() == 'Save':
+            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
+                             self.window.dpmOutFuncSource_lineEdit)
+        else:
+            # TODO
+            print('TODO: APPLY CHANGES TO PLUGIN')
+
         self.populatePluginFields()
         self.newManualPluginTemplate()
-
-    # Save a manually inputted func name into the database
-    def callAddFuncToPlugin(self):
-        checkedPlugins = []
-        for i in range(self.window.addToPlugin_list.count()):
-            item = self.window.addToPlugin_list.item(i)
-            if item.checkState() == Qt.Checked:
-                checkedPlugins.append(item.text())
-
-        if checkedPlugins:
-            pythonCool = ", ".join([plugin for plugin in checkedPlugins])
-            print("adding " + self.window.funcName_lineEdit.text() + " to " + pythonCool)
 
     # Clears the labels that are used for creating a new predefined plugin to create a new plugin
     def newXMLPluginTemplate(self):
@@ -809,6 +806,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpmOutFuncName_lineEdit.clear()
         self.window.dpmOutFuncSource_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
+
+        self.window.pluginEditingStatus_label.setText('Add Plugin Through Manual Input')
+        self.window.addPoiXML_label.setText('Add POI Through XML Input')
+        self.window.addPoiManual_label.setText('Add POI Through Manual Input')
+        self.window.saveManualPlugin_button.setText('Save')
+        self.window.clearManualPlugin_button.setText('Clear')
+        self.window.pluginManagement_list.clearSelection()
+        self.window.poiManagement_list.clear()
 
     # Clears the labels that are used for creating a new predefined poi set to create a new poi set
     def newXMLPoiTemplate(self):
@@ -827,13 +832,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays a detailed view of a plugin when it is clicked
     def displayPlugin(self):
-
         # get name of current plugin
         item = self.window.pluginManagement_list.currentItem().text()
+        poi = self.window.addPoiType_dropdown.currentText()
         # set label to display name of plugin being edited
-        self.window.label_3.setText('Currently Editing: ' + item)
-        name, description, poi, output = getCurrentPlugin(item)
+        self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
+        self.window.addPoiXML_label.setText('Add POI to {}'.format(item) + ' Through XML Input')
+        self.window.addPoiManual_label.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
         # display poi information
+        name, description, poi, output = getCurrentPlugin(item)
         self.window.dpmPluginName_lineEdit.setText(name)
         self.window.dpmPluginDesc_lineEdit.setText(description)
         self.window.dpmOutName_lineEdit.setText(output['name'])
@@ -843,54 +850,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.saveManualPlugin_button.setText('Update Plugin')
         # change clear button text
         self.window.clearManualPlugin_button.setText('De-Select Plugin')
+        # display its pois
+        self.displayPoiFromPlugin()
 
     # Displays all pois associated with the clicked plugin
     def displayPoiFromPlugin(self):
         self.window.poiManagement_list.clear()
+        if self.window.pluginManagement_list.currentItem():
+            plugin = self.window.pluginManagement_list.currentItem().text()
+            poiFromPlugin = getFilterPoi(plugin)
+            poiType = self.window.addPoiType_dropdown.currentText()
+            self.window.addPoiManual_label.setText('Add {}'.format(poiType) + ' to {}'.format(plugin) + ' Through Manual Input')
 
-        checkedPlugins = []
-        for i in range(self.window.addToPlugin_list.count()):
-            item = self.window.addToPlugin_list.item(i)
-            if item.checkState() == Qt.Checked:
-                checkedPlugins.append(item.text())
-
-        if checkedPlugins:
-            poiFromPlugin = []
-            for i in range(len(checkedPlugins)):
-                poiFromPlugin.append(getFilterPoi(checkedPlugins[i]))
-
-            poiType = self.window.comboBox.currentText().lower()
-            for i in range(len(poiFromPlugin)):
-                pois = []
-                for j in range(len(poiFromPlugin[i][poiType])):
-                    pois.append(poiFromPlugin[i][poiType][j]['name'])
-                # self.window.poiManagement_list.addItem("--" + checkedPlugins[i] + "--")
-                self.window.poiManagement_list.addItems(pois)
-                self.window.poiManagement_list.addItem("\n")
-
-    def checkUncheckAllPlugins(self):
-        if self.window.checkAllPlugins_checkBox.isChecked():
-            for i in range(self.window.addToPlugin_list.count()):
-                item = self.window.addToPlugin_list.item(i)
-                item.setCheckState(QtCore.Qt.Checked)
-
-        elif self.window.checkAllPlugins_checkBox.checkState() == 0:
-            for i in range(self.window.addToPlugin_list.count()):
-                item = self.window.addToPlugin_list.item(i)
-                item.setCheckState(QtCore.Qt.Unchecked)
-
-    # Clears the labels that are used for creating a new plugin to create a new plugin
-    def newManualPluginTemplate(self):
-        self.window.dpmPluginName_lineEdit.clear()
-        self.window.dpmPluginDesc_lineEdit.clear()
-        self.window.dpmOutName_lineEdit.clear()
-        self.window.dpmOutFuncName_lineEdit.clear()
-        self.window.dpmOutFuncSource_lineEdit.clear()
-        self.window.pluginManagement_list.clearSelection()
-        self.window.label_3.setText('Add Plugin Through Manual Input')
-        self.window.saveManualPlugin_button.setText('Save')
-        self.window.clearManualPlugin_button.setText('Clear')
-        self.displayPoiFromPlugin()
+            pois = []
+            poiType = poiType.lower()
+            for i in range(len(poiFromPlugin[poiType])):
+                pois.append(poiFromPlugin[poiType][i]['name'])
+            self.window.poiManagement_list.addItems(pois)
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
 
@@ -922,15 +898,35 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.populatePluginFields()
 
-    # Deletes a poi from plugin
-    # def callDeletePoiFromPlugin(self):
-    #     if self.window.poiManagement_list.currentItem():
-    #         pluginDict = getCurrentPluginInfo(self.window.dpoimPlugin_dropdown.currentText())
-    #         name = self.window.dpoimPlugin_dropdown.currentText()
-    #         modifiedPlugin = removePoiFromPlugin(pluginDict, self.window.poiManagement_list.currentItem().text())
-    #         deleteAPoiFromPlugin(name, modifiedPlugin)
-    #         self.window.poiManagement_list.clear()
-    #         self.populatePoiFromPlugin()
+    # Provides functionality to delete a poi from a plugin by right clicking on it
+    def rightClickOnPoi(self, point):
+        # Infos about the node selected.
+        index = self.window.poiManagement_list.indexAt(point)
+
+        if not index.isValid():
+            return
+
+        item = self.window.poiManagement_list.itemAt(point)
+
+        # We build the menu.
+        menu = QtWidgets.QMenu()
+
+        menu.addAction("Delete", self.showConfirmationDeletePoi)
+
+        menu.exec_(self.window.poiManagement_list.mapToGlobal(point))
+
+    # Deletes a poi from the specified plugin
+    def callDeletePoiFromPlugin(self):
+        if self.window.poiManagement_list.currentItem():
+            poi = self.window.poiManagement_list.currentItem().text()
+            plugin = self.window.pluginManagement_list.currentItem().text()
+
+            pluginDict = getCurrentPluginInfo(plugin)
+            modifiedPlugin = removePoiFromPlugin(pluginDict, poi)
+
+            deleteAPoiFromPlugin(plugin, modifiedPlugin)
+            self.window.poiManagement_list.clear()
+            self.displayPoiFromPlugin()
 
     # ---- Following methods are for calling and showing the different windows in the management tab -----------------
 
@@ -942,8 +938,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                       QMessageBox.Yes | QMessageBox.No)
         if choice == QMessageBox.Yes:
             self.callDeletePlugin()
-        else:
-            pass
+
+    # Show the confirmation window when deleting a poi
+    def showConfirmationDeletePoi(self):
+        poi = self.window.poiManagement_list.currentItem().text()
+        plugin = self.window.pluginManagement_list.currentItem().text()
+        choice = QMessageBox.question(self, 'Warning',
+                                      "Are you sure you want to delete poi {} ".format(poi) + "from: {}?".format(plugin),
+                                      QMessageBox.Yes | QMessageBox.No)
+        if choice == QMessageBox.Yes:
+            self.callDeletePoiFromPlugin()
 
     # Open up file explorer to select a file for Plugin predefined line edit
     def showFileExplorer(self):
@@ -956,27 +960,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpoimPredefined_lineEdit.setText(name)
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
-
-    def disable(self):
-        self.window.central_tabs.setEnabled(False)
-        self.window.menubar.setDisabled(False)
-        QTimer.singleShot(1000, lambda: self.runDynamic())
-
-    def enable(self):
-        self.window.central_tabs.setDisabled(False)
-        self.window.menubar.setDisabled(False)
-
-    def callSavePluginManual(self):
-        if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                             self.window.dpmOutFuncSource_lineEdit)
-        else:
-            # TODO
-            print('TODO: APPLY CHANGES TO PLUGIN')
-
-        self.populatePluginFields()
-        self.newManualPluginTemplate()
 
 
 def main():

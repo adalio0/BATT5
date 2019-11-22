@@ -27,7 +27,7 @@ class ProjectWindow(QtWidgets.QDialog):
     def showFileExplorer(self):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Browse", "",
                                                         "All Files (*);;Python Files (*.py)", options=options)
         self.window.path_lineEdit.setText(name)
         if name:

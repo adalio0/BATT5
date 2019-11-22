@@ -23,7 +23,7 @@ plugin_db = db_2['plugins']
 
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
-    flag = ''
+    flag = False
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -378,11 +378,11 @@ def deleteAPlugin(plugin):
 
 
 # Deletes a poi from the plugin database
-def deleteAPoiFromPlugin(name, plugin):
+def deleteAPoiFromPlugin(plugin, newPluginDict):
     plugin_db.find_one_and_delete(
-        {'name': name}
+        {'name': plugin}
     )
-    plugin_db.insert_one(plugin)
+    plugin_db.insert_one(newPluginDict)
 
 
 # Delete EVERYTHING from project
