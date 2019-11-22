@@ -52,6 +52,7 @@ def formatPluginXml(pluginDict):
             'string': [],
             'variable': [],
             'dll': [],
+            'struct': [],
             'packetProtocol': []
         },
         'output': {
@@ -93,6 +94,12 @@ def formatPluginXml(pluginDict):
             elif len(pluginDict['pointOfInterest']['packetProtocol']) > 1:
                 newPluginDict['pointOfInterest']['packetProtocol'] = pluginDict['pointOfInterest']['packetProtocol']
 
+        if 'struct' in pluginDict['pointOfInterest']:
+            if len(pluginDict['pointOfInterest']['struct']) == 1:
+                newPluginDict['pointOfInterest']['struct'] = [pluginDict['pointOfInterest']['struct']]
+            elif len(pluginDict['pointOfInterest']['struct']) > 1:
+                newPluginDict['pointOfInterest']['struct'] = pluginDict['pointOfInterest']['struct']
+
     if 'output' in pluginDict:
         if 'name' in pluginDict['output']:
             newPluginDict['output']['name'] = pluginDict['output']['name']
@@ -125,7 +132,6 @@ def savePluginManual(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_
                                          dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
                                          dpmOutFuncSource_lineEdit.text())
         savePlugin(pluginDict)
-
 
 # ---------------- DATABASE ----------------
 def saveToDatabase(plugin):

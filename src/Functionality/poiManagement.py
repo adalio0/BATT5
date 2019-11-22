@@ -108,6 +108,11 @@ def removePoiFromPlugin(pluginDict, poiName):
             pluginDict['pointOfInterest']['dll'].pop(i)
             return pluginDict
 
+    for i in range(len(pluginDict['pointOfInterest']['struct'])):
+        if pluginDict['pointOfInterest']['struct'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['struct'].pop(i)
+            return pluginDict
+
 # ---------------- FORMAT XML ----------------
 
 # ---------------- GUI ----------------
@@ -142,6 +147,13 @@ def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself):
     finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
     pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
     updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
+
+def processPOIDataStruct(dpoimPlugin_dropdown,protoName_lineEditself):
+    structDict = convertPacketProtocolManual(protoName_lineEditself.text())
+    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
+    pluginDictNew = addPacketProtocolToPlugin(finalPD, structDict)
+    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
+
 
 # ---------------- TESTING ----------------
 
