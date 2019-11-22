@@ -56,18 +56,13 @@ def new_dynamic(filePath, funcList):
     for i in range(len(funcList)):
         #pull the information for each function
         funD['fName']=(funcList[i])
-        #print(funD['fName'])
         funInfo = infile.cmd("afvj @ " + funcList[i])
         formatInfo = json.loads(funInfo)
 
         for key in formatInfo.keys():
             tempList = formatInfo[key]
-            #print(tempList)
-            #print("\n")
-            for j in range(len(tempList)):
-               # print(tempList[j]['kind'])
-                #for k in range(1):
 
+            for j in range(len(tempList)):
                if tempList[j]['kind'] == 'reg':
                    argCounter += 1
                    funD['argNum'] = argCounter
