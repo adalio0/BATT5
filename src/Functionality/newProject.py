@@ -5,9 +5,10 @@ import r2pipe
 from PyQt5 import QtWidgets
 from src.GUI.python_files.popups.newProjectWind import NewProject
 from src.GUI.python_files.popups.errors import ErrEmptyFields
+from src.GUI.python_files.popups.errors import Errx86
 
 properties = []
-
+checkBinary = False
 
 class ProjectWindow(QtWidgets.QDialog):
     def __init__(self):
@@ -25,6 +26,7 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Extracts file location -----------------------------------------------------------------------
     def showFileExplorer(self):
+
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
@@ -32,6 +34,14 @@ class ProjectWindow(QtWidgets.QDialog):
         self.window.path_lineEdit.setText(name)
         if name:
             self.setProperties()
+            self.validatex86()
+            if checkBinary == False:
+                self.window.path_lineEdit.clear()
+                self.showx86Err()
+                #show error
+            
+                
+        
 
     # ---- Extracts text from fields and inserts them into the project database -----------------
     def createProject(self):
@@ -146,7 +156,23 @@ class ProjectWindow(QtWidgets.QDialog):
     def showErr(self):
         self.windowEF = ErrEmptyFields()
         self.windowEF.show()
-
+    def showx86Err(self):
+        self.windowxF = Errx86()
+        self.windowxF.show()
+    #----Validate Binary x86-------------------------------------------------------
+    def validatex86(self):
+        global checkBinary 
+        tree = self.window.properties_treeWidget
+        item0 = tree.itemAt(0,0)
+        item1 = tree.itemBelow(item0)
+        item2 = tree.itemBelow(item1)
+        
+        if item2.text(1) == "AMD 64":
+            checkBinary = True
+            self.window.create_button.setDisabled(False)
+        else:
+            self.window.create_button.setDisabled(True)
+        
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
         infile = r2pipe.open(self.window.path_lineEdit.text())

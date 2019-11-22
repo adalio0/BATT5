@@ -5,7 +5,7 @@ import sys
 import time
 from pathlib import Path
 
-# sys.path.insert(0, Path(__file__).parents[2].as_posix())
+sys.path.insert(0, Path(__file__).parents[2].as_posix())
 # sys.path.insert(0, "/mnt/c/Users/jgauc/PycharmProjects/BATT5/src")
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
