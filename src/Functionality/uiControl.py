@@ -151,7 +151,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)
 
         # check or uncheck all elements in poi list
-        self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
+        # self.window.checkAllPlugins_checkBox.stateChanged.connect(self.checkUncheckAllPlugins)
 
         # Right clicking on a plugin in the management plugin box will bring up confirmation for deleting
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -225,9 +225,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.addItems(plugins)
 
         # add to plugin list
-        self.window.addToPlugin_list.clear()
-        self.window.addToPlugin_list.addItems(plugins)
-        self.checkUncheckAllPlugins()
+        # self.checkUncheckAllPlugins()
 
         # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
@@ -878,16 +876,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 pois.append(poiFromPlugin[poiType][i]['name'])
             self.window.poiManagement_list.addItems(pois)
 
-    def checkUncheckAllPlugins(self):
-        if self.window.checkAllPlugins_checkBox.isChecked():
-            for i in range(self.window.addToPlugin_list.count()):
-                item = self.window.addToPlugin_list.item(i)
-                item.setCheckState(QtCore.Qt.Checked)
-
-        elif self.window.checkAllPlugins_checkBox.checkState() == 0:
-            for i in range(self.window.addToPlugin_list.count()):
-                item = self.window.addToPlugin_list.item(i)
-                item.setCheckState(QtCore.Qt.Unchecked)
+    # def checkUncheckAllPlugins(self):
+    #     if self.window.checkAllPlugins_checkBox.isChecked():
+    #         for i in range(self.window.addToPlugin_list.count()):
+    #             item = self.window.addToPlugin_list.item(i)
+    #             item.setCheckState(QtCore.Qt.Checked)
+    #
+    #     elif self.window.checkAllPlugins_checkBox.checkState() == 0:
+    #         for i in range(self.window.addToPlugin_list.count()):
+    #             item = self.window.addToPlugin_list.item(i)
+    #             item.setCheckState(QtCore.Qt.Unchecked)
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
 
