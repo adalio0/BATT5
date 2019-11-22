@@ -14,6 +14,7 @@ class ProjectWindow(QtWidgets.QDialog):
         super(ProjectWindow, self).__init__()
         self.window = NewProject()
         self.window.setupUi(self)
+        self.window.path_lineEdit.setDisabled(True)
 
         # create button pressed
         self.window.create_button.clicked.connect(self.createProject)
