@@ -42,12 +42,44 @@ def dynamicAnalysis(filePath, funcList):
         infile.cmd("db-*")  # remove all breakpoints
     return progress
 
-def new_dynamic(filePath,funcList):
+def new_dynamic(filePath, funcList):
+    keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue']
+    #will be used to add each function dictionary
+    dictList =[]
+    argCounter = 0
+    # create a dictionary with keys that correspond to fields needed for the functions
+    funD = dict.fromkeys(keys, [])
+    infile = r2pipe.open(filePath) #open file
+    infile.cmd("aaa") #initial analysis
 
-    keys = ['fName','args','argType','argVal','retName','retType','retValue']
-    #create a dictionary with keys that correspond to fields needed for the functions
-    funD = dict.fromkeys(keys,[])
+    #start analysis process
+    for i in range(len(funcList)):
+        #pull the information for each function
+        funD['fName']=(funcList[i])
+        #print(funD['fName'])
+        funInfo = infile.cmd("afvj @ " + funcList[i])
+        formatInfo = json.loads(funInfo)
 
+        for key in formatInfo.keys():
+            tempList = formatInfo[key]
+            #print(tempList)
+            #print("\n")
+            for j in range(len(tempList)):
+               # print(tempList[j]['kind'])
+                #for k in range(1):
+
+               if tempList[j]['kind'] == 'reg':
+                   argCounter += 1
+                   funD['argNum'] = argCounter
+                   funD['argName']= (tempList[j]['name'])
+                   funD['argType']= (tempList[j]['type'])
+
+        argCounter = 0
+
+        dictList.append(funD)
+        funD = dict.fromkeys(keys,[])
+
+    return dictList
 
 
 
