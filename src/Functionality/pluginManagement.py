@@ -126,19 +126,3 @@ def saveToDatabase(plugin):
     savePlugin(plugin)
 
 # ---------------- TEST ----------------
-# testPlugin = convertPluginXML(
-#     'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')
-# print('Network Plugin:', testPlugin)
-#
-# print('POIs validation:', validatePoiXML(
-#                      'C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/testPois.xml'))
-#
-# testPois = convertPoiXML('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/testPois.xml')
-# print('POIs that will be added:', testPois)
-#
-# testPois = formatPoi(testPois)
-# print('Formatted POIs:         ', testPois)
-#
-# print('before update:', testPlugin)
-# testPlugin = appendPoiPluginXml(testPlugin, testPois)
-# print('after  update:', testPlugin)
