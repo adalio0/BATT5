@@ -30,7 +30,8 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
             'string': [],
             'variable': [],
             'dll': [],
-            'packetProtocol': []
+            'packetProtocol': [],
+            'struct': []
         },
         'output': {
             'name': outName,
