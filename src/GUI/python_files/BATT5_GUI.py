@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
@@ -105,21 +107,13 @@ class Ui_BATT5(object):
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.POI_tableWidget = QtWidgets.QTableWidget(self.analysis_box)
-        self.POI_tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        self.POI_tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
-        self.POI_tableWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
-        self.POI_tableWidget.setShowGrid(True)
-        self.POI_tableWidget.setGridStyle(QtCore.Qt.SolidLine)
-        self.POI_tableWidget.setObjectName("POI_tableWidget")
-        self.POI_tableWidget.setColumnCount(0)
-        self.POI_tableWidget.setRowCount(0)
-        self.POI_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
-        self.POI_tableWidget.horizontalHeader().setDefaultSectionSize(100)
-        self.POI_tableWidget.horizontalHeader().setMinimumSectionSize(50)
-        self.POI_tableWidget.horizontalHeader().setSortIndicatorShown(True)
-        self.POI_tableWidget.horizontalHeader().setStretchLastSection(True)
-        self.verticalLayout_16.addWidget(self.POI_tableWidget)
+        self.POI_treeWidget = QtWidgets.QTreeWidget(self.analysis_box)
+        self.POI_treeWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.POI_treeWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
+        self.POI_treeWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.POI_treeWidget.setObjectName("POI_treeWidget")
+        self.POI_treeWidget.headerItem().setText(0, "1")
+        self.verticalLayout_16.addWidget(self.POI_treeWidget)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.current_view)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 100))
@@ -780,7 +774,7 @@ class Ui_BATT5(object):
         self.clearPredefPoi_button.setText(_translate("BATT5", "Clear"))
         self.savePredefPoi_button.setText(_translate("BATT5", "Save"))
         self.addPoiXML_label.setText(_translate("BATT5", "Add POI to Plugin Through XML Input"))
-        self.addPoi_label.setText(_translate("BATT5", "Point of Interest  Name:"))
+        self.addPoi_label.setText(_translate("BATT5", "*Point of Interest  Name:"))
         self.clearPoiAll_button.setText(_translate("BATT5", "Clear"))
         self.savePoi_button.setText(_translate("BATT5", "Save POI"))
         self.addPoiManual_label.setText(_translate("BATT5", "Add POI to Plugin Through Manual Input"))
@@ -797,3 +791,12 @@ class Ui_BATT5(object):
         self.actionOpen_Project.setText(_translate("BATT5", "Open Project"))
         self.actionExport_Project.setText(_translate("BATT5", "Export Project"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    BATT5 = QtWidgets.QMainWindow()
+    ui = Ui_BATT5()
+    ui.setupUi(BATT5)
+    BATT5.show()
+    sys.exit(app.exec_())

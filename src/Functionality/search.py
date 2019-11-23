@@ -105,14 +105,13 @@ def searchPoiM(search, poiManagement_list, poiType, plugin):
 
 
 # highlight table widget when poi is selected from poi list
-def highlightTable(poi, POI_tableWidget):
-    POI_tableWidget.clearSelection()
-    tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
-
+def highlightTable(poi, POI_treeWidget):
+    POI_treeWidget.clearSelection()
+    tablePoi = POI_treeWidget.findItems(poi, QtCore.Qt.MatchContains)
     for item in tablePoi:
-        if item.text() == poi:
+        if QTreeWidgetItem(item) == poi:
             item.setSelected(True)
-            POI_tableWidget.setCurrentItem(item)
+            POI_treeWidget.setCurrentItem(item)
             return
 
 
