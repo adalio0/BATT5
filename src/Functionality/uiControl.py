@@ -11,7 +11,6 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.GUI.python_files.popups.xmlEditor import XMLEditor
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
@@ -664,10 +663,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.windowOUT = QtWidgets.QWidget()
         self.ui = NOutputWindow()
         self.ui.show()
-
-    def showXML(self):
-        self.windxml = XMLEditor()
-        self.windxml.show()
 
     # Open the file explorer to select a file for the output window
     def showFileExplorer_outFuncSource(self):

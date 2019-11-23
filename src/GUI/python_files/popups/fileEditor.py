@@ -2,14 +2,14 @@ import sys
 import os
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtWidgets
 
 # This class is used to create the XML editor window that will be used to save, modify or create new XML files.
 
 
-class XMLEditor(QMainWindow):
-    def __init__(self, parent=None):
-        super(XMLEditor, self).__init__()
+class FileEditor(QtWidgets.QDialog):
+    def __init__(self):
+        super(FileEditor, self).__init__()
 
         self.initUI()
 
@@ -70,45 +70,45 @@ class XMLEditor(QMainWindow):
         closeAction.setShortcut("Ctrl+Q")
         closeAction.triggered.connect(self.Close)
 
-        self.toolbar = self.addToolBar("Options")
-        self.toolbar.addAction(newAction)
-        self.toolbar.addAction(openAction)
-        self.toolbar.addAction(saveAction)
-        self.toolbar.addSeparator()
-        self.toolbar.addSeparator()
-        self.toolbar.addAction(findAction)
-        self.toolbar.addAction(cutAction)
-        self.toolbar.addAction(copyAction)
-        self.toolbar.addAction(pasteAction)
-        self.toolbar.addAction(undoAction)
-        self.toolbar.addAction(redoAction)
-        self.toolbar.addSeparator()
-        self.toolbar.addSeparator()
-        self.toolbar.addAction(closeAction)
+        # self.toolbar = self.addToolBar("Options")
+        # self.toolbar.addAction(newAction)
+        # self.toolbar.addAction(openAction)
+        # self.toolbar.addAction(saveAction)
+        # self.toolbar.addSeparator()
+        # self.toolbar.addSeparator()
+        # self.toolbar.addAction(findAction)
+        # self.toolbar.addAction(cutAction)
+        # self.toolbar.addAction(copyAction)
+        # self.toolbar.addAction(pasteAction)
+        # self.toolbar.addAction(undoAction)
+        # self.toolbar.addAction(redoAction)
+        # self.toolbar.addSeparator()
+        # self.toolbar.addSeparator()
+        # self.toolbar.addAction(closeAction)
 
-        self.addToolBarBreak()
+        # self.addToolBarBreak()
 
         # --- Menubar --------------------------------------
 
-        menubar = self.menuBar()
-        file = menubar.addMenu("File")
-        edit = menubar.addMenu("Edit")
-        view = menubar.addMenu("View")
-
-        file.addAction(newAction)
-        file.addAction(openAction)
-        file.addAction(saveAction)
-
-        edit.addAction(undoAction)
-        edit.addAction(redoAction)
-        edit.addAction(cutAction)
-        edit.addAction(copyAction)
-        edit.addAction(findAction)
+        # menubar = self.menuBar()
+        # file = menubar.addMenu("File")
+        # edit = menubar.addMenu("Edit")
+        # view = menubar.addMenu("View")
+        #
+        # file.addAction(newAction)
+        # file.addAction(openAction)
+        # file.addAction(saveAction)
+        #
+        # edit.addAction(undoAction)
+        # edit.addAction(redoAction)
+        # edit.addAction(cutAction)
+        # edit.addAction(copyAction)
+        # edit.addAction(findAction)
 
         # --- Main window ----------------------------------
 
-        self.lb1 = self.addToolBar("Format")
-        self.lb1.setStyleSheet("font-size: 15px; ")
+        # self.lb1 = self.addToolBar("Format")
+        # self.lb1.setStyleSheet("font-size: 15px; ")
 
         self.text = QTextEdit(self)
         self.fileEdit = QTextEdit(self)
@@ -124,11 +124,11 @@ class XMLEditor(QMainWindow):
 
         mainWidget.setLayout(myLayout)
         myLayout.addWidget(self.stacked)
-        self.setCentralWidget(mainWidget)
+        # self.setCentralWidget(mainWidget)
 
-        self.statusBar()
-
-        self.statusBar().showMessage("Ready")
+        # self.statusBar()
+        #
+        # self.statusBar().showMessage("Ready")
 
         self.setGeometry(500, 500, 560, 450)
 
@@ -192,8 +192,8 @@ class XMLEditor(QMainWindow):
 
 
 def main():
-    app = QApplication(sys.argv)
-    editor = XMLEditor()
+    app = QtWidgets.QApplication(sys.argv)
+    editor = FileEditor()
     editor.show()
     sys.exit(app.exec_())
 
