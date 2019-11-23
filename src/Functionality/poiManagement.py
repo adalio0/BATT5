@@ -1,3 +1,4 @@
+from PyQt5.QtWidgets import QMessageBox
 from xmljson import parker as pk
 import xml.etree.ElementTree as ET
 import json
@@ -32,6 +33,7 @@ def convertPoiManual(name):
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
 def appendPoiPlugin(pluginDict, poiDict, poiType):
+    poiType = poiType.lower()
     pluginDict['pointOfInterest'][poiType].append(poiDict)
     return pluginDict
 
@@ -65,11 +67,15 @@ def removePoiFromPlugin(pluginDict, poiName):
 # ---------------- FORMAT XML ----------------
 
 # ---------------- GUI ----------------
-def addPoiToPlugin(poiName, poiType, pluginName):
+def addPoiToPlugin(ui, poiName, poiType, pluginName):
+    if poiName == '':
+        QMessageBox.question(ui, "Error: Empty Field",
+                             "The required field cannot be empty",
+                             QMessageBox.Ok)
     poiDict = convertPoiManual(poiName)
     pluginDict = getCurrentPluginInfo(pluginName)
 
-    updatedPlugin = appendPoiPlugin(pluginDict, poiDict, poiType.lower())
+    updatedPlugin = appendPoiPlugin(pluginDict, poiDict, poiType)
     updatePlugin(updatedPlugin, pluginName)
 
 # ---------------- TESTING ----------------

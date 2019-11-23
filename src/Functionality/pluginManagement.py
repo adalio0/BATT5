@@ -18,9 +18,6 @@ def convertPluginXML(filepath):
         pluginDict = formatPluginXml(pluginDict)
         return pluginDict
     else:
-        print('TODO: display error window')
-        print('XML is invalid. (not xml or does not conform to schema)')
-        # TODO display error window
         return 0
 
 # ---------------- MANUAL PLUGIN CONVERSION ----------------
@@ -115,17 +112,20 @@ def formatPluginXml(pluginDict):
 
 # ---------------- GUI ----------------
 
-def savePluginXML(dpmPluginStructure_lineEdit):
+def savePluginXML(ui, dpmPluginStructure_lineEdit):
     pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
     if pluginDict == 0:
+        QMessageBox.question(ui, "Error: Invalid File",
+                             "Provided file must be an XML that conforms to pluginConfig,xsd (schema)",
+                             QMessageBox.Ok)
         return
     else:
         savePlugin(pluginDict)
 
-def savePluginManual(self, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
+def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
                      dpmOutFuncSource_lineEdit):
     if dpmPluginName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
-        QMessageBox.question(self, "Error Message: Missing Fields",
+        QMessageBox.question(ui, "Error: Empty Fields",
                              "All fields must be filled to in order to create or update a plugin",
                              QMessageBox.Ok)
         return
@@ -135,9 +135,25 @@ def savePluginManual(self, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOu
                                          dpmOutFuncSource_lineEdit.text())
         savePlugin(pluginDict)
 
+# ---------------- Plugin Modification ----------------
+def modifyPlugin(ui, oldName, newName, newDesc, newOutName, newOutFuncName, newOutFuncSource):
+    if newName == '' or newDesc == '':
+        QMessageBox.question(ui, "Error: Empty Fields",
+                             "All fields must be filled to in order to create or update a plugin",
+                             QMessageBox.Ok)
+        return
+    pluginDict = getCurrentPluginInfo(oldName)
+    pluginDict['name'] = newName
+    pluginDict['description'] = newDesc
+    pluginDict['output']['name'] = newOutName
+    pluginDict['output']['functionName'] = newOutFuncName
+    pluginDict['output']['functionSource'] = newOutFuncSource
+    updatePlugin(pluginDict, oldName)
+
 # ---------------- DATABASE ----------------
 def saveToDatabase(plugin):
     savePlugin(plugin)
+
 
 # ---------------- TEST ----------------
 # testPlugin = convertPluginXML('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')

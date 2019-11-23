@@ -766,7 +766,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a predefined plugin into the database
     def callSavePluginXML(self):
-        savePluginXML(self.window.dpmPluginStructure_lineEdit)
+        savePluginXML(self, self.window.dpmPluginStructure_lineEdit)
         self.populatePluginFields()
         self.newXMLPluginTemplate()
 
@@ -777,8 +777,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                              self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
                              self.window.dpmOutFuncSource_lineEdit)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
-            # TODO
-            print('TODO: APPLY CHANGES TO PLUGIN')
+            modifyPlugin(self, self.window.pluginManagement_list.currentItem().text(),
+                         self.window.dpmPluginName_lineEdit.text(),  self.window.dpmPluginDesc_lineEdit.text(),
+                         self.window.dpmOutName_lineEdit.text(), self.window.dpmOutFuncName_lineEdit.text(),
+                         self.window.dpmOutFuncSource_lineEdit.text())
 
         self.populatePluginFields()
         self.deselectPlugin()
@@ -959,10 +961,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
 
     def callAddPoiToPlugin(self):
-        addPoiToPlugin(self.window.addPoiName_lineEdit.text(), self.window.addPoiType_dropdown.currentText(),
-                       self.window.pluginManagement_list.currentItem().text())
+        try:
+            addPoiToPlugin(self, self.window.addPoiName_lineEdit.text(),
+                           self.window.addPoiType_dropdown.currentText(),
+                           self.window.pluginManagement_list.currentItem().text())
+            self.displayPoiFromPlugin()
+        except:
+            QMessageBox.question(self, "Error: Invlaid Input",
+                                 "You must have a plugin selected",
+                                 QMessageBox.Ok)
         self.window.addPoiName_lineEdit.clear()
-        self.displayPoiFromPlugin()
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
