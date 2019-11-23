@@ -128,7 +128,7 @@ def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutN
         QMessageBox.question(ui, "Error: Empty Fields",
                              "All fields must be filled to in order to create or update a plugin",
                              QMessageBox.Ok)
-        return
+        return 0
     else:
         pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
                                          dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
