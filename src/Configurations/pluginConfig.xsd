@@ -1,89 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<!--PLUGIN-->
-	<xs:element name="plugin">
-		<xs:complexType>
-			<xs:sequence>
-      			<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
-				<xs:element name="description" 	type="xs:string" minOccurs="1" maxOccurs="1" default=""/>
+		<!--POINTS OF INTEREST-->
+		<xs:element name="pointOfInterest" >
+			<xs:complexType>
+				<xs:sequence>
 
-				<!--POINTS OF INTEREST-->
-				<xs:element name="pointOfInterest" minOccurs="0" maxOccurs="unbounded" >
-					<xs:complexType>
-						<xs:sequence>
+					<!--FUNCTIONS-->
+					<xs:element name="function" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element> <!--END OF FUNCTIONS-->
 
-							<!--FUNCTIONS-->
-							<xs:element name="function" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF FUNCTIONS-->
+					<!--STRINGS-->
+					<xs:element name="string" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>	<!--END OF STRINGS-->
 
-							<!--STRINGS-->
-							<xs:element name="string" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name"	type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>	<!--END OF STRINGS-->
+					<!--VARIABLES-->
+					<xs:element name="variable" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element> <!--END OF VARIABLES-->
 
-							<!--VARIABLES-->
-							<xs:element name="variable" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name"		type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF VARIABLES-->
+					<!--DLLs-->
+					<xs:element name="dll" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element> <!--END OF DLLs-->
 
-							<!--DLLs-->
-							<xs:element name="dll" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF DLLs-->
+					<!--PACKET PROTOCOLS-->
+					<xs:element name="packetProtocol" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element> <!--END OF PACKET PROTOCOLS-->
 
-							<!--PACKET PROTOCOLS-->
-							<xs:element name="packetProtocol" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF PACKET PROTOCOLS-->
+					<!--STRUCTS-->
+					<xs:element name="struct" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="name" 	type="xs:string" minOccurs="1" maxOccurs="1"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element> <!--END OF STRUCTS-->
 
-							<!--STRUCTS-->
-							<xs:element name="struct" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name" 	type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF STRUCTS-->
-
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element> <!--END OF POINTS OF INTEREST-->
-
-				<!--OUTPUT FIELD-->
-				<xs:element name="output" 	minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="name" 		minOccurs="1" maxOccurs="1" type="xs:string"/>
-							<xs:element name="functionName" minOccurs="1" maxOccurs="1" type="xs:string"/>
-							<xs:element name="functionSource" minOccurs="1" maxOccurs="1" type="xs:string"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element> <!--END OF OUTPUT FIELD-->
-
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element> <!--END OF PLUGIN-->
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element> <!--END OF POINTS OF INTEREST-->
 
 </xs:schema> <!--END OF SCHEMA-->

@@ -139,7 +139,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)
 
         # Clicking on a plugin inside the list will show a detailed view of it
-        self.window.pluginManagement_list.itemClicked.connect(self.displayPlugin)
+        self.window.pluginManagement_list.itemSelectionChanged.connect(self.displayPlugin)
 
         # Clicking on the clear button below the management plugin box will allow user to create new plugin
         self.window.clearManualPlugin_button.clicked.connect(self.deselectPlugin)
@@ -790,6 +790,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
+
         if self.window.saveManualPlugin_button.text() == 'Save':
             savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                              self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
@@ -799,7 +800,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                          self.window.dpmPluginName_lineEdit.text(),  self.window.dpmPluginDesc_lineEdit.text(),
                          self.window.dpmOutName_lineEdit.text(), self.window.dpmOutFuncName_lineEdit.text(),
                          self.window.dpmOutFuncSource_lineEdit.text())
-
         self.populatePluginFields()
         self.deselectPlugin()
 
@@ -829,6 +829,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.clearManualPlugin_button.setText('Clear')
         self.window.pluginManagement_list.clearSelection()
         self.window.poiManagement_list.clear()
+        self.window.addPluginXml_frame.setDisabled(False)
 
     # Clears the labels that are used for creating a new predefined poi set to create a new poi set
     def newXMLPoiTemplate(self):
@@ -868,6 +869,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.clearManualPlugin_button.setText('De-Select Plugin')
         # display its pois
         self.displayPoiFromPlugin()
+        # disable ability to add plugin through xml
+        self.window.addPluginXml_frame.setDisabled(True)
+
 
     # Displays all pois associated with the clicked plugin
     def displayPoiFromPlugin(self):
