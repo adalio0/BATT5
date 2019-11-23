@@ -712,6 +712,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
+        item = self.window.poi_list.currentItem()
+        item.setIcon(QIcon())
 
     # enable checkbox
     def enableCheck(self):
