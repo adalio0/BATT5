@@ -1,4 +1,7 @@
+from PyQt5.QtWidgets import QMessageBox
+
 from src.Functionality.poiManagement import *
+
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
@@ -7,6 +10,7 @@ def validatePluginXML(filepath):
         return pluginSchema.is_valid(filepath)
     except:
         return 0
+
 
 # ---------------- XML CONVERSION ----------------
 def convertPluginXML(filepath):
@@ -21,6 +25,7 @@ def convertPluginXML(filepath):
         print('XML is invalid. (not xml or does not conform to schema)')
         # TODO display error window
         return 0
+
 
 # ---------------- MANUAL PLUGIN CONVERSION ----------------
 def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
@@ -41,6 +46,7 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
         }
     }
     return plugDict
+
 
 # ---------------- FORMAT XML ----------------
 def formatPluginXml(pluginDict):
@@ -112,6 +118,7 @@ def formatPluginXml(pluginDict):
 
     return newPluginDict
 
+
 # ---------------- GUI ----------------
 
 def savePluginXML(dpmPluginStructure_lineEdit):
@@ -121,17 +128,20 @@ def savePluginXML(dpmPluginStructure_lineEdit):
     else:
         savePlugin(pluginDict)
 
-def savePluginManual(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
+
+def savePluginManual(self, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
                      dpmOutFuncSource_lineEdit):
-    if dpmOutName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
-        print('REQUIRED FIELDS NOT FILLED')
-        # TODO display error window
+    if dpmPluginName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
+        QMessageBox.question(self, "Error Message: Missing Fields",
+                             "All fields must be filled to in order to create or update a plugin",
+                             QMessageBox.Ok)
         return
     else:
         pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
                                          dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
                                          dpmOutFuncSource_lineEdit.text())
         savePlugin(pluginDict)
+
 
 # ---------------- DATABASE ----------------
 def saveToDatabase(plugin):

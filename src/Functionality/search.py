@@ -47,11 +47,9 @@ def searchPoi(search, poi_list, poi_type):
                 j += 1
             else:
                 poi_list.item(i).setHidden(True)
-                # poi_list.item(i).setCheckable(False)
     else:
         for i in range(poi_list.count()):
             poi_list.item(i).setHidden(False)
-            # poi_list.item(i).setCheckable(True)
 
 
 def searchPluginM(search, pluginManagement_list):
@@ -102,6 +100,27 @@ def searchPoiM(search, poiManagement_list, poiType, plugin):
             pois.append(poiFromPlugin[poiType][i]['name'])
         poiManagement_list.clear()
         poiManagement_list.addItems(pois)
+
+
+def searchDocumentation(search, document_list):
+    result = document_list.findItems(search, QtCore.Qt.MatchContains)
+    item = ''
+    j = 0
+
+    if search:
+        for i in range(document_list.count()):
+            try:
+                item = QListWidgetItem(result[j])
+            except IndexError:
+                pass
+            if item.text() in document_list.item(i).text():
+                document_list.item(i).setHidden(False)
+                j += 1
+            else:
+                document_list.item(i).setHidden(True)
+    else:
+        for i in range(document_list.count()):
+            document_list.item(i).setHidden(False)
 
 
 # highlight table widget when poi is selected from poi list
