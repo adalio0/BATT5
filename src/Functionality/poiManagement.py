@@ -6,14 +6,16 @@ import xmlschema
 from pathlib import Path
 from src.Functionality.database import *
 
+
 # ---------------- XML VALIDATION ----------------
 def validatePoiXML(filepath):
     poiSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 
+
 # ---------------- XML CONVERSION ----------------
-def convertPoiXML(filepath):
+def convertPoiXML(ui, filepath):
     if validatePoiXML(filepath):
         poiTree = ET.parse(filepath)
         poiRoot = poiTree.getroot()
@@ -21,8 +23,10 @@ def convertPoiXML(filepath):
         return poiDict
     else:
         print('invalid POI XML (does not conform to POI schema)')
-        # TODO display error window
-        return
+        QMessageBox.question(ui, "Error: Invalid File",
+                             "Provided file must be an XML that conforms to poiConfig,xsd (schema)",
+                             QMessageBox.Ok)
+        return 0
 
 # ---------------- MANUAL POI CONVERSION ----------------
 def convertPoiManual(name):
@@ -35,6 +39,37 @@ def convertPoiManual(name):
 def appendPoiPlugin(pluginDict, poiDict, poiType):
     poiType = poiType.lower()
     pluginDict['pointOfInterest'][poiType].append(poiDict)
+    return pluginDict
+
+def appendPoiPluginXml(pluginDict, poiDict):
+
+    # for poiType in pluginDict['pointOfInterest']:  # for every poi type in plugin
+    #     # print(poiType)
+    #     for poi in poiDict[poiType]:  # for every poi of this type in poiDict
+    #         # print('   ', poi)
+    #         if poi not in pluginDict['pointOfInterest'][poiType]:  # if not already contained
+    #             pluginDict['pointOfInterest'][poiType].append(poi)  # append poi
+
+    for poi in poiDict['function']:
+        if poi not in pluginDict['pointOfInterest']['function']:
+            pluginDict['pointOfInterest']['function'].append(poi)
+
+    for poi in poiDict['string']:
+        if poi not in pluginDict['pointOfInterest']['string']:
+            pluginDict['pointOfInterest']['string'].append(poi)
+
+    for poi in poiDict['variable']:
+        if poi not in pluginDict['pointOfInterest']['variable']:
+            pluginDict['pointOfInterest']['variable'].append(poi)
+
+    for poi in poiDict['dll']:
+        if poi not in pluginDict['pointOfInterest']['dll']:
+            pluginDict['pointOfInterest']['dll'].append(poi)
+
+    for poi in poiDict['struct']:
+        if poi not in pluginDict['pointOfInterest']['struct']:
+            pluginDict['pointOfInterest']['struct'].append(poi)
+
     return pluginDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
@@ -64,7 +99,26 @@ def removePoiFromPlugin(pluginDict, poiName):
             pluginDict['pointOfInterest']['struct'].pop(i)
             return pluginDict
 
+
 # ---------------- FORMAT XML ----------------
+def formatPoi(poiDict):
+    newPoiDict = {
+        'function': [],
+        'string': [],
+        'variable': [],
+        'dll': [],
+        'struct': [],
+        'packetProtocol': []
+    }
+    poiTypes = ['function', 'string', 'variable', 'dll', 'packetProtocol', 'struct']
+    for t in poiTypes:
+        if t in poiDict:
+            if len(poiDict[t]) == 1:
+                newPoiDict[t] = [poiDict[t]]
+            elif len(poiDict[t]) > 1:
+                newPoiDict[t] = poiDict[t]
+
+    return newPoiDict
 
 # ---------------- GUI ----------------
 def addPoiToPlugin(ui, poiName, poiType, pluginName):
@@ -72,11 +126,16 @@ def addPoiToPlugin(ui, poiName, poiType, pluginName):
         QMessageBox.question(ui, "Error: Empty Field",
                              "The required field cannot be empty",
                              QMessageBox.Ok)
+        return
     poiDict = convertPoiManual(poiName)
+    updatedPluginDict = appendPoiPlugin(getCurrentPluginInfo(pluginName), poiDict, poiType)
+    updatePlugin(updatedPluginDict, pluginName)
+
+def addPoiToPluginXml(ui, filepath, pluginName):
+    poiDict = formatPoi(convertPoiXML(ui, filepath))
+    if poiDict == 0:
+        return 0
     pluginDict = getCurrentPluginInfo(pluginName)
-
-    updatedPlugin = appendPoiPlugin(pluginDict, poiDict, poiType)
-    updatePlugin(updatedPlugin, pluginName)
-
+    updatedPluginDict = appendPoiPluginXml(pluginDict, poiDict)
+    updatePlugin(updatedPluginDict, pluginName)
 # ---------------- TESTING ----------------
-

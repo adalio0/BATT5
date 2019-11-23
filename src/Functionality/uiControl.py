@@ -18,7 +18,6 @@ from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
-from src.Functionality.poiManagement import *
 from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
@@ -154,6 +153,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Clicking on the save func button will save the given func name to the checked plugins
         self.window.savePoi_button.clicked.connect(self.callAddPoiToPlugin)
+        self.window.savePredefPoi_button.clicked.connect(self.callAddPoiToPluginXml)
 
         # When changing POI type in the drop down will update which types are displayed
         self.window.addPoiType_dropdown.currentIndexChanged.connect(self.displayPoiFromPlugin)
@@ -975,6 +975,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  "You must have a plugin selected",
                                  QMessageBox.Ok)
         self.window.addPoiName_lineEdit.clear()
+
+    def callAddPoiToPluginXml(self):
+        try:
+            addPoiToPluginXml(self, self.window.dpoimPredefined_lineEdit.text(),
+                              self.window.pluginManagement_list.currentItem().text())
+            self.displayPoiFromPlugin()
+        except:
+            QMessageBox.question(self, "Error: Invlaid Input",
+                                 "You must have a plugin selected",
+                                 QMessageBox.Ok)
+        self.window.dpoimPredefined_lineEdit.clear()
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():

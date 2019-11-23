@@ -704,11 +704,6 @@ p, li { white-space: pre-wrap; }
                     <widget class="QComboBox" name="poiType_dropdown_2">
                      <item>
                       <property name="text">
-                       <string>Extract All</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
                        <string>Function</string>
                       </property>
                      </item>
