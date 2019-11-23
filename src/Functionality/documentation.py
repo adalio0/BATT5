@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 from src.GUI.python_files.popups.documentationView import Documentation_Window
 from src.GUI.python_files.popups.errors import ErrEmptyFields
 
-edit = False;
+edit = False
 
 
 class DocumentationWindow(QtWidgets.QDialog):
