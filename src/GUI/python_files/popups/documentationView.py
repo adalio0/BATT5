@@ -55,8 +55,7 @@ class Documentation_Window(object):
         self.dDocumentView_label.setObjectName("dDocumentView_label")
         self.dDocumentView_layout.addWidget(self.dDocumentView_label)
         self.dDocumentView_textEdit = QtWidgets.QTextEdit(Dialog)
-        self.dDocumentView_textEdit.setStyleSheet("color: rgb(255, 255, 255);\n"
-"alternate-background-color: rgb(255, 255, 255);")
+        self.dDocumentView_textEdit.setStyleSheet("")
         self.dDocumentView_textEdit.setLineWidth(1)
         self.dDocumentView_textEdit.setObjectName("dDocumentView_textEdit")
         self.dDocumentView_layout.addWidget(self.dDocumentView_textEdit)
@@ -86,6 +85,11 @@ class Documentation_Window(object):
         self.addButton.setText(_translate("Dialog", "Add"))
         self.deleteButton.setText(_translate("Dialog", "Delete"))
         self.dDocumentView_label.setText(_translate("Dialog", "Detailed Document View"))
+        self.dDocumentView_textEdit.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.saveButton.setText(_translate("Dialog", "Save"))
         self.editButton.setText(_translate("Dialog", "Edit"))
 
