@@ -86,7 +86,7 @@
                   <widget class="QLineEdit" name="projectSearch_lineEdit">
                    <property name="maximumSize">
                     <size>
-                     <width>275</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -111,7 +111,7 @@
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>250</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -132,7 +132,7 @@
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>250</width>
+                     <width>16777215</width>
                      <height>400</height>
                     </size>
                    </property>
@@ -176,7 +176,7 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>245</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>

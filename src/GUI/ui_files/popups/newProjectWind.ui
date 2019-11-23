@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
-    <height>443</height>
+    <width>533</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,10 @@
         <string notr="true">background-color: rgb(182, 206, 227);</string>
        </property>
        <property name="text">
-        <string>                                                                                                    Create A New Project</string>
+        <string>Create A New Project</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -74,9 +77,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="path_lineEdit"/>
-     </item>
      <item row="3" column="3">
       <widget class="QPushButton" name="browse_button">
        <property name="text">
@@ -85,7 +85,14 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QTextEdit" name="projectDescription_textEdit"/>
+      <widget class="QTextEdit" name="projectDescription_textEdit">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="projectName_lineEdit"/>
@@ -167,6 +174,16 @@
          <string>Stripped</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="path_lineEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
