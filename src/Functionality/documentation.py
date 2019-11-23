@@ -113,16 +113,20 @@ class DocumentationWindow(QtWidgets.QDialog):
                                                         "All Files (*);;Text Files (*.txt)", options=options)
 
         try:
+            fileToSave = open(name, 'r')
+            text = fileToSave.read()
+
             file = open((path + name.split('/')[-1].split('.')[0] + '.txt'), 'w+')
-            contents = open(name, 'r')
-            file.write(contents.read())
-            contents.close()
+            file.write(text)
+            fileToSave.close()
             file.close()
+
             self.window.documentView_listWidget.clear()
             self.populateDoc()
         except UnicodeDecodeError:
-            print('nah bitch')
-            pass
+            QMessageBox.question(self, "Error Message: Cannot read file.",
+                                 "Not able to decode file. Make sure file only contains text.",
+                                 QMessageBox.Ok)
 
 
 def main():
