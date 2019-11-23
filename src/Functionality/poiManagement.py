@@ -13,7 +13,6 @@ def validatePoiXML(filepath):
     result = poiSchema.is_valid(filepath)
     return result
 
-
 # ---------------- XML CONVERSION ----------------
 def convertPoiXML(ui, filepath):
     if validatePoiXML(filepath):
@@ -126,16 +125,22 @@ def addPoiToPlugin(ui, poiName, poiType, pluginName):
         QMessageBox.question(ui, "Error: Empty Field",
                              "The required field cannot be empty",
                              QMessageBox.Ok)
-        return
+        return 0
     poiDict = convertPoiManual(poiName)
     updatedPluginDict = appendPoiPlugin(getCurrentPluginInfo(pluginName), poiDict, poiType)
     updatePlugin(updatedPluginDict, pluginName)
 
 def addPoiToPluginXml(ui, filepath, pluginName):
-    poiDict = formatPoi(convertPoiXML(ui, filepath))
+    if filepath == '':
+        QMessageBox.question(ui, "Error: Empty Field",
+                             "The required field cannot be empty",
+                             QMessageBox.Ok)
+        return 0
+    poiDict = convertPoiXML(ui, filepath)
     if poiDict == 0:
         return 0
+    formatedPoiDict = formatPoi(poiDict)
     pluginDict = getCurrentPluginInfo(pluginName)
-    updatedPluginDict = appendPoiPluginXml(pluginDict, poiDict)
+    updatedPluginDict = appendPoiPluginXml(pluginDict, formatedPoiDict)
     updatePlugin(updatedPluginDict, pluginName)
 # ---------------- TESTING ----------------

@@ -825,34 +825,36 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays a detailed view of a plugin when it is clicked
     def displayPlugin(self):
-        # get name of current plugin
-        item = self.window.pluginManagement_list.currentItem().text()
-        poi = self.window.addPoiType_dropdown.currentText()
-        # set label to display name of plugin being edited
-        self.window.pluginEditingStatus_label.setStyleSheet("font-weight: bold")
-        self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
+        selected = self.window.pluginManagement_list.selectedItems()
+        if selected:
+            # get name of current plugin
+            item = self.window.pluginManagement_list.currentItem().text()
+            poi = self.window.addPoiType_dropdown.currentText()
+            # set label to display name of plugin being edited
+            self.window.pluginEditingStatus_label.setStyleSheet("font-weight: bold")
+            self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
 
-        self.window.addPoiXML_label.setStyleSheet("font-weight: bold")
-        self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
-        self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
+            self.window.addPoiXML_label.setStyleSheet("font-weight: bold")
+            self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
+            self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
 
-        self.window.addPoiManual_label.setStyleSheet("font-weight: bold")
-        self.window.addPoiManual_label.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
-        # display poi information
-        name, description, poi, output = getCurrentPlugin(item)
-        self.window.dpmPluginName_lineEdit.setText(name)
-        self.window.dpmPluginDesc_lineEdit.setText(description)
-        self.window.dpmOutName_lineEdit.setText(output['name'])
-        self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
-        self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
-        # change save button text
-        self.window.saveManualPlugin_button.setText('Update Plugin')
-        # change clear button text
-        self.window.clearManualPlugin_button.setText('De-Select Plugin')
-        # display its pois
-        self.displayPoiFromPlugin()
-        # disable ability to add plugin through xml
-        self.window.addPluginXml_frame.setDisabled(True)
+            self.window.addPoiManual_label.setStyleSheet("font-weight: bold")
+            self.window.addPoiManual_label.setText('Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
+            # display poi information
+            name, description, poi, output = getCurrentPlugin(item)
+            self.window.dpmPluginName_lineEdit.setText(name)
+            self.window.dpmPluginDesc_lineEdit.setText(description)
+            self.window.dpmOutName_lineEdit.setText(output['name'])
+            self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
+            self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
+            # change save button text
+            self.window.saveManualPlugin_button.setText('Update Plugin')
+            # change clear button text
+            self.window.clearManualPlugin_button.setText('De-Select Plugin')
+            # display its pois
+            self.displayPoiFromPlugin()
+            # disable ability to add plugin through xml
+            self.window.addPluginXml_frame.setDisabled(True)
 
 
     # Displays all pois associated with the clicked plugin
