@@ -273,7 +273,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
-    # filter the treeWidget when searching
+    # filter tree widgetbased on poi list selection
     def filterTree(self):
         self.window.POI_treeWidget.clear()
         self.window.POI_treeWidget.setHeaderHidden(True)
@@ -288,6 +288,43 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                         addIcon(item)
             tree = self.window.POI_treeWidget
             tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
+        if poi == 'String':
+            for i in range(len(content)):
+                if 'string' in content[i]:
+                    item = QListWidgetItem(content[i]['string'])
+                    # set icon
+                    if getComment(content[i]['string'], "String", self.window.comment_text):
+                        addIcon(item)
+            tree = self.window.POI_treeWidget
+            tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
+        if poi == 'Variable':
+            for i in range(len(content)):
+                if 'name' in content[i]:
+                    item = QListWidgetItem(content[i]['name'])
+                    # set icon
+                    if getComment(content[i]['name'], "Variable", self.window.comment_text):
+                        addIcon(item)
+            tree = self.window.POI_treeWidget
+            tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
+        if poi == 'DLL':
+            for i in range(len(content)):
+                if 'name' in content[i]:
+                    item = QListWidgetItem(content[i]['name'])
+                    # set icon
+                    if getComment(content[i]['name'], "DLL", self.window.comment_text):
+                        addIcon(item)
+            tree = self.window.POI_treeWidget
+            tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
+        if poi == 'Struct':
+            for i in range(len(content)):
+                if 'name' in content[i]:
+                    item = QListWidgetItem(content[i]['type'])
+                    # set icon
+                    if getComment(content[i]['type'], "Struct", self.window.comment_text):
+                        addIcon(item)
+            tree = self.window.POI_treeWidget
+            tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
+    #add poi to poi list
     def displayListPoi(self):
         self.window.POI_treeWidget.setHeaderHidden(True)
         self.window.POI_treeWidget.clear()
@@ -309,7 +346,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                         #functionTree.append(QTreeWidgetItem([content[i]['name']]))
                 #tree = self.window.POI_treeWidget
                 #tree.addTopLevelItems(functionTree)
-
         elif poi == 'String':
             self.disableCheck()
             if self.window.pluginSelection_dropdown.currentText() == 'None':
