@@ -64,6 +64,9 @@ class Documentation_Window(object):
         self.dDocumentView_layout.addWidget(self.dDocumentView_textEdit)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.saveButton = QtWidgets.QPushButton(Dialog)
+        self.saveButton.setObjectName("saveButton")
+        self.horizontalLayout_4.addWidget(self.saveButton)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem)
         self.editButton = QtWidgets.QPushButton(Dialog)
@@ -92,6 +95,7 @@ class Documentation_Window(object):
         self.addButton.setText(_translate("Dialog", "Add"))
         self.deleteButton.setText(_translate("Dialog", "Delete"))
         self.dDocumentView_label.setText(_translate("Dialog", "Detailed Document View"))
+        self.saveButton.setText(_translate("Dialog", "Save"))
         self.editButton.setText(_translate("Dialog", "Edit"))
 
 
