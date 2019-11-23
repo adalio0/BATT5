@@ -106,13 +106,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
-        self.window.poi_list.currentItemChanged.connect(self.callFilterTree)
+        self.window.poi_list.currentItemChanged.connect(self.displayTree)
 
         self.window.POI_treeWidget.currentItemChanged.connect(self.callHighlightList)
 
         # ---- Filters ------------------------------------------------------------------------------------------------
         # When changing POI type in the drop down will update whats displayed
-        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayListPoi)
+        self.window.poiType_dropdown.currentIndexChanged.connect(self.calldisplayATree)
 
         # ---- Console ------------------------------------------------------------------------------------------------
         # Executes the input command in the radare prompt
@@ -262,19 +262,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             # Save the results of static into the database
             saveStatic(poi)
-            self.displayListPoi()
+            self.calldisplayATree()
         else:
-            self.displayListPoi()
-    def callFilterTree(self):
+            self.calldisplayATree()
+    def calldisplayATree(self):
         try:
-            self.filterTree()
-            getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
-                       self.window.comment_text)
+            if self.window.pluginSelection_dropdown.currentText() != 'None':
+                self.displayFListPoi()
+                getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
+                           self.window.comment_text)
+            else:
+                self.displayListPoi()
+                getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
+                           self.window.comment_text)
         except AttributeError:
             pass
 
     # filter tree widgetbased on poi list selection
-    def filterTree(self):
+    def displayTree(self):
         self.window.POI_treeWidget.clear()
         self.window.POI_treeWidget.setHeaderHidden(True)
         poi = self.window.poiType_dropdown.currentText()
@@ -324,7 +329,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                         addIcon(item)
             tree = self.window.POI_treeWidget
             tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
-    #add poi to poi list
+   #add poi's filtered by plugin to poi list and display
+    def displayFListPoi(self):
+        print("filtered LIst by plugin")
+    #add poi's to poi List and display
     def displayListPoi(self):
         self.window.POI_treeWidget.setHeaderHidden(True)
         self.window.POI_treeWidget.clear()
@@ -704,16 +712,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                    self.window.poiType_dropdown.currentText())
-        addIcon(self.window.poi_list.currentItem())
-        #highlightCell(self.window.POI_tableWidget.currentItem())
+        if self.window.comment_text.toPlainText() != "":
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
+            addIcon(self.window.poi_list.currentItem())
+            # highlightCell(self.window.POI_tableWidget.currentItem())
+        else:
+            item = self.window.poi_list.currentItem()
+            item.setIcon(QIcon())
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
 
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
-        item = self.window.poi_list.currentItem()
-        item.setIcon(QIcon())
 
     # enable checkbox
     def enableCheck(self):
