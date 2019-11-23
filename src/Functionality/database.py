@@ -23,12 +23,13 @@ plugin_db = db_2['plugins']
 
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
-    flag = ''
+    flag = False
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
                 flag = p.get('static_analysis', {}).get('performed')
     return flag
+
 
 # ---- Setters for the database (sets the current project and window title) --------------------------------------
 
@@ -78,6 +79,7 @@ def setCurrentProject(selected):
                         binaryPath = b.get('file')
 
     return text, binaryPath
+
 
 # ---- Getters for the database (Gets appropriate data based on request) --------------------------------------
 
@@ -132,7 +134,6 @@ def getCurrentPluginInfo(selected):
             if p['name'] == selected:
                 return p
 
-
 # Gets the appropriate database
 def getAppropriatePoi(poi):
     if poi == "Function":
@@ -145,7 +146,6 @@ def getAppropriatePoi(poi):
         return dll_db
     elif poi == "Struct":
         return struct_db
-
 
 # Displays specific POI in the Analysis box
 def getPoi(poi):
@@ -202,6 +202,7 @@ def getComment(poiName, dropText, commentBox):
             commentBox.setText(d.get('comment'))
             if d.get('comment'):
                 return 1
+
 
 # ---- Methods that save/insert data into the database -----------------------------------------------
 
@@ -361,6 +362,7 @@ def saveStatic(poi):
                                         {'_id': s['_id']},
                                         {'$push': {'struct': {str(i): struct['_id']}}}, upsert=True)
 
+
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 
 # Deletes a project from the database
@@ -378,11 +380,11 @@ def deleteAPlugin(plugin):
 
 
 # Deletes a poi from the plugin database
-def deleteAPoiFromPlugin(name, plugin):
+def deleteAPoiFromPlugin(plugin, newPluginDict):
     plugin_db.find_one_and_delete(
-        {'name': name}
+        {'name': plugin}
     )
-    plugin_db.insert_one(plugin)
+    plugin_db.insert_one(newPluginDict)
 
 
 # Delete EVERYTHING from project

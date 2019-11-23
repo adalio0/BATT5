@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>957</width>
-    <height>867</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,7 +140,7 @@
                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:9.75pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
@@ -567,7 +567,7 @@ background-color: rgb(186, 189, 182);</string>
                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:9.75pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
@@ -812,7 +812,7 @@ p, li { white-space: pre-wrap; }
            <widget class="QGroupBox" name="pluginManagement_box">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>300</width>
               <height>0</height>
              </size>
             </property>
@@ -846,13 +846,13 @@ p, li { white-space: pre-wrap; }
               <widget class="QListWidget" name="pluginManagement_list">
                <property name="minimumSize">
                 <size>
-                 <width>175</width>
+                 <width>275</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -873,19 +873,6 @@ p, li { white-space: pre-wrap; }
              <string>Detailed Plugin Management</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_15">
-             <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QFrame" name="frame_4">
                <property name="whatsThis">
@@ -913,6 +900,19 @@ p, li { white-space: pre-wrap; }
                 <property name="bottomMargin">
                  <number>6</number>
                 </property>
+                <item>
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item>
                  <layout class="QGridLayout" name="manualPluginAdd">
                   <item row="1" column="1">
@@ -1016,21 +1016,21 @@ p, li { white-space: pre-wrap; }
                   </item>
                  </layout>
                 </item>
+                <item>
+                 <spacer name="verticalSpacer_8">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QFrame" name="frame_3">
@@ -1057,21 +1057,21 @@ p, li { white-space: pre-wrap; }
                  <number>6</number>
                 </property>
                 <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <layout class="QGridLayout" name="gridLayout_2">
-                  <item row="5" column="2">
-                   <widget class="QPushButton" name="dpmOutFuncSource_button">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Browse</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
+                  <item row="5" column="0">
                    <widget class="QLabel" name="dpmOutFuncName_label">
                     <property name="minimumSize">
                      <size>
@@ -1090,10 +1090,10 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="1">
+                  <item row="3" column="1">
                    <widget class="QLineEdit" name="dpmPluginDesc_lineEdit"/>
                   </item>
-                  <item row="3" column="0">
+                  <item row="4" column="0">
                    <widget class="QLabel" name="dpmOutName_lable">
                     <property name="minimumSize">
                      <size>
@@ -1112,7 +1112,7 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="6" column="1">
+                  <item row="7" column="1">
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
                     <item>
                      <widget class="QPushButton" name="clearManualPlugin_button">
@@ -1130,7 +1130,7 @@ p, li { white-space: pre-wrap; }
                     </item>
                    </layout>
                   </item>
-                  <item row="5" column="0">
+                  <item row="6" column="0">
                    <widget class="QLabel" name="dpmOutFuncSource_label">
                     <property name="minimumSize">
                      <size>
@@ -1149,7 +1149,23 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="0" column="1">
+                  <item row="6" column="2">
+                   <widget class="QPushButton" name="dpmOutFuncSource_button">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Browse</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
+                  </item>
+                  <item row="1" column="1">
                    <widget class="QLabel" name="pluginEditingStatus_label">
                     <property name="maximumSize">
                      <size>
@@ -1171,35 +1187,28 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="1">
-                   <widget class="QLineEdit" name="dpmOutName_lineEdit"/>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="dpmOutFuncName_lineEdit"/>
                   </item>
-                  <item row="1" column="1">
-                   <widget class="QLineEdit" name="dpmPluginName_lineEdit"/>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="dpmPluginName_label">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>0</height>
-                     </size>
+                  <item row="6" column="1">
+                   <widget class="QLineEdit" name="dpmOutFuncSource_lineEdit">
+                    <property name="font">
+                     <font>
+                      <italic>true</italic>
+                     </font>
                     </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
+                    <property name="readOnly">
+                     <bool>true</bool>
                     </property>
-                    <property name="text">
-                     <string>*Name:</string>
+                    <property name="placeholderText">
+                     <string/>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>false</bool>
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="1">
-                   <widget class="QLineEdit" name="dpmOutFuncName_lineEdit"/>
-                  </item>
-                  <item row="2" column="0">
+                  <item row="3" column="0">
                    <widget class="QLabel" name="dpmPluginDesc_label">
                     <property name="minimumSize">
                      <size>
@@ -1218,25 +1227,7 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="1">
-                   <widget class="QLineEdit" name="dpmOutFuncSource_lineEdit">
-                    <property name="font">
-                     <font>
-                      <italic>true</italic>
-                     </font>
-                    </property>
-                    <property name="readOnly">
-                     <bool>true</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string/>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="1">
+                  <item row="8" column="1">
                    <widget class="QLabel" name="label_7">
                     <property name="font">
                      <font>
@@ -1251,23 +1242,45 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="dpmOutName_lineEdit"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="dpmPluginName_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>140</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>*Name:</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
@@ -1277,148 +1290,100 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QHBoxLayout" name="poiMmgmnt_layout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QGroupBox" name="poiManagement_box">
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Points of Interest Management</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_14">
+           <widget class="QGroupBox" name="poiManagement_box">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Points of Interest Management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                 <item>
-                  <widget class="QLabel" name="label_6">
-                   <property name="text">
-                    <string>Type</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="comboBox">
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Function</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>String</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Variable</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>DLL</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Struct</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="poiManagementSeach_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
+                <widget class="QLabel" name="label_6">
                  <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Search..</string>
+                  <string>Type</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QListWidget" name="poiManagement_list">
+                <widget class="QComboBox" name="addPoiType_dropdown">
                  <property name="minimumSize">
                   <size>
-                   <width>175</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Function</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>String</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Variable</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DLL</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Struct</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="addToPlugin_box">
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Add Points of Interest to Plugins</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_28">
-               <item>
-                <widget class="QCheckBox" name="checkAllPlugins_checkBox">
-                 <property name="text">
-                  <string>Check/Uncheck All</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="addToPluginSearch_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Search..</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QListWidget" name="addToPlugin_list"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="poiManagementSeach_lineEdit">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>Search..</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="poiManagement_list">
+               <property name="minimumSize">
+                <size>
+                 <width>175</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <widget class="QGroupBox" name="dpoim_box">
@@ -1426,19 +1391,6 @@ p, li { white-space: pre-wrap; }
              <string>Detailed Points of Interest Management</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_18">
-             <item>
-              <spacer name="verticalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QFrame" name="frame">
                <property name="minimumSize">
@@ -1469,6 +1421,19 @@ p, li { white-space: pre-wrap; }
                 <property name="bottomMargin">
                  <number>6</number>
                 </property>
+                <item>
+                 <spacer name="verticalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_3">
                   <item row="1" column="2">
@@ -1549,7 +1514,7 @@ p, li { white-space: pre-wrap; }
                    </layout>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLabel" name="label_4">
+                   <widget class="QLabel" name="addPoiXML_label">
                     <property name="minimumSize">
                      <size>
                       <width>0</width>
@@ -1578,21 +1543,21 @@ p, li { white-space: pre-wrap; }
                   </item>
                  </layout>
                 </item>
+                <item>
+                 <spacer name="verticalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QFrame" name="frame_2">
@@ -1622,57 +1587,68 @@ p, li { white-space: pre-wrap; }
                  <number>6</number>
                 </property>
                 <item>
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <layout class="QGridLayout" name="gridLayout">
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="varName_label">
-                    <property name="text">
-                     <string>Variable Name:</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="2" column="0">
-                   <widget class="QLabel" name="strName_label">
+                   <widget class="QLabel" name="addPoi_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>140</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
-                     <string>String Name:</string>
+                     <string>*Point of Interest  Name:</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="0">
-                   <widget class="QLabel" name="label">
-                    <property name="text">
-                     <string>Struct Name:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="3">
-                   <widget class="QPushButton" name="saveVar_button">
-                    <property name="text">
-                     <string>Save Variable</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
-                   <widget class="QLabel" name="dllName_label">
-                    <property name="text">
-                     <string>DLL Name:</string>
-                    </property>
-                   </widget>
+                  <item row="2" column="2">
+                   <widget class="QLineEdit" name="addPoiName_lineEdit"/>
                   </item>
                   <item row="3" column="2">
-                   <widget class="QLineEdit" name="varName_lineEdit"/>
+                   <layout class="QHBoxLayout" name="horizontalLayout_11">
+                    <item>
+                     <widget class="QPushButton" name="clearPoiAll_button">
+                      <property name="text">
+                       <string>Clear</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="savePoi_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Save POI</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
-                  <item row="5" column="2">
-                   <widget class="QLineEdit" name="structName_lineEdit"/>
-                  </item>
-                  <item row="5" column="3">
-                   <widget class="QPushButton" name="saveStruct_button">
-                    <property name="text">
-                     <string>Save Struct</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="2">
-                   <widget class="QLabel" name="label_5">
+                  <item row="1" column="2">
+                   <widget class="QLabel" name="addPoiManual_label">
                     <property name="maximumSize">
                      <size>
                       <width>16777215</width>
@@ -1693,96 +1669,39 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="2">
-                   <widget class="QLineEdit" name="funcName_lineEdit"/>
-                  </item>
-                  <item row="1" column="3">
-                   <widget class="QPushButton" name="saveFunc_button">
-                    <property name="minimumSize">
+                  <item row="2" column="3">
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
                      <size>
                       <width>100</width>
-                      <height>0</height>
+                      <height>20</height>
                      </size>
                     </property>
-                    <property name="text">
-                     <string>Save Function</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="2">
-                   <widget class="QLineEdit" name="strName_lineEdit"/>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="funcName_label">
-                    <property name="minimumSize">
-                     <size>
-                      <width>140</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Function Name:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="2">
-                   <layout class="QHBoxLayout" name="horizontalLayout_11">
-                    <item>
-                     <widget class="QPushButton" name="clearPoiAll_button">
-                      <property name="text">
-                       <string>Clear All</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_2">
-                      <property name="text">
-                       <string>Save All</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="4" column="3">
-                   <widget class="QPushButton" name="saveDll_button">
-                    <property name="text">
-                     <string>Save DLL</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="2">
-                   <widget class="QLineEdit" name="dllName_lineEdit"/>
-                  </item>
-                  <item row="2" column="3">
-                   <widget class="QPushButton" name="saveString_button">
-                    <property name="text">
-                     <string>Save String</string>
-                    </property>
-                   </widget>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
+                <item>
+                 <spacer name="verticalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </widget>
