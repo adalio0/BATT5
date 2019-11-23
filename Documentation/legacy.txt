@@ -329,3 +329,6 @@ def displayPoi(self):
         else:
             filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
             self.displayAllFiltered(filterContent, functions, strings, variables, dlls, structs)
+
+child = QTreeWidgetItem(projectTree[len(projectTree)-1])
+child.setText(0, 'path')
