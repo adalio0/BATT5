@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import *
-from src.Functionality.database import getProjects
+from src.Functionality.database import getProjects, getComment
 from src.Functionality.database import getPlugins
 from src.Functionality.database import getFilterPoi
 
@@ -122,16 +122,14 @@ def searchDocumentation(search, document_list):
         for i in range(document_list.count()):
             document_list.item(i).setHidden(False)
 
-
-# highlight table widget when poi is selected from poi list
-def highlightTable(poi, POI_tableWidget):
-    POI_tableWidget.clearSelection()
-    tablePoi = POI_tableWidget.findItems(poi, QtCore.Qt.MatchContains)
-
+#highlight table widget when poi is selected from poi list
+def highlightTable(poi, POI_treeWidget):
+    POI_treeWidget.clearSelection()
+    tablePoi = POI_treeWidget.findItems(poi, QtCore.Qt.MatchContains)
     for item in tablePoi:
-        if item.text() == poi:
+        if QTreeWidgetItem(item) == poi:
             item.setSelected(True)
-            POI_tableWidget.setCurrentItem(item)
+            POI_treeWidget.setCurrentItem(item)
             return
 
 
