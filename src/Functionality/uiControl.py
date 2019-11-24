@@ -288,9 +288,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             for i in range(len(content)):
                 if 'name' in content[i]:
                     item = QListWidgetItem(content[i]['name'])
-                    # set icon
-                    if getComment(content[i]['name'], "Function", self.window.comment_text):
-                        addIcon(item)
+                # set icon
+                if getComment(content[i]['name'], "Function", self.window.comment_text):
+                    addIcon(item)
             tree = self.window.POI_treeWidget
             tree.addTopLevelItem(QTreeWidgetItem([self.window.poi_list.currentItem().text()]))
         if poi == 'String':

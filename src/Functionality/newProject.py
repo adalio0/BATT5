@@ -6,10 +6,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.newProjectWind import NewProject
-from src.GUI.python_files.popups.errors import ErrEmptyFields
-
 properties = []
-
+checkBinary = False
 
 class ProjectWindow(QtWidgets.QDialog):
     def __init__(self):
@@ -35,10 +33,10 @@ class ProjectWindow(QtWidgets.QDialog):
         if name:
             self.setProperties()
             self.validatex86()
-            if checkBinary == False:
+            if checkBinary is False:
                 self.window.path_lineEdit.clear()
                 self.showx86Err()
-                #show error
+
 
 
 
@@ -160,8 +158,11 @@ class ProjectWindow(QtWidgets.QDialog):
                              "All fields must be filled to in order to create a Project",
                              QMessageBox.Ok)
 
-        self.windowEF = ErrEmptyFields()
-        self.windowEF.show()
+
+    def showx86Err(self):
+        QMessageBox.question(self, "Error Message: File Selected is not x86",
+                             "Binary should be x86 architecture in order to create a project",
+                             QMessageBox.Ok)
     #----Validate Binary x86-------------------------------------------------------
     def validatex86(self):
         global checkBinary
@@ -172,9 +173,7 @@ class ProjectWindow(QtWidgets.QDialog):
 
         if item2.text(1) == "AMD 64":
             checkBinary = True
-            self.window.create_button.setDisabled(False)
-        else:
-            self.window.create_button.setDisabled(True)
+
 
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
