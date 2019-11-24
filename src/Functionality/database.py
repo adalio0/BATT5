@@ -228,7 +228,7 @@ def saveComment(comment, poiName, dropText):
         upsert=False)
 
 
-# Gets and saves Static Analysis results into database TODO: Take care of the overflow stuff?
+# Gets and saves Static Analysis results into database
 def saveStatic(poi):
     for c in current_db.find():
         for p in project_db.find():
@@ -240,18 +240,45 @@ def saveStatic(poi):
                             {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
                         for r in results_db.find():
                             if r['_id'] == s.get('results').get('01'):
-                                # SAVE FUNCTIONS
+                                # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
                                 for i in range(len(poi[0])):
+                                    parameters = []
+                                    try:
+                                        for j in range(len(poi[0][i]['regvars'])):
+                                            info = {
+                                                'name': poi[0][i]['regvars'][j]['name'],
+                                                'type': poi[0][i]['regvars'][j]['type'],
+                                                'value': ''
+                                            }
+                                            parameters.append(info)
+                                    except KeyError:
+                                        continue
+
+                                    try:
+                                        for j in range(len(poi[0][i]['spvars'])):
+                                            if j >= poi[0][i]['nlocals']:
+                                                info = {
+                                                    'name': poi[0][i]['spvars'][j]['name'],
+                                                    'type': poi[0][i]['spvars'][j]['type'],
+                                                    'value': ''
+                                                }
+                                                parameters.append(info)
+                                    except KeyError:
+                                        continue
+
                                     function = {
                                         'results_id': r['_id'],
-                                        'name': poi[0][i]['name'],
                                         'comment': '',
-                                        'data': poi[0][i]
+                                        'name': poi[0][i]['name'],
+                                        'data': {
+                                            'name': poi[0][i]['name'],
+                                            'signature': poi[0][i]['signature'],
+                                            'parameters': parameters,
+                                            'returnType': '',
+                                            'returnValue': ''
+                                        }
                                     }
-                                    try:
-                                        function_outcome = function_db.insert_one(function)
-                                    except OverflowError:
-                                        pass
+                                    function_outcome = function_db.insert_one(function)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
@@ -261,14 +288,17 @@ def saveStatic(poi):
                                 for i in range(len(poi[1])):
                                     string = {
                                         'results_id': r['_id'],
-                                        'name': poi[1][i]['string'],
                                         'comment': '',
-                                        'data': poi[1][i]
+                                        'name': poi[1][i]['string'],
+                                        'data': {
+                                            'name': poi[1][i]['string'],
+                                            'type': poi[1][i]['type'],
+                                            'size': poi[1][i]['size'],
+                                            'length': poi[1][i]['length'],
+                                            'section': poi[1][i]['section']
+                                        }
                                     }
-                                    try:
-                                        string_outcome = string_db.insert_one(string)
-                                    except OverflowError:
-                                        pass
+                                    string_outcome = string_db.insert_one(string)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
@@ -278,14 +308,16 @@ def saveStatic(poi):
                                 for i in range(len(poi[2]['sp'])):
                                     variable = {
                                         'results_id': r['_id'],
-                                        'name': poi[2]['sp'][i]['name'],
                                         'comment': '',
-                                        'data': poi[2]['sp'][i]
+                                        'name': poi[2]['sp'][i]['name'],
+                                        'data': {
+                                            'name': poi[2]['sp'][i]['name'],
+                                            'type': poi[2]['sp'][i]['type'],
+                                            'size': poi[2]['sp'][i]['ref']['offset'],
+                                            'value': ''
+                                        }
                                     }
-                                    try:
-                                        variable_outcome = variable_db.insert_one(variable)
-                                    except OverflowError:
-                                        pass
+                                    variable_outcome = variable_db.insert_one(variable)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
@@ -295,14 +327,17 @@ def saveStatic(poi):
                                 for i in range(len(poi[2]['bp'])):
                                     variable = {
                                         'results_id': r['_id'],
-                                        'name': poi[2]['bp'][i]['name'],
                                         'comment': '',
-                                        'data': poi[2]['bp'][i]
+                                        'name': poi[2]['bp'][i]['name'],
+                                        'data': {
+                                            'name': poi[2]['bp'][i]['name'],
+                                            'type': poi[2]['bp'][i]['type'],
+                                            'size': poi[2]['bp'][i]['ref']['offset'],
+                                            'value': ''
+                                        }
                                     }
-                                    try:
-                                        variable_outcome = variable_db.insert_one(variable)
-                                    except OverflowError:
-                                        pass
+                                    variable_outcome = variable_db.insert_one(variable)
+                                    # print(variable)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
@@ -312,14 +347,15 @@ def saveStatic(poi):
                                 for i in range(len(poi[2]['reg'])):
                                     variable = {
                                         'results_id': r['_id'],
-                                        'name': poi[2]['reg'][i]['name'],
                                         'comment': '',
-                                        'data': poi[2]['reg'][i]
+                                        'name': poi[2]['reg'][i]['name'],
+                                        'data': {
+                                            'name': poi[2]['reg'][i]['name'],
+                                            'type': poi[2]['reg'][i]['type'],
+                                            'value': ''
+                                        }
                                     }
-                                    try:
-                                        variable_outcome = variable_db.insert_one(variable)
-                                    except OverflowError:
-                                        pass
+                                    variable_outcome = variable_db.insert_one(variable)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
@@ -329,38 +365,17 @@ def saveStatic(poi):
                                 for i in range(len(poi[3])):
                                     dll = {
                                         'results_id': r['_id'],
-                                        'name': poi[3][i]['name'],
                                         'comment': '',
-                                        'data': poi[3][i]
+                                        'name': poi[3][i]['name'],
+                                        'data': {
+                                            'name': poi[3][i]['name']
+                                        }
                                     }
-                                    try:
-                                        dll_outcome = dll_db.insert_one(dll)
-                                    except OverflowError:
-                                        pass
+                                    dll_outcome = dll_db.insert_one(dll)
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
-
-                                # SAVE PACKET PROTOCOLS
-                                # TODO
-
-                                # SAVE STRUCTS
-                                for i in range(len(poi[4])):
-                                    struct = {
-                                        'results_id': r['_id'],
-                                        'name': poi[4][i]['type'],
-                                        'comment': '',
-                                        'data': poi[4][i]
-                                    }
-                                    try:
-                                        struct_outcome = struct_db.insert_one(struct)
-                                    except OverflowError:
-                                        pass
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'struct': {str(i): struct['_id']}}}, upsert=True)
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------

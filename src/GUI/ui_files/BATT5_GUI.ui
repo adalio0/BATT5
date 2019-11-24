@@ -262,38 +262,75 @@ background-color: rgb(186, 189, 182);</string>
                  <string>Analysis View</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_16">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
-                  <widget class="QTableWidget" name="POI_tableWidget">
-                   <property name="editTriggers">
-                    <set>QAbstractItemView::NoEditTriggers</set>
+                  <widget class="QStackedWidget" name="viewPoi_stack">
+                   <property name="currentIndex">
+                    <number>0</number>
                    </property>
-                   <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectItems</enum>
-                   </property>
-                   <property name="verticalScrollMode">
-                    <enum>QAbstractItemView::ScrollPerPixel</enum>
-                   </property>
-                   <property name="showGrid">
-                    <bool>true</bool>
-                   </property>
-                   <property name="gridStyle">
-                    <enum>Qt::SolidLine</enum>
-                   </property>
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>100</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderMinimumSectionSize">
-                    <number>50</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderStretchLastSection">
-                    <bool>true</bool>
-                   </attribute>
+                   <widget class="QWidget" name="viewFunc_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_29">
+                     <item>
+                      <widget class="QTreeWidget" name="vewFunc_tree">
+                       <column>
+                        <property name="text">
+                         <string>Functions</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewString_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_30">
+                     <item>
+                      <widget class="QTreeWidget" name="viewString_tree">
+                       <column>
+                        <property name="text">
+                         <string>Strings</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewVar_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_31">
+                     <item>
+                      <widget class="QTreeWidget" name="viewVar_tree">
+                       <column>
+                        <property name="text">
+                         <string>Variables</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewDll_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_28">
+                     <item>
+                      <widget class="QTreeWidget" name="viewDll_tree">
+                       <column>
+                        <property name="text">
+                         <string>DLL's</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
                   </widget>
                  </item>
                 </layout>
@@ -436,11 +473,6 @@ background-color: rgb(186, 189, 182);</string>
                      <item>
                       <property name="text">
                        <string>DLL</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Struct</string>
                       </property>
                      </item>
                     </widget>
@@ -1340,11 +1372,6 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <property name="text">
                    <string>DLL</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Struct</string>
                   </property>
                  </item>
                 </widget>
