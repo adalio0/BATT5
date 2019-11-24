@@ -105,7 +105,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
-        # self.window.poi_list.currentItemChanged.connect(self.displayTree)
+        # self.window.poi_list.currentItemChanged.connect(self.callHighlightTree)
 
         # self.window.POI_treeWidget.currentItemChanged.connect(self.callHighlightList)
 
@@ -412,7 +412,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
+        self.window.viewFunc_tree.clear()
+        self.window.viewString_tree.clear()
+        self.window.viewVar_tree.clear()
+        self.window.viewDll_tree.clear()
         self.window.poi_list.clear()
+
         poi = self.window.poiType_dropdown.currentText()
         content = getPoi(poi)
         filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
@@ -448,18 +453,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the functions extracted from Static Analysis in Analysis box and POI box
     def displayFunctions(self, content):
+        funcTree = []
         for i in range(len(content)):
+            parent = ''
+            children = []
             if 'name' in content[i]:
-                print(content[i]['name'])
+                parent = QTreeWidgetItem([content[i]['name']])
                 # getComment(content[i]['name'], "Function", self.window.comment_text)
             if 'signature' in content[i]:
-                print(content[i]['signature'])
+                children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
             if 'parameters' in content[i]:
-                print(content[i]['parameters'])
+                params = []
+                for j in range(len(content[i]['parameters'])):
+                    params.append(QTreeWidgetItem(children[len(children)-1], ["Parameter: " + content[i]['parameters'][j]['name']]))
+                children.append(params)
             if 'returnType' in content[i]:
-                print(content[i]['returnType'])
+                children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
             if 'returnValue' in content[i]:
-                print(content[i]['returnValue'])
+                children.append(QTreeWidgetItem(parent, ["Return Value: " + content[i]['returnValue']]))
 
             item = QListWidgetItem(content[i]['name'])
             # set icon
@@ -467,23 +478,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 addIcon(item)
             item.setCheckState(QtCore.Qt.Checked)
             self.window.poi_list.addItem(item)
+            funcTree.append(parent)
+        self.window.viewFunc_tree.addTopLevelItems(funcTree)
 
     # Displays the filtered functions based on the selected plugin in Analysis box and POI box
     def displayFilteredFunctions(self, filterContent, content):
-        for j in range(len(filterContent['function'])):
+        funcTree = []
+        for k in range(len(filterContent['function'])):
             for i in range(len(content)):
-                if content[i]['name'] in filterContent['function'][j]['name']:
+                if content[i]['name'] in filterContent['function'][k]['name']:
+                    parent = ''
+                    children = []
                     if 'name' in content[i]:
-                        print(content[i]['name'])
+                        parent = QTreeWidgetItem([content[i]['name']])
                         # getComment(content[i]['name'], "Function", self.window.comment_text)
                     if 'signature' in content[i]:
-                        print(content[i]['signature'])
+                        children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
                     if 'parameters' in content[i]:
-                        print(content[i]['parameters'])
+                        params = []
+                        for j in range(len(content[i]['parameters'])):
+                            params.append(QTreeWidgetItem(children[len(children) - 1],
+                                                          ["Parameters: " + content[i]['parameters'][j]['name']]))
+                        children.append(params)
                     if 'returnType' in content[i]:
-                        print(content[i]['returnType'])
+                        children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
                     if 'returnValue' in content[i]:
-                        print(content[i]['returnValue'])
+                        children.append(QTreeWidgetItem(parent, ["Return Value: " + content[i]['returnValue']]))
 
                     item = QListWidgetItem(content[i]['name'])
                     # set icon
@@ -491,6 +511,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                         addIcon(item)
                     item.setCheckState(QtCore.Qt.Checked)
                     self.window.poi_list.addItem(item)
+                    funcTree.append(parent)
+        self.window.viewFunc_tree.addTopLevelItems(funcTree)
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
@@ -515,9 +537,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the filtered strings based on the selected plugin in Analysis box and POI box
     def displayFilterStrings(self, filterContent, content):
-        for j in range(len(filterContent['string'])):
+        for k in range(len(filterContent['string'])):
             for i in range(len(content)):
-                if content[i]['name'] in filterContent['string'][j]['name']:
+                if content[i]['name'] in filterContent['string'][k]['name']:
                     if 'name' in content[i]:
                         print(content[i]['name'])
                         # getComment(content[i]['string'], "String", self.window.comment_text)
@@ -557,9 +579,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the filtered variables based on the selected plugin in Analysis box and POI box
     def displayFilteredVariable(self, filterContent, content):
-        for j in range(len(filterContent['variable'])):
+        for k in range(len(filterContent['variable'])):
             for i in range(len(content)):
-                if content[i]['name'] in filterContent['variable'][j]['name']:
+                if content[i]['name'] in filterContent['variable'][k]['name']:
                     if 'name' in content[i]:
                         print(content[i]['name'])
                         # getComment(content[i]['name'], "Variable", self.window.comment_text)
@@ -591,9 +613,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the filtered dlls based on the selected plugin in Analysis box and POI box
     def displayFilteredDll(self, filterContent, content):
-        for j in range(len(filterContent['dll'])):
+        for k in range(len(filterContent['dll'])):
             for i in range(len(content)):
-                if content[i]['name'] in filterContent['dll'][j]['name']:
+                if content[i]['name'] in filterContent['dll'][k]['name']:
                     if 'name' in content[i]:
                         print(content[i]['name'])
                         # getComment(content[i]['name'], "DLL", self.window.comment_text)
