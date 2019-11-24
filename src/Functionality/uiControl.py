@@ -105,9 +105,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
-        self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
+        # self.window.poi_list.currentItemChanged.connect(self.callHighlightTable)
 
-        self.window.POI_tableWidget.currentItemChanged.connect(self.callHighlightList)
+        # self.window.POI_tableWidget.currentItemChanged.connect(self.callHighlightList)
 
         # ---- Filters ------------------------------------------------------------------------------------------------
         # When changing POI type in the drop down will update whats displayed
@@ -600,7 +600,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                     self.window.poiType_dropdown.currentText())
         addIcon(self.window.poi_list.currentItem())
-        highlightCell(self.window.POI_tableWidget.currentItem())
+        # highlightCell(self.window.POI_tableWidget.currentItem())
 
     # Clear comment text
     def clearComment(self):
@@ -632,14 +632,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def switchToCurrent(self):
         self.window.changeViews_stack.setCurrentIndex(0)
-
-    def callHighlightTable(self):
-        try:
-            highlightTable(self.window.poi_list.currentItem().text(), self.window.POI_tableWidget)
-            getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
-                       self.window.comment_text)
-        except AttributeError:
-            pass
 
     def callHighlightList(self):
         try:
