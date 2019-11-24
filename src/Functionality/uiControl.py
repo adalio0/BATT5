@@ -274,6 +274,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Call appropriate method to display poi
         if poi == 'Function':
+            self.window.viewPoi_stack.setCurrentIndex(0)
             self.enableCheck()
             if self.window.pluginSelection_dropdown.currentText() == 'None':
                 self.displayFunctions(content)
@@ -282,16 +283,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             self.disableCheck()
             if poi == 'String':
+                self.window.viewPoi_stack.setCurrentIndex(1)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     self.displayString(content)
                 else:
                     self.displayFilterStrings(filterContent, content)
             elif poi == 'Variable':
+                self.window.viewPoi_stack.setCurrentIndex(2)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     self.displayVariable(content)
                 else:
                     self.displayFilteredVariable(filterContent, content)
             elif poi == 'DLL':
+                self.window.viewPoi_stack.setCurrentIndex(3)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     self.displayDll(content)
                 else:
@@ -358,11 +362,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'section' in content[i]:
                 print(content[i]['section'])
 
-            item = QListWidgetItem(content[i]['name'])
-            # set icon
-            if getComment(content[i]['name'], "String", self.window.comment_text):
-                addIcon(item)
-            self.window.poi_list.addItem(item)
+            # item = QListWidgetItem(content[i]['name'])
+            # # set icon
+            # if getComment(content[i]['name'], "String", self.window.comment_text):
+            #     addIcon(item)
+            # self.window.poi_list.addItem(item)
 
     # Displays the filtered strings based on the selected plugin in Analysis box and POI box
     def displayFilterStrings(self, filterContent, content):
