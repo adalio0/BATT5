@@ -268,6 +268,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
+        self.window.poi_list.clear()
         poi = self.window.poiType_dropdown.currentText()
         content = getPoi(poi)
         filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
@@ -372,7 +373,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def displayFilterStrings(self, filterContent, content):
         for j in range(len(filterContent['string'])):
             for i in range(len(content)):
-                if content[i]['string'] in filterContent['string'][j]['name']:
+                if content[i]['name'] in filterContent['string'][j]['name']:
                     if 'name' in content[i]:
                         print(content[i]['name'])
                         # getComment(content[i]['string'], "String", self.window.comment_text)

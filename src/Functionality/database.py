@@ -270,10 +270,13 @@ def saveStatic(poi):
                                         'results_id': r['_id'],
                                         'comment': '',
                                         'name': poi[0][i]['name'],
-                                        'signature': poi[0][i]['signature'],
-                                        'parameters': parameters,
-                                        'returnType': '',
-                                        'returnValue': ''
+                                        'data': {
+                                            'name': poi[0][i]['name'],
+                                            'signature': poi[0][i]['signature'],
+                                            'parameters': parameters,
+                                            'returnType': '',
+                                            'returnValue': ''
+                                        }
                                     }
                                     function_outcome = function_db.insert_one(function)
 
@@ -287,10 +290,13 @@ def saveStatic(poi):
                                         'results_id': r['_id'],
                                         'comment': '',
                                         'name': poi[1][i]['string'],
-                                        'type': poi[1][i]['type'],
-                                        'size': poi[1][i]['size'],
-                                        'length': poi[1][i]['length'],
-                                        'section': poi[1][i]['section']
+                                        'data': {
+                                            'name': poi[1][i]['string'],
+                                            'type': poi[1][i]['type'],
+                                            'size': poi[1][i]['size'],
+                                            'length': poi[1][i]['length'],
+                                            'section': poi[1][i]['section']
+                                        }
                                     }
                                     string_outcome = string_db.insert_one(string)
 
@@ -304,9 +310,12 @@ def saveStatic(poi):
                                         'results_id': r['_id'],
                                         'comment': '',
                                         'name': poi[2]['sp'][i]['name'],
-                                        'type': poi[2]['sp'][i]['type'],
-                                        'size': poi[2]['sp'][i]['ref']['offset'],
-                                        'value': ''
+                                        'data': {
+                                            'name': poi[2]['sp'][i]['name'],
+                                            'type': poi[2]['sp'][i]['type'],
+                                            'size': poi[2]['sp'][i]['ref']['offset'],
+                                            'value': ''
+                                        }
                                     }
                                     variable_outcome = variable_db.insert_one(variable)
 
@@ -320,9 +329,12 @@ def saveStatic(poi):
                                         'results_id': r['_id'],
                                         'comment': '',
                                         'name': poi[2]['bp'][i]['name'],
-                                        'type': poi[2]['bp'][i]['type'],
-                                        'size': poi[2]['bp'][i]['ref']['offset'],
-                                        'value': ''
+                                        'data': {
+                                            'name': poi[2]['bp'][i]['name'],
+                                            'type': poi[2]['bp'][i]['type'],
+                                            'size': poi[2]['bp'][i]['ref']['offset'],
+                                            'value': ''
+                                        }
                                     }
                                     variable_outcome = variable_db.insert_one(variable)
                                     # print(variable)
@@ -337,8 +349,11 @@ def saveStatic(poi):
                                         'results_id': r['_id'],
                                         'comment': '',
                                         'name': poi[2]['reg'][i]['name'],
-                                        'type': poi[2]['reg'][i]['type'],
-                                        'value': ''
+                                        'data': {
+                                            'name': poi[2]['reg'][i]['name'],
+                                            'type': poi[2]['reg'][i]['type'],
+                                            'value': ''
+                                        }
                                     }
                                     variable_outcome = variable_db.insert_one(variable)
 
@@ -351,7 +366,10 @@ def saveStatic(poi):
                                     dll = {
                                         'results_id': r['_id'],
                                         'comment': '',
-                                        'name': poi[3][i]['name']
+                                        'name': poi[3][i]['name'],
+                                        'data': {
+                                            'name': poi[3][i]['name']
+                                        }
                                     }
                                     dll_outcome = dll_db.insert_one(dll)
 
