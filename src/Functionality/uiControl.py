@@ -262,7 +262,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             # Save the results of static into the database
             saveStatic(poi)
-            # self.displayPoi()
+            self.displayPoi()
         else:
             self.displayPoi()
 
@@ -363,11 +363,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if 'section' in content[i]:
                 print(content[i]['section'])
 
-            # item = QListWidgetItem(content[i]['name'])
-            # # set icon
-            # if getComment(content[i]['name'], "String", self.window.comment_text):
-            #     addIcon(item)
-            # self.window.poi_list.addItem(item)
+            item = QListWidgetItem(content[i]['name'])
+            # set icon
+            if getComment(content[i]['name'], "String", self.window.comment_text):
+                addIcon(item)
+            self.window.poi_list.addItem(item)
 
     # Displays the filtered strings based on the selected plugin in Analysis box and POI box
     def displayFilterStrings(self, filterContent, content):
