@@ -122,16 +122,6 @@ def searchDocumentation(search, document_list):
         for i in range(document_list.count()):
             document_list.item(i).setHidden(False)
 
-#highlight table widget when poi is selected from poi list
-def highlightTable(poi, POI_treeWidget):
-    POI_treeWidget.clearSelection()
-    tablePoi = POI_treeWidget.findItems(poi, QtCore.Qt.MatchContains)
-    for item in tablePoi:
-        if QTreeWidgetItem(item) == poi:
-            item.setSelected(True)
-            POI_treeWidget.setCurrentItem(item)
-            return
-
 
 def HighlightList(poi, poi_list):
     poi_list.clearSelection()
