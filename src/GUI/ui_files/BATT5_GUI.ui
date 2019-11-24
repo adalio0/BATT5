@@ -475,11 +475,6 @@ background-color: rgb(186, 189, 182);</string>
                        <string>DLL</string>
                       </property>
                      </item>
-                     <item>
-                      <property name="text">
-                       <string>Struct</string>
-                      </property>
-                     </item>
                     </widget>
                    </item>
                   </layout>
@@ -1377,11 +1372,6 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <property name="text">
                    <string>DLL</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Struct</string>
                   </property>
                  </item>
                 </widget>
