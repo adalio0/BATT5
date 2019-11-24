@@ -262,22 +262,75 @@ background-color: rgb(186, 189, 182);</string>
                  <string>Analysis View</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_16">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
-                  <widget class="QTreeWidget" name="POI_treeWidget">
-                   <property name="editTriggers">
-                    <set>QAbstractItemView::NoEditTriggers</set>
+                  <widget class="QStackedWidget" name="viewPoi_stack">
+                   <property name="currentIndex">
+                    <number>0</number>
                    </property>
-                   <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectItems</enum>
-                   </property>
-                   <property name="verticalScrollMode">
-                    <enum>QAbstractItemView::ScrollPerPixel</enum>
-                   </property>
-                   <column>
-                    <property name="text">
-                     <string notr="true">1</string>
-                    </property>
-                   </column>
+                   <widget class="QWidget" name="viewFunc_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_29">
+                     <item>
+                      <widget class="QTreeWidget" name="vewFunc_tree">
+                       <column>
+                        <property name="text">
+                         <string>Functions</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewString_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_30">
+                     <item>
+                      <widget class="QTreeWidget" name="viewString_tree">
+                       <column>
+                        <property name="text">
+                         <string>Strings</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewVar_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_31">
+                     <item>
+                      <widget class="QTreeWidget" name="viewVar_tree">
+                       <column>
+                        <property name="text">
+                         <string>Variables</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="viewDll_page">
+                    <layout class="QVBoxLayout" name="verticalLayout_28">
+                     <item>
+                      <widget class="QTreeWidget" name="viewDll_tree">
+                       <column>
+                        <property name="text">
+                         <string>DLL's</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
                   </widget>
                  </item>
                 </layout>
@@ -420,11 +473,6 @@ background-color: rgb(186, 189, 182);</string>
                      <item>
                       <property name="text">
                        <string>DLL</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Struct</string>
                       </property>
                      </item>
                     </widget>
@@ -686,11 +734,6 @@ p, li { white-space: pre-wrap; }
                   <layout class="QGridLayout" name="poi_layout_2">
                    <item row="0" column="1">
                     <widget class="QComboBox" name="poiType_dropdown_2">
-                     <item>
-                      <property name="text">
-                       <string>Extract All</string>
-                      </property>
-                     </item>
                      <item>
                       <property name="text">
                        <string>Function</string>
@@ -1329,11 +1372,6 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <property name="text">
                    <string>DLL</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Struct</string>
                   </property>
                  </item>
                 </widget>

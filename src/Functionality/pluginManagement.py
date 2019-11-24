@@ -30,7 +30,8 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
             'string': [],
             'variable': [],
             'dll': [],
-            'packetProtocol': []
+            'packetProtocol': [],
+            'struct': []
         },
         'output': {
             'name': outName,
@@ -61,42 +62,13 @@ def formatPluginXml(pluginDict):
     }
 
     if 'pointOfInterest' in pluginDict:
-
-        if 'function' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['function']) == 1:
-                newPluginDict['pointOfInterest']['function'] = [pluginDict['pointOfInterest']['function']]
-            elif len(pluginDict['pointOfInterest']['function']) > 1:
-                newPluginDict['pointOfInterest']['function'] = pluginDict['pointOfInterest']['function']
-
-        if 'string' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['string']) == 1:
-                newPluginDict['pointOfInterest']['string'] = [pluginDict['pointOfInterest']['string']]
-            elif len(pluginDict['pointOfInterest']['string']) > 1:
-                newPluginDict['pointOfInterest']['string'] = pluginDict['pointOfInterest']['string']
-
-        if 'variable' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['variable']) == 1:
-                newPluginDict['pointOfInterest']['variable'] = [pluginDict['pointOfInterest']['variable']]
-            elif len(pluginDict['pointOfInterest']['variable']) > 1:
-                newPluginDict['pointOfInterest']['variable'] = pluginDict['pointOfInterest']['variable']
-
-        if 'dll' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['dll']) == 1:
-                newPluginDict['pointOfInterest']['dll'] = [pluginDict['pointOfInterest']['dll']]
-            elif len(pluginDict['pointOfInterest']['dll']) > 1:
-                newPluginDict['pointOfInterest']['dll'] = pluginDict['pointOfInterest']['dll']
-
-        if 'packetProtocol' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['packetProtocol']) == 1:
-                newPluginDict['pointOfInterest']['packetProtocol'] = [pluginDict['pointOfInterest']['packetProtocol']]
-            elif len(pluginDict['pointOfInterest']['packetProtocol']) > 1:
-                newPluginDict['pointOfInterest']['packetProtocol'] = pluginDict['pointOfInterest']['packetProtocol']
-
-        if 'struct' in pluginDict['pointOfInterest']:
-            if len(pluginDict['pointOfInterest']['struct']) == 1:
-                newPluginDict['pointOfInterest']['struct'] = [pluginDict['pointOfInterest']['struct']]
-            elif len(pluginDict['pointOfInterest']['struct']) > 1:
-                newPluginDict['pointOfInterest']['struct'] = pluginDict['pointOfInterest']['struct']
+        poiTypes = ['function', 'string', 'variable', 'dll', 'packetProtocol', 'struct']
+        for t in poiTypes:
+            if t in pluginDict['pointOfInterest']:
+                if len(pluginDict['pointOfInterest'][t]) == 1:
+                    newPluginDict['pointOfInterest'][t] = [pluginDict['pointOfInterest'][t]]
+                elif len(pluginDict['pointOfInterest'][t]) > 1:
+                    newPluginDict['pointOfInterest'][t] = pluginDict['pointOfInterest'][t]
 
     if 'output' in pluginDict:
         if 'name' in pluginDict['output']:
@@ -111,16 +83,15 @@ def formatPluginXml(pluginDict):
     return newPluginDict
 
 # ---------------- GUI ----------------
-
 def savePluginXML(ui, dpmPluginStructure_lineEdit):
     pluginDict = convertPluginXML(dpmPluginStructure_lineEdit.text())
     if pluginDict == 0:
         QMessageBox.question(ui, "Error: Invalid File",
                              "Provided file must be an XML that conforms to pluginConfig,xsd (schema)",
                              QMessageBox.Ok)
-        return
-    else:
-        savePlugin(pluginDict)
+        return 0
+
+    savePlugin(pluginDict)
 
 def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
                      dpmOutFuncSource_lineEdit):
@@ -154,9 +125,4 @@ def modifyPlugin(ui, oldName, newName, newDesc, newOutName, newOutFuncName, newO
 def saveToDatabase(plugin):
     savePlugin(plugin)
 
-
 # ---------------- TEST ----------------
-# testPlugin = convertPluginXML('C:/Users/rivas/OneDrive/School/5 - Fall 2019/CS 4311/BATT5/src/Configurations/networkPlugin.xml')
-# print(testPlugin)
-# testPlugin = removePoiFromPlugin(testPlugin, 'Sleep')
-# print(testPlugin)

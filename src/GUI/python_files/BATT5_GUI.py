@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'BATT5_GUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_BATT5(object):
     def setupUi(self, BATT5):
@@ -106,14 +104,43 @@ class Ui_BATT5(object):
         self.analysis_box = QtWidgets.QGroupBox(self.current_view)
         self.analysis_box.setObjectName("analysis_box")
         self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.analysis_box)
+        self.verticalLayout_16.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.POI_treeWidget = QtWidgets.QTreeWidget(self.analysis_box)
-        self.POI_treeWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        self.POI_treeWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
-        self.POI_treeWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
-        self.POI_treeWidget.setObjectName("POI_treeWidget")
-        self.POI_treeWidget.headerItem().setText(0, "1")
-        self.verticalLayout_16.addWidget(self.POI_treeWidget)
+        self.viewPoi_stack = QtWidgets.QStackedWidget(self.analysis_box)
+        self.viewPoi_stack.setObjectName("viewPoi_stack")
+        self.viewFunc_page = QtWidgets.QWidget()
+        self.viewFunc_page.setObjectName("viewFunc_page")
+        self.verticalLayout_29 = QtWidgets.QVBoxLayout(self.viewFunc_page)
+        self.verticalLayout_29.setObjectName("verticalLayout_29")
+        self.vewFunc_tree = QtWidgets.QTreeWidget(self.viewFunc_page)
+        self.vewFunc_tree.setObjectName("vewFunc_tree")
+        self.verticalLayout_29.addWidget(self.vewFunc_tree)
+        self.viewPoi_stack.addWidget(self.viewFunc_page)
+        self.viewString_page = QtWidgets.QWidget()
+        self.viewString_page.setObjectName("viewString_page")
+        self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.viewString_page)
+        self.verticalLayout_30.setObjectName("verticalLayout_30")
+        self.viewString_tree = QtWidgets.QTreeWidget(self.viewString_page)
+        self.viewString_tree.setObjectName("viewString_tree")
+        self.verticalLayout_30.addWidget(self.viewString_tree)
+        self.viewPoi_stack.addWidget(self.viewString_page)
+        self.viewVar_page = QtWidgets.QWidget()
+        self.viewVar_page.setObjectName("viewVar_page")
+        self.verticalLayout_31 = QtWidgets.QVBoxLayout(self.viewVar_page)
+        self.verticalLayout_31.setObjectName("verticalLayout_31")
+        self.viewVar_tree = QtWidgets.QTreeWidget(self.viewVar_page)
+        self.viewVar_tree.setObjectName("viewVar_tree")
+        self.verticalLayout_31.addWidget(self.viewVar_tree)
+        self.viewPoi_stack.addWidget(self.viewVar_page)
+        self.viewDll_page = QtWidgets.QWidget()
+        self.viewDll_page.setObjectName("viewDll_page")
+        self.verticalLayout_28 = QtWidgets.QVBoxLayout(self.viewDll_page)
+        self.verticalLayout_28.setObjectName("verticalLayout_28")
+        self.viewDll_tree = QtWidgets.QTreeWidget(self.viewDll_page)
+        self.viewDll_tree.setObjectName("viewDll_tree")
+        self.verticalLayout_28.addWidget(self.viewDll_tree)
+        self.viewPoi_stack.addWidget(self.viewDll_page)
+        self.verticalLayout_16.addWidget(self.viewPoi_stack)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.current_view)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 100))
@@ -166,7 +193,6 @@ class Ui_BATT5(object):
         self.poi_layout.addWidget(self.poiType_label, 0, 0, 1, 1)
         self.poiType_dropdown = QtWidgets.QComboBox(self.poi_box)
         self.poiType_dropdown.setObjectName("poiType_dropdown")
-        self.poiType_dropdown.addItem("")
         self.poiType_dropdown.addItem("")
         self.poiType_dropdown.addItem("")
         self.poiType_dropdown.addItem("")
@@ -284,7 +310,6 @@ class Ui_BATT5(object):
         self.poi_layout_2.setObjectName("poi_layout_2")
         self.poiType_dropdown_2 = QtWidgets.QComboBox(self.poi_box_2)
         self.poiType_dropdown_2.setObjectName("poiType_dropdown_2")
-        self.poiType_dropdown_2.addItem("")
         self.poiType_dropdown_2.addItem("")
         self.poiType_dropdown_2.addItem("")
         self.poiType_dropdown_2.addItem("")
@@ -516,7 +541,6 @@ class Ui_BATT5(object):
         self.addPoiType_dropdown.addItem("")
         self.addPoiType_dropdown.addItem("")
         self.addPoiType_dropdown.addItem("")
-        self.addPoiType_dropdown.addItem("")
         self.horizontalLayout_5.addWidget(self.addPoiType_dropdown)
         self.verticalLayout_14.addLayout(self.horizontalLayout_5)
         self.poiManagementSeach_lineEdit = QtWidgets.QLineEdit(self.poiManagement_box)
@@ -682,6 +706,7 @@ class Ui_BATT5(object):
         self.retranslateUi(BATT5)
         self.central_tabs.setCurrentIndex(0)
         self.changeViews_stack.setCurrentIndex(0)
+        self.viewPoi_stack.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(BATT5)
 
     def retranslateUi(self, BATT5):
@@ -702,6 +727,10 @@ class Ui_BATT5(object):
         self.pluginControls_box.setTitle(_translate("BATT5", "Plugin Controls"))
         self.generateScript_button.setText(_translate("BATT5", "Generate Output Field"))
         self.analysis_box.setTitle(_translate("BATT5", "Analysis View"))
+        self.vewFunc_tree.headerItem().setText(0, _translate("BATT5", "Functions"))
+        self.viewString_tree.headerItem().setText(0, _translate("BATT5", "Strings"))
+        self.viewVar_tree.headerItem().setText(0, _translate("BATT5", "Variables"))
+        self.viewDll_tree.headerItem().setText(0, _translate("BATT5", "DLL\'s"))
         self.radareConsole_box.setTitle(_translate("BATT5", "r2 Command Prompt"))
         self.radareConsoleIn_lineEdit.setPlaceholderText(_translate("BATT5", "BATT5$"))
         self.comment_box.setTitle(_translate("BATT5", "Comment View"))
@@ -713,7 +742,6 @@ class Ui_BATT5(object):
         self.poiType_dropdown.setItemText(1, _translate("BATT5", "String"))
         self.poiType_dropdown.setItemText(2, _translate("BATT5", "Variable"))
         self.poiType_dropdown.setItemText(3, _translate("BATT5", "DLL"))
-        self.poiType_dropdown.setItemText(4, _translate("BATT5", "Struct"))
         self.check_allpoi.setText(_translate("BATT5", "Check/Uncheck ALL"))
         self.poiSearch_lineEdit.setPlaceholderText(_translate("BATT5", "Search.."))
         self.viewCurrent_box.setTitle(_translate("BATT5", "Switch View"))
@@ -731,13 +759,12 @@ class Ui_BATT5(object):
         self.commentSave_button_2.setText(_translate("BATT5", "Save"))
         self.commentClear_button_2.setText(_translate("BATT5", "Clear"))
         self.poi_box_2.setTitle(_translate("BATT5", "Points of Interest"))
-        self.poiType_dropdown_2.setItemText(0, _translate("BATT5", "Extract All"))
-        self.poiType_dropdown_2.setItemText(1, _translate("BATT5", "Function"))
-        self.poiType_dropdown_2.setItemText(2, _translate("BATT5", "String"))
-        self.poiType_dropdown_2.setItemText(3, _translate("BATT5", "Variable"))
-        self.poiType_dropdown_2.setItemText(4, _translate("BATT5", "DLL"))
-        self.poiType_dropdown_2.setItemText(5, _translate("BATT5", "Packet Protocol"))
-        self.poiType_dropdown_2.setItemText(6, _translate("BATT5", "Struct"))
+        self.poiType_dropdown_2.setItemText(0, _translate("BATT5", "Function"))
+        self.poiType_dropdown_2.setItemText(1, _translate("BATT5", "String"))
+        self.poiType_dropdown_2.setItemText(2, _translate("BATT5", "Variable"))
+        self.poiType_dropdown_2.setItemText(3, _translate("BATT5", "DLL"))
+        self.poiType_dropdown_2.setItemText(4, _translate("BATT5", "Packet Protocol"))
+        self.poiType_dropdown_2.setItemText(5, _translate("BATT5", "Struct"))
         self.poiType_label_2.setText(_translate("BATT5", "Type"))
         self.poiSearch_lineEdit_2.setText(_translate("BATT5", "Search.."))
         self.switchToCurrent_box.setTitle(_translate("BATT5", "Switch View"))
@@ -767,7 +794,6 @@ class Ui_BATT5(object):
         self.addPoiType_dropdown.setItemText(1, _translate("BATT5", "String"))
         self.addPoiType_dropdown.setItemText(2, _translate("BATT5", "Variable"))
         self.addPoiType_dropdown.setItemText(3, _translate("BATT5", "DLL"))
-        self.addPoiType_dropdown.setItemText(4, _translate("BATT5", "Struct"))
         self.poiManagementSeach_lineEdit.setPlaceholderText(_translate("BATT5", "Search.."))
         self.dpoim_box.setTitle(_translate("BATT5", "Detailed Points of Interest Management"))
         self.dpoimPredefined_button.setText(_translate("BATT5", "Browse"))
@@ -792,12 +818,3 @@ class Ui_BATT5(object):
         self.actionOpen_Project.setText(_translate("BATT5", "Open Project"))
         self.actionExport_Project.setText(_translate("BATT5", "Export Project"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    BATT5 = QtWidgets.QMainWindow()
-    ui = Ui_BATT5()
-    ui.setupUi(BATT5)
-    BATT5.show()
-    sys.exit(app.exec_())

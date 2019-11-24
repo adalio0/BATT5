@@ -106,3 +106,11 @@ class NewProject(object):
         self.properties_treeWidget.topLevelItem(12).setText(0, _translate("Form", "Stripped"))
         self.properties_treeWidget.setSortingEnabled(__sortingEnabled)
 
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = NewProject()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())

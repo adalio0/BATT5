@@ -31,6 +31,9 @@
 			<name>msvcrt.dll_exit</name>
 		</dll>
 
+		<struct>
+				<name>struct</name>
+		</struct>
 	</pointOfInterest>
 
 	<output>
