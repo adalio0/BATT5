@@ -15,6 +15,7 @@ class DocumentationWindow(QtWidgets.QDialog):
         super(DocumentationWindow, self).__init__()
         self.window = Documentation_Window()
         self.window.setupUi(self)
+        self.setWindowTitle("Documentation")
 
         self.populateDoc()
         self.window.saveButton.setVisible(False)
