@@ -9,72 +9,74 @@ import json
 
 
 
-def dynamicAnalysis(filePath, funcList):
-    # infile = r2pipe.open(filePath, ['-d', '-e', 'dbg.profile=profile.rr2']) #open file, will do only once
-    infile = r2pipe.open(filePath)
-    # infile.cmd('e dbg.profile=robot.rr2')  # this line should configure things properly should input be required
-    infile.cmd("aaa") # entire analysis is needed for full functionality
-    progress = [] # empty list to attach things too
-    for i in range(len(funcList)): # iterate over list of functions
-        curntFunc = funcList[i]
-        progress.append("Function Name:")
-        progress.append(curntFunc)
-        infile.cmd("ood")   # open in debug mode
-        breakpointString = "db " + str(curntFunc)
-        infile.cmd(breakpointString) # first set the breakpoint
-        infile.cmd("dc")    # continue to run until breakpoint is hit, there may be some input required which still not sure where to pass it
-        progress.append("Hit breakpoint @ " + curntFunc)
-        argsnvar = infile.cmd("afvd")   # get args and local vars at this point
-        progress.append("----------Initial Values of Args and Variables----------")
-        progress.append(argsnvar)   # put args on list
-        infile.cmd("dcr")   # continue execution until return call
-        returnvals = infile.cmd("afvd")#values at the end
-        progress.append("----------Final Values of Args and Variables----------")
-        progress.append(returnvals)     # end values
-        stack = infile.cmd("x@rsp")     # peek in the stack, some other values may be elswhere will have to modify
-        progress.append("----------STACK----------")
-        progress.append(stack)  # add stack to list
-        rax = infile.cmd("dr rax")#return value
-        progress.append("----------RETURN VALUE----------")
-        progress.append(rax)    # put in list
-        progress.append("--------------------------------")
-        # at this point process is done so the breakpoint needs to be removed for next thing
-        infile.cmd("db-*")  # remove all breakpoints
-    return progress
+# def dynamicAnalysis(filePath, funcList):
+#     # infile = r2pipe.open(filePath, ['-d', '-e', 'dbg.profile=profile.rr2']) #open file, will do only once
+#     infile = r2pipe.open(filePath)
+#     # infile.cmd('e dbg.profile=robot.rr2')  # this line should configure things properly should input be required
+#     infile.cmd("aaa") # entire analysis is needed for full functionality
+#     progress = [] # empty list to attach things too
+#     for i in range(len(funcList)): # iterate over list of functions
+#         curntFunc = funcList[i]
+#         progress.append("Function Name:")
+#         progress.append(curntFunc)
+#         infile.cmd("ood")   # open in debug mode
+#         breakpointString = "db " + str(curntFunc)
+#         infile.cmd(breakpointString) # first set the breakpoint
+#         infile.cmd("dc")    # continue to run until breakpoint is hit, there may be some input required which still not sure where to pass it
+#         progress.append("Hit breakpoint @ " + curntFunc)
+#         argsnvar = infile.cmd("afvd")   # get args and local vars at this point
+#         progress.append("----------Initial Values of Args and Variables----------")
+#         progress.append(argsnvar)   # put args on list
+#         infile.cmd("dcr")   # continue execution until return call
+#         returnvals = infile.cmd("afvd")#values at the end
+#         progress.append("----------Final Values of Args and Variables----------")
+#         progress.append(returnvals)     # end values
+#         stack = infile.cmd("x@rsp")     # peek in the stack, some other values may be elswhere will have to modify
+#         progress.append("----------STACK----------")
+#         progress.append(stack)  # add stack to list
+#         rax = infile.cmd("dr rax")#return value
+#         progress.append("----------RETURN VALUE----------")
+#         progress.append(rax)    # put in list
+#         progress.append("--------------------------------")
+#         # at this point process is done so the breakpoint needs to be removed for next thing
+#         infile.cmd("db-*")  # remove all breakpoints
+#     return progress
 
-def new_dynamic(filePath, funcList):
+
+
+
+def dynamicAnalysis(filePath, funcList):
     keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue']
-    #will be used to add each function dictionary
-    dictList =[]
+    # will be used to add each function dictionary
+    dictList = []
     argCounter = 0
     # create a dictionary with keys that correspond to fields needed for the functions
     funD = dict.fromkeys(keys, [])
-    infile = r2pipe.open(filePath) #open file
-    infile.cmd("aaa") #initial analysis
+    infile = r2pipe.open(filePath)  # open file
+    infile.cmd("aaa")  # initial analysis
 
-    #start analysis process
+    # start analysis process
     for i in range(len(funcList)):
-        #pull the information for each function
-        funD['fName']=(funcList[i])
+        funD['fName'] = (funcList[i])
         funInfo = infile.cmd("afvj @ " + funcList[i])
         formatInfo = json.loads(funInfo)
 
         for key in formatInfo.keys():
             tempList = formatInfo[key]
-
+            new_list = []
+            new_list2 = []
             for j in range(len(tempList)):
-               if tempList[j]['kind'] == 'reg':
-                   argCounter += 1
-                   funD['argNum'] = argCounter
-                   funD['argName']= (tempList[j]['name'])
-                   funD['argType']= (tempList[j]['type'])
+                if tempList[j]['kind'] == 'reg':
+                    argCounter += 1
+                    funD['argNum'] = argCounter
+                    new_list.append(tempList[j]['name'])
+                    new_list2.append(tempList[j]['type'])
+                funD['argName'] = new_list
+                funD['argType'] = new_list2
 
         argCounter = 0
 
         dictList.append(funD)
-        funD = dict.fromkeys(keys,[])
+        funD = dict.fromkeys(keys, [])
 
     return dictList
-
-
-
