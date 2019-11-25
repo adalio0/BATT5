@@ -85,6 +85,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
+        # Temp to see if this is a better view
+        # self.window.poi_list.currentItemChanged.connect(self.displayPoi)
+
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
@@ -516,47 +519,57 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays the strings extracted from Static Analysis in Analysis box and POI box
     def displayString(self, content):
+        stringTree = []
         for i in range(len(content)):
+            parent = ''
+            children = []
             if 'name' in content[i]:
-                print(content[i]['name'])
+                parent = QTreeWidgetItem([content[i]['name']])
                 # getComment(content[i]['string'], "String", self.window.comment_text)
-            if 'type' in content[i]:
-                print(content[i]['type'])
-            if 'size' in content[i]:
-                print(content[i]['size'])
-            if 'length' in content[i]:
-                print(content[i]['length'])
-            if 'section' in content[i]:
-                print(content[i]['section'])
+                if 'type' in content[i]:
+                    children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
+                if 'size' in content[i]:
+                    children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
+                if 'length' in content[i]:
+                    children.append(QTreeWidgetItem(parent, ["Length: " + str(content[i]['length'])]))
+                if 'section' in content[i]:
+                    children.append(QTreeWidgetItem(parent, ["Section: " + content[i]['section']]))
 
             item = QListWidgetItem(content[i]['name'])
             # set icon
             if getComment(content[i]['name'], "String", self.window.comment_text):
                 addIcon(item)
             self.window.poi_list.addItem(item)
+            stringTree.append(parent)
+        self.window.viewString_tree.addTopLevelItems(stringTree)
 
     # Displays the filtered strings based on the selected plugin in Analysis box and POI box
     def displayFilterStrings(self, filterContent, content):
+        stringTree = []
         for k in range(len(filterContent['string'])):
             for i in range(len(content)):
                 if content[i]['name'] in filterContent['string'][k]['name']:
+                    parent = ''
+                    children = []
                     if 'name' in content[i]:
-                        print(content[i]['name'])
+                        parent = QTreeWidgetItem([content[i]['name']])
                         # getComment(content[i]['string'], "String", self.window.comment_text)
-                    if 'type' in content[i]:
-                        print(content[i]['type'])
-                    if 'size' in content[i]:
-                        print(content[i]['size'])
-                    if 'length' in content[i]:
-                        print(content[i]['length'])
-                    if 'section' in content[i]:
-                        print(content[i]['section'])
+                        if 'type' in content[i]:
+                            children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
+                        if 'size' in content[i]:
+                            children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
+                        if 'length' in content[i]:
+                            children.append(QTreeWidgetItem(parent, ["Length: " + str(content[i]['length'])]))
+                        if 'section' in content[i]:
+                            children.append(QTreeWidgetItem(parent, ["Section: " + content[i]['section']]))
 
                     item = QListWidgetItem(content[i]['name'])
                     # set icon
                     if getComment(content[i]['name'], "String", self.window.comment_text):
                         addIcon(item)
                     self.window.poi_list.addItem(item)
+                    stringTree.append(parent)
+        self.window.viewString_tree.addTopLevelItems(stringTree)
 
     # Displays the variables extracted from Static Analysis in Analysis box and POI box
     def displayVariable(self, content):
