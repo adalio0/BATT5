@@ -1,9 +1,11 @@
+from PyQt5.QtWidgets import QMessageBox
 from xmljson import parker as pk
 import xml.etree.ElementTree as ET
 import json
 import xmlschema
 from pathlib import Path
 from src.Functionality.database import *
+
 
 # ---------------- XML VALIDATION ----------------
 def validatePoiXML(filepath):
@@ -12,7 +14,7 @@ def validatePoiXML(filepath):
     return result
 
 # ---------------- XML CONVERSION ----------------
-def convertPoiXML(filepath):
+def convertPoiXML(ui, filepath):
     if validatePoiXML(filepath):
         poiTree = ET.parse(filepath)
         poiRoot = poiTree.getroot()
@@ -20,70 +22,53 @@ def convertPoiXML(filepath):
         return poiDict
     else:
         print('invalid POI XML (does not conform to POI schema)')
-        # TODO display error window
-        return
+        QMessageBox.question(ui, "Error: Invalid File",
+                             "Provided file must be an XML that conforms to poiConfig,xsd (schema)",
+                             QMessageBox.Ok)
+        return 0
 
 # ---------------- MANUAL POI CONVERSION ----------------
-def convertFuncManual(name):
-    funcDict = {
+def convertPoiManual(name):
+    PoiDict = {
         'name': name
     }
-    return funcDict
-
-def convertStringManual(name):
-    strDict = {
-        'name': name
-    }
-    return strDict
-
-def convertDllManual(name):
-    dllDict = {
-        'name': name
-    }
-    return dllDict
-
-def convertVarManual(name):
-    varDict = {
-        'name': name
-    }
-    return varDict
-
-def convertPacketProtocolManual(name):
-    ppDict = {
-        'name': name
-    }
-    return ppDict
-
-def convertStructManual(name):
-    structDict = {
-        'name': name
-    }
-    return structDict
+    return PoiDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
-def addFuncToPlugin(pluginDict, funcDict):
-    pluginDict['pointOfInterest']['function'].append(funcDict)
-    print(pluginDict)
+def appendPoiPlugin(pluginDict, poiDict, poiType):
+    poiType = poiType.lower()
+    pluginDict['pointOfInterest'][poiType].append(poiDict)
     return pluginDict
 
-def addStringToPlugin(pluginDict, strDict):
-    pluginDict['pointOfInterest']['string'].append(strDict)
-    print(pluginDict)
-    return pluginDict
+def appendPoiPluginXml(pluginDict, poiDict):
 
-def addVarToPlugin(pluginDict, varDict):
-    pluginDict['pointOfInterest']['variable'].append(varDict)
-    print(pluginDict)
-    return pluginDict
+    # for poiType in pluginDict['pointOfInterest']:  # for every poi type in plugin
+    #     # print(poiType)
+    #     for poi in poiDict[poiType]:  # for every poi of this type in poiDict
+    #         # print('   ', poi)
+    #         if poi not in pluginDict['pointOfInterest'][poiType]:  # if not already contained
+    #             pluginDict['pointOfInterest'][poiType].append(poi)  # append poi
 
-def addDllToPlugin(pluginDict, dllDict):
-    pluginDict['pointOfInterest']['dll'].append(dllDict)
-    print(pluginDict)
-    return pluginDict
+    for poi in poiDict['function']:
+        if poi not in pluginDict['pointOfInterest']['function']:
+            pluginDict['pointOfInterest']['function'].append(poi)
 
-def addPacketProtocolToPlugin(pluginDict, ppDict):
-    pluginDict['pointOfInterest']['packetProtocol'].append(ppDict)
-    print(pluginDict)
+    for poi in poiDict['string']:
+        if poi not in pluginDict['pointOfInterest']['string']:
+            pluginDict['pointOfInterest']['string'].append(poi)
+
+    for poi in poiDict['variable']:
+        if poi not in pluginDict['pointOfInterest']['variable']:
+            pluginDict['pointOfInterest']['variable'].append(poi)
+
+    for poi in poiDict['dll']:
+        if poi not in pluginDict['pointOfInterest']['dll']:
+            pluginDict['pointOfInterest']['dll'].append(poi)
+
+    for poi in poiDict['struct']:
+        if poi not in pluginDict['pointOfInterest']['struct']:
+            pluginDict['pointOfInterest']['struct'].append(poi)
+
     return pluginDict
 
 # ---------------- ADDING POIS TO PLUGINS ----------------
@@ -108,40 +93,54 @@ def removePoiFromPlugin(pluginDict, poiName):
             pluginDict['pointOfInterest']['dll'].pop(i)
             return pluginDict
 
+    for i in range(len(pluginDict['pointOfInterest']['struct'])):
+        if pluginDict['pointOfInterest']['struct'][i]['name'] == poiName:
+            pluginDict['pointOfInterest']['struct'].pop(i)
+            return pluginDict
+
+
 # ---------------- FORMAT XML ----------------
+def formatPoi(poiDict):
+    newPoiDict = {
+        'function': [],
+        'string': [],
+        'variable': [],
+        'dll': [],
+        'struct': [],
+        'packetProtocol': []
+    }
+    poiTypes = ['function', 'string', 'variable', 'dll', 'packetProtocol', 'struct']
+    for t in poiTypes:
+        if t in poiDict:
+            if len(poiDict[t]) == 1:
+                newPoiDict[t] = [poiDict[t]]
+            elif len(poiDict[t]) > 1:
+                newPoiDict[t] = poiDict[t]
+
+    return newPoiDict
 
 # ---------------- GUI ----------------
+def addPoiToPlugin(ui, poiName, poiType, pluginName):
+    if poiName == '':
+        QMessageBox.question(ui, "Error: Empty Field",
+                             "The required field cannot be empty",
+                             QMessageBox.Ok)
+        return 0
+    poiDict = convertPoiManual(poiName)
+    updatedPluginDict = appendPoiPlugin(getCurrentPluginInfo(pluginName), poiDict, poiType)
+    updatePlugin(updatedPluginDict, pluginName)
 
-def processPOIDataFun(dpoimPlugin_dropdown, funcName_lineEdit):
-    funDict = convertFuncManual(funcName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addFuncToPlugin(finalPD, funDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-    
-
-def processPOIDataStr(dpoimPlugin_dropdown, strName_lineEdit):
-    strDict = convertStringManual(strName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addStringToPlugin(finalPD, strDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataVar(dpoimPlugin_dropdown, varName_lineEdit):
-    varDict = convertVarManual(varName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addVarToPlugin(finalPD, varDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataDLL(dpoimPlugin_dropdown, dllName_lineEdit):
-    dllDict = convertDllManual(dllName_lineEdit.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addDllToPlugin(finalPD, dllDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
-def processPOIDataPP(dpoimPlugin_dropdown,protoName_lineEditself):
-    ppDict = convertPacketProtocolManual(protoName_lineEditself.text())
-    finalPD = getCurrentPluginInfo(dpoimPlugin_dropdown.currentText())
-    pluginDictNew = addPacketProtocolToPlugin(finalPD, ppDict)
-    updatePlugin(pluginDictNew, dpoimPlugin_dropdown.currentText())
-
+def addPoiToPluginXml(ui, filepath, pluginName):
+    if filepath == '':
+        QMessageBox.question(ui, "Error: Empty Field",
+                             "The required field cannot be empty",
+                             QMessageBox.Ok)
+        return 0
+    poiDict = convertPoiXML(ui, filepath)
+    if poiDict == 0:
+        return 0
+    formatedPoiDict = formatPoi(poiDict)
+    pluginDict = getCurrentPluginInfo(pluginName)
+    updatedPluginDict = appendPoiPluginXml(pluginDict, formatedPoiDict)
+    updatePlugin(updatedPluginDict, pluginName)
 # ---------------- TESTING ----------------
-
