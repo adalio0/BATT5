@@ -9,6 +9,7 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
+from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -22,6 +23,7 @@ from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import dynamicAnalysis
+from src.Functionality.displayPointsOfInterests import *
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -39,9 +41,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Populate the management plugin boxes with the current plugins
         self.populatePluginFields()
-
-        # Populate the management poi list with poi from plugin
-        # self.populatePoiFromPlugin()
 
         # Initialize the project properties, terminal also initialized here
         self.setProject()
@@ -108,7 +107,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         # self.window.poi_list.currentItemChanged.connect(self.callHighlightTree)
-        # self.window.poi_list.currentItemChanged.connect(self.displayPoi)
+        self.window.poi_list.currentItemChanged.connect(self.displayPoi)
 
         # self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
         # self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
@@ -271,6 +270,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
+        # selected = ''
+        # if self.window.poi_list.currentItem():
+        #     selected = self.window.poi_list.currentItem().text()
         self.window.viewFunc_tree.clear()
         self.window.viewString_tree.clear()
         self.window.viewVar_tree.clear()
@@ -286,242 +288,29 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.viewPoi_stack.setCurrentIndex(0)
             self.enableCheck()
             if self.window.pluginSelection_dropdown.currentText() == 'None':
-                self.displayFunctions(content)
+                displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
             else:
-                self.displayFilteredFunctions(filterContent, content)
+                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, self.window.comment_text, filterContent, content)
         else:
             self.disableCheck()
             if poi == 'String':
                 self.window.viewPoi_stack.setCurrentIndex(1)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    self.displayString(content)
+                    displayString(self.window.viewString_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    self.displayFilterStrings(filterContent, content)
+                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
             elif poi == 'Variable':
                 self.window.viewPoi_stack.setCurrentIndex(2)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    self.displayVariable(content)
+                    displayVariable(self.window.viewVar_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    self.displayFilteredVariable(filterContent, content)
+                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
             elif poi == 'DLL':
                 self.window.viewPoi_stack.setCurrentIndex(3)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    self.displayDll(content)
+                    displayDll(self.window.viewDll_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    self.displayFilteredDll(filterContent, content)
-
-    # Displays the functions extracted from Static Analysis in Analysis box and POI box
-    def displayFunctions(self, content):
-        funcTree = []
-        for i in range(len(content)):
-            parent = ''
-            children = []
-            if 'name' in content[i]:
-                parent = QTreeWidgetItem([content[i]['name']])
-                # getComment(content[i]['name'], "Function", self.window.comment_text)
-            if 'signature' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
-            if 'parameters' in content[i]:
-                params = []
-                for j in range(len(content[i]['parameters'])):
-                    params.append(QTreeWidgetItem(children[len(children) - 1],
-                                                  ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j]['name']]))
-                children.append(params)
-            if 'returnType' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
-            if 'returnValue' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Return Value: " + content[i]['returnValue'] + "\n"]))
-
-            item = QListWidgetItem(content[i]['name'])
-            # set icon
-            if getComment(content[i]['name'], "Function", self.window.comment_text):
-                addIcon(item)
-            item.setCheckState(QtCore.Qt.Checked)
-            self.window.poi_list.addItem(item)
-            funcTree.append(parent)
-        self.window.viewFunc_tree.addTopLevelItems(funcTree)
-        self.window.viewFunc_tree.expandAll()
-
-    # Displays the filtered functions based on the selected plugin in Analysis box and POI box
-    def displayFilteredFunctions(self, filterContent, content):
-        funcTree = []
-        for k in range(len(filterContent['function'])):
-            for i in range(len(content)):
-                if content[i]['name'] in filterContent['function'][k]['name']:
-                    parent = ''
-                    children = []
-                    if 'name' in content[i]:
-                        parent = QTreeWidgetItem([content[i]['name']])
-                        # getComment(content[i]['name'], "Function", self.window.comment_text)
-                    if 'signature' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
-                    if 'parameters' in content[i]:
-                        params = []
-                        for j in range(len(content[i]['parameters'])):
-                            params.append(QTreeWidgetItem(children[len(children) - 1],
-                                                          ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j][
-                                                              'name']]))
-                        children.append(params)
-                    if 'returnType' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
-                    if 'returnValue' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Return Value: " + content[i]['returnValue'] + "\n"]))
-
-                    item = QListWidgetItem(content[i]['name'])
-                    # set icon
-                    if getComment(content[i]['name'], "Function", self.window.comment_text):
-                        addIcon(item)
-                    item.setCheckState(QtCore.Qt.Checked)
-                    self.window.poi_list.addItem(item)
-                    funcTree.append(parent)
-        self.window.viewFunc_tree.addTopLevelItems(funcTree)
-        self.window.viewFunc_tree.expandAll()
-
-    # Displays the strings extracted from Static Analysis in Analysis box and POI box
-    def displayString(self, content):
-        stringTree = []
-        for i in range(len(content)):
-            parent = ''
-            children = []
-            if 'name' in content[i]:
-                parent = QTreeWidgetItem([content[i]['name']])
-                # getComment(content[i]['string'], "String", self.window.comment_text)
-                if 'type' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-                if 'size' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
-                if 'length' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Length: " + str(content[i]['length'])]))
-                if 'section' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Section: " + content[i]['section'] + "\n"]))
-
-            item = QListWidgetItem(content[i]['name'])
-            # set icon
-            if getComment(content[i]['name'], "String", self.window.comment_text):
-                addIcon(item)
-            self.window.poi_list.addItem(item)
-            stringTree.append(parent)
-        self.window.viewString_tree.addTopLevelItems(stringTree)
-        self.window.viewString_tree.expandAll()
-
-    # Displays the filtered strings based on the selected plugin in Analysis box and POI box
-    def displayFilterStrings(self, filterContent, content):
-        stringTree = []
-        for k in range(len(filterContent['string'])):
-            for i in range(len(content)):
-                if content[i]['name'] in filterContent['string'][k]['name']:
-                    parent = ''
-                    children = []
-                    if 'name' in content[i]:
-                        parent = QTreeWidgetItem([content[i]['name']])
-                        # getComment(content[i]['string'], "String", self.window.comment_text)
-                        if 'type' in content[i]:
-                            children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-                        if 'size' in content[i]:
-                            children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
-                        if 'length' in content[i]:
-                            children.append(QTreeWidgetItem(parent, ["Length: " + str(content[i]['length'])]))
-                        if 'section' in content[i]:
-                            children.append(QTreeWidgetItem(parent, ["Section: " + content[i]['section'] + "\n"]))
-
-                    item = QListWidgetItem(content[i]['name'])
-                    # set icon
-                    if getComment(content[i]['name'], "String", self.window.comment_text):
-                        addIcon(item)
-                    self.window.poi_list.addItem(item)
-                    stringTree.append(parent)
-        self.window.viewString_tree.addTopLevelItems(stringTree)
-        self.window.viewString_tree.expandAll()
-
-    # Displays the variables extracted from Static Analysis in Analysis box and POI box
-    def displayVariable(self, content):
-        varTree = []
-        for i in range(len(content)):
-            parent = ''
-            children = []
-            if 'name' in content[i]:
-                parent = QTreeWidgetItem([content[i]['name']])
-                # getComment(content[i]['name'], "Variable", self.window.comment_text)
-            if 'type' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-            if 'size' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
-            if 'value' in content[i]:
-                children.append(QTreeWidgetItem(parent, ["Value: " + content[i]['value'] + "\n"]))
-
-            item = QListWidgetItem(content[i]['name'])
-            # set icon
-            if getComment(content[i]['name'], "Variable", self.window.comment_text):
-                addIcon(item)
-            varTree.append(parent)
-            self.window.poi_list.addItem(item)
-        self.window.viewVar_tree.addTopLevelItems(varTree)
-        self.window.viewVar_tree.expandAll()
-
-    # Displays the filtered variables based on the selected plugin in Analysis box and POI box
-    def displayFilteredVariable(self, filterContent, content):
-        varTree = []
-        for k in range(len(filterContent['variable'])):
-            for i in range(len(content)):
-                if content[i]['name'] in filterContent['variable'][k]['name']:
-                    parent = ''
-                    children = []
-                    if 'name' in content[i]:
-                        parent = QTreeWidgetItem([content[i]['name']])
-                        # getComment(content[i]['name'], "Variable", self.window.comment_text)
-                    if 'type' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-                    if 'size' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
-                    if 'value' in content[i]:
-                        children.append(QTreeWidgetItem(parent, ["Value: " + content[i]['value'] + "\n"]))
-
-                    item = QListWidgetItem(content[i]['name'])
-                    # set icon
-                    if getComment(content[i]['name'], "Variable", self.window.comment_text):
-                        addIcon(item)
-                    varTree.append(parent)
-                    self.window.poi_list.addItem(item)
-        self.window.viewVar_tree.addTopLevelItems(varTree)
-        self.window.viewVar_tree.expandAll()
-
-    # Displays the dlls extracted from Static Analysis in Analysis box and POI box
-    def displayDll(self, content):
-        dllTree = []
-        for i in range(len(content)):
-            parent = ''
-            if 'name' in content[i]:
-                parent = QTreeWidgetItem([content[i]['name']])
-                # getComment(content[i]['name'], "DLL", self.window.comment_text)
-
-            item = QListWidgetItem(content[i]['name'])
-            # set icon
-            if getComment(content[i]['name'], "DLL", self.window.comment_text):
-                addIcon(item)
-            self.window.poi_list.addItem(item)
-            dllTree.append(parent)
-        self.window.viewDll_tree.addTopLevelItems(dllTree)
-        self.window.viewDll_tree.expandAll()
-
-    # Displays the filtered dlls based on the selected plugin in Analysis box and POI box
-    def displayFilteredDll(self, filterContent, content):
-        dllTree = []
-        for k in range(len(filterContent['dll'])):
-            for i in range(len(content)):
-                if content[i]['name'] in filterContent['dll'][k]['name']:
-                    parent = ''
-                    if 'name' in content[i]:
-                        parent = QTreeWidgetItem([content[i]['name']])
-                        # getComment(content[i]['name'], "DLL", self.window.comment_text)
-
-                    item = QListWidgetItem(content[i]['name'])
-                    # set icon
-                    if getComment(content[i]['name'], "DLL", self.window.comment_text):
-                        addIcon(item)
-                    self.window.poi_list.addItem(item)
-                    dllTree.append(parent)
-        self.window.viewDll_tree.addTopLevelItems(dllTree)
-        self.window.viewDll_tree.expandAll()
+                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
 
@@ -688,11 +477,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             item = self.window.poi_list.item(i)
             if not item.isHidden():
                 if self.window.check_allpoi.isChecked():
-                    for i in range(self.window.poi_list.count()):
-                        item.setCheckState(QtCore.Qt.Checked)
+                    item.setCheckState(QtCore.Qt.Checked)
                 elif self.window.check_allpoi.checkState() == 0:
-                    for i in range(self.window.poi_list.count()):
-                        item.setCheckState(QtCore.Qt.Unchecked)
+                    item.setCheckState(QtCore.Qt.Unchecked)
 
     # From current to history
     def switchToHistory(self):
@@ -970,6 +757,11 @@ def main():
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+    # appctxt = ApplicationContext()
+    # app = ApplicationWindow()
+    # app.show()
+    # exit_code = appctxt.app.exec_()
+    # sys.exit(exit_code)
 
 if __name__ == "__main__":
     main()
