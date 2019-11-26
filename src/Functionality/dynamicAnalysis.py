@@ -46,10 +46,11 @@ import json
 
 
 def dynamicAnalysis(filePath, funcList):
-    keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue']
+    keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue', 'locName', 'locType', 'locNum']
     # will be used to add each function dictionary
     dictList = []
     argCounter = 0
+    locCounter = 0
     # create a dictionary with keys that correspond to fields needed for the functions
     funD = dict.fromkeys(keys, [])
     infile = r2pipe.open(filePath)  # open file
@@ -63,16 +64,26 @@ def dynamicAnalysis(filePath, funcList):
 
         for key in formatInfo.keys():
             tempList = formatInfo[key]
-            new_list = []
-            new_list2 = []
+            #print(tempList)
+            argNames = []
+            argTypes = []
+            localVarNames = []
+            localVarTypes = []
             for j in range(len(tempList)):
                 if tempList[j]['kind'] == 'reg':
                     argCounter += 1
                     funD['argNum'] = argCounter
-                    new_list.append(tempList[j]['name'])
-                    new_list2.append(tempList[j]['type'])
-                funD['argName'] = new_list
-                funD['argType'] = new_list2
+                    argNames.append(tempList[j]['name'])
+                    argTypes.append(tempList[j]['type'])
+                    funD['argName'] = argNames
+                    funD['argType'] = argTypes
+                if tempList[j]['kind'] == 'var':
+                    locCounter += 1
+                    funD['locNum'] = locCounter
+                    localVarNames.append(tempList[j]['name'])
+                    localVarTypes.append(tempList[j]['type'])
+                    funD['locName'] = localVarNames
+                    funD['locType'] = localVarTypes
 
         argCounter = 0
 
