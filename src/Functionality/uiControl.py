@@ -752,7 +752,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
@@ -763,7 +762,6 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
-
 
 if __name__ == "__main__":
     main()
