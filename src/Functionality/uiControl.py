@@ -224,9 +224,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.clear()
         self.window.pluginManagement_list.addItems(plugins)
 
-        # add to plugin list
-        # self.checkUncheckAllPlugins()
-
         # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
         self.window.pluginSelection_dropdown.addItem('None')  # TEMP COMMAND?
@@ -968,13 +965,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     main()
