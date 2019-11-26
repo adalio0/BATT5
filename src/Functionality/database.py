@@ -1,5 +1,6 @@
 import pymongo
-import base64
+import sys
+import os
 
 # Initializes the connection with our local database
 client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -20,6 +21,9 @@ current_db = db_1['current']
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
+def startDatabase():
+    if sys.platform == 'linux':
+        os.system('sudo service mongod start')
 
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():

@@ -282,7 +282,7 @@ background-color: rgb(186, 189, 182);</string>
                    <widget class="QWidget" name="viewFunc_page">
                     <layout class="QVBoxLayout" name="verticalLayout_29">
                      <item>
-                      <widget class="QTreeWidget" name="vewFunc_tree">
+                      <widget class="QTreeWidget" name="viewFunc_tree">
                        <column>
                         <property name="text">
                          <string>Functions</string>
