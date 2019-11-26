@@ -29,6 +29,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
+        self.showFullScreen()
+        self.showMaximized()
         self.window.generateScript_button.setDisabled(True)
 
         # ---- Main Window --------------------------------------------------------------------------------------------
@@ -962,7 +964,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Displays all pois associated with the clicked plugin
     def displayPoiFromPlugin(self):
         self.window.poiManagement_list.clear()
-        if self.window.pluginManagement_list.currentItem():
+        if self.window.pluginManagement_list.selectedItems():
             plugin = self.window.pluginManagement_list.currentItem().text()
             poiFromPlugin = getFilterPoi(plugin)
             poiType = self.window.addPoiType_dropdown.currentText()
