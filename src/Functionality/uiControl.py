@@ -107,7 +107,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)
-        #self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
+        # self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
 
         # self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
         # self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)

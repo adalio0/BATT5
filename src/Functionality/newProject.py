@@ -6,8 +6,10 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.newProjectWind import NewProject
+
+from src.Functionality.binaryValidation import get_binary_info
 properties = []
-checkBinary = False
+
 
 class ProjectWindow(QtWidgets.QDialog):
     def __init__(self):
@@ -32,14 +34,6 @@ class ProjectWindow(QtWidgets.QDialog):
         self.window.path_lineEdit.setText(name)
         if name:
             self.setProperties()
-            self.validatex86()
-            if checkBinary is False:
-                self.window.path_lineEdit.clear()
-                self.showx86Err()
-
-
-
-
 
     # ---- Extracts text from fields and inserts them into the project database -----------------
     def createProject(self):
@@ -103,18 +97,19 @@ class ProjectWindow(QtWidgets.QDialog):
 
             'file': self.window.path_lineEdit.text(),
             'os': properties[0],
-            'binary': properties[1],
-            'machine': properties[2],
-            'class': properties[3],
-            'bits': properties[4],
-            'language': properties[5],
-            'canary': properties[6],
-            'crypto': properties[7],
-            'nx': properties[8],
-            'pic': properties[9],
-            'relocs': properties[10],
-            'relro': properties[11],
-            'stripped': properties[12]
+            'arch': properties[1],
+            'binary': properties[2],
+            'machine': properties[3],
+            'class': properties[4],
+            'bits': properties[5],
+            'language': properties[6],
+            'canary': properties[7],
+            'crypto': properties[8],
+            'nx': properties[9],
+            'pic': properties[10],
+            'relocs': properties[11],
+            'relro': properties[12],
+            'stripped': properties[13]
         }
         binary_outcome = binary_db.insert_one(binary)
 
@@ -158,30 +153,30 @@ class ProjectWindow(QtWidgets.QDialog):
                              "All fields must be filled to in order to create a Project",
                              QMessageBox.Ok)
 
-
     def showx86Err(self):
         QMessageBox.question(self, "Error Message: File Selected is not x86",
                              "Binary should be x86 architecture in order to create a project",
                              QMessageBox.Ok)
-    #----Validate Binary x86-------------------------------------------------------
-    def validatex86(self):
-        global checkBinary
-        tree = self.window.properties_treeWidget
-        item0 = tree.itemAt(0,0)
-        item1 = tree.itemBelow(item0)
-        item2 = tree.itemBelow(item1)
 
-        if item2.text(1) == "AMD 64":
-            checkBinary = True
-
+    # ----Validate Binary x86-------------------------------------------------------
+    def validatex86(self, arch):
+        if arch == "x86":
+            return True
 
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
-        infile = r2pipe.open(self.window.path_lineEdit.text())
-        fileProperties = infile.cmdj("ij")
+        fileProperties  = get_binary_info(self.window.path_lineEdit.text())
 
         bin = fileProperties.get('bin', {})
         tree = self.window.properties_treeWidget
+
+        try:
+            if not self.validatex86(bin['arch']):
+                self.window.path_lineEdit.clear()
+                self.showx86Err()
+        except KeyError:
+            self.window.path_lineEdit.clear()
+            self.showx86Err()
 
         # os
         item0 = tree.itemAt(0, 0)
@@ -192,112 +187,121 @@ class ProjectWindow(QtWidgets.QDialog):
             item0.setText(1, "N/A")
             properties.append("N/A")
 
-        # binary type
+        # arch
         item1 = tree.itemBelow(item0)
         try:
-            item1.setText(1, str(bin['bintype']))
-            properties.append(str(bin['bintype']))
+            item1.setText(1, str(bin['arch']))
+            properties.append(str(bin['arch']))
         except KeyError:
             item1.setText(1, "N/A")
             properties.append("N/A")
 
-        # machine
+        # binary type
         item2 = tree.itemBelow(item1)
         try:
-            item2.setText(1, str(bin['machine']))
-            properties.append(str(bin['machine']))
+            item2.setText(1, str(bin['bintype']))
+            properties.append(str(bin['bintype']))
         except KeyError:
             item2.setText(1, "N/A")
             properties.append("N/A")
 
-        # class
+        # machine
         item3 = tree.itemBelow(item2)
         try:
-            item3.setText(1, str(bin['class']))
-            properties.append(str(bin['class']))
+            item3.setText(1, str(bin['machine']))
+            properties.append(str(bin['machine']))
         except KeyError:
             item3.setText(1, "N/A")
             properties.append("N/A")
 
-        # bits
+        # class
         item4 = tree.itemBelow(item3)
         try:
-            item4.setText(1, str(bin['bits']))
-            properties.append(str(bin['bits']))
+            item4.setText(1, str(bin['class']))
+            properties.append(str(bin['class']))
         except KeyError:
             item4.setText(1, "N/A")
             properties.append("N/A")
 
-        # language
+        # bits
         item5 = tree.itemBelow(item4)
         try:
-            item5.setText(1, str(bin['lang']))
-            properties.append(str(bin['lang']))
+            item5.setText(1, str(bin['bits']))
+            properties.append(str(bin['bits']))
         except KeyError:
             item5.setText(1, "N/A")
             properties.append("N/A")
 
-        # canary
+        # language
         item6 = tree.itemBelow(item5)
         try:
-            item6.setText(1, str(bin['canary']))
-            properties.append(str(bin['canary']))
+            item6.setText(1, str(bin['lang']))
+            properties.append(str(bin['lang']))
         except KeyError:
             item6.setText(1, "N/A")
             properties.append("N/A")
 
-        # crypto
+        # canary
         item7 = tree.itemBelow(item6)
         try:
-            item7.setText(1, str(bin['crypto']))
-            properties.append(str(bin['crypto']))
+            item7.setText(1, str(bin['canary']))
+            properties.append(str(bin['canary']))
         except KeyError:
             item7.setText(1, "N/A")
             properties.append("N/A")
 
-        # nx
+        # crypto
         item8 = tree.itemBelow(item7)
         try:
-            item8.setText(1, str(bin['nx']))
-            properties.append(str(bin['nx']))
+            item8.setText(1, str(bin['crypto']))
+            properties.append(str(bin['crypto']))
         except KeyError:
             item8.setText(1, "N/A")
             properties.append("N/A")
 
-        # pic
+        # nx
         item9 = tree.itemBelow(item8)
         try:
-            item9.setText(1, str(bin['pic']))
-            properties.append(str(bin['pic']))
+            item9.setText(1, str(bin['nx']))
+            properties.append(str(bin['nx']))
         except KeyError:
             item9.setText(1, "N/A")
             properties.append("N/A")
 
-        # relocs
+        # pic
         item10 = tree.itemBelow(item9)
         try:
-            item10.setText(1, str(bin['relocs']))
-            properties.append(str(bin['relocs']))
+            item10.setText(1, str(bin['pic']))
+            properties.append(str(bin['pic']))
         except KeyError:
             item10.setText(1, "N/A")
             properties.append("N/A")
 
-        # relro
+        # relocs
         item11 = tree.itemBelow(item10)
         try:
-            item11.setText(1, str(bin['relro']))
-            properties.append(str(bin['relro']))
+            item11.setText(1, str(bin['relocs']))
+            properties.append(str(bin['relocs']))
         except KeyError:
             item11.setText(1, "N/A")
             properties.append("N/A")
 
-        # stripped
+        # relro
         item12 = tree.itemBelow(item11)
         try:
-            item12.setText(1, str(bin['stripped']))
-            properties.append(str(bin['stripped']))
+            item12.setText(1, str(bin['relro']))
+            properties.append(str(bin['relro']))
         except KeyError:
             item12.setText(1, "N/A")
+            properties.append("N/A")
+
+        # stripped
+        item13 = tree.itemBelow(item12)
+        try:
+            item13.setText(1, str(bin['stripped']))
+            properties.append(str(bin['stripped']))
+        except KeyError:
+            item13.setText(1, "N/A")
             properties.append("N/A")
 
 
