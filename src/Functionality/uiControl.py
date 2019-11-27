@@ -22,7 +22,7 @@ from src.Functionality.radareTerminal import Terminal
 from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
 from src.Functionality.search import *
-from src.Functionality.dynamicAnalysis import dynamicAnalysis
+from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
 
 

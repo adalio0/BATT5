@@ -161,8 +161,6 @@ def displayVariable(view_tree, poi_list, content, comment_text):
             parent = QTreeWidgetItem([content[i]['name']])
         if 'type' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-        if 'size' in content[i]:
-            children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
         if 'value' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Value: " + content[i]['value'] + "\n"]))
 
@@ -188,8 +186,6 @@ def displayFilteredVariable(view_tree, poi_list, filterContent, content, comment
                     parent = QTreeWidgetItem([content[i]['name']])
                 if 'type' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
-                if 'size' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Size: " + str(content[i]['size'])]))
                 if 'value' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Value: " + content[i]['value'] + "\n"]))
 

@@ -14,7 +14,6 @@ def functions_analysis():
 def string_analysis():
     strings = infile.cmdj('izzj')
     # decode from base 64
-    print(strings)
     for i in range(len(strings)):
         try:
             strings[i]['string'] = base64.b64decode(strings[i]['string']).decode("utf-8")

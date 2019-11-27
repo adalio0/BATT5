@@ -326,7 +326,6 @@ def saveStatic(poi):
                                         'data': {
                                             'name': poi[2]['sp'][i]['name'],
                                             'type': poi[2]['sp'][i]['type'],
-                                            'size': poi[2]['sp'][i]['ref']['offset'],
                                             'value': ''
                                         }
                                     }
@@ -345,7 +344,6 @@ def saveStatic(poi):
                                         'data': {
                                             'name': poi[2]['bp'][i]['name'],
                                             'type': poi[2]['bp'][i]['type'],
-                                            'size': poi[2]['bp'][i]['ref']['offset'],
                                             'value': ''
                                         }
                                     }
