@@ -6,6 +6,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.newProjectWind import NewProject
+
+from src.Functionality.binaryValidation import get_binary_info
 properties = []
 
 
@@ -163,8 +165,7 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
-        infile = r2pipe.open(self.window.path_lineEdit.text())
-        fileProperties = infile.cmdj("ij")
+        fileProperties  = get_binary_info(self.window.path_lineEdit.text())
 
         bin = fileProperties.get('bin', {})
         tree = self.window.properties_treeWidget
