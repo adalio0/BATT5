@@ -4,6 +4,6 @@ import re
 
 def get_binary_info(filepath):
     infile = r2pipe.open(filepath)
-    fileProperties = infile.cmd("ij")
+    fileProperties = infile.cmdj("ij")
     return fileProperties
 
