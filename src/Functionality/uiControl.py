@@ -106,8 +106,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
-        # self.window.poi_list.currentItemChanged.connect(self.callHighlightTree)
-        self.window.poi_list.currentItemChanged.connect(self.displayPoi)
+        self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)
+        #self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
 
         # self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
         # self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
@@ -248,6 +248,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                       self.window.poiType_dropdown.currentText())
         except AttributeError:
             pass
+
+    # for display comment and highlighting
+    def callHighlightTree(self):
+        getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(), self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving static analysis -------------------------------
 
@@ -454,11 +458,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                    self.window.poiType_dropdown.currentText())
-        addIcon(self.window.poi_list.currentItem())
-        # highlightCell(self.window.POI_tableWidget.currentItem())
-
+        if (self.window.comment_text.toPlainText() == ""):
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
+            self.window.poi_list.currentItem().setIcon(QIcon())
+            # highlightCell(self.window.POI_tableWidget.currentItem())
+        else:
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
+            addIcon(self.window.poi_list.currentItem())
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
