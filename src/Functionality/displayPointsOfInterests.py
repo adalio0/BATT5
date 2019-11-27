@@ -19,19 +19,27 @@ def displayFunctions(view_tree, poi_list, content, comment_text):
             children.append(item)
         if 'parameters' in content[i]:
             params = []
+            paramData = []
             for j in range(len(content[i]['parameters'])):
                 params.append(QTreeWidgetItem(children[len(children) - 1],
                                               ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j][
                                                   'name']]))
+                paramData.append(QTreeWidgetItem(params[len(params) - 1], ["Type: " + content[i]['parameters'][j]['type']]))
+                paramData.append(QTreeWidgetItem(params[len(params) - 1], ["Value: " + content[i]['parameters'][j]['value']]))
             children.append(params)
+            children.append(paramData)
         if 'locals' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Local vars:"]))
 
             local = []
+            localData = []
             for j in range(len(content[i]['locals'])):
                 local.append(QTreeWidgetItem(children[len(children) - 1], [
                     "Local " + str(j + 1) + ": " + content[i]['locals'][j]['name']]))
+                localData.append(QTreeWidgetItem(local[len(local)-1],  ["Type: " + content[i]['locals'][j]['type']]))
+                localData.append(QTreeWidgetItem(local[len(local) - 1], ["Value: " + content[i]['locals'][j]['value']]))
             children.append(local)
+            children.append(localData)
         if 'returnType' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
         if 'returnValue' in content[i]:
@@ -64,19 +72,29 @@ def displayFilteredFunctions(view_tree, poi_list, filterContent, content, commen
                     children.append(item)
                 if 'parameters' in content[i]:
                     params = []
+                    paramData = []
                     for j in range(len(content[i]['parameters'])):
                         params.append(QTreeWidgetItem(children[len(children) - 1],
                                                       ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j][
                                                           'name']]))
+                        paramData.append(
+                            QTreeWidgetItem(params[len(params) - 1], ["Type: " + content[i]['parameters'][j]['type']]))
+                        paramData.append(
+                            QTreeWidgetItem(params[len(params) - 1], ["Value: " + content[i]['parameters'][j]['value']]))
                     children.append(params)
+                    children.append(paramData)
                 if 'locals' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Local vars:"]))
 
                     local = []
+                    localData = []
                     for j in range(len(content[i]['locals'])):
                         local.append(QTreeWidgetItem(children[len(children) - 1], [
                             "Local " + str(j + 1) + ": " + content[i]['locals'][j]['name']]))
+                        localData.append(QTreeWidgetItem(local[len(local) - 1], ["Type: " + content[i]['locals'][j]['type']]))
+                        localData.append(QTreeWidgetItem(local[len(local) - 1], ["Value: " + content[i]['locals'][j]['value']]))
                     children.append(local)
+                    children.append(localData)
                 if 'returnType' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
                 if 'returnValue' in content[i]:
