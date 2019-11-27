@@ -1,5 +1,6 @@
 import pymongo
-import base64
+import sys
+import os
 
 # Initializes the connection with our local database
 client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -20,6 +21,9 @@ current_db = db_1['current']
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
+def startDatabase():
+    if sys.platform == 'linux':
+        os.system('sudo service mongod start')
 
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
@@ -243,6 +247,7 @@ def saveStatic(poi):
                                 # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
                                 for i in range(len(poi[0])):
                                     parameters = []
+                                    local = []
                                     try:
                                         for j in range(len(poi[0][i]['regvars'])):
                                             info = {
@@ -263,6 +268,13 @@ def saveStatic(poi):
                                                     'value': ''
                                                 }
                                                 parameters.append(info)
+                                            else:
+                                                info = {
+                                                    'name': poi[0][i]['spvars'][j]['name'],
+                                                    'type': poi[0][i]['spvars'][j]['type'],
+                                                    'value': ''
+                                                }
+                                                local.append(info)
                                     except KeyError:
                                         continue
 
@@ -274,6 +286,7 @@ def saveStatic(poi):
                                             'name': poi[0][i]['name'],
                                             'signature': poi[0][i]['signature'],
                                             'parameters': parameters,
+                                            'locals': local,
                                             'returnType': '',
                                             'returnValue': ''
                                         }
