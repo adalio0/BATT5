@@ -45,7 +45,7 @@ import json
 
 
 
-def dynamicAnalysis(filePath, funcList):
+def new_dynamic(filePath, funcList):
     keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue', 'locName', 'locType', 'locNum']
     # will be used to add each function dictionary
     dictList = []
@@ -73,21 +73,61 @@ def dynamicAnalysis(filePath, funcList):
                 if tempList[j]['kind'] == 'reg':
                     argCounter += 1
                     funD['argNum'] = argCounter
-                    argNames.append(tempList[j]['name'])
-                    argTypes.append(tempList[j]['type'])
+                    argNames.append(tempList[j]['name'].encode('utf-8'))
+                    argTypes.append(tempList[j]['type'].encode('utf-8'))
                     funD['argName'] = argNames
                     funD['argType'] = argTypes
                 if tempList[j]['kind'] == 'var':
                     locCounter += 1
                     funD['locNum'] = locCounter
-                    localVarNames.append(tempList[j]['name'])
-                    localVarTypes.append(tempList[j]['type'])
+                    localVarNames.append(tempList[j]['name'].encode('utf-8'))
+                    localVarTypes.append(tempList[j]['type'].encode('utf-8'))
                     funD['locName'] = localVarNames
                     funD['locType'] = localVarTypes
 
         argCounter = 0
+        locCounter = 0
 
         dictList.append(funD)
         funD = dict.fromkeys(keys, [])
 
+    return dictList
+
+def getValues(filepath, dictList):
+    infile = r2pipe.open(filepath)  # open file
+    infile.cmd("aaa")
+    for i in range(len(dictList)):  # iterate over list of functions
+        infile.cmd("ood")  # open in debug mode
+        breakpointString = "db " + (dictList[i]['fName'].encode('utf-8'))
+        infile.cmd(breakpointString)  # first set the breakpoint
+        infile.cmd("dc") #continue to run
+        infile.cmd("dcr") #get values at this point
+        returnVal = infile.cmd("dr rax")
+        returnVal = returnVal.rstrip("\n").encode('utf-8')
+        # start running after breakpoint get arguments first
+        templistOfVals = []
+        templistOfLoc =[]
+        #for arguments
+        for j in range(dictList[i]['argNum']):
+            #set return value
+            dictList[i]['retVal'] = returnVal
+            commandToVal = infile.cmd("afvd " + dictList[i]['argName'][j])
+            commandList = commandToVal.split(" ")
+            validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+            lineWithval = infile.cmd(validCommand)
+            formattedVal = json.loads(lineWithval)
+            templistOfVals.append(formattedVal[0]['value'])
+            dictList[i]['argVal'] = templistOfVals
+        #for local variables
+        for k in range(dictList[i]['locNum']):
+            commandToVal = infile.cmd("afvd " + dictList[i]['locName'][j])
+            commandList = commandToVal.split(" ")
+            validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+            lineWithval = infile.cmd(validCommand)
+            formattedVal = json.loads(lineWithval)
+            templistOfLoc.append(formattedVal[0]['value'])
+            dictList[i]['locVal'] = templistOfLoc
+
+
+        infile.cmd("db-*")
     return dictList
