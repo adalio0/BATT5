@@ -13,15 +13,25 @@ def displayFunctions(view_tree, poi_list, content, comment_text):
         children = []
         if 'name' in content[i]:
             parent = QTreeWidgetItem([content[i]['name']])
-            # getComment(content[i]['name'], "Function", comment_text)
         if 'signature' in content[i]:
-            children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
+            item = QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']])
+            item.setToolTip(0, "Signature: " + content[i]['signature'])
+            children.append(item)
         if 'parameters' in content[i]:
             params = []
             for j in range(len(content[i]['parameters'])):
                 params.append(QTreeWidgetItem(children[len(children) - 1],
-                                              ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j]['name']]))
+                                              ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j][
+                                                  'name']]))
             children.append(params)
+        if 'locals' in content[i]:
+            children.append(QTreeWidgetItem(parent, ["Local vars:"]))
+
+            local = []
+            for j in range(len(content[i]['locals'])):
+                local.append(QTreeWidgetItem(children[len(children) - 1], [
+                    "Local " + str(j + 1) + ": " + content[i]['locals'][j]['name']]))
+            children.append(local)
         if 'returnType' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
         if 'returnValue' in content[i]:
@@ -48,9 +58,10 @@ def displayFilteredFunctions(view_tree, poi_list, filterContent, content, commen
                 children = []
                 if 'name' in content[i]:
                     parent = QTreeWidgetItem([content[i]['name']])
-                    # getComment(content[i]['name'], "Function", comment_text)
                 if 'signature' in content[i]:
-                    children.append(QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']]))
+                    item = QTreeWidgetItem(parent, ["Signature: " + content[i]['signature']])
+                    item.setToolTip(0, "Signature: " + content[i]['signature'])
+                    children.append(item)
                 if 'parameters' in content[i]:
                     params = []
                     for j in range(len(content[i]['parameters'])):
@@ -58,6 +69,14 @@ def displayFilteredFunctions(view_tree, poi_list, filterContent, content, commen
                                                       ["Arg " + str(j + 1) + ": " + content[i]['parameters'][j][
                                                           'name']]))
                     children.append(params)
+                if 'locals' in content[i]:
+                    children.append(QTreeWidgetItem(parent, ["Local vars:"]))
+
+                    local = []
+                    for j in range(len(content[i]['locals'])):
+                        local.append(QTreeWidgetItem(children[len(children) - 1], [
+                            "Local " + str(j + 1) + ": " + content[i]['locals'][j]['name']]))
+                    children.append(local)
                 if 'returnType' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
                 if 'returnValue' in content[i]:
@@ -82,7 +101,7 @@ def displayString(view_tree, poi_list, content, comment_text):
         children = []
         if 'name' in content[i]:
             parent = QTreeWidgetItem([content[i]['name']])
-            # getComment(content[i]['string'], "String", comment_text)
+            parent.setToolTip(0, content[i]['name'])
             if 'type' in content[i]:
                 children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
             if 'size' in content[i]:
@@ -112,7 +131,7 @@ def displayFilterStrings(view_tree, poi_list, filterContent, content, comment_te
                 children = []
                 if 'name' in content[i]:
                     parent = QTreeWidgetItem([content[i]['name']])
-                    # getComment(content[i]['string'], "String", comment_text)
+                    parent.setToolTip(0, content[i]['name'])
                     if 'type' in content[i]:
                         children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
                     if 'size' in content[i]:
@@ -140,7 +159,6 @@ def displayVariable(view_tree, poi_list, content, comment_text):
         children = []
         if 'name' in content[i]:
             parent = QTreeWidgetItem([content[i]['name']])
-            # getComment(content[i]['name'], "Variable", comment_text)
         if 'type' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
         if 'size' in content[i]:
@@ -168,7 +186,6 @@ def displayFilteredVariable(view_tree, poi_list, filterContent, content, comment
                 children = []
                 if 'name' in content[i]:
                     parent = QTreeWidgetItem([content[i]['name']])
-                    # getComment(content[i]['name'], "Variable", comment_text)
                 if 'type' in content[i]:
                     children.append(QTreeWidgetItem(parent, ["Type: " + content[i]['type']]))
                 if 'size' in content[i]:
@@ -193,7 +210,6 @@ def displayDll(view_tree, poi_list, content, comment_text):
         parent = ''
         if 'name' in content[i]:
             parent = QTreeWidgetItem([content[i]['name']])
-            # getComment(content[i]['name'], "DLL", comment_text)
 
         item = QListWidgetItem(content[i]['name'])
         # set icon
@@ -214,7 +230,6 @@ def displayFilteredDll(view_tree, poi_list, filterContent, content, comment_text
                 parent = ''
                 if 'name' in content[i]:
                     parent = QTreeWidgetItem([content[i]['name']])
-                    # getComment(content[i]['name'], "DLL", comment_text)
 
                 item = QListWidgetItem(content[i]['name'])
                 # set icon
