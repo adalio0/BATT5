@@ -315,7 +315,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if self.window.pluginSelection_dropdown.currentText() == 'None':
                 displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
             else:
-                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, self.window.comment_text, filterContent, content)
+                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
         else:
             self.disableCheck()
             if poi == 'String':
@@ -479,15 +479,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        if (self.window.comment_text.toPlainText() == ""):
+        if self.window.comment_text.toPlainText():
             saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                         self.window.poiType_dropdown.currentText())
-            self.window.poi_list.currentItem().setIcon(QIcon())
+            addIcon(self.window.poi_list.currentItem())
             # highlightCell(self.window.POI_tableWidget.currentItem())
         else:
             saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                         self.window.poiType_dropdown.currentText())
-            addIcon(self.window.poi_list.currentItem())
+            self.window.poi_list.currentItem().setIcon(QIcon())
+
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
