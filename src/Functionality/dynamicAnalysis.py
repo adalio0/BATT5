@@ -45,55 +45,7 @@ import json
 
 
 
-def new_dynamic(filePath, funcList):
-    keys = ['fName', 'argNum', 'argName', 'argType', 'argVal', 'retName', 'retType', 'retValue', 'locName', 'locType', 'locNum']
-    # will be used to add each function dictionary
-    dictList = []
-    argCounter = 0
-    locCounter = 0
-    # create a dictionary with keys that correspond to fields needed for the functions
-    funD = dict.fromkeys(keys, [])
-    infile = r2pipe.open(filePath)  # open file
-    infile.cmd("aaa")  # initial analysis
-
-    # start analysis process
-    for i in range(len(funcList)):
-        funD['fName'] = (funcList[i])
-        funInfo = infile.cmd("afvj @ " + funcList[i])
-        formatInfo = json.loads(funInfo)
-
-        for key in formatInfo.keys():
-            tempList = formatInfo[key]
-            #print(tempList)
-            argNames = []
-            argTypes = []
-            localVarNames = []
-            localVarTypes = []
-            for j in range(len(tempList)):
-                if tempList[j]['kind'] == 'reg':
-                    argCounter += 1
-                    funD['argNum'] = argCounter
-                    argNames.append(tempList[j]['name'].encode('utf-8'))
-                    argTypes.append(tempList[j]['type'].encode('utf-8'))
-                    funD['argName'] = argNames
-                    funD['argType'] = argTypes
-                if tempList[j]['kind'] == 'var':
-                    locCounter += 1
-                    funD['locNum'] = locCounter
-                    localVarNames.append(tempList[j]['name'].encode('utf-8'))
-                    localVarTypes.append(tempList[j]['type'].encode('utf-8'))
-                    funD['locName'] = localVarNames
-                    funD['locType'] = localVarTypes
-
-        argCounter = 0
-        locCounter = 0
-
-        dictList.append(funD)
-        funD = dict.fromkeys(keys, [])
-
-    return dictList
-
-def getValues(filepath, dictList):
+def dynamicAnalysis(filepath, dictList):
     infile = r2pipe.open(filepath)  # open file
     infile.cmd("aaa")
     for i in range(len(dictList)):  # iterate over list of functions

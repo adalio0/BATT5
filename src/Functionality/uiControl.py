@@ -9,7 +9,7 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
-from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
+#from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
