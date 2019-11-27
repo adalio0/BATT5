@@ -95,18 +95,19 @@ class ProjectWindow(QtWidgets.QDialog):
 
             'file': self.window.path_lineEdit.text(),
             'os': properties[0],
-            'binary': properties[1],
-            'machine': properties[2],
-            'class': properties[3],
-            'bits': properties[4],
-            'language': properties[5],
-            'canary': properties[6],
-            'crypto': properties[7],
-            'nx': properties[8],
-            'pic': properties[9],
-            'relocs': properties[10],
-            'relro': properties[11],
-            'stripped': properties[12]
+            'arch': properties[1],
+            'binary': properties[2],
+            'machine': properties[3],
+            'class': properties[4],
+            'bits': properties[5],
+            'language': properties[6],
+            'canary': properties[7],
+            'crypto': properties[8],
+            'nx': properties[9],
+            'pic': properties[10],
+            'relocs': properties[11],
+            'relro': properties[12],
+            'stripped': properties[13]
         }
         binary_outcome = binary_db.insert_one(binary)
 

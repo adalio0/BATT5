@@ -68,6 +68,7 @@ def setCurrentProject(selected):
                         text += "<b>Binary Properties</b>: <br>"
                         text += "<b>" + "File" + "</b>: " + b.get('file') + "<br>"
                         text += "<b>" + "Os" + "</b>: " + b.get('os') + "<br>"
+                        text += "<b>" + "Arch" + "</b>: " + b.get('arch') + "<br>"
                         text += "<b>" + "Binary" + "</b>: " + b.get('binary') + "<br>"
                         text += "<b>" + "Machine" + "</b>: " + b.get('machine') + "<br>"
                         text += "<b>" + "Class" + "</b>: " + b.get('class') + "<br>"
