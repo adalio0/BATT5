@@ -312,7 +312,6 @@ def saveStatic(poi):
                                         }
                                     }
                                     string_outcome = string_db.insert_one(string)
-
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
