@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'newProjectWind.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class NewProject(object):
     def setupUi(self, Form):
@@ -65,6 +67,7 @@ class NewProject(object):
         item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
         item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
         item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
+        item_0 = QtWidgets.QTreeWidgetItem(self.properties_treeWidget)
         self.gridLayout.addWidget(self.properties_treeWidget, 5, 1, 1, 1)
         self.path_lineEdit = QtWidgets.QLineEdit(Form)
         self.path_lineEdit.setReadOnly(True)
@@ -92,25 +95,17 @@ class NewProject(object):
         __sortingEnabled = self.properties_treeWidget.isSortingEnabled()
         self.properties_treeWidget.setSortingEnabled(False)
         self.properties_treeWidget.topLevelItem(0).setText(0, _translate("Form", "OS"))
-        self.properties_treeWidget.topLevelItem(1).setText(0, _translate("Form", "Binary Type"))
-        self.properties_treeWidget.topLevelItem(2).setText(0, _translate("Form", "Machine"))
-        self.properties_treeWidget.topLevelItem(3).setText(0, _translate("Form", "Class"))
-        self.properties_treeWidget.topLevelItem(4).setText(0, _translate("Form", "Bits"))
-        self.properties_treeWidget.topLevelItem(5).setText(0, _translate("Form", "Language"))
-        self.properties_treeWidget.topLevelItem(6).setText(0, _translate("Form", "Canary"))
-        self.properties_treeWidget.topLevelItem(7).setText(0, _translate("Form", "Crypto"))
-        self.properties_treeWidget.topLevelItem(8).setText(0, _translate("Form", "Nx"))
-        self.properties_treeWidget.topLevelItem(9).setText(0, _translate("Form", "Pic"))
-        self.properties_treeWidget.topLevelItem(10).setText(0, _translate("Form", "Relocs"))
-        self.properties_treeWidget.topLevelItem(11).setText(0, _translate("Form", "Relro"))
-        self.properties_treeWidget.topLevelItem(12).setText(0, _translate("Form", "Stripped"))
+        self.properties_treeWidget.topLevelItem(1).setText(0, _translate("Form", "Arch"))
+        self.properties_treeWidget.topLevelItem(2).setText(0, _translate("Form", "Binary Type"))
+        self.properties_treeWidget.topLevelItem(3).setText(0, _translate("Form", "Machine"))
+        self.properties_treeWidget.topLevelItem(4).setText(0, _translate("Form", "Class"))
+        self.properties_treeWidget.topLevelItem(5).setText(0, _translate("Form", "Bits"))
+        self.properties_treeWidget.topLevelItem(6).setText(0, _translate("Form", "Language"))
+        self.properties_treeWidget.topLevelItem(7).setText(0, _translate("Form", "Canary"))
+        self.properties_treeWidget.topLevelItem(8).setText(0, _translate("Form", "Crypto"))
+        self.properties_treeWidget.topLevelItem(9).setText(0, _translate("Form", "Nx"))
+        self.properties_treeWidget.topLevelItem(10).setText(0, _translate("Form", "Pic"))
+        self.properties_treeWidget.topLevelItem(11).setText(0, _translate("Form", "Relocs"))
+        self.properties_treeWidget.topLevelItem(12).setText(0, _translate("Form", "Relro"))
+        self.properties_treeWidget.topLevelItem(13).setText(0, _translate("Form", "Stripped"))
         self.properties_treeWidget.setSortingEnabled(__sortingEnabled)
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = NewProject()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())

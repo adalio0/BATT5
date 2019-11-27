@@ -68,6 +68,7 @@ def setCurrentProject(selected):
                         text += "<b>Binary Properties</b>: <br>"
                         text += "<b>" + "File" + "</b>: " + b.get('file') + "<br>"
                         text += "<b>" + "Os" + "</b>: " + b.get('os') + "<br>"
+                        text += "<b>" + "Arch" + "</b>: " + b.get('arch') + "<br>"
                         text += "<b>" + "Binary" + "</b>: " + b.get('binary') + "<br>"
                         text += "<b>" + "Machine" + "</b>: " + b.get('machine') + "<br>"
                         text += "<b>" + "Class" + "</b>: " + b.get('class') + "<br>"
@@ -312,7 +313,6 @@ def saveStatic(poi):
                                         }
                                     }
                                     string_outcome = string_db.insert_one(string)
-
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'string': {str(i): string['_id']}}}, upsert=True)

@@ -116,6 +116,11 @@
        </item>
        <item>
         <property name="text">
+         <string>Arch</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Binary Type</string>
         </property>
        </item>

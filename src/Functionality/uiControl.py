@@ -251,7 +251,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # for display comment and highlighting
     def callHighlightTree(self):
-        getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(), self.window.comment_text)
+        if self.window.poi_list.selectedItems():
+            itemIndex = self.window.poi_list.currentRow()
+            poiType = self.window.poiType_dropdown.currentText()
+            if poiType == 'Function':
+                item = self.window.viewFunc_tree.topLevelItem(itemIndex)
+                self.window.viewFunc_tree.setCurrentItem(item)
+                self.window.viewFunc_tree.scrollToItem(item)
+            elif poiType == 'String':
+                item = self.window.viewString_tree.topLevelItem(itemIndex)
+                self.window.viewString_tree.setCurrentItem(item)
+                self.window.viewString_tree.scrollToItem(item)
+            elif poiType == 'Variable':
+                item = self.window.viewVar_tree.topLevelItem(itemIndex)
+                self.window.viewVar_tree.setCurrentItem(item)
+                self.window.viewVar_tree.scrollToItem(item)
+            elif poiType == 'DLL':
+                item = self.window.viewDll_tree.topLevelItem(itemIndex)
+                self.window.viewDll_tree.setCurrentItem(item)
+                self.window.viewDll_tree.scrollToItem(item)
+
+        getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
+                   self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving static analysis -------------------------------
 
