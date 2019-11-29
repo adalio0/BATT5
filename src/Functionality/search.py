@@ -128,7 +128,6 @@ def highlightList(view_tree, poi_list):
     treeRow = view_tree.indexOfTopLevelItem(item)
     if treeRow != -1:
         listItem = poi_list.item(treeRow)
-        print(listItem.text())
         poi_list.setCurrentItem(listItem)
         poi_list.scrollToItem(listItem)
 

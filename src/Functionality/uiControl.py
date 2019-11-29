@@ -521,7 +521,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callHighlightList(self):
         try:
             poiType = self.window.poiType_dropdown.currentText()
-            print(poiType)
             if poiType == 'Function':
                 highlightList(self.window.viewFunc_tree, self.window.poi_list)
 
