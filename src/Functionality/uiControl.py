@@ -107,12 +107,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)
-        #self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
+        # self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
 
-        # self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
-        # self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
-        # self.window.viewVar_tree.currentItemChanged.connect(self.callHighlightList)
-        # self.window.viewDll_tree.currentItemChanged.connect(self.callHighlightList)
+        self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
+        self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
+        self.window.viewVar_tree.currentItemChanged.connect(self.callHighlightList)
+        self.window.viewDll_tree.currentItemChanged.connect(self.callHighlightList)
 
         # ---- Filters ------------------------------------------------------------------------------------------------
         # When changing POI type in the drop down will update whats displayed
@@ -520,9 +520,23 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def callHighlightList(self):
         try:
-            HighlightList(self.window.viewPoi_stack.currentItem().text(), self.window.poi_list)
+            poiType = self.window.poiType_dropdown.currentText()
+            if poiType == 'Function':
+                highlightList(self.window.viewFunc_tree, self.window.poi_list)
+
+            elif poiType == 'String':
+                highlightList(self.window.viewString_tree, self.window.poi_list)
+
+            elif poiType == 'Variable':
+                highlightList(self.window.viewVar_tree, self.window.poi_list)
+
+            elif poiType == 'DLL':
+                highlightList(self.window.viewDll_tree, self.window.poi_list)
+
         except AttributeError:
             pass
+
+
 
     def disable(self):
         self.window.central_tabs.setEnabled(False)

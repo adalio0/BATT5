@@ -556,6 +556,12 @@ background-color: rgb(186, 189, 182);</string>
              <layout class="QVBoxLayout" name="project_sublayout_h">
               <item>
                <widget class="QGroupBox" name="project_box_h">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>300</width>
@@ -585,13 +591,13 @@ background-color: rgb(186, 189, 182);</string>
                   <widget class="QTextBrowser" name="projectProperties_text_h">
                    <property name="minimumSize">
                     <size>
-                     <width>275</width>
+                     <width>0</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>250</width>
+                     <width>16777215</width>
                      <height>250</height>
                     </size>
                    </property>
@@ -649,12 +655,86 @@ p, li { white-space: pre-wrap; }
              <layout class="QVBoxLayout" name="detailedAnalysis_sublayout_2">
               <item>
                <widget class="QGroupBox" name="daRunDetails_box">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="title">
                  <string>Dynamic Analysis Run Details</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_20">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
-                  <widget class="QTableWidget" name="daRunDetails_table"/>
+                  <widget class="QStackedWidget" name="stackedWidget">
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <widget class="QWidget" name="page">
+                    <layout class="QVBoxLayout" name="verticalLayout">
+                     <item>
+                      <widget class="QTreeWidget" name="viewFunc_tree_h">
+                       <column>
+                        <property name="text">
+                         <string>Functions</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="page_2">
+                    <layout class="QVBoxLayout" name="verticalLayout_32">
+                     <item>
+                      <widget class="QTreeWidget" name="viewString_tree_h">
+                       <column>
+                        <property name="text">
+                         <string>Strings</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="page_3">
+                    <layout class="QVBoxLayout" name="verticalLayout_33">
+                     <item>
+                      <widget class="QTreeWidget" name="viewVar_tree_h">
+                       <column>
+                        <property name="text">
+                         <string>Variables</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="page_4">
+                    <layout class="QVBoxLayout" name="verticalLayout_34">
+                     <item>
+                      <widget class="QTreeWidget" name="viewDll_tree_h">
+                       <column>
+                        <property name="text">
+                         <string>DLL's</string>
+                        </property>
+                       </column>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -676,7 +756,7 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_4">
                  <item>
-                  <widget class="QTextEdit" name="comment_text_2">
+                  <widget class="QTextEdit" name="comment_text_h">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -693,17 +773,17 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <layout class="QGridLayout" name="commentButton_layout_2">
-                   <item row="0" column="0">
-                    <widget class="QPushButton" name="commentSave_button_2">
-                     <property name="text">
-                      <string>Save</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="0" column="1">
                     <widget class="QPushButton" name="commentClear_button_2">
                      <property name="text">
                       <string>Clear</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="2">
+                    <widget class="QPushButton" name="commentSave_button_2">
+                     <property name="text">
+                      <string>Save</string>
                      </property>
                     </widget>
                    </item>
@@ -713,7 +793,7 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="poi_box_2">
+               <widget class="QGroupBox" name="poi_box_h">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -731,9 +811,9 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_19">
                  <item>
-                  <layout class="QGridLayout" name="poi_layout_2">
+                  <layout class="QGridLayout" name="poi_layout_h">
                    <item row="0" column="1">
-                    <widget class="QComboBox" name="poiType_dropdown_2">
+                    <widget class="QComboBox" name="poiType_dropdown_h">
                      <item>
                       <property name="text">
                        <string>Function</string>
@@ -767,7 +847,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item row="0" column="0">
-                    <widget class="QLabel" name="poiType_label_2">
+                    <widget class="QLabel" name="poiType_label_h">
                      <property name="text">
                       <string>Type</string>
                      </property>
@@ -776,7 +856,7 @@ p, li { white-space: pre-wrap; }
                   </layout>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="poiSearch_lineEdit_2">
+                  <widget class="QLineEdit" name="poiSearch_lineEdit_h">
                    <property name="styleSheet">
                     <string notr="true">color: rgb(136, 138, 133);</string>
                    </property>
@@ -786,7 +866,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QListWidget" name="poi_list_2">
+                  <widget class="QListWidget" name="poi_list_h">
                    <property name="minimumSize">
                     <size>
                      <width>275</width>
@@ -1753,10 +1833,6 @@ p, li { white-space: pre-wrap; }
      <string>File</string>
     </property>
     <addaction name="actionNew_Project"/>
-    <addaction name="actionOpen_Project"/>
-    <addaction name="actionExport_Project"/>
-    <addaction name="separator"/>
-    <addaction name="actionSave_Analysis_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
