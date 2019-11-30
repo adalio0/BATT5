@@ -123,15 +123,13 @@ def searchDocumentation(search, document_list):
             document_list.item(i).setHidden(False)
 
 
-def HighlightList(poi, poi_list):
-    poi_list.clearSelection()
-    list_of_pois = poi_list.findItems(poi, QtCore.Qt.MatchContains)
-
-    for item in list_of_pois:
-        if item.text() == poi:
-            item.setSelected(True)
-            poi_list.setCurrentItem(item)
-            return
+def highlightList(view_tree, poi_list):
+    item = view_tree.currentItem()
+    treeRow = view_tree.indexOfTopLevelItem(item)
+    if treeRow != -1:
+        listItem = poi_list.item(treeRow)
+        poi_list.setCurrentItem(listItem)
+        poi_list.scrollToItem(listItem)
 
 
 def addIcon(poi):
