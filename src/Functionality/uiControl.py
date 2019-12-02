@@ -479,16 +479,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        if self.window.comment_text.toPlainText():
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            addIcon(self.window.poi_list.currentItem())
-            # highlightCell(self.window.POI_tableWidget.currentItem())
-        else:
+        if self.window.comment_text.toPlainText() == "":
             saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                         self.window.poiType_dropdown.currentText())
             self.window.poi_list.currentItem().setIcon(QIcon())
+            if self.window.poiType_dropdown.currentText() == 'Function':
+                removeIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'String':
+                removeIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Variable':
+                removeIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'DLL':
+                removeIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
 
+        else:
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
+            addIcon(self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Function':
+                addIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'String':
+                addIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Variable':
+                addIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'DLL':
+                addIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()

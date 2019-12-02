@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QTreeWidgetItem, QListWidgetItem
 
 from src.Functionality.database import getComment
 from src.Functionality.search import addIcon
-
+from src.Functionality.search import displayIconTree
 
 # Displays the functions extracted from Static Analysis in Analysis box and POI box
 def displayFunctions(view_tree, poi_list, content, comment_text):
@@ -54,7 +54,12 @@ def displayFunctions(view_tree, poi_list, content, comment_text):
         funcTree.append(parent)
     view_tree.addTopLevelItems(funcTree)
     view_tree.expandAll()
+    dforTree(view_tree,content, "Function",comment_text)
 
+def dforTree(view_tree,content,poitype,commentBox):
+    for i in range(len(content)):
+        if getComment(content[i]['name'], poitype, commentBox):
+            displayIconTree(view_tree, content[i]['name'])
 
 # Displays the filtered functions based on the selected plugin in Analysis box and POI box
 def displayFilteredFunctions(view_tree, poi_list, filterContent, content, comment_text):
@@ -109,6 +114,7 @@ def displayFilteredFunctions(view_tree, poi_list, filterContent, content, commen
                 funcTree.append(parent)
     view_tree.addTopLevelItems(funcTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "Function", comment_text)
 
 
 # Displays the strings extracted from Static Analysis in Analysis box and POI box
@@ -137,6 +143,7 @@ def displayString(view_tree, poi_list, content, comment_text):
         stringTree.append(parent)
     view_tree.addTopLevelItems(stringTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "String", comment_text)
 
 
 # Displays the filtered strings based on the selected plugin in Analysis box and POI box
@@ -167,6 +174,7 @@ def displayFilterStrings(view_tree, poi_list, filterContent, content, comment_te
                 stringTree.append(parent)
     view_tree.addTopLevelItems(stringTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "String", comment_text)
 
 
 # Displays the variables extracted from Static Analysis in Analysis box and POI box
@@ -190,6 +198,7 @@ def displayVariable(view_tree, poi_list, content, comment_text):
         poi_list.addItem(item)
     view_tree.addTopLevelItems(varTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "Variable", comment_text)
 
 
 # Displays the filtered variables based on the selected plugin in Analysis box and POI box
@@ -215,6 +224,7 @@ def displayFilteredVariable(view_tree, poi_list, filterContent, content, comment
                 poi_list.addItem(item)
     view_tree.addTopLevelItems(varTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "Variable", comment_text)
 
 
 # Displays the dlls extracted from Static Analysis in Analysis box and POI box
@@ -233,6 +243,7 @@ def displayDll(view_tree, poi_list, content, comment_text):
         dllTree.append(parent)
     view_tree.addTopLevelItems(dllTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "DLL", comment_text)
 
 
 # Displays the filtered dlls based on the selected plugin in Analysis box and POI box
@@ -253,3 +264,4 @@ def displayFilteredDll(view_tree, poi_list, filterContent, content, comment_text
                 dllTree.append(parent)
     view_tree.addTopLevelItems(dllTree)
     view_tree.expandAll()
+    dforTree(view_tree, content, "DLL", comment_text)
