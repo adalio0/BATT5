@@ -135,6 +135,27 @@ def highlightList(view_tree, poi_list):
 def addIcon(poi):
     poi.setIcon(QIcon(r"comment-24px.svg"))
 
+def addIconTree(treeType, currentListItem):
+    root = treeType.invisibleRootItem()
+    child_count = root.childCount()
+    for i in range(child_count):
+        item = root.child(i)
+        if currentListItem.text() == item.text(0):
+            item.setIcon(0,QIcon(r"comment-24px.svg"))
+def displayIconTree(treeType,poiName):
+    root = treeType.invisibleRootItem()
+    child_count = root.childCount()
+    for i in range(child_count):
+        item = root.child(i)
+        if poiName == item.text(0):
+            item.setIcon(0, QIcon(r"comment-24px.svg"))
+def removeIconTree(treeType, currentListItem):
+    root = treeType.invisibleRootItem()
+    child_count = root.childCount()
+    for i in range(child_count):
+        item = root.child(i)
+        if currentListItem.text() == item.text(0):
+            item.setIcon(0,QIcon())
 
 def highlightCell(cell):
     cell.setBackground(QColor(255, 240, 189))

@@ -9,7 +9,7 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
-#from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
+# from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -31,9 +31,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
-        self.showFullScreen()
         self.showMaximized()
-        self.window.generateScript_button.setDisabled(True)
+        # self.window.generateScript_button.setDisabled(True)
 
         # ---- Main Window --------------------------------------------------------------------------------------------
         # Populate the projects box with current projects
@@ -92,6 +91,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Dynamic Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
 
+        # Expand collapse all visible POI
+        self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)
+
         # ---- Search Functions ----------------------------------------------------------------------------------------
         # returns the searched elements in the project list
         self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)
@@ -107,7 +109,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)
-        # self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
 
         self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
@@ -124,7 +125,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Plugin Controls ----------------------------------------------------------------------------------------
         # Clicking on Generate Script button calls showOutputWindow method
-        self.window.generateScript_button.clicked.connect(self.showOutputWindow)
+        # self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
         # ---- Management Tab -----------------------------------------------------------------------------------------
         # Clicking on Plugin Structure browse button calls showFileExplorer method
@@ -479,16 +480,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        if self.window.comment_text.toPlainText():
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            addIcon(self.window.poi_list.currentItem())
-            # highlightCell(self.window.POI_tableWidget.currentItem())
-        else:
+        if self.window.comment_text.toPlainText() == "":
             saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                         self.window.poiType_dropdown.currentText())
             self.window.poi_list.currentItem().setIcon(QIcon())
+            if self.window.poiType_dropdown.currentText() == 'Function':
+                removeIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'String':
+                removeIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Variable':
+                removeIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'DLL':
+                removeIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
 
+        else:
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
+            addIcon(self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Function':
+                addIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'String':
+                addIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'Variable':
+                addIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
+            if self.window.poiType_dropdown.currentText() == 'DLL':
+                addIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
@@ -793,6 +809,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  "You must have a plugin selected",
                                  QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
+
+    def expandPOI(self):
+        poiType = self.window.poiType_dropdown.currentText()
+        if poiType == 'Function':
+            currTree = self.window.viewFunc_tree
+        elif poiType == 'String':
+            currTree = self.window.viewString_tree
+        elif poiType == 'Variable':
+            currTree = self.window.viewVar_tree
+        elif poiType == 'DLL':
+            currTree = self.window.viewDll_tree
+
+        if self.window.expandCollapseAll_check.checkState():
+            currTree.expandAll()
+        else:
+            currTree.collapseAll()
 
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
