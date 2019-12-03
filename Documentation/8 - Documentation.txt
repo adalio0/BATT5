@@ -1,0 +1,33 @@
+Documentation
+
+Documentation is meant to display, add, edit, or remove documents for the BATT5 system.
+Documents explain in detail the abilities of the BATT5 system.
+
+Ensure that there is an existing .txt file before adding a new document.
+Only valid .txt files will be accepted for documentation use.
+
+• To add a Document:
+
+1) Press the Add button.
+
+2) Select the desired .txt file.
+
+3) The new Document will be displayed in the Document View List.
+
+• To view a Document:
+
+1) Click on a document displayed under the Document View list.
+
+• To edit a Document:
+
+1) Press the Edit button at the bottom right of the screen.
+
+2) Enter the desired text.
+
+3) Press the Save button to save current changes.
+
+4) Press the Done button when complete.
+
+• To delete a Document:
+
+1) Press the Delete button at the bottom left of the screen.
