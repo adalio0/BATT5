@@ -707,7 +707,7 @@ class Ui_BATT5(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
         self.daRuns_box.setTitle(_translate("BATT5", "Dynamic Analysis Runs"))
-        self.recentCmd_box.setTitle(_translate("BATT5", "Recent Command History"))
+        self.recentCmd_box.setTitle(_translate("BATT5", "Recent Commands"))
         self.daRunDetails_box.setTitle(_translate("BATT5", "Dynamic Analysis Run Details"))
         self.viewFunc_tree_h.headerItem().setText(0, _translate("BATT5", "Functions"))
         self.viewString_tree_h.headerItem().setText(0, _translate("BATT5", "Strings"))
