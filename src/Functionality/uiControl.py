@@ -1,5 +1,6 @@
 #! /usr/bin/env python3.
 
+import sys
 # from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -197,6 +198,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
+        self.window.projectProperties_text_h.setHtml(text)
 
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
@@ -502,6 +504,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 addIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
             if self.window.poiType_dropdown.currentText() == 'DLL':
                 addIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
+
     # Clear comment text
     def clearComment(self):
         self.window.comment_text.clear()
@@ -530,9 +533,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if text == 'Switch to History View':
             self.window.changeViews_stack.setCurrentIndex(1)
             self.window.switchToHistory_button.setText('Switch to Current View')
+            self.disableCheck()
         else:
             self.window.changeViews_stack.setCurrentIndex(0)
             self.window.switchToHistory_button.setText('Switch to History View')
+            self.enableCheck()
 
     def callHighlightList(self):
         try:
@@ -552,8 +557,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
-
-
     def disable(self):
         self.window.central_tabs.setEnabled(False)
         self.window.menubar.setDisabled(False)
@@ -562,6 +565,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def enable(self):
         self.window.central_tabs.setDisabled(False)
         self.window.menubar.setDisabled(False)
+
+    def expandPOI(self):
+        poiType = self.window.poiType_dropdown.currentText()
+        if poiType == 'Function':
+            currTree = self.window.viewFunc_tree
+        elif poiType == 'String':
+            currTree = self.window.viewString_tree
+        elif poiType == 'Variable':
+            currTree = self.window.viewVar_tree
+        elif poiType == 'DLL':
+            currTree = self.window.viewDll_tree
+
+        if self.window.expandCollapseAll_check.checkState():
+            currTree.expandAll()
+        else:
+            currTree.collapseAll()
 
     # TODO---- Following methods are performed in the management tab of the BATT5 system -------------------------------
 
@@ -810,22 +829,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
 
-    def expandPOI(self):
-        poiType = self.window.poiType_dropdown.currentText()
-        if poiType == 'Function':
-            currTree = self.window.viewFunc_tree
-        elif poiType == 'String':
-            currTree = self.window.viewString_tree
-        elif poiType == 'Variable':
-            currTree = self.window.viewVar_tree
-        elif poiType == 'DLL':
-            currTree = self.window.viewDll_tree
-
-        if self.window.expandCollapseAll_check.checkState():
-            currTree.expandAll()
-        else:
-            currTree.collapseAll()
-
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
@@ -838,6 +841,7 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
+
 
 if __name__ == "__main__":
     main()
