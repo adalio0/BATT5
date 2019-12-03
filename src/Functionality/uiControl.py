@@ -9,7 +9,7 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent, QTimer, Qt
-#from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
+# from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
@@ -31,9 +31,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         super(ApplicationWindow, self).__init__()
         self.window = Ui_BATT5()
         self.window.setupUi(self)
-        self.showFullScreen()
         self.showMaximized()
-        self.window.generateScript_button.setDisabled(True)
+        # self.window.generateScript_button.setDisabled(True)
 
         # ---- Main Window --------------------------------------------------------------------------------------------
         # Populate the projects box with current projects
@@ -126,7 +125,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Plugin Controls ----------------------------------------------------------------------------------------
         # Clicking on Generate Script button calls showOutputWindow method
-        self.window.generateScript_button.clicked.connect(self.showOutputWindow)
+        # self.window.generateScript_button.clicked.connect(self.showOutputWindow)
 
         # ---- Management Tab -----------------------------------------------------------------------------------------
         # Clicking on Plugin Structure browse button calls showFileExplorer method
