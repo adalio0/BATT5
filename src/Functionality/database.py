@@ -408,22 +408,24 @@ def saveDynamic(poi,valueDict):
                                     parameters = []
                                     local = []
                                     returnVal = []
-                                        counter =len(valueDict)
-                                        print(counter)
-                                        for j in range(counter):
-                                            print("also get here")
-                                            print(j)
-                                            if valueDict[j]['argNum']:
-                                                for k in range(valueDict[j]['argNum']):
-                                                    print(valueDict[j])
-                                                    info = {
-                                                        'name': valueDict[j]['argName'][k],
-                                                        'type': valueDict[j]['argType'][k],
-                                                        'value': valueDict[j]['argVal'][k]
-                                                    }
-                                                    parameters.append(info)
-
-
+                                    counter =len(valueDict)
+                                    print(counter)
+                                    for j in range(counter):
+                                        print("also get here")
+                                        print(j)
+                                        print(valueDict[j]['argNum'])
+                                        #if counter2 >=0:
+                                        try:
+                                            for k in range(valueDict[j]['argNum']):
+                                                print(valueDict[j])
+                                                info = {
+                                                    'name': valueDict[j]['argName'][k],
+                                                    'type': valueDict[j]['argType'][k],
+                                                    'value': valueDict[j]['argVal'][k]
+                                                }
+                                                parameters.append(info)
+                                        except IndexError:
+                                            continue
                                     try:
                                         for j in range(len(valueDict)):
                                             print("surprise make it here too")
