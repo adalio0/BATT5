@@ -1,4 +1,4 @@
-#! /usr/bin/env python3.
+# ! /usr/bin/env python3.
 
 # from pathlib import Path
 
@@ -860,7 +860,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
 
-
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
     app = QtWidgets.QApplication(sys.argv)
@@ -872,7 +871,6 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
-
 
 if __name__ == "__main__":
     main()
