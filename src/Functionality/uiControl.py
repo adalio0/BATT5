@@ -311,7 +311,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Call appropriate method to display poi
         if poi == 'Function':
             self.window.viewPoi_stack.setCurrentIndex(0)
-            self.enableCheck()
+            if self.window.changeViews_stack.currentIndex() == 1:
+                self.disableCheck()
+            else:
+                self.enableCheck()
             if self.window.pluginSelection_dropdown.currentText() == 'None':
                 displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
             else:
