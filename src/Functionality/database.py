@@ -406,18 +406,21 @@ def saveDynamic(poi,valueDict):
                                     parameters = []
                                     local = []
                                     returnVal = []
-                                    try:
-                                        for j in range(len(valueDict)):
+                                    for j in range(len(valueDict)):
+                                        try:
                                             for k in range(valueDict[j]['argNum']):
+                                                try:
 
-                                                info = {
-                                                    'name': valueDict[j]['argName'][k],
-                                                    'type': valueDict[j]['argType'][k],
-                                                    'value': valueDict[j]['argVal'][k]
-                                                }
-                                                parameters.append(info)
-                                    except:
-                                        continue
+                                                    info = {
+                                                        'name': valueDict[j]['argName'][k],
+                                                        'type': valueDict[j]['argType'][k],
+                                                        'value': valueDict[j]['argVal'][k]
+                                                    }
+                                                    parameters.append(info)
+                                                except:
+                                                    continue
+                                        except:
+                                            continue
 
                                     try:
                                         for j in range(len(valueDict)):
