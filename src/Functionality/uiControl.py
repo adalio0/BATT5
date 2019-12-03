@@ -91,7 +91,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
         # Clicking on Run Dynamic Analysis button calls runDynamic method
-        self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
+        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
 
         # Expand collapse all visible POI
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)
@@ -329,6 +329,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         saveDynamic(poi, valueList2)
         self.displayPoi()
+        self.enable()
 
 
 
