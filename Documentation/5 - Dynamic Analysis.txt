@@ -1,10 +1,9 @@
 Dynamic Analysis
 
-Dynamic Analysis is a process used to extract additional data from a binary that may have changed during the binaries
-execution.
-The system requires that Static Analysis is completed before running Dynamic Analysis.
+Dynamic Analysis is a process used to extract additional data from a binary that may have changed during the binaries execution. The system requires that Static Analysis is completed before running Dynamic Analysis.
 
 • Step to Initialize Dynamic Analysis:
-    1) Press the Run Dynamic Analysis button under the Analysis Control View.
+
+1) Press the Run Dynamic Analysis button under the Analysis Control View.
 
 Dynamic Analysis may be performed more than once.
