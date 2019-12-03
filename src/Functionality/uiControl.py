@@ -16,7 +16,7 @@ from src.Functionality.documentation import DocumentationWindow
 # from src.Functionality.newOutput import NOutputWindow
 # from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
-from src.Functionality.staticAnalysis import staticAnalysis
+from src.Functionality.staticAnalysis import staticAnalysis, historicAnalysis
 from src.Functionality.radareTerminal import Terminal
 from src.Functionality.pluginManagement import *
 from src.Functionality.database import *
@@ -91,7 +91,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
         # Clicking on Run Dynamic Analysis button calls runDynamic method
-        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
+        self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
 
         # Expand collapse all visible POI
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)
@@ -314,6 +314,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             QMessageBox.question(self, "Error Message: No Project selected",
                                  "A project has not been selected, cannot perform Static Analysis.",
                                  QMessageBox.Ok)
+    # runs Dynamic analysis with database stuff
+    def runDynamic(self):
+        path = getCurrentFilePath()
+        poi = staticAnalysis(path)
+        funcList = []
+        for i in range(len(poi[0])):
+            funcList.append(poi[0][i]['name'])
+
+        valueList = historicAnalysis(path,funcList)
+        valueList2 = dynamicAnalysis(path,valueList)
+
+        saveDynamic(poi, valueList2)
+        self.displayPoi()
+
+
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
@@ -375,28 +390,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.radareConsoleIn_lineEdit.clear()
 
     # runs Dynamic Analysis
-    def runDynamic(self):
-        if self.window.runDynamicAnalysis_button.text() == "Run Dynamic Analysis":
-            self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
-
-            items = []
-            for i in range(self.window.poi_list.count()):
-                items.append(self.window.poi_list.item(i).text())
-            # test by hardcoding two known functions
-            items.append("sym.secret_stuff")
-            items.append("sym.even_more_secret")
-
-            path = getCurrentFilePath().strip()
-            print(path)
-            dynamic = dynamicAnalysis(path, items)
-            # print(dynamic)
-            # print(self.window.poi_list.item(i).text())
-            for j in range(len(dynamic)):
-                self.window.radareConsoleOut_text.append(dynamic[j])
-
-        elif self.window.runDynamicAnalysis_button.text() == "Stop Dynamic Analysis":
-            self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
-        self.enable()
+    # def runDynamic(self):
+    #     if self.window.runDynamicAnalysis_button.text() == "Run Dynamic Analysis":
+    #         self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
+    #
+    #         items = []
+    #         for i in range(self.window.poi_list.count()):
+    #             items.append(self.window.poi_list.item(i).text())
+    #         # test by hardcoding two known functions
+    #         items.append("sym.secret_stuff")
+    #         items.append("sym.even_more_secret")
+    #
+    #         path = getCurrentFilePath().strip()
+    #         print(path)
+    #         dynamic = dynamicAnalysis(path, items)
+    #         # print(dynamic)
+    #         # print(self.window.poi_list.item(i).text())
+    #         for j in range(len(dynamic)):
+    #             self.window.radareConsoleOut_text.append(dynamic[j])
+    #
+    #     elif self.window.runDynamicAnalysis_button.text() == "Stop Dynamic Analysis":
+    #         self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
+    #     self.enable()
 
     # ---- Following methods are for deleting a project from the database -------------------
 
