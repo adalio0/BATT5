@@ -1,4 +1,4 @@
-#! /usr/bin/env python3.
+# ! /usr/bin/env python3.
 
 # from pathlib import Path
 
@@ -13,8 +13,6 @@ from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
-#from src.Functionality.newOutput import NOutputWindow
-#from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
