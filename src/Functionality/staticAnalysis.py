@@ -1,5 +1,6 @@
 import r2pipe
 import base64
+import json
 
 def staticAnalysis(filePath):
     global infile
