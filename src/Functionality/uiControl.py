@@ -202,13 +202,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
             self.window.runDynamicAnalysis_button.setEnabled(True)
+            self.window.commentSave_button.setEnabled(True)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
             self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
             self.displayPoi()
         else:
             self.window.runDynamicAnalysis_button.setEnabled(False)
+            self.window.commentSave_button.setEnabled(False)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+
             self.displayPoi()
 
         # Set up command prompt
@@ -282,6 +286,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.projectNavigator_tree.currentItem():
             if not checkStatic():
                 self.window.runDynamicAnalysis_button.setEnabled(True)
+                self.window.commentSave_button.setEnabled(True)
                 self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
                 self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
