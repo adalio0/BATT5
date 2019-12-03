@@ -278,20 +278,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Static Analysis w/ database stuff
     def runStatic(self):
-        if not checkStatic():
-            self.window.runDynamicAnalysis_button.setEnabled(True)
-            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        if self.window.projectNavigator_tree.currentItem():
+            if not checkStatic():
+                self.window.runDynamicAnalysis_button.setEnabled(True)
+                self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+                self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-            # Get the path of the binary file and run static analysis
-            path = getCurrentFilePath()
-            poi = staticAnalysis(path)
+                # Get the path of the binary file and run static analysis
+                path = getCurrentFilePath()
+                poi = staticAnalysis(path)
 
-            # Save the results of static into the database
-            saveStatic(poi)
-            self.displayPoi()
+                # Save the results of static into the database
+                saveStatic(poi)
+                self.displayPoi()
+            else:
+                self.displayPoi()
         else:
-            self.displayPoi()
+            QMessageBox.question(self, "Error Message: No Project selected",
+                                 "A project has not been selected, cannot perform Static Analysis.",
+                                 QMessageBox.Ok)
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
