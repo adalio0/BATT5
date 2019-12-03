@@ -1,6 +1,5 @@
 #! /usr/bin/env python3.
 
-import sys
 # from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -8,12 +7,11 @@ import sys
 # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QEvent, QTimer, Qt
+from PyQt5.QtCore import QTimer
 # from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.GUI.python_files.popups.errors import ErrFile, Errx86, ErrRadare
-from src.Functionality.newProject import ProjectWindow
+from Documentation.legacy.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
 from src.Functionality.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
@@ -173,8 +171,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagement_list.customContextMenuRequested.connect(self.rightClickOnPoi)
 
         # ---- View Box -----------------------------------------------------------------------------------------------
-        self.window.switchToHistory_button.clicked.connect(self.switchToHistory)
-        self.window.switchToCurrent_button.clicked.connect(self.switchToCurrent)
+        self.window.switchToHistory_button.clicked.connect(self.switchViews)
 
         # ---- Other? -------------------------------------------------------------------------------------------------
         # check or uncheck all elements in poi list
@@ -528,11 +525,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     item.setCheckState(QtCore.Qt.Unchecked)
 
     # From current to history
-    def switchToHistory(self):
-        self.window.changeViews_stack.setCurrentIndex(1)
-
-    def switchToCurrent(self):
-        self.window.changeViews_stack.setCurrentIndex(0)
+    def switchViews(self):
+        text = self.window.switchToHistory_button.text()
+        if text == 'Switch to History View':
+            self.window.changeViews_stack.setCurrentIndex(1)
+            self.window.switchToHistory_button.setText('Switch to Current View')
+        else:
+            self.window.changeViews_stack.setCurrentIndex(0)
+            self.window.switchToHistory_button.setText('Switch to History View')
 
     def callHighlightList(self):
         try:
