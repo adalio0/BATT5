@@ -63,8 +63,6 @@ class ProjectWindow(QtWidgets.QDialog):
         results = {
             'static_id': '',
 
-            'associated_plugin': '',
-
             'function': [
 
             ],
