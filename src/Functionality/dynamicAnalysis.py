@@ -49,6 +49,7 @@ def dynamicAnalysis(filepath, dictList):
     print(dictList)
     infile = r2pipe.open(filepath)  # open file
     infile.cmd("aaa")
+    #infile.cmd("ood")  # open in debug mode
     for i in range(len(dictList)):  # iterate over list of functions
         infile.cmd("ood")  # open in debug mode
         breakpoint = dictList[i]['fName']
@@ -62,28 +63,30 @@ def dynamicAnalysis(filepath, dictList):
         infile.cmd("dc") #continue to run
         infile.cmd("dcr") #get values at this point
         returnVal = infile.cmd("dr rax")
-        returnVal = returnVal.rstrip("\n").encode('utf-8')
+        returnVal = returnVal.rstrip("\n")
+        dictList[i]['retValue'] = returnVal
         # start running after breakpoint get arguments first
         templistOfVals = []
         templistOfLoc =[]
         #for arguments if argNum is 0 this will skip
         try:
-            for j in range(dictList[i]['argNum']):
+            for j in range(dictList[i]['argNum'][0]):
                 print("made it here")
                 #set return value
-                dictList[i]['retVal'] = returnVal
+                #dictList[i]['retValue'] = returnVal.decode('utf-8')
+                print(type(dictList[i]['retValue']))
                 argumentName = dictList[i]['argName'][j]
                 print(argumentName)
                 argumentString = argumentName.decode('utf-8')
                 print(argumentString)
                 commandToVal = infile.cmd("afvd " + argumentString)
-                if not commandToVal:
-                    print("I go here")
-                    infile.cmd("dcr")
-                    testCommand = "afvd " + argumentString
-                    print(testCommand)
-                    commandToVal = infile.cmd("afvd " + argumentString)
-                    print(commandToVal)
+                # if not commandToVal:
+                #     print("I go here")
+                #     infile.cmd("dcr")
+                #     testCommand = "afvd " + argumentString
+                #     print(testCommand)
+                #     commandToVal = infile.cmd("afvd " + argumentString)
+                #     print(commandToVal)
                 commandList = commandToVal.split(" ")
                 print(commandList)
                 validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
@@ -92,7 +95,7 @@ def dynamicAnalysis(filepath, dictList):
                 formattedVal = json.loads(lineWithval)
                 templistOfVals.append(formattedVal[0]['value'])
                 dictList[i]['argVal'] = templistOfVals
-        except:
+        except (IndexError, TypeError):
             continue
         #for local variables
         try:
@@ -106,8 +109,9 @@ def dynamicAnalysis(filepath, dictList):
                 formattedVal = json.loads(lineWithval)
                 templistOfLoc.append(formattedVal[0]['value'])
                 dictList[i]['locVal'] = templistOfLoc
-        except:
+        except(IndexError, TypeError):
             continue
         infile.cmd("db-*")
+    print("Succesfully ended")
     return dictList
 

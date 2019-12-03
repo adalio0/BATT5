@@ -403,43 +403,52 @@ def saveDynamic(poi,valueDict):
                             if r['_id'] == s.get('results').get('01'):
                                 # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
                                 for i in range(len(poi[0])):
+                                    print("get here")
+                                    print(poi[0][i]['name'])
                                     parameters = []
                                     local = []
                                     returnVal = []
                                     try:
-                                        for j in range(len(valueDict)):
+                                        counter =len(valueDict)
+                                        print(counter)
+                                        for j in range(counter):
+                                            print("also get here")
+                                            print(j)
                                             for k in range(valueDict[j]['argNum']):
-
+                                                print(valueDict[j])
                                                 info = {
                                                     'name': valueDict[j]['argName'][k],
                                                     'type': valueDict[j]['argType'][k],
                                                     'value': valueDict[j]['argVal'][k]
                                                 }
                                                 parameters.append(info)
-                                    except:
-                                        continue
+                                    except (KeyError, IndexError):
+                                        pass
 
                                     try:
                                         for j in range(len(valueDict)):
-                                            for k in range(valueDict[j]['locNum']):
+                                            print("surprise make it here too")
+                                            for k in range(valueDict[j]['locNum'][0]):
+                                                print("aha make it here as well")
                                                 info = {
                                                     'name': valueDict[j]['locName'][k],
                                                     'type': valueDict[j]['locType'][k],
                                                     'value': valueDict[j]['locVal'][k]
                                                 }
                                                 local.append(info)
-                                    except:
-                                        continue
+                                    except (KeyError, IndexError):
+                                        pass
 
                                     try:
                                         for j in range(len(valueDict)):
+                                            print(valueDict[j]['retValue'])
                                             info = {
-                                                'value': valueDict[j]['retVal']
+                                                'value': valueDict[j]['retValue']
                                             }
                                             returnVal.append(info)
-                                    except:
+                                    except (KeyError, IndexError):
                                         continue
-
+                                try:
                                     function = {
                                         'results_id': r['_id'],
                                         'comment': '',
@@ -450,14 +459,16 @@ def saveDynamic(poi,valueDict):
                                             'parameters': parameters,
                                             'locals': local,
                                             'returnType': '',
-                                            'returnValue': returnVal
+                                            'returnValue': returnVal[0]['value'][0]
                                         }
                                     }
                                     function_outcome = function_db.insert_one(function)
-
+                                except IndexError:
+                                    continue
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
