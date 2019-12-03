@@ -1,0 +1,39 @@
+Point of Interest Management
+
+Plugins created for BATT5 are primarily composed of Points of Interest (POI's) defined by the user. These POI's could be managed through the management tab of BATT5.
+
+• To define the points of interest of a plugin through XML input:
+
+1) Go to the Management tab of BATT5.
+
+2) Select the plugin which you want add POI(s) to.
+
+3) Select "Browse" under "Add POIs to [selected plugin] Through XML Input".
+
+4) Select an XML file which conforms to the POI schema (poiConfig.xsd). To see the schema, go to .../BATT5/src/Configurations/poiConfig.xsd.
+
+5) Select "Save" in the same section. If the file selected is valid, new POI(s) will appear under "Point of Interest Management" on the left side of the window. Multiple POI's can be added to a plugin in this manner.
+
+• To create a point of interest through manual input:
+
+1) Go to the Management tab of BATT5.
+
+2) Select the plugin which you want add POI(s) to.
+
+3) Under "Points of Interest Management", select the type of POI you want to add to the plugin selected using the POI type dropdown box.
+
+4) Fill in the name of the POI  under the "Add [poi type] to [selected plugin] Through Manual Input" section.
+
+5) Select the "Save" option in this section. If the name field is filled, a new POI will appear under "Point of Interest Management" on the left side of the window.
+
+• To delete a plugin:
+
+1) Go to the Management tab of BATT5.
+
+2) Select the plugin which you want remove POI(s) from.
+
+3) Under the "Point of Interest Management", right-click the POI you want to delete, select "Delete".
+
+4) You will be prompted to confirm deletion of the selected POI, select "yes" to delete the POI from the selected plugin. 
+
+5) This will only remove the POI from the selected plugin, not any other plugins.

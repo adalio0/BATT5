@@ -1,6 +1,5 @@
 #! /usr/bin/env python3.
 
-import sys
 # from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -15,6 +14,7 @@ from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
 #from src.Functionality.newOutput import NOutputWindow
+from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
@@ -23,7 +23,6 @@ from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
-
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -278,20 +277,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # runs Static Analysis w/ database stuff
     def runStatic(self):
-        if not checkStatic():
-            self.window.runDynamicAnalysis_button.setEnabled(True)
-            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+        if self.window.projectNavigator_tree.currentItem():
+            if not checkStatic():
+                self.window.runDynamicAnalysis_button.setEnabled(True)
+                self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
+                self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
-            # Get the path of the binary file and run static analysis
-            path = getCurrentFilePath()
-            poi = staticAnalysis(path)
+                # Get the path of the binary file and run static analysis
+                path = getCurrentFilePath()
+                poi = staticAnalysis(path)
 
-            # Save the results of static into the database
-            saveStatic(poi)
-            self.displayPoi()
+                # Save the results of static into the database
+                saveStatic(poi)
+                self.displayPoi()
+            else:
+                self.displayPoi()
         else:
-            self.displayPoi()
+            QMessageBox.question(self, "Error Message: No Project selected",
+                                 "A project has not been selected, cannot perform Static Analysis.",
+                                 QMessageBox.Ok)
 
     # Displays POIs in the Analysis box
     def displayPoi(self):

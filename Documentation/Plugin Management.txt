@@ -1,0 +1,35 @@
+Plugin Creation
+
+BATT5 supports the creation and use of plugins. These plugins contain defintions for Points of Interest which will be filtered during binary analysis.
+
+• To create a plugin through XML input:
+
+1) Go to the Management tab of BATT5.
+
+2) If a plugin is currently selected, click on the "De-Select Plugin" button to clear all fields.
+
+3) Select "Browse" in "Add Plugin Through XML Input" 
+
+4) Select an XML file which conforms to the plugin schema (pluginConfig.xsd). To see the schema, go to .../BATT5/src/Configurations/pluginConfig.xsd.
+
+5) Select "Save" in the same section. If the file selected is valid, a new plugin will appear under "Plugin Management" on the left side of the window.
+
+• To create a plugin trhough manual input:
+
+1) Go to the Management tab of BATT5.
+
+2) If a plugin is currently selected, click on the "De-Select Plugin" button to clear all fields.
+
+3) Fill in the required fields of the "Add Plugin Through Manual Input" section - required fields will be denoted by an asterisk (*).
+
+4) Select the "Save" option in this section. If all required fields are filled, a new plugin will appear under "Plugin Management" on the left side of the window.
+
+• To delete a plugin:
+
+1) Go to the Management tab of BATT5.
+
+2) Under the "Plugin Management", right-click the plugin you want to delete, select "Delete".
+
+3) You will be prompted to confirm deletion of the selected plugin, select "yes" to delete the plugin from the database.
+
+4) The plugin will be removed from the database and will no longer be visible in the Plugin Management section.

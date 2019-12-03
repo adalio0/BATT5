@@ -8,7 +8,7 @@ Team 5 (Adal Rivas, Alain Sanchez, Andrea Labrado, Juan Gaucin, and Mark Nunez) 
 
 -------------------------------------------------------------------------------------------------
 
-Plugin Creation
+Plugin Management
 
 Abstract:
 
@@ -34,7 +34,7 @@ Once plugin XML is validated, the system will store:
 
 -------------------------------------------------------------------------------------------------
 
-POI Creation
+POI Management
 
 Abstract:
 
@@ -62,7 +62,7 @@ Project Management
 
 Abstract:
 
-The purpose of Project Management is to be able to create multiple projects that consist of one executable.
+The purpose of Project Management is to be able to create multiple projects that consist of one executable each.
 
 To create a new Project, a name, description, and path must be given in order to be created.
 
@@ -70,7 +70,9 @@ Path cannot receive input manually, path must be selected with browser and canno
 
 Furthermore, you cannot create a project if the architecture is not x86.
 
-When Project Management is performed, Project List will be populated with name of project and Project Properties will be populated with description, path, and binary properties uncovered by Radare.
+When Project Creation is performed, Project List will be populated with name of project and Project Properties will be populated with description, path, and binary properties uncovered by Radare.
+
+Refer to "Project Management" for more detailed information.
 
 -------------------------------------------------------------------------------------------------
 Static Analysis

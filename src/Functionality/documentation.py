@@ -37,7 +37,7 @@ class DocumentationWindow(QtWidgets.QDialog):
     # Gets all the .txt files inside the BATT5/Documentation path and display them
     def populateDoc(self):
         path = Path(__file__).parents[2].as_posix() + '/Documentation/'
-        for file in glob.glob(path + "/**/" + '*.txt', recursive=True):
+        for file in sorted(glob.glob(path + "/**/" + '*.txt', recursive=True)):
             self.window.documentView_listWidget.addItem(file.split(path)[-1].split('.txt')[0])
 
     # When a file is selected on the list, will display its contents on the text field

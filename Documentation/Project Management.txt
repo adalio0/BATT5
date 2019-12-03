@@ -1,0 +1,30 @@
+Project Management
+
+To create a new Project, a name, description, and path must be given in order to be created.
+
+Path cannot receive input manually, path must be selected with browser and cannot be changed once project has been created.
+
+Furthermore, you cannot create a project if the architecture of the Binary is not x86.
+
+When Project Creation is performed, Project List will be populated with name of project and Project Properties will be populated with description, path, and binary properties uncovered by Radare.
+
+• Steps to create a Project:
+
+1) In the top left corner of the BATT5 window, select File then New Project.
+
+2) In the newly opened window, populate the name, description, and browse to the path of the binary file you would like to analyze.
+
+3) Click on Create and a new project will be added to the BATT5 system.
+
+• Once a Project has been created:
+
+1) To start working on a project simply click on it in the Projects list.
+
+2) The BATT5 window title will update according to the currently selected Project.
+
+• Deleting a Project:
+
+1) To delete a Project from the BATT5 system, simply right click on the name of the project in the Project list and click on Delete in the newly opened menu.
+
+2) A confirmation window will display select yes to delete the Project.
+
