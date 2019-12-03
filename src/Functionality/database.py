@@ -408,22 +408,21 @@ def saveDynamic(poi,valueDict):
                                     parameters = []
                                     local = []
                                     returnVal = []
-                                    try:
                                         counter =len(valueDict)
                                         print(counter)
                                         for j in range(counter):
                                             print("also get here")
                                             print(j)
-                                            for k in range(valueDict[j]['argNum']):
-                                                print(valueDict[j])
-                                                info = {
-                                                    'name': valueDict[j]['argName'][k],
-                                                    'type': valueDict[j]['argType'][k],
-                                                    'value': valueDict[j]['argVal'][k]
-                                                }
-                                                parameters.append(info)
-                                    except (KeyError, IndexError):
-                                        pass
+                                            if valueDict[j]['argNum']:
+                                                for k in range(valueDict[j]['argNum']):
+                                                    print(valueDict[j])
+                                                    info = {
+                                                        'name': valueDict[j]['argName'][k],
+                                                        'type': valueDict[j]['argType'][k],
+                                                        'value': valueDict[j]['argVal'][k]
+                                                    }
+                                                    parameters.append(info)
+
 
                                     try:
                                         for j in range(len(valueDict)):
@@ -437,7 +436,7 @@ def saveDynamic(poi,valueDict):
                                                 }
                                                 local.append(info)
                                     except (KeyError, IndexError):
-                                        pass
+                                        continue
 
                                     try:
                                         for j in range(len(valueDict)):
