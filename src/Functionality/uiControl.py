@@ -13,6 +13,8 @@ from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
+#from src.Functionality.newOutput import NOutputWindow
+#from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
@@ -190,23 +192,34 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
+        # Get the properties and name of the selected project
         text, binaryPath = setCurrentProject(selected)
-        self.setWindowTitle(setWindowTitle())
+        current = setWindowTitle()
+        self.setWindowTitle(current)
+        try:
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.findItems(current, QtCore.Qt.MatchContains)[0])
+        except IndexError:
+            pass
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
-        self.window.projectProperties_text_h.setHtml(text)
+        self.window.projectProperties_text_h.setHtml("<b> Current Project </b>: " + current + "<br>" + text)
 
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
             self.window.runDynamicAnalysis_button.setEnabled(True)
+            self.window.commentSave_button.setEnabled(True)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
             self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
             self.displayPoi()
         else:
             self.window.runDynamicAnalysis_button.setEnabled(False)
+            self.window.commentSave_button.setEnabled(False)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+
             self.displayPoi()
 
         # Set up command prompt
@@ -280,6 +293,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.projectNavigator_tree.currentItem():
             if not checkStatic():
                 self.window.runDynamicAnalysis_button.setEnabled(True)
+                self.window.commentSave_button.setEnabled(True)
                 self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
                 self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
@@ -413,6 +427,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.ui.exec_() == ProjectWindow.Accepted:
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.topLevelItem(self.window.projectNavigator_tree.topLevelItemCount()-1))
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
@@ -465,9 +481,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows Output window
     def showOutputWindow(self):
-        self.windowOUT = QtWidgets.QWidget()
+        print("Window")
+        # self.windowOUT = QtWidgets.QWidget()
         # self.ui = NOutputWindow()
-        self.ui.show()
+        # self.ui.show()
 
     # Open the file explorer to select a file for the output window
     def showFileExplorer_outFuncSource(self):

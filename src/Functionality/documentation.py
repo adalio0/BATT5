@@ -25,7 +25,7 @@ class DocumentationWindow(QtWidgets.QDialog):
         self.window.documentView_listWidget.itemSelectionChanged.connect(self.showFile)
 
         self.window.addButton.clicked.connect(self.showFileExplorer)
-        self.window.deleteButton.clicked.connect(self.delete)
+        self.window.deleteButton.clicked.connect(self.showConfirmationDeleteProject)
 
         self.window.editButton.setShortcut('Ctrl+E')
         self.window.editButton.clicked.connect(self.edit)
@@ -131,7 +131,15 @@ class DocumentationWindow(QtWidgets.QDialog):
         except FileNotFoundError:
             pass
 
-
+    def showConfirmationDeleteProject(self):
+        name = self.window.documentView_listWidget.currentItem().text()
+        choice = QMessageBox.question(self, 'Warning',
+                                      "Are you sure you want to delete document: {}?".format(name),
+                                      QMessageBox.Yes | QMessageBox.No)
+        if choice == QMessageBox.Yes:
+            self.delete()
+        else:
+            pass
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = DocumentationWindow()
