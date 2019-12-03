@@ -22,5 +22,4 @@ listed below are the dependencies used in the BATT5 system: <br>
 - xmljson <br>
 - xmlschema <br>
 - fbs <br>
-- numpy <br>
 <br>
