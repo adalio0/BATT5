@@ -45,9 +45,5 @@ class Terminal(object):
             else:
                 cmd = self.r.cmd(command_in)
                 self._displayOutput(cmd)
-
         except:
             self.promptOut.insertPlainText('unable to execute command: ' + command_in + '\n')
-
-
-
