@@ -11,7 +11,7 @@ from PyQt5.QtCore import QTimer
 # from fbs_runtime.application_context.PyQt5 import ApplicationContext    # pip install fbs
 
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from Documentation.legacy.newProject import ProjectWindow
+from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
 from src.Functionality.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
