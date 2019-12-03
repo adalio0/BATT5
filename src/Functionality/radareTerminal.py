@@ -2,12 +2,13 @@ import r2pipe as r2
 
 class Terminal(object):
     # constructor, initialize and launce terminal
-    def __init__(self, b, pIn, pOut):
+    def __init__(self, b, pIn, pOut, r):
         # set attributes
         self.binaryPath = b
         # text boxes that will take in input as well as return output
         self.promptIn = pIn
         self.promptOut = pOut
+        self.recents = r
         # function to prepare binary
         self.openBinary()
         # self.launchTerminal()
@@ -37,6 +38,7 @@ class Terminal(object):
 
     def processInput(self, command_in):
         self.promptOut.insertPlainText('>>> ' + command_in + '\n')
+        self.recents.insertPlainText(command_in + '\n')
         try:
             if command_in == 'clear':
                 self.promptOut.clear()
@@ -46,3 +48,6 @@ class Terminal(object):
 
         except:
             self.promptOut.insertPlainText('unable to execute command: ' + command_in + '\n')
+
+
+

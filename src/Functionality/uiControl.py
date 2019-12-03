@@ -211,7 +211,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.displayPoi()
 
         # Set up command prompt
-        self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text)
+        self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text,
+                                 self.window.recentCmd_text)
+        self.window.recentCmd_text.clear()
 
     # Initialize every field that involve plugins with all the current plugins from database
     def populatePluginFields(self):

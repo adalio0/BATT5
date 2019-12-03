@@ -441,7 +441,7 @@ p, li { white-space: pre-wrap; }
                  </size>
                 </property>
                 <property name="title">
-                 <string>Recent Command History</string>
+                 <string>Recent Commands</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_25">
                  <item>
