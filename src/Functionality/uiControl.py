@@ -84,6 +84,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
+        # When changing plugins will update the displayed pois with the pois from plugin
+        self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.displayPoi)
+
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
