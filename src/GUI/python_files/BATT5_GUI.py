@@ -14,7 +14,7 @@ class Ui_BATT5(object):
     def setupUi(self, BATT5):
         BATT5.setObjectName("BATT5")
         BATT5.setWindowModality(QtCore.Qt.NonModal)
-        BATT5.resize(957, 716)
+        BATT5.resize(960, 818)
         BATT5.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.central_layout = QtWidgets.QWidget(BATT5)
         self.central_layout.setObjectName("central_layout")
@@ -143,6 +143,14 @@ class Ui_BATT5(object):
         self.verticalLayout_28.addWidget(self.viewDll_tree)
         self.viewPoi_stack.addWidget(self.viewDll_page)
         self.verticalLayout_16.addWidget(self.viewPoi_stack)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setContentsMargins(9, -1, -1, -1)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.expandCollapseAll_check = QtWidgets.QCheckBox(self.analysis_box)
+        self.expandCollapseAll_check.setChecked(True)
+        self.expandCollapseAll_check.setObjectName("expandCollapseAll_check")
+        self.horizontalLayout_3.addWidget(self.expandCollapseAll_check)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_3)
         self.detailedAnalysis_sublayout.addWidget(self.analysis_box)
         self.radareConsole_box = QtWidgets.QGroupBox(self.current_view)
         self.radareConsole_box.setMinimumSize(QtCore.QSize(300, 100))
@@ -527,7 +535,7 @@ class Ui_BATT5(object):
         self.dpmOutFuncSource_lineEdit.setFont(font)
         self.dpmOutFuncSource_lineEdit.setReadOnly(True)
         self.dpmOutFuncSource_lineEdit.setPlaceholderText("")
-        self.dpmOutFuncSource_lineEdit.setClearButtonEnabled(False)
+        self.dpmOutFuncSource_lineEdit.setProperty("clearButtonEnabled", False)
         self.dpmOutFuncSource_lineEdit.setObjectName("dpmOutFuncSource_lineEdit")
         self.gridLayout_2.addWidget(self.dpmOutFuncSource_lineEdit, 6, 1, 1, 1)
         self.dpmPluginDesc_label = QtWidgets.QLabel(self.addPluginManual_frame)
@@ -701,7 +709,7 @@ class Ui_BATT5(object):
         self.verticalLayout_13.addWidget(self.central_tabs)
         BATT5.setCentralWidget(self.central_layout)
         self.menubar = QtWidgets.QMenuBar(BATT5)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 957, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 25))
         self.menubar.setObjectName("menubar")
         self.file_menu = QtWidgets.QMenu(self.menubar)
         self.file_menu.setObjectName("file_menu")
@@ -750,8 +758,8 @@ class Ui_BATT5(object):
         self.projectProperties_text.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
         self.pluginSelection_box.setTitle(_translate("BATT5", "Plugin Selection"))
         self.analyisisControls_box.setTitle(_translate("BATT5", "Analysis Controls"))
         self.runStaticAnalysis_button.setText(_translate("BATT5", "Run Static Analysis"))
@@ -763,6 +771,7 @@ class Ui_BATT5(object):
         self.viewString_tree.headerItem().setText(0, _translate("BATT5", "Strings"))
         self.viewVar_tree.headerItem().setText(0, _translate("BATT5", "Variables"))
         self.viewDll_tree.headerItem().setText(0, _translate("BATT5", "DLL\'s"))
+        self.expandCollapseAll_check.setText(_translate("BATT5", "Expand/Collapse All"))
         self.radareConsole_box.setTitle(_translate("BATT5", "r2 Command Prompt"))
         self.radareConsoleIn_lineEdit.setPlaceholderText(_translate("BATT5", "BATT5$"))
         self.comment_box.setTitle(_translate("BATT5", "Comment View"))
@@ -782,8 +791,8 @@ class Ui_BATT5(object):
         self.projectProperties_text_h.setHtml(_translate("BATT5", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
         self.daRuns_box.setTitle(_translate("BATT5", "Dynamic Analysis Runs"))
         self.recentCmd_box.setTitle(_translate("BATT5", "Recent Command History"))
         self.daRunDetails_box.setTitle(_translate("BATT5", "Dynamic Analysis Run Details"))

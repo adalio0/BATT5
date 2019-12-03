@@ -92,6 +92,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # Clicking on Run Dynamic Analysis button calls runDynamic method
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
 
+        # Expand collapse all visible POI
+        self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)
+
         # ---- Search Functions ----------------------------------------------------------------------------------------
         # returns the searched elements in the project list
         self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)
@@ -107,7 +110,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
         self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)
-        # self.window.poi_list.itemSelectionChanged.connect(self.displayPoi)
 
         self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
@@ -808,6 +810,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  "You must have a plugin selected",
                                  QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
+
+    def expandPOI(self):
+        poiType = self.window.poiType_dropdown.currentText()
+        if poiType == 'Function':
+            currTree = self.window.viewFunc_tree
+        elif poiType == 'String':
+            currTree = self.window.viewString_tree
+        elif poiType == 'Variable':
+            currTree = self.window.viewVar_tree
+        elif poiType == 'DLL':
+            currTree = self.window.viewDll_tree
+
+        if self.window.expandCollapseAll_check.checkState():
+            currTree.expandAll()
+        else:
+            currTree.collapseAll()
 
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
