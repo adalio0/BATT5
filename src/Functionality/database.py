@@ -403,53 +403,46 @@ def saveDynamic(poi,valueDict):
                             if r['_id'] == s.get('results').get('01'):
                                 # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
                                 for i in range(len(poi[0])):
-                                    print("get here")
-                                    print(poi[0][i]['name'])
                                     parameters = []
                                     local = []
                                     returnVal = []
-                                    counter =len(valueDict)
-                                    print(counter)
-                                    for j in range(counter):
-                                        print("also get here")
-                                        print(j)
-                                        print(valueDict[j]['argNum'])
-                                        #if counter2 >=0:
+                                    for j in range(len(valueDict)):
                                         try:
                                             for k in range(valueDict[j]['argNum']):
-                                                print(valueDict[j])
-                                                info = {
-                                                    'name': valueDict[j]['argName'][k],
-                                                    'type': valueDict[j]['argType'][k],
-                                                    'value': valueDict[j]['argVal'][k]
-                                                }
-                                                parameters.append(info)
-                                        except IndexError:
+                                                try:
+
+                                                    info = {
+                                                        'name': valueDict[j]['argName'][k],
+                                                        'type': valueDict[j]['argType'][k],
+                                                        'value': valueDict[j]['argVal'][k]
+                                                    }
+                                                    parameters.append(info)
+                                                except:
+                                                    continue
+                                        except:
                                             continue
+
                                     try:
                                         for j in range(len(valueDict)):
-                                            print("surprise make it here too")
-                                            for k in range(valueDict[j]['locNum'][0]):
-                                                print("aha make it here as well")
+                                            for k in range(valueDict[j]['locNum']):
                                                 info = {
                                                     'name': valueDict[j]['locName'][k],
                                                     'type': valueDict[j]['locType'][k],
                                                     'value': valueDict[j]['locVal'][k]
                                                 }
                                                 local.append(info)
-                                    except (KeyError, IndexError):
+                                    except:
                                         continue
 
                                     try:
                                         for j in range(len(valueDict)):
-                                            print(valueDict[j]['retValue'])
                                             info = {
                                                 'value': valueDict[j]['retValue']
                                             }
                                             returnVal.append(info)
-                                    except (KeyError, IndexError):
+                                    except:
                                         continue
-                                try:
+
                                     function = {
                                         'results_id': r['_id'],
                                         'comment': '',
@@ -464,8 +457,7 @@ def saveDynamic(poi,valueDict):
                                         }
                                     }
                                     function_outcome = function_db.insert_one(function)
-                                except IndexError:
-                                    continue
+
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
