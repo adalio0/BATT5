@@ -1,6 +1,5 @@
 #! /usr/bin/env python3.
 
-import sys
 # from pathlib import Path
 
 # sys.path.insert(0, Path(__file__).parents[2].as_posix())
@@ -14,7 +13,7 @@ from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
-from src.Functionality.newOutput import NOutputWindow
+from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
@@ -23,7 +22,6 @@ from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
-
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):

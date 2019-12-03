@@ -8,7 +8,7 @@ Team 5 (Adal Rivas, Alain Sanchez, Andrea Labrado, Juan Gaucin, and Mark Nunez) 
 
 -------------------------------------------------------------------------------------------------
 
-Plugin Creation
+Plugin Management
 
 Abstract:
 
@@ -34,7 +34,7 @@ Once plugin XML is validated, the system will store:
 
 -------------------------------------------------------------------------------------------------
 
-POI Creation
+POI Management
 
 Abstract:
 
