@@ -192,12 +192,19 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
+        # Get the properties and name of the selected project
         text, binaryPath = setCurrentProject(selected)
-        self.setWindowTitle(setWindowTitle())
+        current = setWindowTitle()
+        self.setWindowTitle(current)
+        try:
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.findItems(current, QtCore.Qt.MatchContains)[0])
+        except IndexError:
+            pass
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
-        self.window.projectProperties_text_h.setHtml(text)
+        self.window.projectProperties_text_h.setHtml("<b> Current Project </b>: " + current + "<br>" + text)
 
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
@@ -415,6 +422,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.ui.exec_() == ProjectWindow.Accepted:
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.topLevelItem(self.window.projectNavigator_tree.topLevelItemCount()-1))
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
@@ -467,9 +476,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows Output window
     def showOutputWindow(self):
-        self.windowOUT = QtWidgets.QWidget()
-        self.ui = NOutputWindow()
-        self.ui.show()
+        print("Window")
+        # self.windowOUT = QtWidgets.QWidget()
+        # self.ui = NOutputWindow()
+        # self.ui.show()
 
     # Open the file explorer to select a file for the output window
     def showFileExplorer_outFuncSource(self):
