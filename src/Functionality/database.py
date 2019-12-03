@@ -437,7 +437,7 @@ def saveDynamic(poi,valueDict):
                                     try:
                                         for j in range(len(valueDict)):
                                             info = {
-                                                'value': valueDict[j]['retVal']
+                                                'value': valueDict[j]['retValue']
                                             }
                                             returnVal.append(info)
                                     except:
@@ -453,7 +453,7 @@ def saveDynamic(poi,valueDict):
                                             'parameters': parameters,
                                             'locals': local,
                                             'returnType': '',
-                                            'returnValue': returnVal
+                                            'returnValue': returnVal[0]['value'][0]
                                         }
                                     }
                                     function_outcome = function_db.insert_one(function)
@@ -461,6 +461,7 @@ def saveDynamic(poi,valueDict):
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------

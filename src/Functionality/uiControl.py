@@ -1,4 +1,4 @@
-#! /usr/bin/env python3.
+# ! /usr/bin/env python3.
 
 # from pathlib import Path
 
@@ -13,8 +13,8 @@ from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
-#from src.Functionality.newOutput import NOutputWindow
-#from Documentation.legacy.newOutput import NOutputWindow
+# from src.Functionality.newOutput import NOutputWindow
+# from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis, historicAnalysis
 from src.Functionality.radareTerminal import Terminal
@@ -23,6 +23,7 @@ from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
+
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -82,6 +83,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # right click functionality for projects
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
+
+        # When changing plugins will update the displayed pois with the pois from plugin
+        self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.displayPoi)
 
         # Clicking on Run Static Analysis button calls runStatic method
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
@@ -178,7 +182,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
 
     # TODO---- Following methods initialize the main window with all the project, plugin and poi data ------------------
-
+    # for r in results_db.find():
+    #     print(r)
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
@@ -192,23 +197,34 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def setProject(self):
         selected = self.window.projectNavigator_tree.selectedItems()
 
+        # Get the properties and name of the selected project
         text, binaryPath = setCurrentProject(selected)
-        self.setWindowTitle(setWindowTitle())
+        current = setWindowTitle()
+        self.setWindowTitle(current)
+        try:
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.findItems(current, QtCore.Qt.MatchContains)[0])
+        except IndexError:
+            pass
 
         # Populate the properties box with the current project
         self.window.projectProperties_text.setHtml(text)
-        self.window.projectProperties_text_h.setHtml(text)
+        self.window.projectProperties_text_h.setHtml("<b> Current Project </b>: " + current + "<br>" + text)
 
         # Checks if static has already been performed, if so unlock dynamic and display poi
         if checkStatic():
             self.window.runDynamicAnalysis_button.setEnabled(True)
+            self.window.commentSave_button.setEnabled(True)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
             self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
+
             self.displayPoi()
         else:
             self.window.runDynamicAnalysis_button.setEnabled(False)
+            self.window.commentSave_button.setEnabled(False)
             self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
             self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
+
             self.displayPoi()
 
         # Set up command prompt
@@ -282,6 +298,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.projectNavigator_tree.currentItem():
             if not checkStatic():
                 self.window.runDynamicAnalysis_button.setEnabled(True)
+                self.window.commentSave_button.setEnabled(True)
                 self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
                 self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
 
@@ -308,6 +325,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         valueList = historicAnalysis(path,funcList)
         valueList2 = dynamicAnalysis(path,valueList)
+        print(valueList2)
 
         saveDynamic(poi, valueList2)
         self.displayPoi()
@@ -339,7 +357,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if self.window.pluginSelection_dropdown.currentText() == 'None':
                 displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
             else:
-                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
         else:
             self.disableCheck()
             if poi == 'String':
@@ -347,19 +366,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayString(self.window.viewString_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
             elif poi == 'Variable':
                 self.window.viewPoi_stack.setCurrentIndex(2)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayVariable(self.window.viewVar_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content,
+                                            self.window.comment_text)
             elif poi == 'DLL':
                 self.window.viewPoi_stack.setCurrentIndex(3)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayDll(self.window.viewDll_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content,
+                                       self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
 
@@ -430,6 +452,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.ui.exec_() == ProjectWindow.Accepted:
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
+            self.window.projectNavigator_tree.setCurrentItem(
+                self.window.projectNavigator_tree.topLevelItem(
+                    self.window.projectNavigator_tree.topLevelItemCount() - 1))
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
@@ -482,9 +507,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Shows Output window
     def showOutputWindow(self):
-        self.windowOUT = QtWidgets.QWidget()
-        self.ui = NOutputWindow()
-        self.ui.show()
+        print("Window")
+        # self.windowOUT = QtWidgets.QWidget()
+        # self.ui = NOutputWindow()
+        # self.ui.show()
 
     # Open the file explorer to select a file for the output window
     def showFileExplorer_outFuncSource(self):
@@ -503,31 +529,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        if self.window.comment_text.toPlainText() == "":
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            self.window.poi_list.currentItem().setIcon(QIcon())
-            if self.window.poiType_dropdown.currentText() == 'Function':
-                removeIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'String':
-                removeIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Variable':
-                removeIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'DLL':
-                removeIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
+        if self.window.poi_list.currentItem():
+            if self.window.comment_text.toPlainText() == "":
+                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                            self.window.poiType_dropdown.currentText())
+                self.window.poi_list.currentItem().setIcon(QIcon())
+                if self.window.poiType_dropdown.currentText() == 'Function':
+                    removeIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'String':
+                    removeIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Variable':
+                    removeIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'DLL':
+                    removeIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
 
-        else:
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            addIcon(self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Function':
-                addIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'String':
-                addIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Variable':
-                addIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'DLL':
-                addIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
+            else:
+                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                            self.window.poiType_dropdown.currentText())
+                addIcon(self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Function':
+                    addIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'String':
+                    addIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Variable':
+                    addIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'DLL':
+                    addIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
 
     # Clear comment text
     def clearComment(self):
@@ -853,9 +880,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                                  QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
 
-
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
+    #deleteDatabase()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
@@ -865,7 +892,7 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
-
+    #deleteDatabase()
 
 if __name__ == "__main__":
     main()

@@ -27,7 +27,10 @@ class Terminal(object):
             outStr = 'Analyzing binary: ' + self.binaryPath + '\n'
 
         except:
-            outStr = 'Error opening binary: ' + self.binaryPath + '\n'
+            if self.binaryPath == '':
+                outStr = 'Please select a project to begin analyzing a binary.\n'
+            else:
+                outStr = 'Error opening binary: ' + self.binaryPath + '\n'
 
         finally:
             self.promptOut.insertPlainText(outStr)
@@ -45,9 +48,5 @@ class Terminal(object):
             else:
                 cmd = self.r.cmd(command_in)
                 self._displayOutput(cmd)
-
         except:
             self.promptOut.insertPlainText('unable to execute command: ' + command_in + '\n')
-
-
-
