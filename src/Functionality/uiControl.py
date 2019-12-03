@@ -13,8 +13,8 @@ from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
 from src.Functionality.newProject import ProjectWindow
 from src.Functionality.documentation import DocumentationWindow
-#from src.Functionality.newOutput import NOutputWindow
-#from Documentation.legacy.newOutput import NOutputWindow
+# from src.Functionality.newOutput import NOutputWindow
+# from Documentation.legacy.newOutput import NOutputWindow
 from src.GUI.python_files.popups.analysisResultView import Analysis_Window
 from src.Functionality.staticAnalysis import staticAnalysis
 from src.Functionality.radareTerminal import Terminal
@@ -23,6 +23,7 @@ from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
+
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -336,7 +337,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             if self.window.pluginSelection_dropdown.currentText() == 'None':
                 displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
             else:
-                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
         else:
             self.disableCheck()
             if poi == 'String':
@@ -344,19 +346,22 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayString(self.window.viewString_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
             elif poi == 'Variable':
                 self.window.viewPoi_stack.setCurrentIndex(2)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayVariable(self.window.viewVar_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content,
+                                            self.window.comment_text)
             elif poi == 'DLL':
                 self.window.viewPoi_stack.setCurrentIndex(3)
                 if self.window.pluginSelection_dropdown.currentText() == 'None':
                     displayDll(self.window.viewDll_tree, self.window.poi_list, content, self.window.comment_text)
                 else:
-                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content, self.window.comment_text)
+                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content,
+                                       self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
 
@@ -428,7 +433,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
             self.window.projectNavigator_tree.setCurrentItem(
-                self.window.projectNavigator_tree.topLevelItem(self.window.projectNavigator_tree.topLevelItemCount()-1))
+                self.window.projectNavigator_tree.topLevelItem(
+                    self.window.projectNavigator_tree.topLevelItemCount() - 1))
 
     # Shows confirmation to delete project
     def showConfirmationDeleteProject(self):
@@ -503,31 +509,32 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
-        if self.window.comment_text.toPlainText() == "":
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            self.window.poi_list.currentItem().setIcon(QIcon())
-            if self.window.poiType_dropdown.currentText() == 'Function':
-                removeIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'String':
-                removeIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Variable':
-                removeIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'DLL':
-                removeIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
+        if self.window.poi_list.currentItem():
+            if self.window.comment_text.toPlainText() == "":
+                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                            self.window.poiType_dropdown.currentText())
+                self.window.poi_list.currentItem().setIcon(QIcon())
+                if self.window.poiType_dropdown.currentText() == 'Function':
+                    removeIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'String':
+                    removeIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Variable':
+                    removeIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'DLL':
+                    removeIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
 
-        else:
-            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                        self.window.poiType_dropdown.currentText())
-            addIcon(self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Function':
-                addIconTree(self.window.viewFunc_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'String':
-                addIconTree(self.window.viewString_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'Variable':
-                addIconTree(self.window.viewVar_tree,self.window.poi_list.currentItem())
-            if self.window.poiType_dropdown.currentText() == 'DLL':
-                addIconTree(self.window.viewDll_tree,self.window.poi_list.currentItem())
+            else:
+                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                            self.window.poiType_dropdown.currentText())
+                addIcon(self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Function':
+                    addIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'String':
+                    addIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'Variable':
+                    addIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
+                if self.window.poiType_dropdown.currentText() == 'DLL':
+                    addIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
 
     # Clear comment text
     def clearComment(self):
