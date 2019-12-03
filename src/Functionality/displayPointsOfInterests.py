@@ -43,6 +43,7 @@ def displayFunctions(view_tree, poi_list, content, comment_text):
         if 'returnType' in content[i]:
             children.append(QTreeWidgetItem(parent, ["Return Type: " + content[i]['returnType']]))
         if 'returnValue' in content[i]:
+            #print(content[i]['returnValue'])
             children.append(QTreeWidgetItem(parent, ["Return Value: " + content[i]['returnValue'] + "\n"]))
 
         item = QListWidgetItem(content[i]['name'])

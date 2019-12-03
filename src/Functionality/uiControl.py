@@ -182,7 +182,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)
 
     # TODO---- Following methods initialize the main window with all the project, plugin and poi data ------------------
-
+    # for r in results_db.find():
+    #     print(r)
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
         projects = getProjects()
@@ -324,6 +325,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         valueList = historicAnalysis(path,funcList)
         valueList2 = dynamicAnalysis(path,valueList)
+        print(valueList2)
 
         saveDynamic(poi, valueList2)
         self.displayPoi()
@@ -880,6 +882,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
+    deleteDatabase()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
@@ -889,6 +892,7 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
+    #deleteDatabase()
 
 if __name__ == "__main__":
     main()
