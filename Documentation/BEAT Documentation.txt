@@ -1,1 +1,145 @@
-Hello I am BATT5 but cooler ;) lol
+BATT5 Documentation
+
+Abstract:
+
+The purpose of BATT5 is to reduce the amount of time required to perform analysis on an executable file and the ability to perform a more targeted type of binary analysis via a graphical user interface.
+
+Team 5 (Adal Rivas, Alain Sanchez, Andrea Labrado, Juan Gaucin, and Mark Nunez) have collaborated and developed BATT5 (Behavior Analysis Tool by Team 5) that will provide the ability to conduct binary analysis intercept and the ability to modify contents of network packets via a graphical user interface.
+
+-------------------------------------------------------------------------------------------------
+
+Plugin Creation
+
+Abstract:
+
+The purpose of Plugin creation is to expand the functionality of BATT5.
+
+As of right now, BATT5 includes the Network plugin which allows filtering the static analysis based on Network functions.
+
+To upload a new plugin, plugin must have correct XML structure which can be found in the "Plugin Structure" file.
+
+Once plugin XML is validated, the system will store:
+
+• Plugin Name.
+
+• Plugin Description.
+
+• All output fields.
+
+• Default output field.
+
+• All points of interest.
+
+• GUI components for each point of interest.
+
+-------------------------------------------------------------------------------------------------
+
+POI Creation
+
+Abstract:
+
+The purpose of POI Creation is to add additional POIs to a selected plugin to uncover additional functions during static analysis.
+
+BATT5 has two ways of adding POIs:
+
+• XML input.
+    When adding POIs through XML input, POI must have correct
+    XML structure which can be found in the "POI Structure" file.
+
+    With this method you can add multiple POIs at the same time.
+
+• Manual Input.
+    When adding POIs through Manual input, only a function
+    name is required.
+
+    with this method you can only add one POI at a time.
+
+When POI Creation is performed, POI Management List will be populated with name/names of POI
+
+
+-------------------------------------------------------------------------------------------------
+Project Management
+
+Abstract:
+
+The purpose of Project Management is to be able to create multiple projects that consist of one executable.
+
+To create a new Project, a name, description, and path must be given in order to be created.
+
+Path cannot receive input manually, path must be selected with browser and cannot be changed once project has been created.
+
+Furthermore, you cannot create a project if the architecture is not x86.
+
+When Project Management is performed, Project List will be populated with name of project and Project Properties will be populated with description, path, and binary properties uncovered by Radare.
+
+-------------------------------------------------------------------------------------------------
+Static Analysis
+
+Abstract:
+
+The purpose of Static Analysis is to examine the code without executing the program to provide an understanding of the code's structure.
+
+To perform Static Analysis, have a project selected and appropriate plugin.
+
+When Static Analysis is performed, POI and Analysis views are populated.
+
+
+-------------------------------------------------------------------------------------------------
+Dynamic Analysis
+
+Abstract:
+
+The purpose of Dynamic Analysis is to analyze the behaviour of the binary as it is executing.
+
+To perform Dynamic Analysis, Static Analysis must be run and desired breakpoints must be set.
+
+When Dynamic Analysis is performed, the Analysis View will populate missing values from Static Analysis which include parameter values, local variables, and return values.
+
+-------------------------------------------------------------------------------------------------
+Search
+
+Abstract:
+
+The purpose of Search is to find the either the project, poi, or plugin that matches the substring of the search text (case insensitive).
+
+To perform a Search, simply type desired text in Search Box.
+
+When a Search is performed, the list below search bar will dynamically populate depending on current text of Search bar.
+
+
+-------------------------------------------------------------------------------------------------
+Comment
+
+Abstract:
+
+The purpose of a Comment is to allow users to place a comment on a POI for future reference for themselves or other users.
+
+To perform a Comment, a poi must be selected and comment view text must be populated.
+
+When a Comment is performed, POI will receive a message icon indicating there is a comment stored. When POI is clicked, comment view will be populated with text POI had stored.
+
+-------------------------------------------------------------------------------------------------
+Database
+
+Abstract:
+
+The purpose of the Database is to find the behaviour of the binary as it is executing.
+
+To perform a Search, simply type desired text in Search Box.
+
+When a Search is performed, the Analysis View will populate missing values from Static Analysis which include parameter values, local variables, and return values.
+
+-------------------------------------------------------------------------------------------------
+
+History
+
+Abstract:
+
+The purpose of Search is to find the behaviour of the binary as it is executing.
+
+To perform Dynamic Analysis, Static Analysis must be run and desired breakpoints must be set.
+
+When Dynamic Analysis is performed, the Analysis View will populate missing values from Static Analysis which include parameter values, local variables, and return values.
+
+
+
