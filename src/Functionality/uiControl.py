@@ -882,7 +882,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
-    #deleteDatabase()
+    deleteDatabase()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()

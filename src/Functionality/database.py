@@ -407,8 +407,10 @@ def saveDynamic(poi,valueDict):
                                     local = []
                                     returnVal = []
                                     for j in range(len(valueDict)):
+                                        print("loop1")
                                         try:
                                             for k in range(valueDict[j]['argNum']):
+                                                print("loop2")
                                                 try:
 
                                                     info = {
@@ -424,25 +426,44 @@ def saveDynamic(poi,valueDict):
 
                                     try:
                                         for j in range(len(valueDict)):
-                                            for k in range(valueDict[j]['locNum']):
-                                                info = {
-                                                    'name': valueDict[j]['locName'][k],
-                                                    'type': valueDict[j]['locType'][k],
-                                                    'value': valueDict[j]['locVal'][k]
-                                                }
-                                                local.append(info)
+                                            print("loop3")
+                                            try:
+                                                for k in range(valueDict[j]['locNum']):
+                                                    print("loop4")
+                                                    try:
+                                                        info = {
+                                                            'name': valueDict[j]['locName'][k],
+                                                            'type': valueDict[j]['locType'][k],
+                                                            'value': valueDict[j]['locVal'][k]
+                                                        }
+                                                        local.append(info)
+                                                    except:
+                                                        continue
+
+                                            except:
+                                                continue
                                     except:
                                         continue
 
                                     try:
                                         for j in range(len(valueDict)):
-                                            info = {
-                                                'value': valueDict[j]['retValue']
-                                            }
+                                            print("loop5")
+                                            print(valueDict[j])
+                                            print(type(valueDict[j]['retValue']))
+                                            if valueDict[j]['retValue']:
+                                                info = {
+                                                    'value': valueDict[j]['retValue']
+                                                }
+                                            else:
+                                                info = {
+                                                    'value': "NULL"
+                                                }
                                             returnVal.append(info)
                                     except:
                                         continue
 
+                                    # if not returnVal:
+                                    #     returnVal.append({'value': "Not Found"})
                                     function = {
                                         'results_id': r['_id'],
                                         'comment': '',
@@ -453,7 +474,7 @@ def saveDynamic(poi,valueDict):
                                             'parameters': parameters,
                                             'locals': local,
                                             'returnType': '',
-                                            'returnValue': returnVal[0]['value'][0]
+                                            'returnValue': returnVal[i]['value']
                                         }
                                     }
                                     function_outcome = function_db.insert_one(function)
