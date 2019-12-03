@@ -16,7 +16,7 @@ To install all BATT5 dependencies:<br>
 2) At the root of this repository, run <b>$pip install -r requirements.txt</b>. This will install all python dependencies of BATT5.<br>
 3) To install radare2, clone its repository and follow the installation instructions specified in radare2's <b>README.</b><br>
 *radare2 Repository: https://github.com/radareorg/radare2 <br>
-*NOTE: radare2 must be installed through Github instructions, running <b>sudo-apt install radare2</b> will provide you with a version of Radare2 that is not fully functional.<br>
+*NOTE: radare2 must be installed through Github instructions, running <b>$sudo-apt install radare2</b> will provide you with a version of Radare2 that is not fully functional.<br>
 4) To install mongodb, download and install the MongoDB Community Server package.<br>
 *Download Link: https://www.mongodb.com/download-center/community <br>
 *Note, mongodb must be running in the background during BATT5's runtime. This could be done by running <b>$sudo service mongod start</b>.<br>
