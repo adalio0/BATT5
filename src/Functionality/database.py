@@ -121,15 +121,13 @@ def getCurrentPlugin(selected):
     name = ''
     description = ''
     pointOfInterest = ''
-    output = ''
     if selected:
         for p in plugin_db.find():
             if p['name'] == selected:
                 name = p['name']
                 description = p['description']
                 pointOfInterest = p['pointOfInterest']
-                output = p['output']
-    return name, description, pointOfInterest, output
+    return name, description, pointOfInterest
 
 
 # Get the currently selected plugin

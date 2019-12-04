@@ -20,7 +20,7 @@ def convertPluginXML(filepath):
         return 0
 
 # ---------------- MANUAL PLUGIN CONVERSION ----------------
-def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
+def convertPluginManual(name, desc):
     plugDict = {
         'name': name,
         'description': desc,
@@ -31,11 +31,6 @@ def convertPluginManual(name, desc, outName='', outFcnName='', outFcnSource=''):
             'dll': [],
             'packetProtocol': [],
             'struct': []
-        },
-        'output': {
-            'name': outName,
-            'functionName': outFcnName,
-            'functionSource': outFcnSource
         }
     }
     return plugDict
@@ -52,11 +47,6 @@ def formatPluginXml(pluginDict):
             'dll': [],
             'struct': [],
             'packetProtocol': []
-        },
-        'output': {
-            'name': '',
-            'functionName': '',
-            'functionSource': ''
         }
     }
 
@@ -68,16 +58,6 @@ def formatPluginXml(pluginDict):
                     newPluginDict['pointOfInterest'][t] = [pluginDict['pointOfInterest'][t]]
                 elif len(pluginDict['pointOfInterest'][t]) > 1:
                     newPluginDict['pointOfInterest'][t] = pluginDict['pointOfInterest'][t]
-
-    if 'output' in pluginDict:
-        if 'name' in pluginDict['output']:
-            newPluginDict['output']['name'] = pluginDict['output']['name']
-
-        if 'functionName' in pluginDict['output']:
-            newPluginDict['output']['functionName'] = pluginDict['output']['functionName']
-
-        if 'functionSource' in pluginDict['output']:
-            newPluginDict['output']['functionSource'] = pluginDict['output']['functionSource']
 
     return newPluginDict
 
@@ -92,21 +72,18 @@ def savePluginXML(ui, dpmPluginStructure_lineEdit):
 
     savePlugin(pluginDict)
 
-def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, dpmOutName_lineEdit, dpmOutFuncName_lineEdit,
-                     dpmOutFuncSource_lineEdit):
+def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit):
     if dpmPluginName_lineEdit.text() == '' or dpmPluginDesc_lineEdit.text() == '':
         QMessageBox.question(ui, "Error: Empty Fields",
                              "All fields must be filled to in order to create or update a plugin",
                              QMessageBox.Ok)
         return 0
     else:
-        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),
-                                         dpmOutName_lineEdit.text(), dpmOutFuncName_lineEdit.text(),
-                                         dpmOutFuncSource_lineEdit.text())
+        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),)
         savePlugin(pluginDict)
 
 # ---------------- Plugin Modification ----------------
-def modifyPlugin(ui, oldName, newName, newDesc, newOutName, newOutFuncName, newOutFuncSource):
+def modifyPlugin(ui, oldName, newName, newDesc):
     if newName == '' or newDesc == '':
         QMessageBox.question(ui, "Error: Empty Fields",
                              "All fields must be filled to in order to create or update a plugin",
@@ -115,9 +92,6 @@ def modifyPlugin(ui, oldName, newName, newDesc, newOutName, newOutFuncName, newO
     pluginDict = getCurrentPluginInfo(oldName)
     pluginDict['name'] = newName
     pluginDict['description'] = newDesc
-    pluginDict['output']['name'] = newOutName
-    pluginDict['output']['functionName'] = newOutFuncName
-    pluginDict['output']['functionSource'] = newOutFuncSource
     updatePlugin(pluginDict, oldName)
 
 # ---------------- DATABASE ----------------
