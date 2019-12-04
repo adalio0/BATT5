@@ -24,7 +24,6 @@ from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
 
-
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
@@ -91,7 +90,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)
 
         # Clicking on Run Dynamic Analysis button calls runDynamic method
-        self.window.runDynamicAnalysis_button.clicked.connect(self.runDynamic)
+        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)
 
         # Expand collapse all visible POI
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)
@@ -132,9 +131,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # ---- Management Tab -----------------------------------------------------------------------------------------
         # Clicking on Plugin Structure browse button calls showFileExplorer method
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)
-
-        # Clicking on browse plugin function output source
-        self.window.dpmOutFuncSource_button.clicked.connect(self.showFileExplorer_outFuncSource)
 
         # Creating new plugin from xml
         self.window.saveXMLPlugin_button.clicked.connect(self.callSavePluginXML)
@@ -330,6 +326,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         saveDynamic(poi, valueList2)
         # self.clearPoi()
         self.displayPoi()
+        self.enable()
 
 
 
@@ -642,14 +639,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callSavePluginManual(self):
 
         if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-                             self.window.dpmOutName_lineEdit, self.window.dpmOutFuncName_lineEdit,
-                             self.window.dpmOutFuncSource_lineEdit)
+            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
             modifyPlugin(self, self.window.pluginManagement_list.currentItem().text(),
-                         self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text(),
-                         self.window.dpmOutName_lineEdit.text(), self.window.dpmOutFuncName_lineEdit.text(),
-                         self.window.dpmOutFuncSource_lineEdit.text())
+                         self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text())
         self.populatePluginFields()
         self.deselectPlugin()
 
@@ -662,9 +655,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def deselectPlugin(self):
         self.window.dpmPluginName_lineEdit.clear()
         self.window.dpmPluginDesc_lineEdit.clear()
-        self.window.dpmOutName_lineEdit.clear()
-        self.window.dpmOutFuncName_lineEdit.clear()
-        self.window.dpmOutFuncSource_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
 
         self.window.pluginEditingStatus_label.setStyleSheet("")
@@ -713,9 +703,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             name, description, poi, output = getCurrentPlugin(item)
             self.window.dpmPluginName_lineEdit.setText(name)
             self.window.dpmPluginDesc_lineEdit.setText(description)
-            self.window.dpmOutName_lineEdit.setText(output['name'])
-            self.window.dpmOutFuncName_lineEdit.setText(output['functionName'])
-            self.window.dpmOutFuncSource_lineEdit.setText(output['functionSource'])
             # change save button text
             self.window.saveManualPlugin_button.setText('Update Plugin')
             # change clear button text
@@ -861,7 +848,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
-    deleteDatabase()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
@@ -871,7 +857,6 @@ def main():
     # app.show()
     # exit_code = appctxt.app.exec_()
     # sys.exit(exit_code)
-    #deleteDatabase()
 
 if __name__ == "__main__":
     main()
