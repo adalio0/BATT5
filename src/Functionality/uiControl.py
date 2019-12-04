@@ -328,11 +328,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         print(valueList2)
 
         saveDynamic(poi, valueList2)
+        # self.clearPoi()
         self.displayPoi()
 
 
 
     # Displays POIs in the Analysis box
+    # def clearPoi(self):
+    #     self.window.viewFunc_tree.dele
     def displayPoi(self):
         # selected = ''
         # if self.window.poi_list.currentItem():
@@ -390,30 +393,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
         self.terminal.processInput(cmd_in)
         self.window.radareConsoleIn_lineEdit.clear()
-
-    # runs Dynamic Analysis
-    # def runDynamic(self):
-    #     if self.window.runDynamicAnalysis_button.text() == "Run Dynamic Analysis":
-    #         self.window.runDynamicAnalysis_button.setText("Stop Dynamic Analysis")
-    #
-    #         items = []
-    #         for i in range(self.window.poi_list.count()):
-    #             items.append(self.window.poi_list.item(i).text())
-    #         # test by hardcoding two known functions
-    #         items.append("sym.secret_stuff")
-    #         items.append("sym.even_more_secret")
-    #
-    #         path = getCurrentFilePath().strip()
-    #         print(path)
-    #         dynamic = dynamicAnalysis(path, items)
-    #         # print(dynamic)
-    #         # print(self.window.poi_list.item(i).text())
-    #         for j in range(len(dynamic)):
-    #             self.window.radareConsoleOut_text.append(dynamic[j])
-    #
-    #     elif self.window.runDynamicAnalysis_button.text() == "Stop Dynamic Analysis":
-    #         self.window.runDynamicAnalysis_button.setText("Run Dynamic Analysis")
-    #     self.enable()
 
     # ---- Following methods are for deleting a project from the database -------------------
 
