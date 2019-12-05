@@ -31,15 +31,6 @@
 			<name>msvcrt.dll_exit</name>
 		</dll>
 
-		<struct>
-				<name>struct</name>
-		</struct>
 	</pointOfInterest>
-
-	<output>
-		<name>Script</name>
-		<functionName>generateScript</functionName>
-		<functionSource>C:/fake/address</functionSource>
-	</output>
 
 </plugin>

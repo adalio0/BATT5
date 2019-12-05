@@ -49,38 +49,9 @@
 								</xs:complexType>
 							</xs:element> <!--END OF DLLs-->
 
-							<!--PACKET PROTOCOLS-->
-							<xs:element name="packetProtocol" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name" 		type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF PACKET PROTOCOLS-->
-
-							<!--STRUCTS-->
-							<xs:element name="struct" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name" 	type="xs:string" minOccurs="1" maxOccurs="1"/>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element> <!--END OF STRUCTS-->
-
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element> <!--END OF POINTS OF INTEREST-->
-
-				<!--OUTPUT FIELD-->
-				<xs:element name="output" 	minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="name" 		minOccurs="1" maxOccurs="1" type="xs:string"/>
-							<xs:element name="functionName" minOccurs="1" maxOccurs="1" type="xs:string"/>
-							<xs:element name="functionSource" minOccurs="1" maxOccurs="1" type="xs:string"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element> <!--END OF OUTPUT FIELD-->
 
 			</xs:sequence>
 		</xs:complexType>
