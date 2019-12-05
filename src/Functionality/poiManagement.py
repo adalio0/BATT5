@@ -8,7 +8,7 @@ from src.Functionality.database import *
 
 # ---------------- XML VALIDATION ----------------
 def validatePoiXML(filepath):
-    poiSchema = xmlschema.XMLSchema(Path(__file__).parents[1].as_posix() + '/Configurations/poiConfig.xsd')
+    poiSchema = xmlschema.XMLSchema(Path(__file__).parents[2].as_posix() + '/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 

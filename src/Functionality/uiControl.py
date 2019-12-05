@@ -76,7 +76,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.saveXMLPlugin_button.clicked.connect(self.callSavePluginXML)                # new plugin from xml
         self.window.saveManualPlugin_button.clicked.connect(self.callSavePluginManual)          # new plugin manual
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)    # browse poi structure
-        self.window.pluginManagement_list.itemSelectionChanged.connect(self.displayPlugin)      # display plugin
+        self.window.pluginManagement_list.itemSelectionChanged.connect(self.callDisplayPlugin)      # display plugin
         self.window.clearManualPlugin_button.clicked.connect(self.callDeselectPlugin)               # de-select plugin
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)            # clear manual txt
 
@@ -183,23 +183,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callHighlightTree(self):
         if self.window.poi_list.selectedItems():
             itemIndex = self.window.poi_list.currentRow()
-            poiType = self.window.poiType_dropdown.currentText()
-            if poiType == 'Function':
-                item = self.window.viewFunc_tree.topLevelItem(itemIndex)
-                self.window.viewFunc_tree.setCurrentItem(item)
-                self.window.viewFunc_tree.scrollToItem(item)
-            elif poiType == 'String':
-                item = self.window.viewString_tree.topLevelItem(itemIndex)
-                self.window.viewString_tree.setCurrentItem(item)
-                self.window.viewString_tree.scrollToItem(item)
-            elif poiType == 'Variable':
-                item = self.window.viewVar_tree.topLevelItem(itemIndex)
-                self.window.viewVar_tree.setCurrentItem(item)
-                self.window.viewVar_tree.scrollToItem(item)
-            elif poiType == 'DLL':
-                item = self.window.viewDll_tree.topLevelItem(itemIndex)
-                self.window.viewDll_tree.setCurrentItem(item)
-                self.window.viewDll_tree.scrollToItem(item)
+            currTree = self.getCurrentTree()
+            item = currTree.topLevelItem(itemIndex)
+            currTree.setCurrentItem(item)
+            currTree.scrollToItem(item)
 
         getComment(self.window.poi_list.currentItem().text(), self.window.poiType_dropdown.currentText(),
                    self.window.comment_text)
@@ -371,30 +358,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
         if self.window.poi_list.currentItem():
+            currTree = self.getCurrentTree()
+            saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
+                        self.window.poiType_dropdown.currentText())
             if self.window.comment_text.toPlainText() == "":
-                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                            self.window.poiType_dropdown.currentText())
                 self.window.poi_list.currentItem().setIcon(QIcon())
-                if self.window.poiType_dropdown.currentText() == 'Function':
-                    removeIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'String':
-                    removeIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'Variable':
-                    removeIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'DLL':
-                    removeIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
+                removeIconTree(currTree, self.window.poi_list.currentItem())
             else:
-                saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
-                            self.window.poiType_dropdown.currentText())
                 addIcon(self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'Function':
-                    addIconTree(self.window.viewFunc_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'String':
-                    addIconTree(self.window.viewString_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'Variable':
-                    addIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
-                if self.window.poiType_dropdown.currentText() == 'DLL':
-                    addIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
+                addIconTree(currTree, self.window.poi_list.currentItem())
 
     # Clear comment text
     def clearComment(self):
@@ -431,19 +403,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.enableCheck()
 
     def callHighlightList(self):
+        currTree = self.getCurrentTree()
         try:
-            poiType = self.window.poiType_dropdown.currentText()
-            if poiType == 'Function':
-                highlightList(self.window.viewFunc_tree, self.window.poi_list)
-
-            elif poiType == 'String':
-                highlightList(self.window.viewString_tree, self.window.poi_list)
-
-            elif poiType == 'Variable':
-                highlightList(self.window.viewVar_tree, self.window.poi_list)
-
-            elif poiType == 'DLL':
-                highlightList(self.window.viewDll_tree, self.window.poi_list)
+            highlightList(currTree, self.window.poi_list)
         except AttributeError:
             pass
 
@@ -458,16 +420,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.menubar.setDisabled(False)
 
     def expandPOI(self):
-        poiType = self.window.poiType_dropdown.currentText()
-        if poiType == 'Function':
-            currTree = self.window.viewFunc_tree
-        elif poiType == 'String':
-            currTree = self.window.viewString_tree
-        elif poiType == 'Variable':
-            currTree = self.window.viewVar_tree
-        elif poiType == 'DLL':
-            currTree = self.window.viewDll_tree
-
+        currTree = self.getCurrentTree()
         if self.window.expandCollapseAll_check.checkState():
             currTree.expandAll()
         else:
@@ -533,32 +486,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # ---- Following methods are for displaying a plugin and a plugin's poi in the management tab ----------------
 
     # Displays a detailed view of a plugin when it is clicked
-    def displayPlugin(self):
-        selected = self.window.pluginManagement_list.selectedItems()
-        if selected:
-            # get name of current plugin
-            item = self.window.pluginManagement_list.currentItem().text()
-            poi = self.window.addPoiType_dropdown.currentText()
-            # set label to display name of plugin being edited
-            self.window.pluginEditingStatus_label.setStyleSheet("font-weight: bold")
-            self.window.pluginEditingStatus_label.setText('Currently Editing: {}'.format(item))
-
-            self.window.addPoiXML_label.setStyleSheet("font-weight: bold")
-            self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
-            self.window.addPoiXML_label.setText('Add POIs to {}'.format(item) + ' Through XML Input')
-
-            self.window.addPoiManual_label.setStyleSheet("font-weight: bold")
-            self.window.addPoiManual_label.setText(
-                'Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
-            # display poi information
-            name, description, poi = getCurrentPlugin(item)
-            self.window.dpmPluginName_lineEdit.setText(name)
-            self.window.dpmPluginDesc_lineEdit.setText(description)
-
-            self.window.saveManualPlugin_button.setText('Update Plugin')
-            self.window.clearManualPlugin_button.setText('De-Select Plugin')
-            self.displayPoiFromPlugin()
-            self.window.addPluginXml_frame.setDisabled(True)
+    def callDisplayPlugin(self):
+        name, description, poi = getCurrentPlugin(self.window.pluginManagement_list.currentItem().text())
+        displayPlugin(name, description, self.window.pluginManagement_list, self.window.addPoiType_dropdown,
+              self.window.pluginEditingStatus_label, self.window.addPoiXML_label, self.window.addPoiManual_label,
+              self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+              self.window.saveManualPlugin_button, self.window.clearManualPlugin_button, self.window.addPluginXml_frame)
+        self.displayPoiFromPlugin()
 
     # Displays all pois associated with the clicked plugin
     def displayPoiFromPlugin(self):
@@ -602,7 +536,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.pluginSelection_dropdown.clear()
 
             self.populatePluginFields()
-            self.deselectPlugin()
+            self.callDeselectPlugin()
 
     # Provides functionality to delete a poi from a plugin by right clicking on it
     def rightClickOnPoi(self, point):
@@ -683,6 +617,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except:
             QMessageBox.question(self, "Error: Invlaid Input", "You must have a plugin selected", QMessageBox.Ok)
         self.window.dpoimPredefined_lineEdit.clear()
+
+    def getCurrentTree(self):
+        poiType = self.window.poiType_dropdown.currentText()
+        if poiType == 'Function':
+            currTree = self.window.viewFunc_tree
+        elif poiType == 'String':
+            currTree = self.window.viewString_tree
+        elif poiType == 'Variable':
+            currTree = self.window.viewVar_tree
+        elif poiType == 'DLL':
+            currTree = self.window.viewDll_tree
+        return currTree
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():

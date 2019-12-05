@@ -34,8 +34,4 @@
 		<name>msvcrt.dll_exit</name>
 	</dll>
 
-	<struct>
-		<name>structee</name>
-	</struct>
-
 </pointOfInterest>
