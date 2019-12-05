@@ -18,6 +18,7 @@ from src.Functionality.database import *
 from src.Functionality.search import *
 from src.Functionality.dynamicAnalysis import *
 from src.Functionality.displayPointsOfInterests import *
+from src.Functionality.displayManagement import *
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -76,7 +77,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.saveManualPlugin_button.clicked.connect(self.callSavePluginManual)          # new plugin manual
         self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)    # browse poi structure
         self.window.pluginManagement_list.itemSelectionChanged.connect(self.displayPlugin)      # display plugin
-        self.window.clearManualPlugin_button.clicked.connect(self.deselectPlugin)               # de-select plugin
+        self.window.clearManualPlugin_button.clicked.connect(self.callDeselectPlugin)               # de-select plugin
         self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)            # clear manual txt
 
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # delete plugin
@@ -503,14 +504,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
-
         if self.window.saveManualPlugin_button.text() == 'Save':
             savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
             modifyPlugin(self, self.window.pluginManagement_list.currentItem().text(),
                          self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text())
         self.populatePluginFields()
-        self.deselectPlugin()
+        self.callDeselectPlugin()
 
     # Clears the labels that are used for creating a new predefined plugin to create a new plugin
     def newXMLPluginTemplate(self):
@@ -518,21 +518,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.pluginManagement_list.clearSelection()
 
     # Clears the labels that are used for creating a new plugin to create a new plugin
-    def deselectPlugin(self):
-        self.window.dpmPluginName_lineEdit.clear()
-        self.window.dpmPluginDesc_lineEdit.clear()
-        self.window.pluginManagement_list.clearSelection()
-        self.window.pluginEditingStatus_label.setStyleSheet("")
-        self.window.pluginEditingStatus_label.setText('Add Plugin Through Manual Input')
-        self.window.addPoiXML_label.setStyleSheet("")
-        self.window.addPoiXML_label.setText('Add POIs Through XML Input')
-        self.window.addPoiManual_label.setStyleSheet("")
-        self.window.addPoiManual_label.setText('Add POI Through Manual Input')
-        self.window.saveManualPlugin_button.setText('Save')
-        self.window.clearManualPlugin_button.setText('Clear')
-        self.window.pluginManagement_list.clearSelection()
-        self.window.poiManagement_list.clear()
-        self.window.addPluginXml_frame.setDisabled(False)
+    def callDeselectPlugin(self):
+        deselectPlugin(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                       self.window.pluginManagement_list, self.window.pluginEditingStatus_label,
+                       self.window.addPoiXML_label, self.window.addPoiManual_label, self.window.saveManualPlugin_button,
+                       self.window.clearManualPlugin_button, self.window.poiManagement_list,
+                       self.window.addPluginXml_frame)
 
     # Clears the labels that are used for creating a new predefined poi set to create a new poi set
     def newXMLPoiTemplate(self):
