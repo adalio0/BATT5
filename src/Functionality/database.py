@@ -479,8 +479,7 @@ def saveDynamic(poi,valueDict):
 
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
-                                        {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
-
+                                        {'$set': {'function': {str(i): function['_id']}}}, upsert=True)
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------

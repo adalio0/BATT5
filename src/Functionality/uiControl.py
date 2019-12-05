@@ -323,6 +323,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         valueList2 = dynamicAnalysis(path,valueList)
         print(valueList2)
 
+        #saveDynamic(poi, valueList2)
         saveDynamic(poi, valueList2)
         # self.clearPoi()
         self.displayPoi()
@@ -848,6 +849,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
+    deleteDatabase()
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
