@@ -142,6 +142,7 @@ def addIconTree(treeType, currentListItem):
         item = root.child(i)
         if currentListItem.text() == item.text(0):
             item.setIcon(0,QIcon(r"comment-24px.svg"))
+
 def displayIconTree(treeType,poiName):
     root = treeType.invisibleRootItem()
     child_count = root.childCount()

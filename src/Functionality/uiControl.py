@@ -47,7 +47,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
-        self.window.pluginSelection_dropdown.currentIndexChanged.connect(self.displayPoi)       # display POI
+        # self.window.pluginSelection_dropdown.currentTextChanged.connect(self.displayPoi)      # display POI
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)                    # run static
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)                     # run dynamic
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)                     # expand/collapse poi
@@ -227,6 +227,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         else:
             QMessageBox.question(self, "Error Message: No Project selected",
                                  "A project has not been selected, cannot perform Static Analysis.", QMessageBox.Ok)
+
     # runs Dynamic analysis with database stuff
     def runDynamic(self):
         path = getCurrentFilePath()
@@ -242,8 +243,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         saveDynamic(poi, valueList2)
         self.displayPoi()
         self.enable()
-
-
 
     # Displays POIs in the Analysis box
     def displayPoi(self):
@@ -384,7 +383,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     removeIconTree(self.window.viewVar_tree, self.window.poi_list.currentItem())
                 if self.window.poiType_dropdown.currentText() == 'DLL':
                     removeIconTree(self.window.viewDll_tree, self.window.poi_list.currentItem())
-
             else:
                 saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
                             self.window.poiType_dropdown.currentText())
@@ -446,7 +444,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             elif poiType == 'DLL':
                 highlightList(self.window.viewDll_tree, self.window.poi_list)
-
         except AttributeError:
             pass
 
@@ -554,7 +551,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.addPoiManual_label.setText(
                 'Add {}'.format(poi) + ' to {}'.format(item) + ' Through Manual Input')
             # display poi information
-            name, description, poi, output = getCurrentPlugin(item)
+            name, description, poi = getCurrentPlugin(item)
             self.window.dpmPluginName_lineEdit.setText(name)
             self.window.dpmPluginDesc_lineEdit.setText(description)
 

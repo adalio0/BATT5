@@ -5,6 +5,7 @@ from src.Functionality.database import getComment
 from src.Functionality.search import addIcon
 from src.Functionality.search import displayIconTree
 
+
 # Displays the functions extracted from Static Analysis in Analysis box and POI box
 def displayFunctions(view_tree, poi_list, content, comment_text):
     funcTree = []
@@ -57,10 +58,12 @@ def displayFunctions(view_tree, poi_list, content, comment_text):
     view_tree.expandAll()
     dforTree(view_tree,content, "Function",comment_text)
 
+
 def dforTree(view_tree,content,poitype,commentBox):
     for i in range(len(content)):
         if getComment(content[i]['name'], poitype, commentBox):
             displayIconTree(view_tree, content[i]['name'])
+
 
 # Displays the filtered functions based on the selected plugin in Analysis box and POI box
 def displayFilteredFunctions(view_tree, poi_list, filterContent, content, comment_text):

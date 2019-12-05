@@ -6,8 +6,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.newProjectWind import NewProject
-
 from src.Functionality.binaryValidation import get_binary_info
+from src.Functionality.database import insertToDatabase
 properties = []
 
 
@@ -45,108 +45,19 @@ class ProjectWindow(QtWidgets.QDialog):
             self.showErr()
         else:
             # Store new project into the database
-            self.insertToDatabase()
+            insertToDatabase(self.window.projectName_lineEdit.text(),
+                             self.window.projectDescription_textEdit.toPlainText(), self.window.path_lineEdit.text(),
+                             properties)
 
             # close window
             self.accept()
             self.close()
-
-    # ---- Stores the created project into the database -------------------------------
-    def insertToDatabase(self):
-        client = pymongo.MongoClient("mongodb://localhost:27017")
-        db = client['project_data']
-        project_db = db['project']
-        binary_db = db['binary']
-        static_db = db['static']
-        results_db = db['results']
-
-        results = {
-            'static_id': '',
-
-            'function': [
-
-            ],
-
-            'string': [
-
-            ],
-
-            'variable': [
-
-            ],
-
-            'dll': [
-
-            ]
-        }
-        results_outcome = results_db.insert_one(results)
-
-        static_analysis = {
-            'project_id': '',
-
-            'results': {
-                '01': results['_id']
-            }
-        }
-        static_outcome = static_db.insert_one(static_analysis)
-
-        binary = {
-            'project_id': '',
-
-            'file': self.window.path_lineEdit.text(),
-            'os': properties[0],
-            'arch': properties[1],
-            'binary': properties[2],
-            'machine': properties[3],
-            'class': properties[4],
-            'bits': properties[5],
-            'language': properties[6],
-            'canary': properties[7],
-            'crypto': properties[8],
-            'nx': properties[9],
-            'pic': properties[10],
-            'relocs': properties[11],
-            'relro': properties[12],
-            'stripped': properties[13]
-        }
-        binary_outcome = binary_db.insert_one(binary)
-
-        project_data = {
-            'name': self.window.projectName_lineEdit.text(),
-
-            'description': self.window.projectDescription_textEdit.toPlainText(),
-
-            'binary': binary['_id'],
-
-            'static_analysis': {
-                'performed': False,
-
-                '01': static_analysis['_id']
-            },
-
-            'dynamic_analysis': {
-                '01': '',
-            }
-        }
-        project_outcome = project_db.insert_one(project_data)
-
-        binary_db.find_one_and_update(
-            {'_id': binary['_id']},
-            {'$set': {'project_id': project_data['_id']}}, upsert=True)
-        static_db.find_one_and_update(
-            {'_id': static_analysis['_id']},
-            {'$set': {'project_id': project_data['_id']}}, upsert=True)
-        results_db.find_one_and_update(
-            {'_id': results['_id']},
-            {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
 
     def accept(self):
         super(ProjectWindow, self).accept()
 
     # ---- Show Error Message ------------------------------------------
     def showErr(self):
-        # self.windowEF = ErrEmptyFields()
-        # self.windowEF.show()
         QMessageBox.question(self, "Error Message: Missing Fields",
                              "All fields must be filled to in order to create a Project",
                              QMessageBox.Ok)
@@ -163,7 +74,7 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Displays binary data in Tree Widget -------------------------------------
     def setProperties(self):
-        fileProperties  = get_binary_info(self.window.path_lineEdit.text())
+        fileProperties = get_binary_info(self.window.path_lineEdit.text())
 
         bin = fileProperties.get('bin', {})
         tree = self.window.properties_treeWidget
@@ -172,9 +83,11 @@ class ProjectWindow(QtWidgets.QDialog):
             if not self.validatex86(bin['arch']):
                 self.window.path_lineEdit.clear()
                 self.showx86Err()
+                return
         except KeyError:
             self.window.path_lineEdit.clear()
             self.showx86Err()
+            return
 
         # os
         item0 = tree.itemAt(0, 0)
