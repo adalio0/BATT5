@@ -21,18 +21,103 @@ current_db = db_1['current']
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
 
+
 def startDatabase():
     if sys.platform == 'linux':
         os.system('sudo service mongod start')
 
+
 # Checks if static analysis has been performed on the current selected project
 def checkStatic():
-    flag = False
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
                 flag = p.get('static_analysis', {}).get('performed')
-    return flag
+                return flag
+    return False
+
+
+# Stores the created project into the database
+def insertToDatabase(name, description, path, properties):
+    results = {
+        'static_id': '',
+
+        'function': [
+
+        ],
+
+        'string': [
+
+        ],
+
+        'variable': [
+
+        ],
+
+        'dll': [
+
+        ]
+    }
+    results_outcome = results_db.insert_one(results)
+
+    static_analysis = {
+        'project_id': '',
+
+        'results': {
+            '01': results['_id']
+        }
+    }
+    static_outcome = static_db.insert_one(static_analysis)
+
+    binary = {
+        'project_id': '',
+
+        'file': path,
+        'os': properties[0],
+        'arch': properties[1],
+        'binary': properties[2],
+        'machine': properties[3],
+        'class': properties[4],
+        'bits': properties[5],
+        'language': properties[6],
+        'canary': properties[7],
+        'crypto': properties[8],
+        'nx': properties[9],
+        'pic': properties[10],
+        'relocs': properties[11],
+        'relro': properties[12],
+        'stripped': properties[13]
+    }
+    binary_outcome = binary_db.insert_one(binary)
+
+    project_data = {
+        'name': name,
+
+        'description': description,
+
+        'binary': binary['_id'],
+
+        'static_analysis': {
+            'performed': False,
+
+            '01': static_analysis['_id']
+        },
+
+        'dynamic_analysis': {
+            '01': '',
+        }
+    }
+    project_outcome = project_db.insert_one(project_data)
+
+    binary_db.find_one_and_update(
+        {'_id': binary['_id']},
+        {'$set': {'project_id': project_data['_id']}}, upsert=True)
+    static_db.find_one_and_update(
+        {'_id': static_analysis['_id']},
+        {'$set': {'project_id': project_data['_id']}}, upsert=True)
+    results_db.find_one_and_update(
+        {'_id': results['_id']},
+        {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
 
 
 # ---- Setters for the database (sets the current project and window title) --------------------------------------
@@ -42,7 +127,7 @@ def setWindowTitle():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
                 return p['name']
-    return "BATT5"
+    return ""
 
 
 # Gets all the information of the current project from the database and sets it into the database
@@ -137,6 +222,7 @@ def getCurrentPluginInfo(selected):
             if p['name'] == selected:
                 return p
 
+
 # Gets the appropriate database
 def getAppropriatePoi(poi):
     if poi == "Function":
@@ -149,6 +235,7 @@ def getAppropriatePoi(poi):
         return dll_db
     elif poi == "Struct":
         return struct_db
+
 
 # Displays specific POI in the Analysis box
 def getPoi(poi):
@@ -387,16 +474,12 @@ def saveStatic(poi):
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
-
-def saveDynamic(poi,valueDict):
+def saveDynamic(poi, valueDict):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
                 for s in static_db.find():
                     if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        project_db.find_one_and_update(
-                            {'_id': c['id']},
-                            {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
                         for r in results_db.find():
                             if r['_id'] == s.get('results').get('01'):
                                 # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
@@ -480,7 +563,6 @@ def saveDynamic(poi,valueDict):
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$set': {'function': {str(i): function['_id']}}}, upsert=True)
-
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 

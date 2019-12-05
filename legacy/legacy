@@ -824,6 +824,13 @@ def displayStruct(self, content):
         self.window.viewDll_tree.addTopLevelItems(dllTree)
         self.window.viewDll_tree.expandAll()
 
+    # Shows ErrRadare window
+    def showErrRadare(self):
+        QMessageBox.question(self, "Error Message: Binary File Property Extraction",
+                             "(Returning any Radare2's error message if there are issues extracting\n"
+                             "properties from the binary file.)",
+                             QMessageBox.Ok)
+
 ========HOW WE HAD IT BEFORE WITH ALL IN THE SAME FILE==================================================================
 =======
 =====================================README=============================================================================
