@@ -72,7 +72,9 @@ def insertToDatabase(name, description, path, properties):
 
         'Dresult': {
 
-        }
+        },
+
+        'name': ''
     }
 
     runs_outcome = runs_db.insert_one(runs)
@@ -622,6 +624,8 @@ def deleteDatabase():
     db.variable.drop()
     db.dll.drop()
     db.struct.drop()
+    db.dynamic.drop()
+    db.runs.drop()
 
 
 # Delete EVERYTHING from plugins
@@ -629,8 +633,8 @@ def deletePluginDatabase():
     db_2.plugins.drop()
 
 
-#----------------------------------Refactored Database DANGER ZONE-----------------------------------------------------
-def saveStatic2(poi,dictionaryList):
+# ----------------------------------Refactored Database DANGER ZONE-----------------------------------------------------
+def saveStatic2(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -792,7 +796,8 @@ def saveStatic2(poi,dictionaryList):
                                         {'_id': s['_id']},
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
-def saveDynamic2(poi,dictionaryList):
+
+def saveDynamic2(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -851,8 +856,24 @@ def saveDynamic2(poi,dictionaryList):
                                     'returnValue': dictionaryList[i]['retValue']
                                 }
                             }
-                            run_outcome = runs_db.insert_one(function)
 
-                            results_db.find_one_and_update(
-                                {'_id': s['_id']},
-                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+                            runs_db.find_one_and_update(
+                                {'_id': d['_id']},
+                                {'$set': {'Dresult': {function}}}, upsert=True)
+
+
+def saveRun(name):
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for d in dynamic_db.find():
+                    if d['_id'] == p.get('dynamic_analysis'):
+                        runs_db.find_one_and_update(
+                            {'_id': d['_id']},
+                            {'$set': {'name': name}}, upsert=True)
+
+                        for r in runs_db.find():
+                            if r['_id'] == d.get('_id'):
+                                dynamic_db.find_one_and_update(
+                                    {'_id': p['_id']},
+                                    {'$push': {'runs': {str(runs_db.count()): r['_id']}}}, upsert=True)
