@@ -8,6 +8,8 @@ db = client['project_data']
 project_db = db['project']
 binary_db = db['binary']
 static_db = db['static']
+dynamic_db = db['dynamic']
+runs_db = db['runs']
 results_db = db['results']
 function_db = db['function']
 string_db = db['string']
@@ -20,11 +22,6 @@ current_db = db_1['current']
 
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
-
-
-def startDatabase():
-    if sys.platform == 'linux':
-        os.system('sudo service mongod start')
 
 
 # Checks if static analysis has been performed on the current selected project
@@ -67,7 +64,30 @@ def insertToDatabase(name, description, path, properties):
             '01': results['_id']
         }
     }
+
     static_outcome = static_db.insert_one(static_analysis)
+
+    runs = {
+        'dynamic_id': '',
+
+        'name': '',
+
+        'Dresult': [
+
+        ]
+    }
+
+    runs_outcome = runs_db.insert_one(runs)
+
+    dynamic_analysis = {
+        'project_id': '',
+
+        'runs': [
+
+        ]
+    }
+
+    dynamic_outcome = dynamic_db.insert_one(dynamic_analysis)
 
     binary = {
         'project_id': '',
@@ -103,9 +123,7 @@ def insertToDatabase(name, description, path, properties):
             '01': static_analysis['_id']
         },
 
-        'dynamic_analysis': {
-            '01': '',
-        }
+        'dynamic_analysis': dynamic_analysis['_id']
     }
     project_outcome = project_db.insert_one(project_data)
 
@@ -118,6 +136,12 @@ def insertToDatabase(name, description, path, properties):
     results_db.find_one_and_update(
         {'_id': results['_id']},
         {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
+    dynamic_db.find_one_and_update(
+        {'_id': dynamic_analysis['_id']},
+        {'$set': {'project_id': project_data['_id']}}, upsert=True)
+    runs_db.find_one_and_update(
+        {'_id': runs['_id']},
+        {'$set': {'dynamic_id': dynamic_analysis['_id']}}, upsert=True)
 
 
 # ---- Setters for the database (sets the current project and window title) --------------------------------------
@@ -258,6 +282,29 @@ def getPoi(poi):
     return entries
 
 
+# Displays the pois from dynamic
+def getDynamicPoi():
+    entries = []
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for d in dynamic_db.find():
+                    if type(d['project_id']) == list:
+                        for i in range(len(d['project_id'])):
+                            if d['project_id'][i] == p['_id']:
+                                for r in runs_db.find():
+                                    # print(d['runs'][i].keys())
+                                    for key in d['runs'][i].keys():
+                                        if key == r.get('name'):
+                                            content = r.get('Dresult')
+                                            try:
+                                                entries.append(content)
+                                            except TypeError:
+                                                pass
+    print(entries)
+    return entries
+
+
 # Gets the pois from given plugin that will be used in filtering out a specified poi type
 def getFilterPoi(plugin):
     for p in plugin_db.find():
@@ -318,8 +365,7 @@ def saveComment(comment, poiName, dropText):
         upsert=False)
 
 
-# Gets and saves Static Analysis results into database
-def saveStatic(poi):
+def saveStatic(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -335,33 +381,41 @@ def saveStatic(poi):
                                     parameters = []
                                     local = []
                                     try:
-                                        for j in range(len(poi[0][i]['regvars'])):
-                                            info = {
-                                                'name': poi[0][i]['regvars'][j]['name'],
-                                                'type': poi[0][i]['regvars'][j]['type'],
-                                                'value': ''
-                                            }
+                                        for j in range(dictionaryList[i]['argNum']):
+                                            if dictionaryList[i]['argNum'] > 0:
+
+                                                info = {
+                                                    'name': dictionaryList[i]['argName'][j],
+                                                    'type': dictionaryList[i]['argType'][j],
+                                                    'value': ''
+                                                }
+                                            else:
+                                                info = {
+                                                    'name': '',
+                                                    'type': '',
+                                                    'value': ''
+                                                }
                                             parameters.append(info)
-                                    except KeyError:
+                                    except (KeyError, IndexError):
                                         continue
 
                                     try:
-                                        for j in range(len(poi[0][i]['spvars'])):
-                                            if j >= poi[0][i]['nlocals']:
+                                        for j in range(dictionaryList[i]['locNum']):
+                                            if dictionaryList[i]['locNum'] > 0:
                                                 info = {
-                                                    'name': poi[0][i]['spvars'][j]['name'],
-                                                    'type': poi[0][i]['spvars'][j]['type'],
+                                                    'name': dictionaryList[i]['locName'][j],
+                                                    'type': dictionaryList[i]['locType'][j],
                                                     'value': ''
                                                 }
-                                                parameters.append(info)
                                             else:
                                                 info = {
-                                                    'name': poi[0][i]['spvars'][j]['name'],
-                                                    'type': poi[0][i]['spvars'][j]['type'],
+                                                    'name': '',
+                                                    'type': '',
                                                     'value': ''
                                                 }
-                                                local.append(info)
-                                    except KeyError:
+
+                                            local.append(info)
+                                    except (KeyError, IndexError):
                                         continue
 
                                     function = {
@@ -474,95 +528,86 @@ def saveStatic(poi):
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
-def saveDynamic(poi, valueDict):
+def saveDynamic(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
-                                for i in range(len(poi[0])):
-                                    parameters = []
-                                    local = []
-                                    returnVal = []
-                                    for j in range(len(valueDict)):
-                                        print("loop1")
-                                        try:
-                                            for k in range(valueDict[j]['argNum']):
-                                                print("loop2")
-                                                try:
-
-                                                    info = {
-                                                        'name': valueDict[j]['argName'][k],
-                                                        'type': valueDict[j]['argType'][k],
-                                                        'value': valueDict[j]['argVal'][k]
-                                                    }
-                                                    parameters.append(info)
-                                                except:
-                                                    continue
-                                        except:
-                                            continue
-
-                                    try:
-                                        for j in range(len(valueDict)):
-                                            print("loop3")
-                                            try:
-                                                for k in range(valueDict[j]['locNum']):
-                                                    print("loop4")
-                                                    try:
-                                                        info = {
-                                                            'name': valueDict[j]['locName'][k],
-                                                            'type': valueDict[j]['locType'][k],
-                                                            'value': valueDict[j]['locVal'][k]
-                                                        }
-                                                        local.append(info)
-                                                    except:
-                                                        continue
-
-                                            except:
-                                                continue
-                                    except:
-                                        continue
-
-                                    try:
-                                        for j in range(len(valueDict)):
-                                            print("loop5")
-                                            print(valueDict[j])
-                                            print(type(valueDict[j]['retValue']))
-                                            if valueDict[j]['retValue']:
-                                                info = {
-                                                    'value': valueDict[j]['retValue']
-                                                }
-                                            else:
-                                                info = {
-                                                    'value': "NULL"
-                                                }
-                                            returnVal.append(info)
-                                    except:
-                                        continue
-
-                                    # if not returnVal:
-                                    #     returnVal.append({'value': "Not Found"})
-                                    function = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[0][i]['name'],
-                                        'data': {
-                                            'name': poi[0][i]['name'],
-                                            'signature': poi[0][i]['signature'],
-                                            'parameters': parameters,
-                                            'locals': local,
-                                            'returnType': '',
-                                            'returnValue': returnVal[i]['value']
+                for d in dynamic_db.find():
+                    if d['_id'] == p.get('dynamic_analysis'):
+                        # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
+                        for i in range(len(poi[0])):
+                            parameters = []
+                            local = []
+                            try:
+                                for j in range(dictionaryList[i]['argNum']):
+                                    if dictionaryList[i]['argNum'] > 0:
+                                        info = {
+                                            'name': dictionaryList[i]['argName'][j],
+                                            'type': dictionaryList[i]['argType'][j],
+                                            'value': dictionaryList[i]['argVal'][j]
                                         }
-                                    }
-                                    function_outcome = function_db.insert_one(function)
+                                    else:
+                                        info = {
+                                            'name': '',
+                                            'type': '',
+                                            'value': ''
+                                        }
+                                    parameters.append(info)
+                            except (KeyError):
+                                continue
 
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
+                            try:
+                                for j in range(dictionaryList[i]['locNum']):
+                                    if dictionaryList[i]['locNum'] > 0:
+                                        info = {
+                                            'name': dictionaryList[i]['locName'][j],
+                                            'type': dictionaryList[i]['locType'][j],
+                                            'value': dictionaryList[i]['locVal'][j]
+                                        }
+                                    else:
+                                        info = {
+                                            'name': '',
+                                            'type': '',
+                                            'value': ''
+                                        }
+
+                                    local.append(info)
+                            except (KeyError):
+                                continue
+
+                            function = {
+                                'comment': '',
+                                'name': poi[0][i]['name'],
+                                'data': {
+                                    'name': poi[0][i]['name'],
+                                    'signature': poi[0][i]['signature'],
+                                    'parameters': parameters,
+                                    'locals': local,
+                                    'returnType': '',
+                                    'returnValue': dictionaryList[i]['retValue']
+                                }
+                            }
+
+                            runs_db.find_one_and_update(
+                                {'_id': d['_id']},
+                                {'$push': {'Dresult': {str(i): function}}}, upsert=True)
+
+
+def saveRun(name):
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for d in dynamic_db.find():
+                    if d['_id'] == p.get('dynamic_analysis'):
+                        runs_db.find_one_and_update(
+                            {'_id': d['_id']},
+                            {'$set': {'name': name}})
+
+                        for r in runs_db.find():
+                            if r['_id'] == d.get('_id'):
+                                dynamic_db.find_one_and_update(
+                                    {'_id': p['_id']},
+                                    {'$push': {'project_id': p['_id'], 'runs': {name: r['_id']}}}, upsert=True)
 
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
@@ -600,6 +645,8 @@ def deleteDatabase():
     db.variable.drop()
     db.dll.drop()
     db.struct.drop()
+    db.dynamic.drop()
+    db.runs.drop()
 
 
 # Delete EVERYTHING from plugins

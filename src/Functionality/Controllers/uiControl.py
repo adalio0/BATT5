@@ -163,8 +163,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
                 path = getCurrentFilePath() # Get the path of the binary file and run static analysis
                 poi = staticAnalysis(path)
+                funcList = []
+                for i in range(len(poi[0])):
+                    funcList.append(poi[0][i]['name'])
+                dictList = historicAnalysis(path,funcList)
+                print(dictList)
 
-                saveStatic(poi) # Save the results of static into the database
+                saveStatic(poi, dictList) # Save the results of static into the database
                 self.displayPoi()
             else:
                 self.displayPoi()
@@ -180,10 +185,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             funcList.append(poi[0][i]['name'])
 
         valueList = historicAnalysis(path, funcList)
-        valueList2 = dynamicAnalysis(path, valueList)
+        valueList2 = refactoredDynamic(path, valueList)
         print(valueList2)
-
         saveDynamic(poi, valueList2)
+
         self.displayPoi()
         self.enable()
         choice = QMessageBox.question(self, 'Save Dynamic Run', 'Do You Want to Save This Dynamic Analysis Run?',
@@ -191,7 +196,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if choice == QMessageBox.Yes:
             runName, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
             if okPressed and runName != '':
-                print(runName)
+                saveRun(runName)
+                getDynamicPoi()
 
     def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()
