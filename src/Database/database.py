@@ -301,7 +301,6 @@ def getDynamicPoi():
                                                 entries.append(content)
                                             except TypeError:
                                                 pass
-    print(entries)
     return entries
 
 
@@ -519,98 +518,6 @@ def saveStatic(poi):
                                     results_db.find_one_and_update(
                                         {'_id': s['_id']},
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
-
-
-def saveDynamic(poi, valueDict):
-    for c in current_db.find():
-        for p in project_db.find():
-            if p['_id'] == c.get('id'):
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
-                                for i in range(len(poi[0])):
-                                    parameters = []
-                                    local = []
-                                    returnVal = []
-                                    for j in range(len(valueDict)):
-                                        print("loop1")
-                                        try:
-                                            for k in range(valueDict[j]['argNum']):
-                                                print("loop2")
-                                                try:
-
-                                                    info = {
-                                                        'name': valueDict[j]['argName'][k],
-                                                        'type': valueDict[j]['argType'][k],
-                                                        'value': valueDict[j]['argVal'][k]
-                                                    }
-                                                    parameters.append(info)
-                                                except:
-                                                    continue
-                                        except:
-                                            continue
-
-                                    try:
-                                        for j in range(len(valueDict)):
-                                            print("loop3")
-                                            try:
-                                                for k in range(valueDict[j]['locNum']):
-                                                    print("loop4")
-                                                    try:
-                                                        info = {
-                                                            'name': valueDict[j]['locName'][k],
-                                                            'type': valueDict[j]['locType'][k],
-                                                            'value': valueDict[j]['locVal'][k]
-                                                        }
-                                                        local.append(info)
-                                                    except:
-                                                        continue
-
-                                            except:
-                                                continue
-                                    except:
-                                        continue
-
-                                    try:
-                                        for j in range(len(valueDict)):
-                                            print("loop5")
-                                            print(valueDict[j])
-                                            print(type(valueDict[j]['retValue']))
-                                            if valueDict[j]['retValue']:
-                                                info = {
-                                                    'value': valueDict[j]['retValue']
-                                                }
-                                            else:
-                                                info = {
-                                                    'value': "NULL"
-                                                }
-                                            returnVal.append(info)
-                                    except:
-                                        continue
-
-                                    # if not returnVal:
-                                    #     returnVal.append({'value': "Not Found"})
-                                    function = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[0][i]['name'],
-                                        'data': {
-                                            'name': poi[0][i]['name'],
-                                            'signature': poi[0][i]['signature'],
-                                            'parameters': parameters,
-                                            'locals': local,
-                                            'returnType': '',
-                                            'returnValue': returnVal[i]['value']
-                                        }
-                                    }
-                                    function_outcome = function_db.insert_one(function)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$set': {'function': {str(i): function['_id']}}}, upsert=True)
-
 
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 
