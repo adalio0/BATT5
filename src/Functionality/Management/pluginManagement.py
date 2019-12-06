@@ -79,7 +79,7 @@ def savePluginManual(ui, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit):
                              QMessageBox.Ok)
         return 0
     else:
-        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text(),)
+        pluginDict = convertPluginManual(dpmPluginName_lineEdit.text(), dpmPluginDesc_lineEdit.text())
         savePlugin(pluginDict)
 
 # ---------------- Plugin Modification ----------------

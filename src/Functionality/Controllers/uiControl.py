@@ -3,8 +3,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.Functionality.newProjectControl import ProjectWindow
-from src.Functionality.documentationControl import DocumentationWindow
+from src.Functionality.Controllers.newProjectControl import ProjectWindow
+from src.Functionality.Controllers.documentationControl import DocumentationWindow
 from src.Functionality.Analysis.staticAnalysis import staticAnalysis, historicAnalysis
 from src.Functionality.Analysis.radareTerminal import Terminal
 from src.Functionality.Management.pluginManagement import *
@@ -183,6 +183,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         saveDynamic(poi, valueList2)
         self.displayPoi()
         self.enable()
+        choice = QMessageBox.question(self, 'Save Dynamic Run', 'Do You Want to Save This Dynamic Analysis Run?',
+                                      QMessageBox.Yes | QMessageBox.No)
+        if choice == QMessageBox.Yes:
+            text, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
+            if okPressed and text != '':
+                print(text)
 
     def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()
@@ -448,14 +454,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.callDeletePoiFromPlugin()
 
     def showFileExplorer(self): # Open up file explorer to select a file for Plugin predefined line edit
-        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        path = Path(__file__).parents[3].as_posix() + '/Configurations/Sample Configurations'
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
     def showFileExplorer_predefined(self):     # Open up file explorer to select a file for Poi predefined line edit
-        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        path = Path(__file__).parents[3].as_posix() + '/Configurations/Sample Configurations'
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
