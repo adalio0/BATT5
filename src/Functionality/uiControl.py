@@ -13,6 +13,7 @@ from src.Functionality.Analysis.dynamicAnalysis import *
 from src.Functionality.Display.displayPointsOfInterests import *
 from src.Functionality.Display.displayManagement import *
 
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
@@ -21,72 +22,73 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.showMaximized()
 
         # ---- Main Window --------------------------------------------------------------------------------------------
-        self.populateProjectBox()                                                               # display project list
-        self.populatePluginFields()                                                             # display plugins
-        self.setProject()                                                                       # set current project
+        self.populateProjectBox()  # display project list
+        self.populatePluginFields()  # display plugins
+        self.setProject()  # set current project
 
         # ---- Menu Bar -----------------------------------------------------------------------------------------------
-        self.window.actionNew_Project.setShortcut("Ctrl+N")                                     # open new project
+        self.window.actionNew_Project.setShortcut("Ctrl+N")  # open new project
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
-        self.window.actionDocumentation.setShortcut("Ctrl+D")                                   # open documentation
-        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)         #\
+        self.window.actionDocumentation.setShortcut("Ctrl+D")  # open documentation
+        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)  # \
 
         # ---- Analysis Tab --------------------------------------------------------------------------------------------
-        self.window.commentSave_button.clicked.connect(self.callSaveComment)                    # save comment
-        self.window.commentClear_button.clicked.connect(self.clearComment)                      # clear comment
-        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)         # disp proj properties
+        self.window.commentSave_button.clicked.connect(self.callSaveComment)  # save comment
+        self.window.commentClear_button.clicked.connect(self.clearComment)  # clear comment
+        self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)  # disp proj properties
 
-        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
+        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # right-click project
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
-        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)                    # run static
-        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)                     # run dynamic
-        self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)                     # expand/collapse poi
+        self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)  # run static
+        self.window.runDynamicAnalysis_button.clicked.connect(self.disable)  # run dynamic
+        self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)  # expand/collapse poi
 
-        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
+        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # right-click project
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
         # ---- Search Functions ----------------------------------------------------------------------------------------
-        self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)          # search project list
-        self.window.poiSearch_lineEdit.textChanged.connect(self.callSearchPoi)                  # search poi list
-        self.window.pluginManagementSearch_lineEdit.textChanged.connect(self.callSearchPluginM) # search plugin list
-        self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)        # search mngmt poi list
+        self.window.projectSearch_lineEdit.textChanged.connect(self.callSearchProject)  # search project list
+        self.window.poiSearch_lineEdit.textChanged.connect(self.callSearchPoi)  # search poi list
+        self.window.pluginManagementSearch_lineEdit.textChanged.connect(self.callSearchPluginM)  # search plugin list
+        self.window.poiManagementSeach_lineEdit.textChanged.connect(self.callSearchPoiM)  # search mngmt poi list
 
         # ---- Comment Functionality ----------------------------------------------------------------------------------
-        self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)               # view comment from list
-        self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)            # view comment from tree
+        self.window.poi_list.itemSelectionChanged.connect(self.callHighlightTree)  # view comment from list
+        self.window.viewFunc_tree.currentItemChanged.connect(self.callHighlightList)  # view comment from tree
         self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewVar_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewDll_tree.currentItemChanged.connect(self.callHighlightList)
 
         # ---- Filters ------------------------------------------------------------------------------------------------
-        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)               # display POI by type
+        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)  # display POI by type
 
         # ---- Console ------------------------------------------------------------------------------------------------
-        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)           # execute r2 cmd
+        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)  # execute r2 cmd
 
         # ---- Management Tab -----------------------------------------------------------------------------------------
-        self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)            # browse plugin struct
-        self.window.saveXMLPlugin_button.clicked.connect(self.callSavePluginXML)                # new plugin from xml
-        self.window.saveManualPlugin_button.clicked.connect(self.callSavePluginManual)          # new plugin manual
-        self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)    # browse poi structure
+        self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)  # browse plugin struct
+        self.window.saveXMLPlugin_button.clicked.connect(self.callSavePluginXML)  # new plugin from xml
+        self.window.saveManualPlugin_button.clicked.connect(self.callSavePluginManual)  # new plugin manual
+        self.window.dpoimPredefined_button.clicked.connect(self.showFileExplorer_predefined)  # browse poi structure
         self.window.pluginManagement_list.itemSelectionChanged.connect(self.callDisplayPlugin)  # display plugin
-        self.window.clearManualPlugin_button.clicked.connect(self.callDeselectPlugin)           # de-select plugin
-        self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)            # clear manual txt
-        self.window.savePoi_button.clicked.connect(self.callAddPoiToPlugin)                     # save poi to plugin
-        self.window.savePredefPoi_button.clicked.connect(self.callAddPoiToPluginXml)            # save poi to plugin xml
-        self.window.addPoiType_dropdown.currentIndexChanged.connect(self.callDisplayPoiFromPlugin)  # disp poi from plugin
-        self.window.clearPoiAll_button.clicked.connect(self.newManualPoiTemplate)               # clear manual poi
-        self.window.clearPredefPoi_button.clicked.connect(self.newXMLPoiTemplate)               # clear xml poi
+        self.window.clearManualPlugin_button.clicked.connect(self.callDeselectPlugin)  # de-select plugin
+        self.window.clearXMLPlugin_button.clicked.connect(self.newXMLPluginTemplate)  # clear manual txt
+        self.window.savePoi_button.clicked.connect(self.callAddPoiToPlugin)  # save poi to plugin
+        self.window.savePredefPoi_button.clicked.connect(self.callAddPoiToPluginXml)  # save poi to plugin xml
+        self.window.addPoiType_dropdown.currentIndexChanged.connect(
+            self.callDisplayPoiFromPlugin)  # disp poi from plugin
+        self.window.clearPoiAll_button.clicked.connect(self.newManualPoiTemplate)  # clear manual poi
+        self.window.clearPredefPoi_button.clicked.connect(self.newXMLPoiTemplate)  # clear xml poi
 
-        self.window.poiManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)        # delete poi management
+        self.window.poiManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # delete poi management
         self.window.poiManagement_list.customContextMenuRequested.connect(self.rightClickOnPoi)
-        self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # delete plugin
+        self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # delete plugin
         self.window.pluginManagement_list.customContextMenuRequested.connect(self.rightClickOnPlugin)
 
         # ---- Other --------------------------------------------------------------------------------------------------
-        self.window.switchToHistory_button.clicked.connect(self.switchViews)                    # switch views
-        self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)                      # check pois
+        self.window.switchToHistory_button.clicked.connect(self.switchViews)  # switch views
+        self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)  # check pois
 
     # Initialize the project box with all the current projects from database
     def populateProjectBox(self):
@@ -203,8 +205,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(len(poi[0])):
             funcList.append(poi[0][i]['name'])
 
-        valueList = historicAnalysis(path,funcList)
-        valueList2 = dynamicAnalysis(path,valueList)
+        valueList = historicAnalysis(path, funcList)
+        valueList2 = dynamicAnalysis(path, valueList)
         print(valueList2)
 
         saveDynamic(poi, valueList2)
@@ -242,7 +244,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.pluginSelection_dropdown.currentText() == 'None':
             displayPoiController(poi, currTree, self.window.poi_list, content, self.window.comment_text)
         else:
-            displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content, self.window.comment_text)
+            displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
     # Takes input from user and passes it to the terminal
@@ -404,7 +407,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     # Save a manually inputted plugin into the database
     def callSavePluginManual(self):
         if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,)
+            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit, )
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
             modifyPlugin(self, self.window.pluginManagement_list.currentItem().text(),
                          self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text())
@@ -437,9 +440,11 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def callDisplayPlugin(self):
         name, description, poi = getCurrentPlugin(self.window.pluginManagement_list.currentItem().text())
         displayPlugin(name, description, self.window.pluginManagement_list, self.window.addPoiType_dropdown,
-              self.window.pluginEditingStatus_label, self.window.addPoiXML_label, self.window.addPoiManual_label,
-              self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
-              self.window.saveManualPlugin_button, self.window.clearManualPlugin_button, self.window.addPluginXml_frame)
+                      self.window.pluginEditingStatus_label, self.window.addPoiXML_label,
+                      self.window.addPoiManual_label,
+                      self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
+                      self.window.saveManualPlugin_button, self.window.clearManualPlugin_button,
+                      self.window.addPluginXml_frame)
         self.callDisplayPoiFromPlugin()
 
     # Displays all pois associated with the clicked plugin
@@ -556,12 +561,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         elif poiType == 'DLL':
             return self.window.viewDll_tree
 
+
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application = ApplicationWindow()
     application.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,16 @@
+Shortcuts
+
+Main Window
+	ctrl+N:
+		Opens New Project Window
+	ctrl+D
+		Opens Documentation Window
+	ctrl+tab
+		Switches between Analysis tab and 			Management tab
+
+Documentation Window
+	ctrl+S
+		Saves document you are currently editing
+
+
+
