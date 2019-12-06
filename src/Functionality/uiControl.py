@@ -29,18 +29,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.actionNew_Project.setShortcut("Ctrl+N")                                     # open new project
         self.window.actionNew_Project.triggered.connect(self.showNewProject)
         self.window.actionDocumentation.setShortcut("Ctrl+D")                                   # open documentation
-        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)         #\
+        self.window.actionDocumentation.triggered.connect(self.showDocumentationWindow)
 
         # ---- Analysis Tab --------------------------------------------------------------------------------------------
         self.window.commentSave_button.clicked.connect(self.callSaveComment)                    # save comment
         self.window.commentClear_button.clicked.connect(self.clearComment)                      # clear comment
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)         # disp proj properties
-
-        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
-        self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
-
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)                    # run static
+        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)               # display POI by type
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)                     # run dynamic
+        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)           # execute r2 cmd
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)                     # expand/collapse poi
 
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
@@ -58,12 +56,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.viewString_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewVar_tree.currentItemChanged.connect(self.callHighlightList)
         self.window.viewDll_tree.currentItemChanged.connect(self.callHighlightList)
-
-        # ---- Filters ------------------------------------------------------------------------------------------------
-        self.window.poiType_dropdown.currentIndexChanged.connect(self.displayPoi)               # display POI by type
-
-        # ---- Console ------------------------------------------------------------------------------------------------
-        self.window.radareConsoleIn_lineEdit.returnPressed.connect(self.inputCommand)           # execute r2 cmd
 
         # ---- Management Tab -----------------------------------------------------------------------------------------
         self.window.dpmPluginStructure_button.clicked.connect(self.showFileExplorer)            # browse plugin struct
@@ -88,8 +80,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.switchToHistory_button.clicked.connect(self.switchViews)                    # switch views
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)                      # check pois
 
-    # Initialize the project box with all the current projects from database
-    def populateProjectBox(self):
+    def populateProjectBox(self):    # Initialize the project box with all the current projects from database
         projects = getProjects()
         projectTree = []
         for i in range(len(projects)):
@@ -97,12 +88,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         tree = self.window.projectNavigator_tree
         tree.addTopLevelItems(projectTree)
 
-    # Changes the project description according to the current project from database
-    def setProject(self):
+    def setProject(self):       # Changes the project description according to the current project from database
         selected = self.window.projectNavigator_tree.selectedItems()
-
-        # Get the properties and name of the selected project
-        text, binaryPath = setCurrentProject(selected)
+        text, binaryPath = setCurrentProject(selected) # Get the properties and name of the selected project
         current = setWindowTitle()
         self.setWindowTitle("BATT5 - " + current)
         try:
@@ -111,12 +99,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except IndexError:
             pass
 
-        # Populate the properties box with the current project
-        self.window.projectProperties_text.setHtml(text)
+        self.window.projectProperties_text.setHtml(text) # Populate the properties box with the current project
         self.window.projectProperties_text_h.setHtml("<b> Current Project </b>: " + current + "<br>" + text)
 
-        # Checks if static has already been performed, if so unlock dynamic and display poi
-        if checkStatic():
+        if checkStatic(): # Checks if static has already been performed
             self.window.runDynamicAnalysis_button.setEnabled(True)
             self.window.commentSave_button.setEnabled(True)
             self.displayPoi()
@@ -125,28 +111,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.window.commentSave_button.setEnabled(False)
             self.displayPoi()
 
-        # Set up command prompt
         self.terminal = Terminal(binaryPath, self.window.radareConsoleIn_lineEdit, self.window.radareConsoleOut_text,
-                                 self.window.recentCmd_text)
+                                 self.window.recentCmd_text) # Set up command prompt
         self.window.recentCmd_text.clear()
 
-    # Initialize every field that involve plugins with all the current plugins from database
-    def populatePluginFields(self):
+    def populatePluginFields(self): # Initialize every field that involve plugins with all the current plugins
         plugins = getPlugins()
-
-        # plugin management list
         self.window.pluginManagement_list.clear()
         self.window.pluginManagement_list.addItems(plugins)
 
-        # plugin dropdown menu
         self.window.pluginSelection_dropdown.clear()
         self.window.pluginSelection_dropdown.addItem('None')
         self.window.pluginSelection_dropdown.addItems(plugins)
 
     # ---- Following methods provide all the search functionality in the analysis tab --------------------------
-
-    # Search functionality for the project box
-    def callSearchProject(self):
+    def callSearchProject(self): # Search functionality for the project box
         try:
             searchProject(str(self.window.projectSearch_lineEdit.text()), self.window.projectNavigator_tree)
             if not self.window.projectSearch_lineEdit.text():
@@ -154,16 +133,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
-    # Search functionality for the poi box
-    def callSearchPoi(self):
+    def callSearchPoi(self): # Search functionality for the poi box
         try:
             searchPoi(str(self.window.poiSearch_lineEdit.text()), self.window.poi_list,
                       self.window.poiType_dropdown.currentText())
         except AttributeError:
             pass
 
-    # for display comment and highlighting
-    def callHighlightTree(self):
+    def callHighlightTree(self): # for display comment and highlighting
         if self.window.poi_list.selectedItems():
             itemIndex = self.window.poi_list.currentRow()
             currTree = self.getCurrentTree()
@@ -175,19 +152,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                    self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving static analysis -------------------------------
-    # runs Static Analysis w/ database stuff
-    def runStatic(self):
+    def runStatic(self): # runs Static Analysis w/ database stuff
         if self.window.projectNavigator_tree.currentItem():
             if not checkStatic():
                 self.window.runDynamicAnalysis_button.setEnabled(True)
                 self.window.commentSave_button.setEnabled(True)
 
-                # Get the path of the binary file and run static analysis
-                path = getCurrentFilePath()
+                path = getCurrentFilePath() # Get the path of the binary file and run static analysis
                 poi = staticAnalysis(path)
 
-                # Save the results of static into the database
-                saveStatic(poi)
+                saveStatic(poi) # Save the results of static into the database
                 self.displayPoi()
             else:
                 self.displayPoi()
@@ -195,8 +169,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             QMessageBox.question(self, "Error Message: No Project selected",
                                  "A project has not been selected, cannot perform Static Analysis.", QMessageBox.Ok)
 
-    # runs Dynamic analysis with database stuff
-    def runDynamic(self):
+    def runDynamic(self): # runs Dynamic analysis with database stuff
         path = getCurrentFilePath()
         poi = staticAnalysis(path)
         funcList = []
@@ -211,8 +184,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.displayPoi()
         self.enable()
 
-    # Displays POIs in the Analysis box
-    def displayPoi(self):
+    def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()
         self.window.viewString_tree.clear()
         self.window.viewVar_tree.clear()
@@ -223,8 +195,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         content = getPoi(poi)
         filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
         currTree = self.getCurrentTree()
-        # switch tree
-        if poi == 'Function':
+        if poi == 'Function': # switch tree
             self.window.viewPoi_stack.setCurrentIndex(0)
             if self.window.changeViews_stack.currentIndex() == 1:
                 self.disableCheck()
@@ -238,36 +209,29 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.viewPoi_stack.setCurrentIndex(2)
             elif poi == 'DLL':
                 self.window.viewPoi_stack.setCurrentIndex(3)
-        # call function to display poi's
-        if self.window.pluginSelection_dropdown.currentText() == 'None':
+        if self.window.pluginSelection_dropdown.currentText() == 'None': # call function to display poi's
             displayPoiController(poi, currTree, self.window.poi_list, content, self.window.comment_text)
         else:
             displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content, self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
-    # Takes input from user and passes it to the terminal
-    def inputCommand(self):
+    def inputCommand(self): # Takes input from user and passes it to the terminal
         cmd_in = str(self.window.radareConsoleIn_lineEdit.text())
         self.terminal.processInput(cmd_in)
         self.window.radareConsoleIn_lineEdit.clear()
 
     # ---- Following methods are for deleting a project from the database -------------------
-    # Provides the functionality to delete a project by right clicking on it
-    def rightClickOnProject(self, point):
-        # Infos about the node selected.
-        index = self.window.projectNavigator_tree.indexAt(point)
+    def rightClickOnProject(self, point): # Provides the functionality to delete a project by right clicking on it
+        index = self.window.projectNavigator_tree.indexAt(point) # Infos about the node selected.
 
         if not index.isValid():
             return
 
-        # We build the menu.
-        menu = QtWidgets.QMenu()
-
+        menu = QtWidgets.QMenu() # We build the menu
         menu.addAction("Delete", self.showConfirmationDeleteProject)
         menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
-    # Deletes a project
-    def callDeleteProject(self):
+    def callDeleteProject(self): # Deletes a project
         if self.window.projectNavigator_tree.currentItem():
             project = self.window.projectNavigator_tree.currentItem().text(0)
             deleteAProject(project)
@@ -276,9 +240,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populateProjectBox()
 
     # ---- Following methods are for calling and showing the different windows in the analysis tab ------------------
-
-    # Shows NewProject window
-    def showNewProject(self):
+    def showNewProject(self): # Shows NewProject window
         self.ui = ProjectWindow()
         if self.ui.exec_() == ProjectWindow.Accepted:
             self.window.projectNavigator_tree.clear()
@@ -287,28 +249,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 self.window.projectNavigator_tree.topLevelItem(
                     self.window.projectNavigator_tree.topLevelItemCount() - 1))
 
-    # Shows confirmation to delete project
-    def showConfirmationDeleteProject(self):
+    def showConfirmationDeleteProject(self): # Shows confirmation to delete project
         name = self.window.projectNavigator_tree.currentItem().text(0)
         choice = QMessageBox.question(self, 'Warning', "Are you sure you want to delete project: {}?".format(name),
                                       QMessageBox.Yes | QMessageBox.Cancel)
         if choice == QMessageBox.Yes:
             self.callDeleteProject()
 
-    # Shows ErrFile window
-    def showErrFile(self):
+    def showErrFile(self): # Shows ErrFile window
         QMessageBox.question(self, "Error Message: File Specified",
                              "A project is associated with one binary file and cannot be saved \n"
                              "without a binary file. Please provide a binary file.", QMessageBox.Ok)
 
-    # Shows Documentation window
-    def showDocumentationWindow(self):
+    def showDocumentationWindow(self): # Shows Documentation window
         self.ui = DocumentationWindow()
         self.ui.exec_()
 
     # ---- Following methods are for misc. stuff in the analysis tab ---------------------------------------
-    # Save a comment in the currently clicked poi from the poi list
-    def callSaveComment(self):
+    def callSaveComment(self): # Save a comment in the currently clicked poi from the poi list
         if self.window.poi_list.currentItem():
             currTree = self.getCurrentTree()
             saveComment(self.window.comment_text.toPlainText(), self.window.poi_list.currentItem().text(),
@@ -320,20 +278,16 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 addIcon(self.window.poi_list.currentItem())
                 addIconTree(currTree, self.window.poi_list.currentItem())
 
-    # Clear comment text
-    def clearComment(self):
+    def clearComment(self): # Clear comment text
         self.window.comment_text.clear()
 
-    # enable checkbox
-    def enableCheck(self):
+    def enableCheck(self): # enable checkbox
         self.window.check_allpoi.setCheckable(True)
 
-    # disable checkbox
-    def disableCheck(self):
+    def disableCheck(self): # disable checkbox
         self.window.check_allpoi.setCheckable(False)
 
-    # Check or Uncheck poi List
-    def checkstate_poi(self):
+    def checkstate_poi(self): # Check or Uncheck poi List
         for i in range(self.window.poi_list.count()):
             item = self.window.poi_list.item(i)
             if not item.isHidden():
@@ -342,8 +296,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 elif self.window.check_allpoi.checkState() == 0:
                     item.setCheckState(QtCore.Qt.Unchecked)
 
-    # From current to history
-    def switchViews(self):
+    def switchViews(self): # From current to history
         text = self.window.switchToHistory_button.text()
         if text == 'Switch to History View':
             self.window.changeViews_stack.setCurrentIndex(1)
@@ -394,15 +347,12 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             pass
 
     # ---- Following methods are for saving/creating a new plugin or poi based on predefined or manual input -------
-
-    # Save a predefined plugin into the database
-    def callSavePluginXML(self):
+    def callSavePluginXML(self): # Save a predefined plugin into the database
         savePluginXML(self, self.window.dpmPluginStructure_lineEdit)
         self.populatePluginFields()
         self.newXMLPluginTemplate()
 
-    # Save a manually inputted plugin into the database
-    def callSavePluginManual(self):
+    def callSavePluginManual(self): # Save a manually inputted plugin into the database
         if self.window.saveManualPlugin_button.text() == 'Save':
             savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
@@ -411,30 +361,25 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.populatePluginFields()
         self.callDeselectPlugin()
 
-    # Clears the labels that are used for creating a new predefined plugin to create a new plugin
-    def newXMLPluginTemplate(self):
+    def newXMLPluginTemplate(self): # Clears the labels that are used for creating a new predefined plugin to create one
         self.window.dpmPluginStructure_lineEdit.clear()
         self.window.pluginManagement_list.clearSelection()
 
-    # Clears the labels that are used for creating a new plugin to create a new plugin
-    def callDeselectPlugin(self):
+    def callDeselectPlugin(self): # Clears the labels that are used for creating a new plugin to create a new plugin
         deselectPlugin(self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,
                        self.window.pluginManagement_list, self.window.pluginEditingStatus_label,
                        self.window.addPoiXML_label, self.window.addPoiManual_label, self.window.saveManualPlugin_button,
                        self.window.clearManualPlugin_button, self.window.poiManagement_list,
                        self.window.addPluginXml_frame)
 
-    # Clears the labels that are used for creating a new predefined poi set to create a new poi set
-    def newXMLPoiTemplate(self):
+    def newXMLPoiTemplate(self): # Clears the labels that are used for creating a new predefined poi set
         self.window.dpoimPredefined_lineEdit.clear()
 
-    # Clears the labels that are used for creating a new predefined poi to create a new poi
-    def newManualPoiTemplate(self):
+    def newManualPoiTemplate(self): # Clears the labels that are used for creating a new predefined poi
         self.window.addPoiName_lineEdit.clear()
 
     # ---- Following methods are for displaying a plugin and a plugin's poi in the management tab ----------------
-    # Displays a detailed view of a plugin when it is clicked
-    def callDisplayPlugin(self):
+    def callDisplayPlugin(self): # Displays a detailed view of a plugin when it is clicked
         name, description, poi = getCurrentPlugin(self.window.pluginManagement_list.currentItem().text())
         displayPlugin(name, description, self.window.pluginManagement_list, self.window.addPoiType_dropdown,
               self.window.pluginEditingStatus_label, self.window.addPoiXML_label, self.window.addPoiManual_label,
@@ -442,26 +387,20 @@ class ApplicationWindow(QtWidgets.QMainWindow):
               self.window.saveManualPlugin_button, self.window.clearManualPlugin_button, self.window.addPluginXml_frame)
         self.callDisplayPoiFromPlugin()
 
-    # Displays all pois associated with the clicked plugin
-    def callDisplayPoiFromPlugin(self):
+    def callDisplayPoiFromPlugin(self): # Displays all pois associated with the clicked plugin
         displayPoiFromPlugin(self.window.poiManagement_list, self.window.pluginManagement_list,
                              self.window.addPoiType_dropdown, self.window.addPoiManual_label)
 
     # ---- Following methods are for deleting a plugin or poi from the database in the management tab --------------
-
-    # Provides the functionality to delete a plugin by right clicking on it
-    def rightClickOnPlugin(self, point):
-        # Infos about the node selected.
-        index = self.window.pluginManagement_list.indexAt(point)
+    def rightClickOnPlugin(self, point): # Provides the functionality to delete a plugin by right clicking on it
+        index = self.window.pluginManagement_list.indexAt(point) # Infos about the node selected.
         if not index.isValid():
             return
-        # We build the menu.
-        menu = QtWidgets.QMenu()
+        menu = QtWidgets.QMenu() # We build the menu.
         menu.addAction("Delete", self.showConfirmationDeletePlugin)
         menu.exec_(self.window.pluginManagement_list.mapToGlobal(point))
 
-    # Deletes a plugin
-    def callDeletePlugin(self):
+    def callDeletePlugin(self): # Deletes a plugin
         if self.window.pluginManagement_list.currentItem():
             plugin = self.window.pluginManagement_list.currentItem().text()
             deleteAPlugin(plugin)
@@ -470,19 +409,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.populatePluginFields()
             self.callDeselectPlugin()
 
-    # Provides functionality to delete a poi from a plugin by right clicking on it
-    def rightClickOnPoi(self, point):
-        # Infos about the node selected.
-        index = self.window.poiManagement_list.indexAt(point)
+    def rightClickOnPoi(self, point): # Provides functionality to delete a poi from a plugin by right clicking on it
+        index = self.window.poiManagement_list.indexAt(point) # Infos about the node selected.
         if not index.isValid():
             return
-        # We build the menu.
-        menu = QtWidgets.QMenu()
+        menu = QtWidgets.QMenu() # We build the menu.
         menu.addAction("Delete", self.showConfirmationDeletePoi)
         menu.exec_(self.window.poiManagement_list.mapToGlobal(point))
 
-    # Deletes a poi from the specified plugin
-    def callDeletePoiFromPlugin(self):
+    def callDeletePoiFromPlugin(self): # Deletes a poi from the specified plugin
         if self.window.poiManagement_list.currentItem():
             poi = self.window.poiManagement_list.currentItem().text()
             plugin = self.window.pluginManagement_list.currentItem().text()
@@ -493,9 +428,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.callDisplayPoiFromPlugin()
 
     # ---- Following methods are for calling and showing the different windows in the management tab -----------------
-
-    # Show the confirmation window when deleting a plugin
-    def showConfirmationDeletePlugin(self):
+    def showConfirmationDeletePlugin(self): # Show the confirmation window when deleting a plugin
         name = self.window.pluginManagement_list.currentItem().text()
         choice = QMessageBox.question(self, 'Warning',
                                       "Are you sure you want to delete plugin: {}?".format(name),
@@ -503,8 +436,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if choice == QMessageBox.Yes:
             self.callDeletePlugin()
 
-    # Show the confirmation window when deleting a poi
-    def showConfirmationDeletePoi(self):
+    def showConfirmationDeletePoi(self): # Show the confirmation window when deleting a poi
         poi = self.window.poiManagement_list.currentItem().text()
         plugin = self.window.pluginManagement_list.currentItem().text()
         choice = QMessageBox.question(self, 'Warning',
@@ -514,18 +446,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if choice == QMessageBox.Yes:
             self.callDeletePoiFromPlugin()
 
-    # Open up file explorer to select a file for Plugin predefined line edit
-    def showFileExplorer(self):
+    def showFileExplorer(self): # Open up file explorer to select a file for Plugin predefined line edit
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
-    # Open up file explorer to select a file for Poi predefined line edit
-    def showFileExplorer_predefined(self):
+    def showFileExplorer_predefined(self): # Open up file explorer to select a file for Poi predefined line edit
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
         self.window.dpoimPredefined_lineEdit.setText(name)
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
-
     def callAddPoiToPlugin(self):
         try:
             addPoiToPlugin(self, self.window.addPoiName_lineEdit.text(),
