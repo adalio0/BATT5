@@ -70,11 +70,11 @@ def insertToDatabase(name, description, path, properties):
     runs = {
         'dynamic_id': '',
 
-        'Dresult': {
+        'name': '',
 
-        },
+        'Dresult': [
 
-        'name': ''
+        ]
     }
 
     runs_outcome = runs_db.insert_one(runs)
@@ -279,6 +279,29 @@ def getPoi(poi):
                                             entries.append(content)
                                         except TypeError:
                                             pass
+    return entries
+
+
+# Displays the pois from dynamic
+def getDynamicPoi():
+    entries = []
+    for c in current_db.find():
+        for p in project_db.find():
+            if p['_id'] == c.get('id'):
+                for d in dynamic_db.find():
+                    if type(d['project_id']) == list:
+                        for i in range(len(d['project_id'])):
+                            if d['project_id'][i] == p['_id']:
+                                for r in runs_db.find():
+                                    # print(d['runs'][i].keys())
+                                    for key in d['runs'][i].keys():
+                                        if key == r.get('name'):
+                                            content = r.get('Dresult')
+                                            try:
+                                                entries.append(content)
+                                            except TypeError:
+                                                pass
+    print(entries)
     return entries
 
 
@@ -859,7 +882,7 @@ def saveDynamic2(poi, dictionaryList):
 
                             runs_db.find_one_and_update(
                                 {'_id': d['_id']},
-                                {'$set': {'Dresult': {function}}}, upsert=True)
+                                {'$push': {'Dresult': {str(i): function}}}, upsert=True)
 
 
 def saveRun(name):
@@ -870,12 +893,18 @@ def saveRun(name):
                     if d['_id'] == p.get('dynamic_analysis'):
                         runs_db.find_one_and_update(
                             {'_id': d['_id']},
-                            {'$set': {'name': name}}, upsert=True)
+                            {'$set': {'name': name}})
 
                         for r in runs_db.find():
                             if r['_id'] == d.get('_id'):
                                 dynamic_db.find_one_and_update(
                                     {'_id': p['_id']},
-                                    {'$push': {'runs': {str(runs_db.count()): r['_id']}}}, upsert=True)
-    for r in runs_db.find():
-        print(r)
+                                    {'$push': {'project_id': p['_id'], 'runs': {name: r['_id']}}}, upsert=True)
+    # for d in dynamic_db.find():
+    #     print(d)
+    #
+    # for r in runs_db.find():
+    #     print(r)
+
+
+

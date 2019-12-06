@@ -194,6 +194,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             runName, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
             if okPressed and runName != '':
                 saveRun(runName)
+                getDynamicPoi()
 
     def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()
