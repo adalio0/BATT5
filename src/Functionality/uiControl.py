@@ -447,11 +447,17 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             self.callDeletePoiFromPlugin()
 
     def showFileExplorer(self): # Open up file explorer to select a file for Plugin predefined line edit
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
-    def showFileExplorer_predefined(self): # Open up file explorer to select a file for Poi predefined line edit
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+    def showFileExplorer_predefined(self):     # Open up file explorer to select a file for Poi predefined line edit
+        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
         self.window.dpoimPredefined_lineEdit.setText(name)
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
