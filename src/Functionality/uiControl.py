@@ -21,9 +21,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.showMaximized()
 
         # ---- Main Window --------------------------------------------------------------------------------------------
-        self.populateProjectBox()                                                               # display project list
-        self.populatePluginFields()                                                             # display plugins
-        self.setProject()                                                                       # set current project
+        self.populateProjectBox()  # display project list
+        self.populatePluginFields()  # display plugins
+        self.setProject()  # set current project
 
         # ---- Menu Bar -----------------------------------------------------------------------------------------------
         self.window.actionNew_Project.setShortcut("Ctrl+N")                                     # open new project
@@ -176,8 +176,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(len(poi[0])):
             funcList.append(poi[0][i]['name'])
 
-        valueList = historicAnalysis(path,funcList)
-        valueList2 = dynamicAnalysis(path,valueList)
+        valueList = historicAnalysis(path, funcList)
+        valueList2 = dynamicAnalysis(path, valueList)
         print(valueList2)
 
         saveDynamic(poi, valueList2)
@@ -212,7 +212,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.pluginSelection_dropdown.currentText() == 'None': # call function to display poi's
             displayPoiController(poi, currTree, self.window.poi_list, content, self.window.comment_text)
         else:
-            displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content, self.window.comment_text)
+            displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content,
+                                         self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
     def inputCommand(self): # Takes input from user and passes it to the terminal
@@ -354,7 +355,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     def callSavePluginManual(self): # Save a manually inputted plugin into the database
         if self.window.saveManualPlugin_button.text() == 'Save':
-            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit,)
+            savePluginManual(self, self.window.dpmPluginName_lineEdit, self.window.dpmPluginDesc_lineEdit)
         elif self.window.saveManualPlugin_button.text() == 'Update Plugin':
             modifyPlugin(self, self.window.pluginManagement_list.currentItem().text(),
                          self.window.dpmPluginName_lineEdit.text(), self.window.dpmPluginDesc_lineEdit.text())

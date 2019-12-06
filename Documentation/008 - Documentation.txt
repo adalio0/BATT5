@@ -30,4 +30,6 @@ Only valid .txt files will be accepted for documentation use.
 
 • To delete a Document:
 
-1) Press the Delete button at the bottom left of the screen.
+1) Select document
+
+2) Press the Delete button at the bottom left of the screen.

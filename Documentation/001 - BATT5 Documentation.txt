@@ -151,5 +151,22 @@ Abstract:
 
 The purpose of the Documentation is to explain the capabilities of the documentation view.
 
+To view Documentation, click on the Help from the menu bar.
 
+Once clicked, Documentation Window will be displayed
 
+-------------------------------------------------------------------------------------------------
+
+Plugin XML Schema
+
+Abstract:
+
+the purpose of the Plugin XML Schema is to provide a template for defining Plugins
+
+-------------------------------------------------------------------------------------------------
+
+POI XML Schema
+
+Abstract:
+
+the purpose of the Plugin XML Schema is to provide a template for defining POI
