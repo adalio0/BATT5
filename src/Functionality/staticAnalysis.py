@@ -77,8 +77,6 @@ def historicAnalysis(filePath, funcList):
                     argCounter += 1
                     funD['argNum'] = argCounter
                     #debug print
-                    print(type(tempList[j]['name']))
-
                     argNames.append(tempList[j]['name'])
                     argTypes.append(tempList[j]['type'])
                     funD['argName'] = argNames

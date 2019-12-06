@@ -240,12 +240,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for i in range(len(poi[0])):
             funcList.append(poi[0][i]['name'])
 
-        valueList = historicAnalysis(path,funcList)
-        valueList2 = dynamicAnalysis(path,valueList)
+        valueList = historicAnalysis(path, funcList)
+        valueList2 = refactoredDynamic(path, valueList)
         print(valueList2)
+        function_db.drop()
+        saveDynamic2(poi, valueList2)
+
 
         #saveDynamic(poi, valueList2)
-        saveDynamic(poi, valueList2)
+        #saveDynamic(poi, valueList2)
         # self.clearPoi()
         self.displayPoi()
         self.enable()
