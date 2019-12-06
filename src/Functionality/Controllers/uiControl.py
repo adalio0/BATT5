@@ -186,9 +186,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         choice = QMessageBox.question(self, 'Save Dynamic Run', 'Do You Want to Save This Dynamic Analysis Run?',
                                       QMessageBox.Yes | QMessageBox.No)
         if choice == QMessageBox.Yes:
-            text, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
-            if okPressed and text != '':
-                print(text)
+            runName, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
+            if okPressed and runName != '':
+                print(runName)
 
     def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()

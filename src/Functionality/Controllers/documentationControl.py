@@ -36,7 +36,7 @@ class DocumentationWindow(QtWidgets.QDialog):
 
     # Gets all the .txt files inside the BATT5/Documentation path and display them
     def populateDoc(self):
-        path = Path(__file__).parents[2].as_posix() + '/Documentation/'
+        path = Path(__file__).parents[3].as_posix() + '/Documentation/'
         for file in sorted(glob.glob(path + "/**/" + '*.txt', recursive=True)):
             self.window.documentView_listWidget.addItem(file.split(path)[-1].split('.txt')[0])
 
@@ -45,7 +45,7 @@ class DocumentationWindow(QtWidgets.QDialog):
         self.window.dDocumentView_textEdit.clear()
         if self.window.documentView_listWidget.currentItem():
             name = self.window.documentView_listWidget.currentItem().text()
-            path = Path(__file__).parents[2].as_posix() + '/Documentation/'
+            path = Path(__file__).parents[3].as_posix() + '/Documentation/'
 
             try:
                 for file in glob.glob(path + "/**/" + (name + '.txt'), recursive=True):
@@ -69,7 +69,7 @@ class DocumentationWindow(QtWidgets.QDialog):
 
     # When clicking the save button the file currently being edited will update accordingly
     def save(self):
-        path = Path(__file__).parents[2].as_posix() + '/Documentation/'
+        path = Path(__file__).parents[3].as_posix() + '/Documentation/'
         name = self.window.documentView_listWidget.currentItem().text()
 
         file = open((path + name + '.txt'), 'w')
@@ -79,7 +79,7 @@ class DocumentationWindow(QtWidgets.QDialog):
 
     # When clicking the delete button, the currently selected file will be deleted from the BATT5/Documentation path
     def delete(self):
-        path = Path(__file__).parents[2].as_posix() + '/Documentation/'
+        path = Path(__file__).parents[3].as_posix() + '/Documentation/'
         name = self.window.documentView_listWidget.currentItem().text()
 
         if os.path.exists(path + name + ".txt"):
