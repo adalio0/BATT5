@@ -1,2 +1,5 @@
+# start up database
 sudo service mongod start
-python3 src/Functionality/Controllers/uiControl.py
+
+# execute BATT5
+python3 src/Functionality/Controllers/BATT5WindowControl.py
