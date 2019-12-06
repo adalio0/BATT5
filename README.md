@@ -35,3 +35,8 @@ listed below are the dependencies used in the BATT5 system: <br>
 - radare2 <br>
 - mongodb (server - mongod must be running) <br>
 <br>
+
+<b>Running BATT5</b><br>
+In its current implementation, the system's executable is in the form of a bash script that runs the Python file. To run BATT5, you must have all dependencies installed. Once this is done, perform the following commands at the root directory of BATT5:<br>
+<b>$chmod +x BATT5.sh</b><br>
+<b>$./BATT5.sh</b>
