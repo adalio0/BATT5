@@ -1,4 +1,7 @@
 # ! /usr/bin/env python3.
+import sys
+from pathlib import Path
+sys.path.insert(0, Path(__file__).parents[3].as_posix())
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
