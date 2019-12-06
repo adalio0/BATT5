@@ -21,9 +21,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.showMaximized()
 
         # ---- Main Window --------------------------------------------------------------------------------------------
-        self.populateProjectBox()  # display project list
-        self.populatePluginFields()  # display plugins
-        self.setProject()  # set current project
+        self.populateProjectBox()                                                               # display project list
+        self.populatePluginFields()                                                             # display plugins
+        self.setProject()                                                                       # set current project
 
         # ---- Menu Bar -----------------------------------------------------------------------------------------------
         self.window.actionNew_Project.setShortcut("Ctrl+N")                                     # open new project
