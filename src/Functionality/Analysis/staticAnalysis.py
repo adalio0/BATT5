@@ -63,33 +63,27 @@ def historicAnalysis(filePath, funcList):
         funD['fName'] = (funcList[i])
         funInfo = infile.cmd("afvj @ " + funcList[i])
         formatInfo = json.loads(funInfo)
-
+        funD['argNum'] = argCounter
+        funD['locNum'] = locCounter
         for key in formatInfo.keys():
             tempList = formatInfo[key]
-            #print(tempList)
             argNames = []
             argTypes = []
             localVarNames = []
             localVarTypes = []
             for j in range(len(tempList)):
                 if tempList[j]['kind'] == 'reg':
-                    argCounter += 1
-                    funD['argNum'] = argCounter
-                    argNames.append(tempList[j]['name'].encode('utf-8'))
-                    argTypes.append(tempList[j]['type'].encode('utf-8'))
+                    argNames.append(tempList[j]['name'])
+                    argTypes.append(tempList[j]['type'])
+                    funD['argNum'] = len(argNames)
                     funD['argName'] = argNames
                     funD['argType'] = argTypes
                 if tempList[j]['kind'] == 'var':
-                    locCounter += 1
-                    funD['locNum'] = locCounter
-                    localVarNames.append(tempList[j]['name'].encode('utf-8'))
-                    localVarTypes.append(tempList[j]['type'].encode('utf-8'))
+                    localVarNames.append(tempList[j]['name'])
+                    localVarTypes.append(tempList[j]['type'])
+                    funD['locNum'] = len(localVarNames)
                     funD['locName'] = localVarNames
                     funD['locType'] = localVarTypes
-
-        argCounter = 0
-        locCounter = 0
-
         dictList.append(funD)
         funD = dict.fromkeys(keys, [])
 

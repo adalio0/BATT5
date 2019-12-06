@@ -111,12 +111,12 @@ class DocumentationWindow(QtWidgets.QDialog):
 
     # When clicking the add function, opens up a file explorer so user can add a previously created text file
     def showFileExplorer(self):
-        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        path = Path(__file__).parents[3].as_posix() + '/Documentation'
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
         name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Add File', path, 'Text Files (*.txt)', options=options)
 
-        path = Path(__file__).parents[2].as_posix() + '/Documentation/'
+        path = Path(__file__).parents[3].as_posix() + '/Documentation/'
         try:
             fileToSave = open(name, 'r')
             text = fileToSave.read()
