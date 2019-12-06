@@ -4,11 +4,11 @@ import xml.etree.ElementTree as ET
 import json
 import xmlschema
 from pathlib import Path
-from src.Functionality.database import *
+from src.Database.database import *
 
 # ---------------- XML VALIDATION ----------------
 def validatePoiXML(filepath):
-    poiSchema = xmlschema.XMLSchema(Path(__file__).parents[2].as_posix() + '/Configurations/poiConfig.xsd')
+    poiSchema = xmlschema.XMLSchema(Path(__file__).parents[3].as_posix() + '/Configurations/poiConfig.xsd')
     result = poiSchema.is_valid(filepath)
     return result
 
@@ -40,13 +40,6 @@ def appendPoiPlugin(pluginDict, poiDict, poiType):
     return pluginDict
 
 def appendPoiPluginXml(pluginDict, poiDict):
-
-    # for poiType in pluginDict['pointOfInterest']:  # for every poi type in plugin
-    #     # print(poiType)
-    #     for poi in poiDict[poiType]:  # for every poi of this type in poiDict
-    #         # print('   ', poi)
-    #         if poi not in pluginDict['pointOfInterest'][poiType]:  # if not already contained
-    #             pluginDict['pointOfInterest'][poiType].append(poi)  # append poi
 
     for poi in poiDict['function']:
         if poi not in pluginDict['pointOfInterest']['function']:

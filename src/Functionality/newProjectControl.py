@@ -1,13 +1,11 @@
 import sys
-import pymongo
-import r2pipe
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.newProjectWind import NewProject
-from src.Functionality.binaryValidation import get_binary_info
-from src.Functionality.database import insertToDatabase
+from src.Functionality.Analysis.binaryValidation import get_binary_info
+from src.Database.database import insertToDatabase
 properties = []
 
 

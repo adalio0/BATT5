@@ -1,9 +1,10 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtWidgets import *
-from src.Functionality.database import getProjects, getComment
-from src.Functionality.database import getPlugins
-from src.Functionality.database import getFilterPoi
+from src.Database.database import getPlugins
+from src.Database.database import getFilterPoi
+from pathlib import Path
+
 
 
 # Search functionality for the project box
@@ -133,7 +134,7 @@ def highlightList(view_tree, poi_list):
 
 
 def addIcon(poi):
-    poi.setIcon(QIcon(r"comment-24px.svg"))
+    poi.setIcon(QIcon(Path(__file__).parents[3].as_posix() + '/icons/comment.svg'))
 
 def addIconTree(treeType, currentListItem):
     root = treeType.invisibleRootItem()
@@ -141,15 +142,15 @@ def addIconTree(treeType, currentListItem):
     for i in range(child_count):
         item = root.child(i)
         if currentListItem.text() == item.text(0):
-            item.setIcon(0,QIcon(r"comment-24px.svg"))
+            item.setIcon(0,QIcon(Path(__file__).parents[3].as_posix() + '/icons/comment.svg'))
 
-def displayIconTree(treeType,poiName):
+def displayIconTree(treeType, poiName):
     root = treeType.invisibleRootItem()
     child_count = root.childCount()
     for i in range(child_count):
         item = root.child(i)
         if poiName == item.text(0):
-            item.setIcon(0, QIcon(r"comment-24px.svg"))
+            item.setIcon(0, QIcon(Path(__file__).parents[3].as_posix() + '/icons/comment.svg'))
 
 def removeIconTree(treeType, currentListItem):
     root = treeType.invisibleRootItem()

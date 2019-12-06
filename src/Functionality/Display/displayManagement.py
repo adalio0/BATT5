@@ -1,4 +1,4 @@
-from src.Functionality.database import *
+from src.Database.database import *
 
 # Clears the labels that are used for creating a new plugin to create a new plugin
 def deselectPlugin(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, pluginManagement_list, pluginEditingStatus_label,
@@ -20,9 +20,9 @@ def deselectPlugin(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, pluginManagem
     poiManagement_list.clear()
     addPluginXml_frame.setDisabled(False)
 
-def displayPlugin(name, description, pluginManagement_list, addPoiType_dropdown, pluginEditingStatus_label, addPoiXML_label,
-          addPoiManual_label, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, saveManualPlugin_button,
-          clearManualPlugin_button, addPluginXml_frame):
+def displayPlugin(name, description, pluginManagement_list, addPoiType_dropdown, pluginEditingStatus_label,
+                  addPoiXML_label, addPoiManual_label, dpmPluginName_lineEdit, dpmPluginDesc_lineEdit,
+                  saveManualPlugin_button, clearManualPlugin_button, addPluginXml_frame):
 
     if pluginManagement_list.selectedItems():
         # get name of current plugin

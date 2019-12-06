@@ -4,10 +4,10 @@ import glob
 from pathlib import Path
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QMessageBox
 
 from src.GUI.python_files.popups.documentationView import Documentation_Window
-from src.Functionality.search import searchDocumentation
+from src.Functionality.Display.search import searchDocumentation
 
 
 class DocumentationWindow(QtWidgets.QDialog):

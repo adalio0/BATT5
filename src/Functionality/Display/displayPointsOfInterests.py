@@ -1,9 +1,9 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QTreeWidgetItem, QListWidgetItem
 
-from src.Functionality.database import getComment
-from src.Functionality.search import addIcon
-from src.Functionality.search import displayIconTree
+from src.Database.database import getComment
+from src.Functionality.Display.search import addIcon
+from src.Functionality.Display.search import displayIconTree
 
 
 # Displays the functions extracted from Static Analysis in Analysis box and POI box

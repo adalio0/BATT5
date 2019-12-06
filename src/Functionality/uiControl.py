@@ -3,16 +3,15 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.Functionality.newProject import ProjectWindow
-from src.Functionality.documentation import DocumentationWindow
-from src.Functionality.staticAnalysis import staticAnalysis, historicAnalysis
-from src.Functionality.radareTerminal import Terminal
-from src.Functionality.pluginManagement import *
-from src.Functionality.database import *
-from src.Functionality.search import *
-from src.Functionality.dynamicAnalysis import *
-from src.Functionality.displayPointsOfInterests import *
-from src.Functionality.displayManagement import *
+from src.Functionality.newProjectControl import ProjectWindow
+from src.Functionality.documentationControl import DocumentationWindow
+from src.Functionality.Analysis.staticAnalysis import staticAnalysis, historicAnalysis
+from src.Functionality.Analysis.radareTerminal import Terminal
+from src.Functionality.Management.pluginManagement import *
+from src.Functionality.Display.search import *
+from src.Functionality.Analysis.dynamicAnalysis import *
+from src.Functionality.Display.displayPointsOfInterests import *
+from src.Functionality.Display.displayManagement import *
 
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):

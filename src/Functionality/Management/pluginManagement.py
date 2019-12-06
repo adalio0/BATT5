@@ -1,9 +1,9 @@
-from src.Functionality.poiManagement import *
+from src.Functionality.Management.poiManagement import *
 
 # ---------------- XML VALIDATION ----------------
 def validatePluginXML(filepath):
     try:
-        pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[2].as_posix() + '/Configurations/pluginConfig.xsd')
+        pluginSchema = xmlschema.XMLSchema(Path(__file__).parents[3].as_posix() + '/Configurations/pluginConfig.xsd')
         return pluginSchema.is_valid(filepath)
     except:
         return 0
