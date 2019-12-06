@@ -8,6 +8,8 @@ db = client['project_data']
 project_db = db['project']
 binary_db = db['binary']
 static_db = db['static']
+dynamic_db = db['dynamic']
+runs_db = db['runs']
 results_db = db['results']
 function_db = db['function']
 string_db = db['string']
@@ -20,11 +22,6 @@ current_db = db_1['current']
 
 db_2 = client['plugin_data']
 plugin_db = db_2['plugins']
-
-
-def startDatabase():
-    if sys.platform == 'linux':
-        os.system('sudo service mongod start')
 
 
 # Checks if static analysis has been performed on the current selected project
@@ -67,7 +64,28 @@ def insertToDatabase(name, description, path, properties):
             '01': results['_id']
         }
     }
+
     static_outcome = static_db.insert_one(static_analysis)
+
+    runs = {
+        'dynamic_id': '',
+
+        'Dresult': {
+
+        }
+    }
+
+    runs_outcome = runs_db.insert_one(runs)
+
+    dynamic_analysis = {
+        'project_id': '',
+
+        'runs': [
+
+        ]
+    }
+
+    dynamic_outcome = dynamic_db.insert_one(dynamic_analysis)
 
     binary = {
         'project_id': '',
@@ -103,9 +121,7 @@ def insertToDatabase(name, description, path, properties):
             '01': static_analysis['_id']
         },
 
-        'dynamic_analysis': {
-            '01': '',
-        }
+        'dynamic_analysis': dynamic_analysis['_id']
     }
     project_outcome = project_db.insert_one(project_data)
 
@@ -118,6 +134,12 @@ def insertToDatabase(name, description, path, properties):
     results_db.find_one_and_update(
         {'_id': results['_id']},
         {'$set': {'static_id': static_analysis['_id']}}, upsert=True)
+    dynamic_db.find_one_and_update(
+        {'_id': dynamic_analysis['_id']},
+        {'$set': {'project_id': project_data['_id']}}, upsert=True)
+    runs_db.find_one_and_update(
+        {'_id': runs['_id']},
+        {'$set': {'dynamic_id': dynamic_analysis['_id']}}, upsert=True)
 
 
 # ---- Setters for the database (sets the current project and window title) --------------------------------------
@@ -564,6 +586,7 @@ def saveDynamic(poi, valueDict):
                                         {'_id': s['_id']},
                                         {'$set': {'function': {str(i): function['_id']}}}, upsert=True)
 
+
 # ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 
 # Deletes a project from the database
@@ -773,159 +796,63 @@ def saveDynamic2(poi,dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        project_db.find_one_and_update(
-                            {'_id': c['id']},
-                            {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
-                                for i in range(len(poi[0])):
-                                    parameters = []
-                                    local = []
-                                    try:
-                                        for j in range(dictionaryList[i]['argNum']):
-                                            if dictionaryList[i]['argNum'] > 0:
-                                                info = {
-                                                    'name': dictionaryList[i]['argName'][j],
-                                                    'type': dictionaryList[i]['argType'][j],
-                                                    'value': dictionaryList[i]['argVal'][j]
-                                                }
-                                            else:
-                                                info = {
-                                                    'name': '',
-                                                    'type': '',
-                                                    'value': ''
-                                                }
-                                            parameters.append(info)
-                                    except (KeyError):
-                                        continue
-
-                                    try:
-                                        for j in range(dictionaryList[i]['locNum']):
-                                            if dictionaryList[i]['locNum'] > 0:
-                                                info = {
-                                                    'name': dictionaryList[i]['locName'][j],
-                                                    'type': dictionaryList[i]['locType'][j],
-                                                    'value': dictionaryList[i]['locVal'][j]
-                                                }
-                                            else:
-                                                info = {
-                                                    'name': '',
-                                                    'type': '',
-                                                    'value': ''
-                                                }
-
-                                            local.append(info)
-                                    except (KeyError):
-                                        continue
-
-                                    function = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[0][i]['name'],
-                                        'data': {
-                                            'name': poi[0][i]['name'],
-                                            'signature': poi[0][i]['signature'],
-                                            'parameters': parameters,
-                                            'locals': local,
-                                            'returnType': '',
-                                            'returnValue': dictionaryList[i]['retValue']
+                for d in dynamic_db.find():
+                    if d['_id'] == p.get('dynamic_analysis'):
+                        # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
+                        for i in range(len(poi[0])):
+                            parameters = []
+                            local = []
+                            try:
+                                for j in range(dictionaryList[i]['argNum']):
+                                    if dictionaryList[i]['argNum'] > 0:
+                                        info = {
+                                            'name': dictionaryList[i]['argName'][j],
+                                            'type': dictionaryList[i]['argType'][j],
+                                            'value': dictionaryList[i]['argVal'][j]
                                         }
-                                    }
-                                    function_outcome = function_db.insert_one(function)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
-
-                                # SAVE STRINGS
-                                for i in range(len(poi[1])):
-                                    string = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[1][i]['string'],
-                                        'data': {
-                                            'name': poi[1][i]['string'],
-                                            'type': poi[1][i]['type'],
-                                            'size': poi[1][i]['size'],
-                                            'length': poi[1][i]['length'],
-                                            'section': poi[1][i]['section']
-                                        }
-                                    }
-                                    string_outcome = string_db.insert_one(string)
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
-
-                                # SAVE SP VARIABLES
-                                for i in range(len(poi[2]['sp'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['sp'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['sp'][i]['name'],
-                                            'type': poi[2]['sp'][i]['type'],
+                                    else:
+                                        info = {
+                                            'name': '',
+                                            'type': '',
                                             'value': ''
                                         }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
+                                    parameters.append(info)
+                            except (KeyError):
+                                continue
 
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                                # SAVE BP VARIABLES
-                                for i in range(len(poi[2]['bp'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['bp'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['bp'][i]['name'],
-                                            'type': poi[2]['bp'][i]['type'],
+                            try:
+                                for j in range(dictionaryList[i]['locNum']):
+                                    if dictionaryList[i]['locNum'] > 0:
+                                        info = {
+                                            'name': dictionaryList[i]['locName'][j],
+                                            'type': dictionaryList[i]['locType'][j],
+                                            'value': dictionaryList[i]['locVal'][j]
+                                        }
+                                    else:
+                                        info = {
+                                            'name': '',
+                                            'type': '',
                                             'value': ''
                                         }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
-                                    # print(variable)
 
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
+                                    local.append(info)
+                            except (KeyError):
+                                continue
 
-                                # SAVE REG VARIABLES
-                                for i in range(len(poi[2]['reg'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['reg'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['reg'][i]['name'],
-                                            'type': poi[2]['reg'][i]['type'],
-                                            'value': ''
-                                        }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
+                            function = {
+                                'comment': '',
+                                'name': poi[0][i]['name'],
+                                'data': {
+                                    'name': poi[0][i]['name'],
+                                    'signature': poi[0][i]['signature'],
+                                    'parameters': parameters,
+                                    'locals': local,
+                                    'returnType': '',
+                                    'returnValue': dictionaryList[i]['retValue']
+                                }
+                            }
+                            run_outcome = runs_db.insert_one(function)
 
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                                # SAVE DLLs
-                                for i in range(len(poi[3])):
-                                    dll = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[3][i]['name'],
-                                        'data': {
-                                            'name': poi[3][i]['name']
-                                        }
-                                    }
-                                    dll_outcome = dll_db.insert_one(dll)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
+                            results_db.find_one_and_update(
+                                {'_id': s['_id']},
+                                {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
