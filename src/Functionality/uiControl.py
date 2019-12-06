@@ -160,8 +160,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
                 path = getCurrentFilePath() # Get the path of the binary file and run static analysis
                 poi = staticAnalysis(path)
+                funcList = []
+                for i in range(len(poi[0])):
+                    funcList.append(poi[0][i]['name'])
+                dictList = historicAnalysis(path,funcList)
+                print(dictList)
 
-                saveStatic(poi) # Save the results of static into the database
+                saveStatic2(poi, dictList) # Save the results of static into the database
                 self.displayPoi()
             else:
                 self.displayPoi()
@@ -177,10 +182,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             funcList.append(poi[0][i]['name'])
 
         valueList = historicAnalysis(path, funcList)
-        valueList2 = dynamicAnalysis(path, valueList)
+        valueList2 = refactoredDynamic(path, valueList)
         print(valueList2)
+        function_db.drop()
+        saveDynamic2(poi, valueList2)
 
-        saveDynamic(poi, valueList2)
+
+        #saveDynamic(poi, valueList2)
+        #saveDynamic(poi, valueList2)
+        # self.clearPoi()
         self.displayPoi()
         self.enable()
 

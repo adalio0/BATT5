@@ -45,21 +45,84 @@ import json
 
 
 
-def dynamicAnalysis(filepath, dictList):
-    print(dictList)
+# def dynamicAnalysis(filepath, dictList):
+#     print(dictList)
+#     infile = r2pipe.open(filepath)  # open file
+#     infile.cmd("aaa")
+#     #infile.cmd("ood")  # open in debug mode
+#     for i in range(len(dictList)):  # iterate over list of functions
+#         infile.cmd("ood")  # open in debug mode
+#         breakpoint = dictList[i]['fName']
+#         print(breakpoint)
+#         if breakpoint == 'entry0':
+#             i+=1
+#         if breakpoint == 'main':
+#             break
+#         breakpointString = "db " + (dictList[i]['fName'])
+#         infile.cmd(breakpointString)  # first set the breakpoint
+#         infile.cmd("dc") #continue to run
+#         infile.cmd("dcr") #get values at this point
+#         returnVal = infile.cmd("dr rax")
+#         returnVal = returnVal.rstrip("\n")
+#         dictList[i]['retValue'] = returnVal
+#         # start running after breakpoint get arguments first
+#         templistOfVals = []
+#         templistOfLoc =[]
+#         #for arguments if argNum is 0 this will skip
+#         try:
+#             for j in range(dictList[i]['argNum'][0]):
+#                 print("made it here")
+#                 #set return value
+#                 #dictList[i]['retValue'] = returnVal.decode('utf-8')
+#                 print(type(dictList[i]['retValue']))
+#                 argumentName = dictList[i]['argName'][j]
+#                 print(argumentName)
+#                 argumentString = argumentName.decode('utf-8')
+#                 print(argumentString)
+#                 commandToVal = infile.cmd("afvd " + argumentString)
+#                 # if not commandToVal:
+#                 #     print("I go here")
+#                 #     infile.cmd("dcr")
+#                 #     testCommand = "afvd " + argumentString
+#                 #     print(testCommand)
+#                 #     commandToVal = infile.cmd("afvd " + argumentString)
+#                 #     print(commandToVal)
+#                 commandList = commandToVal.split(" ")
+#                 print(commandList)
+#                 validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+#                 print(validCommand)
+#                 lineWithval = infile.cmd(validCommand)
+#                 formattedVal = json.loads(lineWithval)
+#                 templistOfVals.append(formattedVal[0]['value'])
+#                 dictList[i]['argVal'] = templistOfVals
+#         except (IndexError, TypeError):
+#             continue
+#         #for local variables
+#         try:
+#             for k in range(int(dictList[i]['locNum'][0])):
+#                 commandToVal = infile.cmd("afvd " + dictList[i]['locName'][k])
+#                 print(commandToVal)
+#                 commandList = commandToVal.split(" ")
+#                 print(commandList)
+#                 validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+#                 lineWithval = infile.cmd(validCommand)
+#                 formattedVal = json.loads(lineWithval)
+#                 templistOfLoc.append(formattedVal[0]['value'])
+#                 dictList[i]['locVal'] = templistOfLoc
+#         except(IndexError, TypeError):
+#             continue
+#         infile.cmd("db-*")
+#     print("Succesfully ended")
+#     return dictList
+
+def refactoredDynamic(filepath, dictList):
     infile = r2pipe.open(filepath)  # open file
     infile.cmd("aaa")
     #infile.cmd("ood")  # open in debug mode
     for i in range(len(dictList)):  # iterate over list of functions
         infile.cmd("ood")  # open in debug mode
-        breakpoint = dictList[i]['fName']
-        print(breakpoint)
-        if breakpoint == 'entry0':
-            i+=1
-        if breakpoint == 'main':
-            break
-        breakpointString = "db " + (dictList[i]['fName'])
-        infile.cmd(breakpointString)  # first set the breakpoint
+        breakpoint = dictList[i]['fName'] # need to handle entry0 special case
+        infile.cmd("db " + breakpoint)  # first set the breakpoint
         infile.cmd("dc") #continue to run
         infile.cmd("dcr") #get values at this point
         returnVal = infile.cmd("dr rax")
@@ -70,48 +133,51 @@ def dynamicAnalysis(filepath, dictList):
         templistOfLoc =[]
         #for arguments if argNum is 0 this will skip
         try:
-            for j in range(dictList[i]['argNum'][0]):
-                print("made it here")
-                #set return value
-                #dictList[i]['retValue'] = returnVal.decode('utf-8')
-                print(type(dictList[i]['retValue']))
-                argumentName = dictList[i]['argName'][j]
-                print(argumentName)
-                argumentString = argumentName.decode('utf-8')
-                print(argumentString)
-                commandToVal = infile.cmd("afvd " + argumentString)
-                # if not commandToVal:
-                #     print("I go here")
-                #     infile.cmd("dcr")
-                #     testCommand = "afvd " + argumentString
-                #     print(testCommand)
-                #     commandToVal = infile.cmd("afvd " + argumentString)
-                #     print(commandToVal)
-                commandList = commandToVal.split(" ")
-                print(commandList)
-                validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
-                print(validCommand)
-                lineWithval = infile.cmd(validCommand)
-                formattedVal = json.loads(lineWithval)
-                templistOfVals.append(formattedVal[0]['value'])
+            for j in range(dictList[i]['argNum']):
+            # if dictList[i]['fName'] == 'entry0':
+            #     print("EXECUTE ADDITIONAL COMMAND")
+            #     infile.cmd("dcr")
+            # print("LOOOK HERE")
+            # print(dictList[i]['argNum'])
+                if dictList[i]['argNum'] > 0 and breakpoint != 'entry0':
+                    argumentName = dictList[i]['argName'][j]
+                    commandToVal = infile.cmd("afvd " + argumentName)
+                    commandList = commandToVal.split(" ")
+                    validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+                    lineWithval = infile.cmd(validCommand)
+                    formattedVal = json.loads(lineWithval)
+                    templistOfVals.append(str(formattedVal[0]['value']))
+                else:
+                    templistOfVals.append('0')
                 dictList[i]['argVal'] = templistOfVals
-        except (IndexError, TypeError):
+        except IndexError:
             continue
+
         #for local variables
         try:
-            for k in range(int(dictList[i]['locNum'][0])):
-                commandToVal = infile.cmd("afvd " + dictList[i]['locName'][k])
-                print(commandToVal)
-                commandList = commandToVal.split(" ")
-                print(commandList)
-                validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
-                lineWithval = infile.cmd(validCommand)
-                formattedVal = json.loads(lineWithval)
-                templistOfLoc.append(formattedVal[0]['value'])
+            for k in range(dictList[i]['locNum']):
+                if dictList[i]['locNum'] > 0:
+                    argumentName = dictList[i]['locName'][j]
+                    commandToVal = infile.cmd("afvd " + argumentName)
+                    commandList = commandToVal.split(" ")
+                    # if not commandToVal:
+                    #     templistOfLoc.append('0')
+                    try:
+                        validCommand = commandList[0] + "j " + commandList[1] + " " + commandList[2]
+                        templistOfLoc.append('0')
+                        lineWithval = infile.cmd(validCommand)
+                        formattedVal = json.loads(lineWithval)
+                        templistOfLoc.append(str(formattedVal[0]['value']))
+                    except IndexError:
+                        continue
+                    finally:
+                        templistOfLoc.append('0')
+
+                else:
+                    templistOfLoc.append('0')
                 dictList[i]['locVal'] = templistOfLoc
-        except(IndexError, TypeError):
+        except IndexError:
             continue
-        infile.cmd("db-*")
+    infile.cmd("db-*")
     print("Succesfully ended")
     return dictList
-
