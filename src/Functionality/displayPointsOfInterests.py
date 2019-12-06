@@ -269,3 +269,23 @@ def displayFilteredDll(view_tree, poi_list, filterContent, content, comment_text
     view_tree.addTopLevelItems(dllTree)
     view_tree.expandAll()
     dforTree(view_tree, content, "DLL", comment_text)
+
+def displayFilteredPoiController(poiType, tree, poi_list, filterContent, content, comment_text):
+    if poiType == 'Function':
+        displayFilteredFunctions(tree, poi_list, filterContent, content, comment_text)
+    elif poiType == 'String':
+        displayFilterStrings(tree, poi_list, filterContent, content, comment_text)
+    elif poiType == 'Variable':
+        displayFilteredVariable(tree, poi_list, filterContent, content, comment_text)
+    elif poiType == 'DLL':
+        displayFilteredVariable(tree, poi_list, filterContent, content, comment_text)
+
+def displayPoiController(poiType, tree, poi_list, content, comment_text):
+    if poiType == 'Function':
+        displayFunctions(tree, poi_list, content, comment_text)
+    elif poiType == 'String':
+        displayString(tree, poi_list, content, comment_text)
+    elif poiType == 'Variable':
+        displayVariable(tree, poi_list, content, comment_text)
+    elif poiType == 'DLL':
+        displayVariable(tree, poi_list, content, comment_text)

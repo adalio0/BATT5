@@ -47,7 +47,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
         self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
 
-        # self.window.pluginSelection_dropdown.currentTextChanged.connect(self.displayPoi)      # display POI
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)                    # run static
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)                     # run dynamic
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)                     # expand/collapse poi
@@ -128,16 +127,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if checkStatic():
             self.window.runDynamicAnalysis_button.setEnabled(True)
             self.window.commentSave_button.setEnabled(True)
-            self.window.runDynamicAnalysis_button.setStyleSheet("background-color:;")
-            self.window.runDynamicAnalysis_button.setStyleSheet("color:;")
-
             self.displayPoi()
         else:
             self.window.runDynamicAnalysis_button.setEnabled(False)
             self.window.commentSave_button.setEnabled(False)
-            self.window.runDynamicAnalysis_button.setStyleSheet("background-color: rgb(186, 189, 182);")
-            self.window.runDynamicAnalysis_button.setStyleSheet("color: rgb(136, 138, 133);")
-
             self.displayPoi()
 
         # Set up command prompt
@@ -242,42 +235,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         poi = self.window.poiType_dropdown.currentText()
         content = getPoi(poi)
         filterContent = getFilterPoi(self.window.pluginSelection_dropdown.currentText())
-
-        # Call appropriate method to display poi
+        currTree = self.getCurrentTree()
+        # switch tree
         if poi == 'Function':
             self.window.viewPoi_stack.setCurrentIndex(0)
             if self.window.changeViews_stack.currentIndex() == 1:
                 self.disableCheck()
             else:
                 self.enableCheck()
-            if self.window.pluginSelection_dropdown.currentText() == 'None':
-                displayFunctions(self.window.viewFunc_tree, self.window.poi_list, content, self.window.comment_text)
-            else:
-                displayFilteredFunctions(self.window.viewFunc_tree, self.window.poi_list, filterContent, content,
-                                         self.window.comment_text)
         else:
             self.disableCheck()
             if poi == 'String':
                 self.window.viewPoi_stack.setCurrentIndex(1)
-                if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    displayString(self.window.viewString_tree, self.window.poi_list, content, self.window.comment_text)
-                else:
-                    displayFilterStrings(self.window.viewString_tree, self.window.poi_list, filterContent, content,
-                                         self.window.comment_text)
             elif poi == 'Variable':
                 self.window.viewPoi_stack.setCurrentIndex(2)
-                if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    displayVariable(self.window.viewVar_tree, self.window.poi_list, content, self.window.comment_text)
-                else:
-                    displayFilteredVariable(self.window.viewVar_tree, self.window.poi_list, filterContent, content,
-                                            self.window.comment_text)
             elif poi == 'DLL':
                 self.window.viewPoi_stack.setCurrentIndex(3)
-                if self.window.pluginSelection_dropdown.currentText() == 'None':
-                    displayDll(self.window.viewDll_tree, self.window.poi_list, content, self.window.comment_text)
-                else:
-                    displayFilteredDll(self.window.viewDll_tree, self.window.poi_list, filterContent, content,
-                                       self.window.comment_text)
+        # call function to display poi's
+        if self.window.pluginSelection_dropdown.currentText() == 'None':
+            displayPoiController(poi, currTree, self.window.poi_list, content, self.window.comment_text)
+        else:
+            displayFilteredPoiController(poi, currTree, self.window.poi_list, filterContent, content, self.window.comment_text)
 
     # ---- Following methods are vital for everything revolving dynamic analysis --------------------------------
 
@@ -304,7 +282,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         menu = QtWidgets.QMenu()
 
         menu.addAction("Delete", self.showConfirmationDeleteProject)
-
         menu.exec_(self.window.projectNavigator_tree.mapToGlobal(point))
 
     # Deletes a project
@@ -518,9 +495,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         index = self.window.pluginManagement_list.indexAt(point)
         if not index.isValid():
             return
-
-        item = self.window.pluginManagement_list.itemAt(point)
-
         # We build the menu.
         menu = QtWidgets.QMenu()
         menu.addAction("Delete", self.showConfirmationDeletePlugin)
@@ -531,10 +505,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if self.window.pluginManagement_list.currentItem():
             plugin = self.window.pluginManagement_list.currentItem().text()
             deleteAPlugin(plugin)
-
             self.window.pluginManagement_list.clear()
             self.window.pluginSelection_dropdown.clear()
-
             self.populatePluginFields()
             self.callDeselectPlugin()
 
