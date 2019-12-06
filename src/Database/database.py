@@ -301,6 +301,7 @@ def getDynamicPoi():
                                                 entries.append(content)
                                             except TypeError:
                                                 pass
+    print(entries)
     return entries
 
 
@@ -364,207 +365,7 @@ def saveComment(comment, poiName, dropText):
         upsert=False)
 
 
-# Gets and saves Static Analysis results into database
-def saveStatic(poi):
-    for c in current_db.find():
-        for p in project_db.find():
-            if p['_id'] == c.get('id'):
-                for s in static_db.find():
-                    if s['_id'] == p.get('static_analysis', {}).get('01'):
-                        project_db.find_one_and_update(
-                            {'_id': c['id']},
-                            {'$set': {'static_analysis': {'performed': True, '01': s['_id']}}}, upsert=True)
-                        for r in results_db.find():
-                            if r['_id'] == s.get('results').get('01'):
-                                # SAVE FUNCTIONS and CREATE PARAMETERS LIST FOR FUNCTIONS
-                                for i in range(len(poi[0])):
-                                    parameters = []
-                                    local = []
-                                    try:
-                                        for j in range(len(poi[0][i]['regvars'])):
-                                            info = {
-                                                'name': poi[0][i]['regvars'][j]['name'],
-                                                'type': poi[0][i]['regvars'][j]['type'],
-                                                'value': ''
-                                            }
-                                            parameters.append(info)
-                                    except KeyError:
-                                        continue
-
-                                    try:
-                                        for j in range(len(poi[0][i]['spvars'])):
-                                            if j >= poi[0][i]['nlocals']:
-                                                info = {
-                                                    'name': poi[0][i]['spvars'][j]['name'],
-                                                    'type': poi[0][i]['spvars'][j]['type'],
-                                                    'value': ''
-                                                }
-                                                parameters.append(info)
-                                            else:
-                                                info = {
-                                                    'name': poi[0][i]['spvars'][j]['name'],
-                                                    'type': poi[0][i]['spvars'][j]['type'],
-                                                    'value': ''
-                                                }
-                                                local.append(info)
-                                    except KeyError:
-                                        continue
-
-                                    function = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[0][i]['name'],
-                                        'data': {
-                                            'name': poi[0][i]['name'],
-                                            'signature': poi[0][i]['signature'],
-                                            'parameters': parameters,
-                                            'locals': local,
-                                            'returnType': '',
-                                            'returnValue': ''
-                                        }
-                                    }
-                                    function_outcome = function_db.insert_one(function)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'function': {str(i): function['_id']}}}, upsert=True)
-
-                                # SAVE STRINGS
-                                for i in range(len(poi[1])):
-                                    string = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[1][i]['string'],
-                                        'data': {
-                                            'name': poi[1][i]['string'],
-                                            'type': poi[1][i]['type'],
-                                            'size': poi[1][i]['size'],
-                                            'length': poi[1][i]['length'],
-                                            'section': poi[1][i]['section']
-                                        }
-                                    }
-                                    string_outcome = string_db.insert_one(string)
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'string': {str(i): string['_id']}}}, upsert=True)
-
-                                # SAVE SP VARIABLES
-                                for i in range(len(poi[2]['sp'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['sp'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['sp'][i]['name'],
-                                            'type': poi[2]['sp'][i]['type'],
-                                            'value': ''
-                                        }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                                # SAVE BP VARIABLES
-                                for i in range(len(poi[2]['bp'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['bp'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['bp'][i]['name'],
-                                            'type': poi[2]['bp'][i]['type'],
-                                            'value': ''
-                                        }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
-                                    # print(variable)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                                # SAVE REG VARIABLES
-                                for i in range(len(poi[2]['reg'])):
-                                    variable = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[2]['reg'][i]['name'],
-                                        'data': {
-                                            'name': poi[2]['reg'][i]['name'],
-                                            'type': poi[2]['reg'][i]['type'],
-                                            'value': ''
-                                        }
-                                    }
-                                    variable_outcome = variable_db.insert_one(variable)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'variable': {str(i): variable['_id']}}}, upsert=True)
-
-                                # SAVE DLLs
-                                for i in range(len(poi[3])):
-                                    dll = {
-                                        'results_id': r['_id'],
-                                        'comment': '',
-                                        'name': poi[3][i]['name'],
-                                        'data': {
-                                            'name': poi[3][i]['name']
-                                        }
-                                    }
-                                    dll_outcome = dll_db.insert_one(dll)
-
-                                    results_db.find_one_and_update(
-                                        {'_id': s['_id']},
-                                        {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
-
-# ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
-
-# Deletes a project from the database
-def deleteAProject(project):
-    project_db.find_one_and_delete(
-        {'name': project}
-    )
-
-
-# Deletes a project from the database
-def deleteAPlugin(plugin):
-    plugin_db.find_one_and_delete(
-        {'name': plugin}
-    )
-
-
-# Deletes a poi from the plugin database
-def deleteAPoiFromPlugin(plugin, newPluginDict):
-    plugin_db.find_one_and_delete(
-        {'name': plugin}
-    )
-    plugin_db.insert_one(newPluginDict)
-
-
-# Delete EVERYTHING from project
-def deleteDatabase():
-    db.project.drop()
-    db.binary.drop()
-    db.static.drop()
-    db.results.drop()
-    db.function.drop()
-    db.string.drop()
-    db.variable.drop()
-    db.dll.drop()
-    db.struct.drop()
-    db.dynamic.drop()
-    db.runs.drop()
-
-
-# Delete EVERYTHING from plugins
-def deletePluginDatabase():
-    db_2.plugins.drop()
-
-
-# ----------------------------------Refactored Database DANGER ZONE-----------------------------------------------------
-def saveStatic2(poi, dictionaryList):
+def saveStatic(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -727,7 +528,7 @@ def saveStatic2(poi, dictionaryList):
                                         {'$push': {'dll': {str(i): dll['_id']}}}, upsert=True)
 
 
-def saveDynamic2(poi, dictionaryList):
+def saveDynamic(poi, dictionaryList):
     for c in current_db.find():
         for p in project_db.find():
             if p['_id'] == c.get('id'):
@@ -807,11 +608,47 @@ def saveRun(name):
                                 dynamic_db.find_one_and_update(
                                     {'_id': p['_id']},
                                     {'$push': {'project_id': p['_id'], 'runs': {name: r['_id']}}}, upsert=True)
-    # for d in dynamic_db.find():
-    #     print(d)
-    #
-    # for r in runs_db.find():
-    #     print(r)
 
 
+# ---- Methods that help with deleting everything or a specific item in both the project and plugin database -------
 
+# Deletes a project from the database
+def deleteAProject(project):
+    project_db.find_one_and_delete(
+        {'name': project}
+    )
+
+
+# Deletes a project from the database
+def deleteAPlugin(plugin):
+    plugin_db.find_one_and_delete(
+        {'name': plugin}
+    )
+
+
+# Deletes a poi from the plugin database
+def deleteAPoiFromPlugin(plugin, newPluginDict):
+    plugin_db.find_one_and_delete(
+        {'name': plugin}
+    )
+    plugin_db.insert_one(newPluginDict)
+
+
+# Delete EVERYTHING from project
+def deleteDatabase():
+    db.project.drop()
+    db.binary.drop()
+    db.static.drop()
+    db.results.drop()
+    db.function.drop()
+    db.string.drop()
+    db.variable.drop()
+    db.dll.drop()
+    db.struct.drop()
+    db.dynamic.drop()
+    db.runs.drop()
+
+
+# Delete EVERYTHING from plugins
+def deletePluginDatabase():
+    db_2.plugins.drop()

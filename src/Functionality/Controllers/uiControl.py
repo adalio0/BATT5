@@ -166,7 +166,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 dictList = historicAnalysis(path,funcList)
                 print(dictList)
 
-                saveStatic2(poi, dictList) # Save the results of static into the database
+                saveStatic(poi, dictList) # Save the results of static into the database
                 self.displayPoi()
             else:
                 self.displayPoi()
@@ -184,7 +184,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         valueList = historicAnalysis(path, funcList)
         valueList2 = refactoredDynamic(path, valueList)
         print(valueList2)
-        saveDynamic2(poi, valueList2)
+        saveDynamic(poi, valueList2)
 
         self.displayPoi()
         self.enable()
