@@ -550,14 +550,13 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def getCurrentTree(self):
         poiType = self.window.poiType_dropdown.currentText()
         if poiType == 'Function':
-            currTree = self.window.viewFunc_tree
+            return self.window.viewFunc_tree
         elif poiType == 'String':
-            currTree = self.window.viewString_tree
+            return self.window.viewString_tree
         elif poiType == 'Variable':
-            currTree = self.window.viewVar_tree
+            return self.window.viewVar_tree
         elif poiType == 'DLL':
-            currTree = self.window.viewDll_tree
-        return currTree
+            return self.window.viewDll_tree
 
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
