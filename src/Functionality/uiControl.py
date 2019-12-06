@@ -516,12 +516,18 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # Open up file explorer to select a file for Plugin predefined line edit
     def showFileExplorer(self):
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
         self.window.dpmPluginStructure_lineEdit.setText(name)
 
     # Open up file explorer to select a file for Poi predefined line edit
     def showFileExplorer_predefined(self):
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
+        path = Path(__file__).parents[2].as_posix() + '/Configurations/Sample Configurations'
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', path, 'XML Files (*.xml)', options=options)
         self.window.dpoimPredefined_lineEdit.setText(name)
 
     # ---- Following methods are for misc. stuff in the management tab --------------------------------------------
