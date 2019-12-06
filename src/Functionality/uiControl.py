@@ -36,6 +36,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.commentSave_button.clicked.connect(self.callSaveComment)                    # save comment
         self.window.commentClear_button.clicked.connect(self.clearComment)                      # clear comment
         self.window.projectNavigator_tree.itemSelectionChanged.connect(self.setProject)         # disp proj properties
+
+        self.window.projectNavigator_tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # right-click project
+        self.window.projectNavigator_tree.customContextMenuRequested.connect(self.rightClickOnProject)
+
         self.window.runStaticAnalysis_button.clicked.connect(self.runStatic)                    # run static
         self.window.runDynamicAnalysis_button.clicked.connect(self.disable)                     # run dynamic
         self.window.expandCollapseAll_check.clicked.connect(self.expandPOI)                     # expand/collapse poi
@@ -80,7 +84,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.window.poiManagement_list.customContextMenuRequested.connect(self.rightClickOnPoi)
         self.window.pluginManagement_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)     # delete plugin
         self.window.pluginManagement_list.customContextMenuRequested.connect(self.rightClickOnPlugin)
-        
+
         # ---- Other --------------------------------------------------------------------------------------------------
         self.window.switchToHistory_button.clicked.connect(self.switchViews)                    # switch views
         self.window.check_allpoi.stateChanged.connect(self.checkstate_poi)                      # check pois
@@ -303,11 +307,6 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui = DocumentationWindow()
         self.ui.exec_()
 
-    # Open the file explorer to select a file for the output window
-    def showFileExplorer_outFuncSource(self):
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File')
-        self.window.dpmOutFuncSource_lineEdit.setText(name)
-
     # ---- Following methods are for misc. stuff in the analysis tab ---------------------------------------
     # Save a comment in the currently clicked poi from the poi list
     def callSaveComment(self):
@@ -379,7 +378,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             currTree.expandAll()
         else:
             currTree.collapseAll()
-            
+
     # ---- Following methods provide all the search functionality in the management tab --------------------------
     def callSearchPluginM(self):
         try:
