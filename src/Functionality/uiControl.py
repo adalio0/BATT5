@@ -217,9 +217,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                 # Get the path of the binary file and run static analysis
                 path = getCurrentFilePath()
                 poi = staticAnalysis(path)
+                funcList = []
+                for i in range(len(poi[0])):
+                    funcList.append(poi[0][i]['name'])
+                dictList = historicAnalysis(path,funcList)
+                print(dictList)
 
                 # Save the results of static into the database
-                saveStatic(poi)
+                saveStatic2(poi, dictList)
                 self.displayPoi()
             else:
                 self.displayPoi()
