@@ -1,3 +1,4 @@
+from src.Functionality.database import *
 
 # Clears the labels that are used for creating a new plugin to create a new plugin
 def deselectPlugin(dpmPluginName_lineEdit, dpmPluginDesc_lineEdit, pluginManagement_list, pluginEditingStatus_label,
@@ -46,3 +47,17 @@ def displayPlugin(name, description, pluginManagement_list, addPoiType_dropdown,
         clearManualPlugin_button.setText('De-Select Plugin')
         # self.displayPoiFromPlugin()
         addPluginXml_frame.setDisabled(True)
+
+def displayPoiFromPlugin(poiManagement_list, pluginManagement_list, addPoiType_dropdown, addPoiManual_label):
+    poiManagement_list.clear()
+    if pluginManagement_list.selectedItems():
+        plugin = pluginManagement_list.currentItem().text()
+        poiFromPlugin = getFilterPoi(plugin)
+        poiType = addPoiType_dropdown.currentText()
+        addPoiManual_label.setText(
+            'Add {}'.format(poiType) + ' to {}'.format(plugin) + ' Through Manual Input')
+        pois = []
+        poiType = poiType.lower()
+        for i in range(len(poiFromPlugin[poiType])):
+            pois.append(poiFromPlugin[poiType][i]['name'])
+        poiManagement_list.addItems(pois)
