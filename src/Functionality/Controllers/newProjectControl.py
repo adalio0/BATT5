@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -25,9 +26,10 @@ class ProjectWindow(QtWidgets.QDialog):
 
     # ---- Extracts file location -----------------------------------------------------------------------
     def showFileExplorer(self):
+        path = Path(__file__).parents[3].as_posix() + '/Configurations/Sample Configurations'
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Browse", "",
+        name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Browse", path,
                                                         "All Files (*);;Python Files (*.py)", options=options)
         self.window.path_lineEdit.setText(name)
         if name:
