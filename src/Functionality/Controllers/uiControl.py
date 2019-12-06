@@ -184,13 +184,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         valueList = historicAnalysis(path, funcList)
         valueList2 = refactoredDynamic(path, valueList)
         print(valueList2)
-        function_db.drop()
         saveDynamic2(poi, valueList2)
 
-
-        #saveDynamic(poi, valueList2)
-        #saveDynamic(poi, valueList2)
-        # self.clearPoi()
         self.displayPoi()
         self.enable()
         choice = QMessageBox.question(self, 'Save Dynamic Run', 'Do You Want to Save This Dynamic Analysis Run?',
@@ -198,7 +193,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         if choice == QMessageBox.Yes:
             runName, okPressed = QInputDialog.getText(self, "Run Name", "Name of Dynamic Run:", QLineEdit.Normal, "")
             if okPressed and runName != '':
-                print(runName)
+                saveRun(runName)
 
     def displayPoi(self): # Displays POIs in the Analysis box
         self.window.viewFunc_tree.clear()

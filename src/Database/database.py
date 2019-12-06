@@ -877,3 +877,5 @@ def saveRun(name):
                                 dynamic_db.find_one_and_update(
                                     {'_id': p['_id']},
                                     {'$push': {'runs': {str(runs_db.count()): r['_id']}}}, upsert=True)
+    for r in runs_db.find():
+        print(r)
