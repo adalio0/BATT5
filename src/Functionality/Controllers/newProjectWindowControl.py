@@ -4,16 +4,16 @@ from pathlib import Path
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
-from src.GUI.python_files.popups.newProjectWind import NewProject
+from src.GUI.python_files.popups.newProjectWindow import NewProjectWindow
 from src.Functionality.Analysis.binaryValidation import get_binary_info
 from src.Database.database import insertToDatabase
 properties = []
 
 
-class ProjectWindow(QtWidgets.QDialog):
+class NewProjectWindowControl(QtWidgets.QDialog):
     def __init__(self):
-        super(ProjectWindow, self).__init__()
-        self.window = NewProject()
+        super(NewProjectWindowControl, self).__init__()
+        self.window = NewProjectWindow()
         self.window.setupUi(self)
         self.window.path_lineEdit.setDisabled(True)
 
@@ -54,7 +54,7 @@ class ProjectWindow(QtWidgets.QDialog):
             self.close()
 
     def accept(self):
-        super(ProjectWindow, self).accept()
+        super(NewProjectWindowControl, self).accept()
 
     # ---- Show Error Message ------------------------------------------
     def showErr(self):
@@ -218,7 +218,7 @@ class ProjectWindow(QtWidgets.QDialog):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    application = ProjectWindow()
+    application = NewProjectWindowControl()
     application.show()
     sys.exit(app.exec_())
 

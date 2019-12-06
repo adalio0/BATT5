@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Documentation_Window(object):
+class DocumentationWindow(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(690, 486)
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Documentation_Window()
+    ui = DocumentationWindow()
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())

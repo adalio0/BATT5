@@ -6,14 +6,14 @@ from pathlib import Path
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
-from src.GUI.python_files.popups.documentationView import Documentation_Window
+from src.GUI.python_files.popups.documentationWindow import DocumentationWindow
 from src.Functionality.Display.search import searchDocumentation
 
 
-class DocumentationWindow(QtWidgets.QDialog):
+class DocumentationWindowControl(QtWidgets.QDialog):
     def __init__(self):
-        super(DocumentationWindow, self).__init__()
-        self.window = Documentation_Window()
+        super(DocumentationWindowControl, self).__init__()
+        self.window = DocumentationWindow()
         self.window.setupUi(self)
         self.setWindowTitle("Documentation")
 
@@ -142,7 +142,7 @@ class DocumentationWindow(QtWidgets.QDialog):
             pass
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    application = DocumentationWindow()
+    application = DocumentationWindowControl()
     application.show()
     sys.exit(app.exec_())
 

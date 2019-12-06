@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_BATT5(object):
+class BATT5Window(object):
     def setupUi(self, BATT5):
         BATT5.setObjectName("BATT5")
         BATT5.setWindowModality(QtCore.Qt.NonModal)

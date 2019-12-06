@@ -5,9 +5,9 @@ sys.path.insert(0, Path(__file__).parents[3].as_posix())
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
-from src.GUI.python_files.BATT5_GUI import Ui_BATT5
-from src.Functionality.Controllers.newProjectControl import ProjectWindow
-from src.Functionality.Controllers.documentationControl import DocumentationWindow
+from src.GUI.python_files.BATT5Window import BATT5Window
+from src.Functionality.Controllers.newProjectWindowControl import NewProjectWindowControl
+from src.Functionality.Controllers.documentationWindowControl import DocumentationWindowControl
 from src.Functionality.Analysis.staticAnalysis import staticAnalysis, historicAnalysis
 from src.Functionality.Analysis.radareTerminal import Terminal
 from src.Functionality.Management.pluginManagement import *
@@ -16,10 +16,10 @@ from src.Functionality.Analysis.dynamicAnalysis import *
 from src.Functionality.Display.displayPointsOfInterests import *
 from src.Functionality.Display.displayManagement import *
 
-class ApplicationWindow(QtWidgets.QMainWindow):
+class BATT5WindowControl(QtWidgets.QMainWindow):
     def __init__(self):
-        super(ApplicationWindow, self).__init__()
-        self.window = Ui_BATT5()
+        super(BATT5WindowControl, self).__init__()
+        self.window = BATT5Window()
         self.window.setupUi(self)
         self.showMaximized()
 
@@ -257,8 +257,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
     # ---- Following methods are for calling and showing the different windows in the analysis tab ------------------
     def showNewProject(self): # Shows NewProject window
-        self.ui = ProjectWindow()
-        if self.ui.exec_() == ProjectWindow.Accepted:
+        self.ui = NewProjectWindowControl()
+        if self.ui.exec_() == NewProjectWindowControl.Accepted:
             self.window.projectNavigator_tree.clear()
             self.populateProjectBox()
             self.window.projectNavigator_tree.setCurrentItem(
@@ -278,7 +278,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                              "without a binary file. Please provide a binary file.", QMessageBox.Ok)
 
     def showDocumentationWindow(self): # Shows Documentation window
-        self.ui = DocumentationWindow()
+        self.ui = DocumentationWindowControl()
         self.ui.exec_()
 
     # ---- Following methods are for misc. stuff in the analysis tab ---------------------------------------
@@ -510,7 +510,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 # ------------------------------------------------ MAIN ---------------------------------------------------------------
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    application = ApplicationWindow()
+    application = BATT5WindowControl()
     application.show()
     sys.exit(app.exec_())
 
