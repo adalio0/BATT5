@@ -6,7 +6,6 @@ from src.Database.database import getFilterPoi
 from pathlib import Path
 
 
-
 # Search functionality for the project box
 def searchProject(search, projectNavigator_tree):
     result = projectNavigator_tree.findItems(search, QtCore.Qt.MatchContains)
