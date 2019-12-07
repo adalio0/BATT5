@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+
+	<name>Network Plugin</name>
+	<description>Network plugin includes six points of interest</description>
+
+	<pointOfInterest>
+
+		<function>
+			<name>entry0</name>
+		</function>
+		
+		<invalid>
+			<name>Invalid</name>
+		</inavlid>
+
+		<string>
+			<name>Sleep</name>
+		</string>
+
+		<string>
+			<name>LocalFree</name>
+		</string>
+
+		<variable>
+			<name>var_8h</name>
+		</variable>
+
+		<dll>
+			<name>msvcrt.dll___C_specific_handler</name>
+		</dll>
+
+		<dll>
+			<name>msvcrt.dll_exit</name>
+		</dll>
+
+	</pointOfInterest>
+
+</plugin>
